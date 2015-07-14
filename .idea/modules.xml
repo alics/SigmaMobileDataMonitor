@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/DataUsageMonitor.iml" filepath="$PROJECT_DIR$/DataUsageMonitor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MobileDataMonitor.iml" filepath="$PROJECT_DIR$/MobileDataMonitor.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
