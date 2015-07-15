@@ -11,6 +11,19 @@ public class DailyTrafficHistory {
     private long traffic;
     private Date usageDate;
 
+
+    public DailyTrafficHistory( long traffic , Date usageDate)
+    {
+        setTraffic(traffic);
+        setUsageDate(usageDate);
+    }
+
+    public DailyTrafficHistory(int id, long traffic , Date usageDate)
+    {
+        this(traffic,usageDate);
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }
