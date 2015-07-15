@@ -35,6 +35,4 @@ public class ContactType
         name = value;
     }
 
-    //
-
 }
