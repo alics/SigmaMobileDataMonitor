@@ -3,6 +3,7 @@ package com.zohaltech.app.mobiledatamonitor.dal;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.zohaltech.app.mobiledatamonitor.classes.Helper;
 import com.zohaltech.app.mobiledatamonitor.entities.ContactType;
 import com.zohaltech.app.mobiledatamonitor.entities.DailyTrafficHistory;
 
@@ -31,38 +32,31 @@ public class DailyTrafficHistories {
         SQLiteDatabase db = da.getReadableDB();
         Cursor cursor = null;
 
-        try
-        {
+        try {
             String query = "Select * From " + TableName + " " + whereClause;
             cursor = db.rawQuery(query, selectionArgs);
-            if (cursor != null && cursor.moveToFirst())
-            {
-                do
-                {
-                    //DailyTrafficHistory history = new DailyTrafficHistory(
-                    //        cursor.getInt(cursor.getColumnIndex(Id)),
-                    //        cursor.getLong(cursor.getColumnIndex(Traffic),
-                    //        cursor.getd);
-                    //histories.add(history);
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    DailyTrafficHistory history = new DailyTrafficHistory(cursor.getInt(cursor.getColumnIndex(Id)),
+                                                                          cursor.getLong(cursor.getColumnIndex(Traffic)),
+                                                                          Helper.getDate(cursor.getString(cursor.getColumnIndex(UsageDate))));
+                    histories.add(history);
                 } while (cursor.moveToNext());
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally
-        {
-            if (cursor != null && !cursor.isClosed()) cursor.close();
-            if (db != null && db.isOpen()) db.close();
+        } finally {
+            if (cursor != null && !cursor.isClosed())
+                cursor.close();
+            if (db != null && db.isOpen())
+                db.close();
         }
         return histories;
 
 
     }
 
-    public static ArrayList<DailyTrafficHistory> select()
-    {
+    public static ArrayList<DailyTrafficHistory> select() {
         return select("", null);
     }
 }

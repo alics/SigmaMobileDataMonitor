@@ -1,7 +1,7 @@
 package com.zohaltech.app.mobiledatamonitor.entities;
 
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * Created by Ali on 7/15/2015.

@@ -54,6 +54,20 @@ public final class Helper
         return date;
     }
 
+    public static Date getDate(String dateTime)
+    {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
+        Date date = null;
+        try
+        {
+            date = dateFormat.parse(dateTime);
+        } catch (ParseException e)
+        {
+            e.printStackTrace();
+        }
+        return date;
+    }
+
     public static String getNewImageFileName()
     {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
