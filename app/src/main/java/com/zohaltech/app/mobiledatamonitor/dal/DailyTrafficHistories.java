@@ -4,7 +4,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.zohaltech.app.mobiledatamonitor.classes.Helper;
-import com.zohaltech.app.mobiledatamonitor.entities.ContactType;
 import com.zohaltech.app.mobiledatamonitor.entities.DailyTrafficHistory;
 
 import java.util.ArrayList;
@@ -21,8 +20,8 @@ public class DailyTrafficHistories {
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
             Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-            Traffic + " BIGINT ," +
-            UsageDate + " Date );";
+            Traffic + " BIGINT  NOT NULL," +
+            UsageDate + " Date  NOT NULL );";
     static final String DropTable   = "Drop Table If Exists " + TableName;
 
 
