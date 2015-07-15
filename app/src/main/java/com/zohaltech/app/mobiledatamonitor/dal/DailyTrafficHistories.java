@@ -51,8 +51,6 @@ public class DailyTrafficHistories {
                 db.close();
         }
         return histories;
-
-
     }
 
     public static ArrayList<DailyTrafficHistory> select() {

@@ -1,6 +1,6 @@
 package com.zohaltech.app.mobiledatamonitor.entities;
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * Created by Ali on 7/15/2015.
@@ -8,10 +8,24 @@ import java.sql.Date;
 public class PackageHistory {
     Integer id;
     Integer dataPackageId;
-    Date startDateTime;
-    Date endDateTime;
-    String simId;
+    Date    startDateTime;
+    Date    endDateTime;
+    String  simId;
     Boolean active;
+
+
+    public PackageHistory(Integer dataPackageId, Date startDateTime, Date endDateTime, String simId,Boolean active) {
+        setDataPackageId(dataPackageId);
+        setStartDateTime(startDateTime);
+        setEndDateTime(endDateTime);
+        setSimId(simId);
+        setActive(active);
+    }
+
+    public PackageHistory(Integer id, Integer dataPackageId, Date startDateTime, Date endDateTime, String simId,Boolean active) {
+        this(dataPackageId, startDateTime, endDateTime, simId,active);
+        this.id = id;
+    }
 
     public Integer getId() {
         return id;
