@@ -6,26 +6,26 @@ import java.sql.Date;
  * Created by Ali on 7/15/2015.
  */
 public class PackageHistory {
-    int id;
-    int dataPackageId;
+    Integer id;
+    Integer dataPackageId;
     Date startDateTime;
     Date endDateTime;
     String simId;
-    boolean active;
+    Boolean active;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getDataPackageId() {
+    public Integer getDataPackageId() {
         return dataPackageId;
     }
 
-    public void setDataPackageId(int dataPackageId) {
+    public void setDataPackageId(Integer dataPackageId) {
         this.dataPackageId = dataPackageId;
     }
 
@@ -53,11 +53,11 @@ public class PackageHistory {
         this.simId = simId;
     }
 
-    public boolean isActive() {
+    public Boolean getActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 }

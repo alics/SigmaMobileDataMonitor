@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -66,6 +67,12 @@ public final class Helper
             e.printStackTrace();
         }
         return date;
+    }
+
+    public static Time getTime(String timeStr)
+    {
+        Time time = java.sql.Time.valueOf(timeStr);
+        return time;
     }
 
     public static String getNewImageFileName()

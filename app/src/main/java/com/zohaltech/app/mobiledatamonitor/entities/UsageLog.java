@@ -6,23 +6,23 @@ import java.util.Date;
  * Created by Ali on 7/15/2015.
  */
 public class UsageLog {
-    private int id;
-    private long trafficBytes;
+    private Integer id;
+    private Long trafficBytes;
     private Date logDateTime;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public long getTrafficBytes() {
+    public Long getTrafficBytes() {
         return trafficBytes;
     }
 
-    public void setTrafficBytes(long trafficBytes) {
+    public void setTrafficBytes(Long trafficBytes) {
         this.trafficBytes = trafficBytes;
     }
 

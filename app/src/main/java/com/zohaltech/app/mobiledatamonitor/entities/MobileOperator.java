@@ -4,14 +4,14 @@ package com.zohaltech.app.mobiledatamonitor.entities;
  * Created by Ali on 7/15/2015.
  */
 public class MobileOperator {
-    int id;
+    Integer id;
     String name;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

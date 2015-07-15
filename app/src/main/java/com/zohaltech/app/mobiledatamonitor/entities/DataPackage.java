@@ -1,36 +1,59 @@
 package com.zohaltech.app.mobiledatamonitor.entities;
 
 import java.sql.Time;
+import java.util.Date;
 
 /**
  * Created by Ali on 7/15/2015.
  */
 public class DataPackage {
-    int id;
-    int operatorId;
+    Integer id;
+    Integer operatorId;
     String title;
-    int period;
-    int price;
-    long primaryTraffic;
-    long secondaryTraffic;
+    Integer period;
+    Integer price;
+    Long primaryTraffic;
+    Long secondaryTraffic;
     Time secondaryTrafficStartTime;
     Time secondaryTrafficEndTime;
     String ussdCode;
-    boolean custom;
+    Boolean custom;
 
-    public int getId() {
+    public DataPackage( Integer operatorId , String title,Integer period,Integer price,Long primaryTraffic,Long secondaryTraffic,
+                        Time secondaryTrafficEndTime,Time secondaryTrafficStartTime ,String ussdCode, Boolean custom)
+    {
+        setOperatorId(operatorId);
+        setTitle(title);
+        setPeriod(period);
+        setPrice(price);
+        setPrimaryTraffic(primaryTraffic);
+        setSecondaryTraffic(secondaryTraffic);
+        setSecondaryTrafficStartTime(secondaryTrafficStartTime);
+        setSecondaryTrafficEndTime(secondaryTrafficEndTime);
+        setUssdCode(ussdCode);
+        setCustom(custom);
+    }
+
+    public DataPackage(Integer id,Integer operatorId , String title,Integer period,Integer price,Long primaryTraffic,Long secondaryTraffic,
+                       Time secondaryTrafficEndTime,Time secondaryTrafficStartTime ,String ussdCode, Boolean custom)
+    {
+        this(operatorId,title,period,price,primaryTraffic,secondaryTraffic,secondaryTrafficStartTime,secondaryTrafficEndTime,ussdCode,custom);
+        this.id=id;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getOperatorId() {
+    public Integer getOperatorId() {
         return operatorId;
     }
 
-    public void setOperatorId(int operatorId) {
+    public void setOperatorId(Integer operatorId) {
         this.operatorId = operatorId;
     }
 
@@ -42,35 +65,35 @@ public class DataPackage {
         this.title = title;
     }
 
-    public int getPeriod() {
+    public Integer getPeriod() {
         return period;
     }
 
-    public void setPeriod(int period) {
+    public void setPeriod(Integer period) {
         this.period = period;
     }
 
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
-    public long getPrimaryTraffic() {
+    public Long getPrimaryTraffic() {
         return primaryTraffic;
     }
 
-    public void setPrimaryTraffic(long primaryTraffic) {
+    public void setPrimaryTraffic(Long primaryTraffic) {
         this.primaryTraffic = primaryTraffic;
     }
 
-    public long getSecondaryTraffic() {
+    public Long getSecondaryTraffic() {
         return secondaryTraffic;
     }
 
-    public void setSecondaryTraffic(long secondaryTraffic) {
+    public void setSecondaryTraffic(Long secondaryTraffic) {
         this.secondaryTraffic = secondaryTraffic;
     }
 
@@ -98,11 +121,11 @@ public class DataPackage {
         this.ussdCode = ussdCode;
     }
 
-    public boolean isCustom() {
+    public Boolean getCustom() {
         return custom;
     }
 
-    public void setCustom(boolean custom) {
+    public void setCustom(Boolean custom) {
         this.custom = custom;
     }
 }
