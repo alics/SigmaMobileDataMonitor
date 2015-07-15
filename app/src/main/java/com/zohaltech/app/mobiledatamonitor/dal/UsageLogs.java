@@ -1,4 +1,4 @@
-package com.zohaltech.app.mobiledatamonitor.entities;
+package com.zohaltech.app.mobiledatamonitor.dal;
 
 /**
  * Created by Ali on 7/15/2015.
