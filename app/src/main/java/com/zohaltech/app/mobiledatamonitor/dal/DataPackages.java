@@ -4,7 +4,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.zohaltech.app.mobiledatamonitor.classes.Helper;
-import com.zohaltech.app.mobiledatamonitor.entities.DailyTrafficHistory;
 import com.zohaltech.app.mobiledatamonitor.entities.DataPackage;
 
 import java.util.ArrayList;
@@ -76,8 +75,6 @@ public class DataPackages {
                 db.close();
         }
         return packageList;
-
-
     }
 
     public static ArrayList<DataPackage> select() {
