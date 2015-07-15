@@ -50,6 +50,8 @@ public class ContactTypes
             if (db != null && db.isOpen()) db.close();
         }
         return contactTypes;
+
+
     }
 
     public static ArrayList<ContactType> select()
