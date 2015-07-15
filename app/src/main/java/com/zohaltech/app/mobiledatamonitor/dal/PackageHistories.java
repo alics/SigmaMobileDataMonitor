@@ -20,11 +20,7 @@ public class PackageHistories {
             EndDateTime + " DATE NOT NULL," +
             SimId + " INTEGER  NOT NULL ," +
             Active + " BOOLEAN   );";
-//            SecondaryTraffic + " BIGINT   ," +
-//            SecondaryTrafficStartTime + " TIME   ," +
-//            SecondaryTrafficEndTime + " TIME   ," +
-//            UssdCode + " VARCHAR(50)   ," +
-//            Custom + " BOOLEAN   )";
+
 
     static final String DropTable = "Drop Table If Exists " + TableName;
 }
