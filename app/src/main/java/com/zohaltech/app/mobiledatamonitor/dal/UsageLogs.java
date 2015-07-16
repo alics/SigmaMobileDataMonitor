@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.zohaltech.app.mobiledatamonitor.classes.Helper;
-import com.zohaltech.app.mobiledatamonitor.entities.DailyTrafficHistory;
 import com.zohaltech.app.mobiledatamonitor.entities.UsageLog;
 
 import java.util.ArrayList;
@@ -21,9 +20,9 @@ public class UsageLogs {
     static final String LogDateTime  = "LogDateTime";
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
-            Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-            TrafficBytes + "BIGINT NOT NULL, " +
-            LogDateTime + "DATE );";
+                                      Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                                      TrafficBytes + "BIGINT NOT NULL, " +
+                                      LogDateTime + "DATE );";
 
     static final String DropTable = "Drop Table If Exists " + TableName;
 
