@@ -8,8 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="horizontal"
-        android:background="@color/app_main_color">
+        android:background="@color/app_main_color"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -24,6 +24,15 @@
                 android:layout_height="96dp"
                 android:scaleType="centerInside"/>
 
+            <widgets.MyTextView
+                android:id="@+id/txtDayTraffic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="حجم شبانه روزی"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/white"/>
+
         </LinearLayout>
 
         <LinearLayout
@@ -31,13 +40,22 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center|left"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <widgets.ArcProgress
                 android:id="@+id/progressNight"
                 android:layout_width="96dp"
                 android:layout_height="96dp"
                 android:scaleType="centerInside"/>
+
+            <widgets.MyTextView
+                android:id="@+id/txtNightTraffic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="حجم شبانه"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/white"/>
 
         </LinearLayout>
 
@@ -47,17 +65,16 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="horizontal"
+        android:background="@color/white"
         android:gravity="center"
-        android:background="@color/white">
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnStartAnimation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="Start Animation"
-            android:onClick="startAnimation"/>
+            android:text="Start Animation"/>
 
     </LinearLayout>
 

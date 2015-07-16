@@ -2,6 +2,12 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/app/src/main/assets/fonts" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/zohaltech/app/mobiledatamonitor/activities/DashboardActivity.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/widgets/ArcProgress.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/widgets/MyButton.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/widgets/MyCheckBox.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/widgets/MyEditText.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/widgets/MyTextView.java" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>
