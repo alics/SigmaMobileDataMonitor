@@ -83,7 +83,7 @@ public class ArcProgress extends ImageView {
         textPaint.setAntiAlias(true);
         textPaint.setTextAlign(Align.CENTER);
         //textPaint.setTextSize(numberTextSize);
-        textPaint.setTypeface(App.appFont);
+        //textPaint.setTypeface(App.appFont);
         textPaint.setStyle(Style.FILL_AND_STROKE);
     }
 
@@ -109,7 +109,7 @@ public class ArcProgress extends ImageView {
 
         //int color = Color.argb(127,255, 255, 127);
 
-        int color = Color.argb(200,255, 255, 255);
+        int color = Color.argb(230,255, 255, 255);
 
         arcForegroundPaint.setColor(color);
         int sweepAngle = percent * SWEEP_ANGLE / 100;
@@ -118,9 +118,9 @@ public class ArcProgress extends ImageView {
         textPaint.setTextSize(numberTextSize);
         textPaint.setColor(color);
         canvas.drawText(percent + "%", getWidth() / 2, getHeight() / 2, textPaint);
-        //canvas.drawText(percent + "", getWidth() / 2, getHeight() / 2, textPaint);
-        //
-        //textPaint.setTextSize(percentTextSize);
-        //canvas.drawText("%", getWidth()-(getWidth()/4), getHeight()-(getHeight()/3*2), textPaint);
+
+
+        textPaint.setTextSize(40);
+        canvas.drawText("1245/3065 MB", getWidth()/2, getHeight()-(getHeight()/6), textPaint);
     }
 }
