@@ -8,6 +8,7 @@ import com.zohaltech.app.mobiledatamonitor.classes.Helper;
 import com.zohaltech.app.mobiledatamonitor.entities.UsageLog;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Ali on 7/15/2015.
@@ -53,12 +54,68 @@ public class UsageLogs {
         return logList;
     }
 
+    private static Date getMaxDateOfUsageLog() {
+        Date maxLogDate = null;
+        DataAccess da = new DataAccess();
+        SQLiteDatabase db = da.getReadableDB();
+        Cursor cursor = null;
+        try {
+            String query = "SELECT MAX(" + LogDateTime + ") MaxLogDate FROM UsageLogs";
+            cursor = db.rawQuery(query, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    maxLogDate = Helper.getDate(cursor.getString(cursor.getColumnIndex("MaxLogDate")));
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null && !cursor.isClosed())
+                cursor.close();
+            if (db != null && db.isOpen())
+                db.close();
+        }
+        return maxLogDate;
+    }
+
+    private static long getSumUsedTrafficUsageInDate(Date date) {
+        long sum = 0;
+        DataAccess da = new DataAccess();
+        SQLiteDatabase db = da.getReadableDB();
+        Cursor cursor = null;
+        try {
+            String query = "SELECT SUM(TrafficBytes) SumTrrafic FROM UsageLogs WHERE  SUBSTR(LogDateTime,1,10) = '" + date + "'";
+            cursor = db.rawQuery(query, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    sum = cursor.getLong(cursor.getColumnIndex("SumTrrafic"));
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null && !cursor.isClosed())
+                cursor.close();
+            if (db != null && db.isOpen())
+                db.close();
+        }
+        return sum;
+    }
+
     public static ArrayList<UsageLog> select() {
         return select("", null);
     }
 
     public static long insert(UsageLog usageLog) {
         ContentValues values = new ContentValues();
+        Date maxDate = getMaxDateOfUsageLog();
+        Date currentDate = Helper.getDate(usageLog.getLogDateTime().toString());
+
+        if (currentDate.compareTo(maxDate) > 0) {
+            long sumBytes=getSumUsedTrafficUsageInDate(maxDate);
+            DailyTrafficHistory dailyTrafficHistory=new DailyTrafficHistory(sumBytes,currentDate);
+            DailyTrafficHistories.insert(dailyTrafficHistory);
+        }
 
         values.put(TrafficBytes, usageLog.getTrafficBytes());
         values.put(LogDateTime, usageLog.getLogDateTime().toString());
@@ -81,5 +138,4 @@ public class UsageLogs {
         DataAccess db = new DataAccess();
         return db.delete(TableName, Id + " =? ", new String[]{String.valueOf(usageLog.getId())});
     }
-
 }
