@@ -82,6 +82,39 @@ public class DataPackages {
         return select("", null);
     }
 
+    public static ArrayList<Integer> selectOperatorPeriods(int operatorId) {
+        ArrayList<Integer> periodList = new ArrayList<>();
+
+        DataAccess da = new DataAccess();
+        SQLiteDatabase db = da.getReadableDB();
+        Cursor cursor = null;
+
+        try {
+            String[] selectionArgs = {Period};
+            String query = "Select * From " + TableName + "  WHERE OperatorId=" + operatorId + " Order By Period ASC ";
+            cursor = db.rawQuery(query, selectionArgs);
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    periodList.add(cursor.getInt(cursor.getColumnIndex(Period)));
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null && !cursor.isClosed())
+                cursor.close();
+            if (db != null && db.isOpen())
+                db.close();
+        }
+        return periodList;
+    }
+
+    public static ArrayList<DataPackage> selectPackagesByOperatorAndPeriod(int operatorId, int period) {
+        String whereClause = " WHERE " + OperatorId + "=" + operatorId + " AND " + Period + "=" + period;
+        String[] selectionArgs = {OperatorId, Period};
+        return select(whereClause, selectionArgs);
+    }
+
     public static long insert(DataPackage dataPackage) {
         ContentValues values = new ContentValues();
 
@@ -122,4 +155,6 @@ public class DataPackages {
         DataAccess db = new DataAccess();
         return db.delete(TableName, Id + " =? ", new String[]{String.valueOf(dataPackage.getId())});
     }
+
+
 }
