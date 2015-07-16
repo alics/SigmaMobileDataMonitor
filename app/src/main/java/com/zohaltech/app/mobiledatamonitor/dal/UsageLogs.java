@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.zohaltech.app.mobiledatamonitor.classes.Helper;
-import com.zohaltech.app.mobiledatamonitor.entities.DailyTrafficHistory;
 import com.zohaltech.app.mobiledatamonitor.entities.UsageLog;
 
 import java.util.ArrayList;
@@ -20,9 +19,9 @@ public class UsageLogs {
     static final String LogDateTime  = "LogDateTime";
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
-            Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-            TrafficBytes + "BIGINT NOT NULL, " +
-            LogDateTime + "DATE );";
+                                      Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                                      TrafficBytes + "BIGINT NOT NULL, " +
+                                      LogDateTime + "DATE );";
 
     static final String DropTable = "Drop Table If Exists " + TableName;
 
@@ -38,8 +37,8 @@ public class UsageLogs {
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     UsageLog log = new UsageLog(cursor.getInt(cursor.getColumnIndex(Id)),
-                                                                          cursor.getLong(cursor.getColumnIndex(TrafficBytes)),
-                                                                          Helper.getDate(cursor.getString(cursor.getColumnIndex(LogDateTime))));
+                                                cursor.getLong(cursor.getColumnIndex(TrafficBytes)),
+                                                Helper.getDate(cursor.getString(cursor.getColumnIndex(LogDateTime))));
                     logList.add(log);
                 } while (cursor.moveToNext());
             }
@@ -58,8 +57,7 @@ public class UsageLogs {
         return select("", null);
     }
 
-    public static long insert(UsageLog usageLog)
-    {
+    public static long insert(UsageLog usageLog) {
         ContentValues values = new ContentValues();
 
         values.put(TrafficBytes, usageLog.getTrafficBytes());
@@ -69,8 +67,7 @@ public class UsageLogs {
         return da.insert(TableName, values);
     }
 
-    public static long update(UsageLog usageLog)
-    {
+    public static long update(UsageLog usageLog) {
         ContentValues values = new ContentValues();
 
         values.put(TrafficBytes, usageLog.getTrafficBytes());
@@ -80,8 +77,7 @@ public class UsageLogs {
         return da.update(TableName, values, Id + " =? ", new String[]{String.valueOf(usageLog.getId())});
     }
 
-    public static long delete(UsageLog usageLog)
-    {
+    public static long delete(UsageLog usageLog) {
         DataAccess db = new DataAccess();
         return db.delete(TableName, Id + " =? ", new String[]{String.valueOf(usageLog.getId())});
     }
