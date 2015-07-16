@@ -1,5 +1,6 @@
 package com.zohaltech.app.mobiledatamonitor.dal;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -55,5 +56,33 @@ public class DailyTrafficHistories {
 
     public static ArrayList<DailyTrafficHistory> select() {
         return select("", null);
+    }
+
+    public static long insert(DailyTrafficHistory trafficHistory)
+    {
+        ContentValues values = new ContentValues();
+
+        values.put(Traffic, trafficHistory.getTraffic());
+        values.put(UsageDate, trafficHistory.getUsageDate().toString());
+
+        DataAccess da = new DataAccess();
+        return da.insert(TableName, values);
+    }
+
+    public static long update(DailyTrafficHistory trafficHistory)
+    {
+        ContentValues values = new ContentValues();
+
+        values.put(Traffic, trafficHistory.getTraffic());
+        values.put(UsageDate, trafficHistory.getUsageDate().toString());
+
+        DataAccess da = new DataAccess();
+        return da.update(TableName, values, Id + " =? ", new String[]{String.valueOf(trafficHistory.getId())});
+    }
+
+    public static long delete(DailyTrafficHistory trafficHistory)
+    {
+        DataAccess db = new DataAccess();
+        return db.delete(TableName, Id + " =? ", new String[]{String.valueOf(trafficHistory.getId())});
     }
 }

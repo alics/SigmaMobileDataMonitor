@@ -1,10 +1,10 @@
 package com.zohaltech.app.mobiledatamonitor.dal;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.zohaltech.app.mobiledatamonitor.classes.Helper;
-import com.zohaltech.app.mobiledatamonitor.entities.DataPackage;
 import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
 
 import java.util.ArrayList;
@@ -45,11 +45,11 @@ public class PackageHistories {
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     PackageHistory packageHistory = new PackageHistory(cursor.getInt(cursor.getColumnIndex(Id)),
-                                                              cursor.getInt(cursor.getColumnIndex(DataPackageId)),
-                                                              Helper.getDateTime(cursor.getString(cursor.getColumnIndex(StartDateTime))),
-                                                                Helper.getDateTime(cursor.getString(cursor.getColumnIndex(EndDateTime))),
-                                                              cursor.getString(cursor.getColumnIndex(SimId)),
-                                                              cursor.getInt(cursor.getColumnIndex(Active)) == 1);
+                                                                       cursor.getInt(cursor.getColumnIndex(DataPackageId)),
+                                                                       Helper.getDateTime(cursor.getString(cursor.getColumnIndex(StartDateTime))),
+                                                                       Helper.getDateTime(cursor.getString(cursor.getColumnIndex(EndDateTime))),
+                                                                       cursor.getString(cursor.getColumnIndex(SimId)),
+                                                                       cursor.getInt(cursor.getColumnIndex(Active)) == 1);
                     packageList.add(packageHistory);
                 } while (cursor.moveToNext());
             }
@@ -66,5 +66,39 @@ public class PackageHistories {
 
     public static ArrayList<PackageHistory> select() {
         return select("", null);
+    }
+
+    public static long insert(PackageHistory packageHistory)
+    {
+        ContentValues values = new ContentValues();
+
+        values.put(DataPackageId, packageHistory.getDataPackageId());
+        values.put(StartDateTime, packageHistory.getStartDateTime().toString());
+        values.put(EndDateTime, packageHistory.getEndDateTime().toString());
+        values.put(SimId, packageHistory.getSimId());
+        values.put(Active, packageHistory.getActive() == true ? 1 : 0);
+
+        DataAccess da = new DataAccess();
+        return da.insert(TableName, values);
+    }
+
+    public static long update(PackageHistory packageHistory)
+    {
+        ContentValues values = new ContentValues();
+
+        values.put(DataPackageId, packageHistory.getDataPackageId());
+        values.put(StartDateTime, packageHistory.getStartDateTime().toString());
+        values.put(EndDateTime, packageHistory.getEndDateTime().toString());
+        values.put(SimId, packageHistory.getSimId());
+        values.put(Active, packageHistory.getActive() == true ? 1 : 0);
+
+        DataAccess da = new DataAccess();
+        return da.update(TableName, values, Id + " =? ", new String[]{String.valueOf(packageHistory.getId())});
+    }
+
+    public static long delete(PackageHistory packageHistory)
+    {
+        DataAccess db = new DataAccess();
+        return db.delete(TableName, Id + " =? ", new String[]{String.valueOf(packageHistory.getId())});
     }
 }

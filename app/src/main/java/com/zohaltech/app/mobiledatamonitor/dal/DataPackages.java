@@ -1,5 +1,6 @@
 package com.zohaltech.app.mobiledatamonitor.dal;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -79,5 +80,46 @@ public class DataPackages {
 
     public static ArrayList<DataPackage> select() {
         return select("", null);
+    }
+
+    public static long insert(DataPackage dataPackage) {
+        ContentValues values = new ContentValues();
+
+        values.put(OperatorId, dataPackage.getOperatorId());
+        values.put(Title, dataPackage.getTitle());
+        values.put(Period, dataPackage.getPeriod());
+        values.put(Price, dataPackage.getPrice());
+        values.put(PrimaryTraffic, dataPackage.getPrimaryTraffic());
+        values.put(SecondaryTraffic, dataPackage.getSecondaryTraffic());
+        values.put(SecondaryTrafficStartTime, dataPackage.getSecondaryTrafficStartTime().toString());
+        values.put(SecondaryTrafficEndTime, dataPackage.getSecondaryTrafficEndTime().toString());
+        values.put(UssdCode, dataPackage.getUssdCode().toString());
+        values.put(Custom, dataPackage.getCustom() == true ? 1 : 0);
+
+        DataAccess da = new DataAccess();
+        return da.insert(TableName, values);
+    }
+
+    public static long update(DataPackage dataPackage) {
+        ContentValues values = new ContentValues();
+
+        values.put(OperatorId, dataPackage.getOperatorId());
+        values.put(Title, dataPackage.getTitle());
+        values.put(Period, dataPackage.getPeriod());
+        values.put(Price, dataPackage.getPrice());
+        values.put(PrimaryTraffic, dataPackage.getPrimaryTraffic());
+        values.put(SecondaryTraffic, dataPackage.getSecondaryTraffic());
+        values.put(SecondaryTrafficStartTime, dataPackage.getSecondaryTrafficStartTime().toString());
+        values.put(SecondaryTrafficEndTime, dataPackage.getSecondaryTrafficEndTime().toString());
+        values.put(UssdCode, dataPackage.getUssdCode().toString());
+        values.put(Custom, dataPackage.getCustom() == true ? 1 : 0);
+
+        DataAccess da = new DataAccess();
+        return da.update(TableName, values, Id + " =? ", new String[]{String.valueOf(dataPackage.getId())});
+    }
+
+    public static long delete(DataPackage dataPackage) {
+        DataAccess db = new DataAccess();
+        return db.delete(TableName, Id + " =? ", new String[]{String.valueOf(dataPackage.getId())});
     }
 }

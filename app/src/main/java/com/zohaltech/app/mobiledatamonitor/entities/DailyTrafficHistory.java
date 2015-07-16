@@ -47,7 +47,4 @@ public class DailyTrafficHistory {
         this.usageDate = usageDate;
     }
 
-
-
-
 }

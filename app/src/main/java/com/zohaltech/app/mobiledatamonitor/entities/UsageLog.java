@@ -10,6 +10,18 @@ public class UsageLog {
     private Long trafficBytes;
     private Date logDateTime;
 
+    public UsageLog( Long trafficBytes , Date logDateTime)
+    {
+        setTrafficBytes(trafficBytes);
+        setLogDateTime(logDateTime);
+    }
+
+    public UsageLog(Integer id, Long trafficBytes , Date logDateTime)
+    {
+        this(trafficBytes,logDateTime);
+        this.id = id;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -14,7 +14,7 @@ public class PackageHistory {
     Boolean active;
 
 
-    public PackageHistory(Integer dataPackageId, Date startDateTime, Date endDateTime, String simId,Boolean active) {
+    public PackageHistory(Integer dataPackageId, Date startDateTime, Date endDateTime, String simId, Boolean active) {
         setDataPackageId(dataPackageId);
         setStartDateTime(startDateTime);
         setEndDateTime(endDateTime);
@@ -22,8 +22,8 @@ public class PackageHistory {
         setActive(active);
     }
 
-    public PackageHistory(Integer id, Integer dataPackageId, Date startDateTime, Date endDateTime, String simId,Boolean active) {
-        this(dataPackageId, startDateTime, endDateTime, simId,active);
+    public PackageHistory(Integer id, Integer dataPackageId, Date startDateTime, Date endDateTime, String simId, Boolean active) {
+        this(dataPackageId, startDateTime, endDateTime, simId, active);
         this.id = id;
     }
 

@@ -1,5 +1,6 @@
 package com.zohaltech.app.mobiledatamonitor.dal;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -50,5 +51,31 @@ public class MobileOperators {
 
     public static ArrayList<MobileOperator> select() {
         return select("", null);
+    }
+
+    public static long insert(MobileOperator operator)
+    {
+        ContentValues values = new ContentValues();
+
+        values.put(Name, operator.getName());
+
+        DataAccess da = new DataAccess();
+        return da.insert(TableName, values);
+    }
+
+    public static long update(MobileOperator operator)
+    {
+        ContentValues values = new ContentValues();
+
+        values.put(Name, operator.getName());
+
+        DataAccess da = new DataAccess();
+        return da.update(TableName, values, Id + " =? ", new String[]{String.valueOf(operator.getId())});
+    }
+
+    public static long delete(MobileOperator operator)
+    {
+        DataAccess db = new DataAccess();
+        return db.delete(TableName, Id + " =? ", new String[]{String.valueOf(operator.getId())});
     }
 }
