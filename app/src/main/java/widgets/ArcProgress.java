@@ -48,13 +48,6 @@ public class ArcProgress extends ImageView {
         initialize();
     }
 
-    //public void setProperties(int strokeWidth, int numberTextSize) {
-    //    this.strokeWidth = getWidth()/5;
-    //    this.numberTextSize = numberTextSize;
-    //    //this.percentTextSize = percentTextSize;
-    //    postInvalidate();
-    //}
-
     public void setProgress(int progress, String traffic) {
         this.progress = progress;
         this.traffic = traffic;
@@ -62,66 +55,58 @@ public class ArcProgress extends ImageView {
     }
 
     private void initialize() {
+        int color = Color.argb(230, 255, 255, 255);
+
         arcBackgroundPaint = new Paint();
         arcBackgroundPaint.setColor(context.getResources().getColor(R.color.progress_background));
         arcBackgroundPaint.setAntiAlias(true);
-        //arcBackgroundPaint.setStrokeWidth(strokeWidth);
         arcBackgroundPaint.setStyle(Style.STROKE);
         arcBackgroundPaint.setStrokeCap(Paint.Cap.ROUND);
 
         arcForegroundPaint = new Paint();
-        //arcForegroundPaint.setColor(Color.parseColor("#ff8f00"));
+        arcForegroundPaint.setColor(color);
         arcForegroundPaint.setAntiAlias(true);
-        //arcForegroundPaint.setStrokeWidth(strokeWidth);
         arcForegroundPaint.setStyle(Style.STROKE);
         arcForegroundPaint.setStrokeCap(Paint.Cap.ROUND);
 
         textPaint = new Paint();
-        //textPaint.setColor(Color.BLUE);
+        textPaint.setColor(color);
         textPaint.setAntiAlias(true);
         textPaint.setTextAlign(Align.CENTER);
-        //textPaint.setTextSize(numberTextSize);
         textPaint.setTypeface(App.englishFont);
         textPaint.setStyle(Style.FILL_AND_STROKE);
     }
 
-
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        int textSize = getWidth() / 4;
-        int strokeWidth = getWidth() / 25;
+
+        int baseSize = getWidth() < getHeight() ? getWidth() : getHeight();
+
+        int textSize = baseSize / 4;
+        int strokeWidth = baseSize / 25;
 
         RectF rect = new RectF();
         rect.left = strokeWidth;
-        rect.right = getWidth() - strokeWidth;
+        rect.right = baseSize - strokeWidth;
         rect.top = strokeWidth;
-        rect.bottom = getHeight() - strokeWidth;
+        rect.bottom = baseSize - strokeWidth;
 
         arcForegroundPaint.setStrokeWidth(strokeWidth);
         arcBackgroundPaint.setStrokeWidth(strokeWidth);
 
         canvas.drawArc(rect, START_ANGLE, SWEEP_ANGLE, false, arcBackgroundPaint);
 
-        int color = Color.argb(230, 255, 255, 255);
 
-        arcForegroundPaint.setColor(color);
         int sweepAngle = progress * SWEEP_ANGLE / 100;
         canvas.drawArc(rect, START_ANGLE, sweepAngle, false, arcForegroundPaint);
 
         textPaint.setTextSize(textSize);
         textPaint.setShadowLayer(strokeWidth / 2, strokeWidth / 4, strokeWidth / 4, context.getResources().getColor(R.color.shadow));
-        textPaint.setColor(color);
-        canvas.drawText(progress + "%", getWidth() / 2, getHeight() / 2, textPaint);
+        canvas.drawText(progress + "%", baseSize / 2, getHeight() / 2, textPaint);
 
         textPaint.setTextSize(textSize / 3);
         textPaint.setShadowLayer(strokeWidth / 3, strokeWidth / 4, strokeWidth / 4, context.getResources().getColor(R.color.shadow));
-        canvas.drawText(traffic, getWidth() / 2, getHeight() - (getHeight() / 6), textPaint);
-
-        //textPaint.setTypeface(App.persianFont);
-        //textPaint.setTextSize(textSize / 2);
-        //textPaint.setShadowLayer(strokeWidth / 3, strokeWidth / 4, strokeWidth / 4, context.getResources().getColor(R.color.shadow));
-        //canvas.drawText(caption, getWidth() / 2, getHeight() , textPaint);
-
+        canvas.drawText(traffic, baseSize / 2, getHeight() - (getHeight() / 6), textPaint);
     }
 }

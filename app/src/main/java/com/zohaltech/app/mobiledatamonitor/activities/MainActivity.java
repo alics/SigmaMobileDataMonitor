@@ -8,7 +8,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Toast;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends EnhancedActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

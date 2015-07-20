@@ -1,5 +1,6 @@
 package com.zohaltech.app.mobiledatamonitor.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +18,9 @@ public class DashboardActivity extends EnhancedActivity {
 
     ArcProgress progressDay;
     ArcProgress progressNight;
-    Button btnStartAnimation;
     TextView txtNightTraffic;
+    Button btnStartAnimation;
+    Button btnPurchasePackage;
 
     int dayTraffic;
     int dayTotalTraffic;
@@ -36,6 +38,7 @@ public class DashboardActivity extends EnhancedActivity {
         progressNight = (ArcProgress) findViewById(R.id.progressNight);
         btnStartAnimation = (Button) findViewById(R.id.btnStartAnimation);
         txtNightTraffic = (TextView) findViewById(R.id.txtNightTraffic);
+        btnPurchasePackage = (Button) findViewById(R.id.btnPurchasePackage);
 
         int size1 = (getWindowManager().getDefaultDisplay().getWidth()) / 2;
         int size2 = (getWindowManager().getDefaultDisplay().getWidth()) / 4;
@@ -59,6 +62,14 @@ public class DashboardActivity extends EnhancedActivity {
                 startAnimation();
             }
         });
+
+        btnPurchasePackage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(App.currentActivity, PackagesActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -69,7 +80,7 @@ public class DashboardActivity extends EnhancedActivity {
             public void run() {
                 startAnimation();
             }
-        }, 1000);
+        }, 500);
     }
 
     private void startAnimation() {

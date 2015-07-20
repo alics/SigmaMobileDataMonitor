@@ -67,14 +67,19 @@
         android:layout_weight="1"
         android:background="@color/white"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <Button
+        <widgets.MyButton
             android:id="@+id/btnStartAnimation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:text="Start Animation"/>
+
+        <widgets.MyButton
+            android:id="@+id/btnPurchasePackage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="خرید بسته"/>
 
     </LinearLayout>
 
