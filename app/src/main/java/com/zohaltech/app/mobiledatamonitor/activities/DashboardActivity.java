@@ -17,11 +17,15 @@ public class DashboardActivity extends EnhancedActivity {
 
     ArcProgress progressDay;
     ArcProgress progressNight;
-    Button      btnStartAnimation;
+    Button btnStartAnimation;
     TextView txtNightTraffic;
 
-    String dayTraffic;
-    String nightTraffic;
+    int dayTraffic;
+    int dayTotalTraffic;
+    String strDayTraffic;
+    int nightTraffic;
+    int nightTotalTraffic;
+    String strNightTraffic;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,10 +44,14 @@ public class DashboardActivity extends EnhancedActivity {
 
         txtNightTraffic.setLayoutParams(new LinearLayout.LayoutParams(size2, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        dayTraffic = "1243/3057 MB";
-        nightTraffic = "3/3057 MB";
-        progressDay.setProgress(0, dayTraffic);
-        progressNight.setProgress(0, dayTraffic);
+        dayTraffic = 1243;
+        dayTotalTraffic = 3057;
+        nightTraffic = 120;
+        nightTotalTraffic = 3096;
+        strDayTraffic = dayTraffic + "/" + dayTotalTraffic + "MB";
+        strNightTraffic = nightTraffic + "/" + nightTotalTraffic + "MB";
+        progressDay.setProgress(0, strDayTraffic);
+        progressNight.setProgress(0, strNightTraffic);
 
         btnStartAnimation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,17 +78,25 @@ public class DashboardActivity extends EnhancedActivity {
             @Override
             public void run() {
                 try {
-                    int percent= 0;
-                    while (percent < 75) {
-                        Thread.sleep(10 - (percent / 10));
-                        percent++;
-                        progressDay.setProgress(percent, dayTraffic);
-                    }
-                    //Thread.sleep(50);
-                    while (percent > 73) {
-                        Thread.sleep(50);
-                        percent--;
-                        progressDay.setProgress(percent, dayTraffic);
+                    int percent = dayTraffic * 100 / dayTotalTraffic;
+                    int progress = 0;
+                    if (100 - percent >= 2) {
+                        while (progress < (percent + 2)) {
+                            Thread.sleep(10 - (percent / 10));
+                            progress++;
+                            progressDay.setProgress(progress, strDayTraffic);
+                        }
+                        while (progress > percent) {
+                            Thread.sleep(100);
+                            progress--;
+                            progressDay.setProgress(progress, strDayTraffic);
+                        }
+                    } else {
+                        while (progress < percent) {
+                            Thread.sleep(10 - (percent / 10));
+                            progress++;
+                            progressDay.setProgress(progress, strDayTraffic);
+                        }
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -93,17 +109,25 @@ public class DashboardActivity extends EnhancedActivity {
             @Override
             public void run() {
                 try {
-                    int percent= 0;
-                    while (percent < 25) {
-                        Thread.sleep(10 - (percent / 10));
-                        percent++;
-                        progressNight.setProgress(percent, nightTraffic);
-                    }
-                    //Thread.sleep(50);
-                    while (percent > 23) {
-                        Thread.sleep(50);
-                        percent--;
-                        progressNight.setProgress(percent, nightTraffic);
+                    int percent = nightTraffic * 100 / nightTotalTraffic;
+                    int progress = 0;
+                    if (100 - percent >= 2) {
+                        while (progress < (percent + 2)) {
+                            Thread.sleep(10 - (percent / 10));
+                            progress++;
+                            progressNight.setProgress(percent, strNightTraffic);
+                        }
+                        while (progress > percent) {
+                            Thread.sleep(100);
+                            progress--;
+                            progressNight.setProgress(percent, strNightTraffic);
+                        }
+                    } else {
+                        while (progress < percent) {
+                            Thread.sleep(10 - (percent / 10));
+                            progress++;
+                            progressNight.setProgress(percent, strNightTraffic);
+                        }
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();

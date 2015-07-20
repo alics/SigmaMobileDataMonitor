@@ -113,8 +113,8 @@ public class UsageLogs {
 
         if (currentDate.compareTo(maxDate) > 0) {
             long sumBytes=getSumUsedTrafficUsageInDate(maxDate);
-            DailyTrafficHistory dailyTrafficHistory=new DailyTrafficHistory(sumBytes,currentDate);
-            DailyTrafficHistories.insert(dailyTrafficHistory);
+            //DailyTrafficHistory dailyTrafficHistory=new DailyTrafficHistory(sumBytes,currentDate);
+            //DailyTrafficHistories.insert(dailyTrafficHistory);
         }
 
         values.put(TrafficBytes, usageLog.getTrafficBytes());

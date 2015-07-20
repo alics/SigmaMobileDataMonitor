@@ -22,7 +22,7 @@ public class ArcProgress extends ImageView {
     private Paint arcForegroundPaint;
     private Paint arcBackgroundPaint;
     private Paint textPaint;
-    private int    percent = 0;
+    private int progress = 0;
     private String traffic = "";
     //private int strokeWidth = 22;
     //private int numberTextSize = 120;
@@ -55,8 +55,8 @@ public class ArcProgress extends ImageView {
     //    postInvalidate();
     //}
 
-    public void setProgress(int percent, String traffic) {
-        this.percent = percent;
+    public void setProgress(int progress, String traffic) {
+        this.progress = progress;
         this.traffic = traffic;
         postInvalidate();
     }
@@ -106,13 +106,13 @@ public class ArcProgress extends ImageView {
         int color = Color.argb(230, 255, 255, 255);
 
         arcForegroundPaint.setColor(color);
-        int sweepAngle = percent * SWEEP_ANGLE / 100;
+        int sweepAngle = progress * SWEEP_ANGLE / 100;
         canvas.drawArc(rect, START_ANGLE, sweepAngle, false, arcForegroundPaint);
 
         textPaint.setTextSize(textSize);
         textPaint.setShadowLayer(strokeWidth / 2, strokeWidth / 4, strokeWidth / 4, context.getResources().getColor(R.color.shadow));
         textPaint.setColor(color);
-        canvas.drawText(percent + "%", getWidth() / 2, getHeight() / 2, textPaint);
+        canvas.drawText(progress + "%", getWidth() / 2, getHeight() / 2, textPaint);
 
         textPaint.setTextSize(textSize / 3);
         textPaint.setShadowLayer(strokeWidth / 3, strokeWidth / 4, strokeWidth / 4, context.getResources().getColor(R.color.shadow));
