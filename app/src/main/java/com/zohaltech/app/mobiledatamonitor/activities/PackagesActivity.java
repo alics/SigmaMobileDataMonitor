@@ -4,11 +4,19 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-
+import android.widget.ExpandableListView;
 import com.zohaltech.app.mobiledatamonitor.R;
+import com.zohaltech.app.mobiledatamonitor.adapters.ExpandablePackageAdapter;
 import com.zohaltech.app.mobiledatamonitor.adapters.PackagePagerAdapter;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+
 public class PackagesActivity extends EnhancedActivity{
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -23,5 +31,9 @@ public class PackagesActivity extends EnhancedActivity{
         TabLayout tabOperators = (TabLayout) findViewById(R.id.tabOperators);
         tabOperators.setupWithViewPager(pagerPackages);
 
+
     }
+
+
+
 }

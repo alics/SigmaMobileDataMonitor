@@ -9,7 +9,7 @@ import com.zohaltech.app.mobiledatamonitor.fragments.PackageFragment;
 
 public class PackagePagerAdapter extends FragmentPagerAdapter {
     final int PAGE_COUNT = 3;
-    private String tabTitles[] = new String[]{"Tab1", "Tab2", "Tab3"};
+    private String tabTitles[] = new String[]{"رایتل", "ایرانسل", "همراه اول"};
     private Context context;
 
     public PackagePagerAdapter(FragmentManager fm, Context context) {
