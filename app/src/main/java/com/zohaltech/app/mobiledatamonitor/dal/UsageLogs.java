@@ -21,9 +21,9 @@ public class UsageLogs {
     static final String LogDateTime  = "LogDateTime";
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
-                                      Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-                                      TrafficBytes + "BIGINT NOT NULL, " +
-                                      LogDateTime + "DATE );";
+            Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+            TrafficBytes + "BIGINT NOT NULL, " +
+            LogDateTime + "DATE );";
 
     static final String DropTable = "Drop Table If Exists " + TableName;
 
@@ -79,17 +79,26 @@ public class UsageLogs {
         return maxLogDate;
     }
 
-    private static long getSumUsedTrafficUsageInDate(Date date) {
-        long sum = 0;
+    private static void integrateSumUsedTrafficUsagePerHourInDate(Date date) {
         DataAccess da = new DataAccess();
         SQLiteDatabase db = da.getReadableDB();
         Cursor cursor = null;
         try {
-            String query = "SELECT SUM(TrafficBytes) SumTrrafic FROM UsageLogs WHERE  SUBSTR(LogDateTime,1,10) = '" + date + "'";
+            String query = "SELECT SUBSTR(LogDateTime,11,3) hourPeriod,SUM(TrafficBytes) SumTrrafic FROM UsageLogs " +
+                    "WHERE  SUBSTR(LogDateTime,1,10)='" + date + "' GROUP BY  SUBSTR(LogDateTime,11,3) ;";
             cursor = db.rawQuery(query, null);
             if (cursor != null && cursor.moveToFirst()) {
                 do {
-                    sum = cursor.getLong(cursor.getColumnIndex("SumTrrafic"));
+                    long sum = cursor.getLong(cursor.getColumnIndex("SumTrrafic"));
+                    String hour = cursor.getString(cursor.getColumnIndex("hourPeriod"));
+                    String beginningDateTime = date + " " + hour + ":00:00";
+                    int endingHour = Integer.parseInt(hour.substring(1)) + 1;
+                    String endingDateTime = date + " " + endingHour + ":00:00";
+
+                    DailyTrafficHistory history = new DailyTrafficHistory(sum,
+                                                                          Helper.getDate(beginningDateTime),
+                                                                          Helper.getDate(endingDateTime));
+                    DailyTrafficHistories.insert(history);
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
@@ -100,7 +109,6 @@ public class UsageLogs {
             if (db != null && db.isOpen())
                 db.close();
         }
-        return sum;
     }
 
     public static ArrayList<UsageLog> select() {
@@ -113,9 +121,7 @@ public class UsageLogs {
         Date currentDate = Helper.getDate(usageLog.getLogDateTime().toString());
 
         if (currentDate.compareTo(maxDate) > 0) {
-            long sumBytes=getSumUsedTrafficUsageInDate(maxDate);
-           // DailyTrafficHistory dailyTrafficHistory=new DailyTrafficHistory(sumBytes,currentDate);
-            //DailyTrafficHistories.insert(dailyTrafficHistory);
+            integrateSumUsedTrafficUsagePerHourInDate(maxDate);
         }
 
         values.put(TrafficBytes, usageLog.getTrafficBytes());
