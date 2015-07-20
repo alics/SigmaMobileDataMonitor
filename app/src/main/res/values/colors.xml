@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="white">#ffffff</color>
+    <color name="gray">#ffe8e8e8</color>
     <color name="shadow">#67000000</color>
     <color name="app_main_color">#009688</color>
+    <color name="main_dark">#ffcf0a00</color>
     <color name="progress_background">#ff00887a</color>
 </resources>
