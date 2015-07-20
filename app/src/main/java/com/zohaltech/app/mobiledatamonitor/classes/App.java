@@ -22,7 +22,7 @@ public class App extends Application {
         super.onCreate();
         context = getApplicationContext();
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        englishFont = Typeface.createFromAsset(context.getAssets(), "fonts/calibri.ttf");
+        englishFont = Typeface.createFromAsset(context.getAssets(), "fonts/calibril.ttf");
         persianFont = Typeface.createFromAsset(context.getAssets(), "fonts/default.ttf");
         handler = new Handler();
     }

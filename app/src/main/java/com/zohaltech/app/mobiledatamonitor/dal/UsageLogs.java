@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.zohaltech.app.mobiledatamonitor.classes.Helper;
+import com.zohaltech.app.mobiledatamonitor.entities.DailyTrafficHistory;
 import com.zohaltech.app.mobiledatamonitor.entities.UsageLog;
 
 import java.util.ArrayList;
@@ -113,7 +114,7 @@ public class UsageLogs {
 
         if (currentDate.compareTo(maxDate) > 0) {
             long sumBytes=getSumUsedTrafficUsageInDate(maxDate);
-            //DailyTrafficHistory dailyTrafficHistory=new DailyTrafficHistory(sumBytes,currentDate);
+           // DailyTrafficHistory dailyTrafficHistory=new DailyTrafficHistory(sumBytes,currentDate);
             //DailyTrafficHistories.insert(dailyTrafficHistory);
         }
 

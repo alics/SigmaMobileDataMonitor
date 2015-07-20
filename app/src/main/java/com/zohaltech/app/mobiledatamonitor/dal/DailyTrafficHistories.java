@@ -14,15 +14,17 @@ import java.util.ArrayList;
  */
 public class DailyTrafficHistories {
 
-    static final String TableName = "DailyTrafficHistories";
-    static final String Id        = "Id";
-    static final String Traffic   = "Traffic";
-    static final String UsageDate = "UsageDate";
+    static final String TableName         = "DailyTrafficHistories";
+    static final String Id                = "Id";
+    static final String Traffic           = "Traffic";
+    static final String BeginningDateTime = "BeginningDateTime";
+    static final String EndingDateTime    = "EndingDateTime";
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
             Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
             Traffic + " BIGINT  NOT NULL," +
-            UsageDate + " Date  NOT NULL );";
+            BeginningDateTime + " Date  NOT NULL, " +
+            EndingDateTime + " Date  NOT NULL );";
     static final String DropTable   = "Drop Table If Exists " + TableName;
 
 
@@ -39,7 +41,8 @@ public class DailyTrafficHistories {
                 do {
                     DailyTrafficHistory history = new DailyTrafficHistory(cursor.getInt(cursor.getColumnIndex(Id)),
                                                                           cursor.getLong(cursor.getColumnIndex(Traffic)),
-                                                                          Helper.getDate(cursor.getString(cursor.getColumnIndex(UsageDate))));
+                                                                          Helper.getDate(cursor.getString(cursor.getColumnIndex(BeginningDateTime))),
+                                                                          Helper.getDate(cursor.getString(cursor.getColumnIndex(EndingDateTime))));
                     histories.add(history);
                 } while (cursor.moveToNext());
             }
@@ -58,30 +61,29 @@ public class DailyTrafficHistories {
         return select("", null);
     }
 
-    public static long insert(DailyTrafficHistory trafficHistory)
-    {
+    public static long insert(DailyTrafficHistory trafficHistory) {
         ContentValues values = new ContentValues();
 
         values.put(Traffic, trafficHistory.getTraffic());
-        values.put(UsageDate, trafficHistory.getUsageDate().toString());
+        values.put(BeginningDateTime, trafficHistory.getBeginningDateTime().toString());
+        values.put(EndingDateTime, trafficHistory.getEndingDateTime().toString());
 
         DataAccess da = new DataAccess();
         return da.insert(TableName, values);
     }
 
-    public static long update(DailyTrafficHistory trafficHistory)
-    {
+    public static long update(DailyTrafficHistory trafficHistory) {
         ContentValues values = new ContentValues();
 
         values.put(Traffic, trafficHistory.getTraffic());
-        values.put(UsageDate, trafficHistory.getUsageDate().toString());
+        values.put(BeginningDateTime, trafficHistory.getBeginningDateTime().toString());
+        values.put(EndingDateTime, trafficHistory.getEndingDateTime().toString());
 
         DataAccess da = new DataAccess();
         return da.update(TableName, values, Id + " =? ", new String[]{String.valueOf(trafficHistory.getId())});
     }
 
-    public static long delete(DailyTrafficHistory trafficHistory)
-    {
+    public static long delete(DailyTrafficHistory trafficHistory) {
         DataAccess db = new DataAccess();
         return db.delete(TableName, Id + " =? ", new String[]{String.valueOf(trafficHistory.getId())});
     }

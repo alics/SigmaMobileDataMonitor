@@ -1,6 +1,7 @@
 package com.zohaltech.app.mobiledatamonitor.entities;
 
 
+import java.sql.Time;
 import java.util.Date;
 
 /**
@@ -9,17 +10,17 @@ import java.util.Date;
 public class DailyTrafficHistory {
     private Integer id;
     private Long traffic;
-    private Date usageDate;
+    private Date beginningDateTime;
+    private Date endingDateTime;
 
-    public DailyTrafficHistory( Long traffic , Date usageDate)
-    {
+    public DailyTrafficHistory(Long traffic, Date beginningDateTime, Date endingDateTime) {
         setTraffic(traffic);
-        setUsageDate(usageDate);
+        setBeginningDateTime(beginningDateTime);
+        setEndingDateTime(endingDateTime);
     }
 
-    public DailyTrafficHistory(Integer id, Long traffic , Date usageDate)
-    {
-        this(traffic,usageDate);
+    public DailyTrafficHistory(Integer id, Long traffic, Date beginningDateTime, Date endingDateTime) {
+        this(traffic, beginningDateTime, endingDateTime);
         this.id = id;
     }
 
@@ -39,12 +40,20 @@ public class DailyTrafficHistory {
         this.traffic = traffic;
     }
 
-    public Date getUsageDate() {
-        return usageDate;
+
+    public Date getBeginningDateTime() {
+        return beginningDateTime;
     }
 
-    public void setUsageDate(Date usageDate) {
-        this.usageDate = usageDate;
+    public void setBeginningDateTime(Date beginningDateTime) {
+        this.beginningDateTime = beginningDateTime;
     }
 
+    public Date getEndingDateTime() {
+        return endingDateTime;
+    }
+
+    public void setEndingDateTime(Date endingDateTime) {
+        this.endingDateTime = endingDateTime;
+    }
 }
