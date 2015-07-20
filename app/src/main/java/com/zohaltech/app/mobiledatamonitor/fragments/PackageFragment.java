@@ -60,6 +60,25 @@ public class PackageFragment extends Fragment {
         // setting list adapter
         lstPeriods.setAdapter(packageAdapter);
 
+        // In order to show animations, we need to use a custom click handler
+        // for our ExpandableListView.
+        lstPeriods.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                // We call collapseGroupWithAnimation(int) and
+                // expandGroupWithAnimation(int) to animate group
+                // expansion/collapse.
+                if (lstPeriods.isGroupExpanded(groupPosition)) {
+                    lstPeriods.collapseGroupWithAnimation(groupPosition);
+                } else {
+                    lstPeriods.expandGroupWithAnimation(groupPosition);
+                }
+                return true;
+            }
+
+        });
+
         return view;
     }
 
