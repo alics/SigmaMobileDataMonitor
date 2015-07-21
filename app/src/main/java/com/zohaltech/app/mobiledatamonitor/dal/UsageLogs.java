@@ -22,8 +22,8 @@ public class UsageLogs {
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
             Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-            TrafficBytes + "BIGINT NOT NULL, " +
-            LogDateTime + "DATE );";
+            TrafficBytes + " BIGINT NOT NULL, " +
+            LogDateTime + " DATE );";
 
     static final String DropTable = "Drop Table If Exists " + TableName;
 

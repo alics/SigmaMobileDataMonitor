@@ -22,7 +22,7 @@ public class PackageHistories {
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
             Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
             DataPackageId + " INTEGER REFERENCES " + DataPackages.TableName + " (" + DataPackages.Id + "), " +
-            StartDateTime + "DATE NOT NULL," +
+            StartDateTime + " DATE NOT NULL," +
             EndDateTime + " DATE NOT NULL," +
             SimId + " INTEGER  NOT NULL ," +
             Active + " BOOLEAN   );";
