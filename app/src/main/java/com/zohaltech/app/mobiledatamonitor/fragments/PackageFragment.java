@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.adapters.ExpandablePackageAdapter;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
+import com.zohaltech.app.mobiledatamonitor.dal.DataPackages;
+import com.zohaltech.app.mobiledatamonitor.entities.DataPackage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,12 +23,12 @@ import widgets.AnimatedExpandableListView;
 public class PackageFragment extends Fragment {
     public static final String ARG_PAGE = "ARG_PAGE";
 
-    ExpandablePackageAdapter packageAdapter;
-    AnimatedExpandableListView                               lstPeriods;
-    List<String>                                             listDataHeader;
-    HashMap<String, List<String>>                            listDataChild;
+    ExpandablePackageAdapter      packageAdapter;
+    AnimatedExpandableListView    lstPeriods;
+    List<String>                  listDataHeader;
+    HashMap<String, List<String>> listDataChild;
 
-    private int mPage;
+    private int operatorPage;
 
     public static PackageFragment newInstance(int page) {
         Bundle args = new Bundle();
@@ -39,21 +41,18 @@ public class PackageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPage = getArguments().getInt(ARG_PAGE);
+        operatorPage = getArguments().getInt(ARG_PAGE);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_package, container, false);
-        //TextView textView = (TextView) view;
-        //textView.setText("Fragment #" + mPage);
-
 
         // get the listview
         lstPeriods = (AnimatedExpandableListView) view.findViewById(R.id.lstPeriods);
 
         // preparing list data
-        prepareListData(mPage);
+        prepareListData(operatorPage);
 
         packageAdapter = new ExpandablePackageAdapter(App.currentActivity, listDataHeader, listDataChild);
 
@@ -82,10 +81,24 @@ public class PackageFragment extends Fragment {
         return view;
     }
 
-
-    private void prepareListData(int mPage) {
+    private void prepareListData(int operatorId) {
         listDataHeader = new ArrayList<String>();
         listDataChild = new HashMap<String, List<String>>();
+
+        ArrayList<Integer> operatorPeriodList = DataPackages.selectOperatorPeriods(operatorId);
+        //
+        //for (int i = 0; i < operatorPeriodList.size(); i++) {
+        //    int period = operatorPeriodList.get(i);
+        //    listDataHeader.add(period + " روزه");
+        //
+        //    List<String> childCat = new ArrayList<String>();
+        //    ArrayList<DataPackage> packageList = DataPackages.selectPackagesByOperatorAndPeriod(operatorId, period);
+        //    for (int j = 0; j < packageList.size(); j++) {
+        //        childCat.add(packageList.get(j).getTitle());
+        //    }
+        //    listDataChild.put(listDataHeader.get(i), childCat);
+        //}
+
 
         // Adding child data
         listDataHeader.add("Top 250");
@@ -101,7 +114,7 @@ public class PackageFragment extends Fragment {
         top250.add("The Good, the Bad and the Ugly");
         top250.add("The Dark Knight");
         top250.add("12 Angry Men");
-
+        //
         List<String> nowShowing = new ArrayList<String>();
         nowShowing.add("The Conjuring");
         nowShowing.add("Despicable Me 2");
@@ -109,7 +122,7 @@ public class PackageFragment extends Fragment {
         nowShowing.add("Grown Ups 2");
         nowShowing.add("Red 2");
         nowShowing.add("The Wolverine");
-
+        //
         List<String> comingSoon = new ArrayList<String>();
         comingSoon.add("2 Guns");
         comingSoon.add("The Smurfs 2");

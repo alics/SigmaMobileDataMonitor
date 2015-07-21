@@ -53,8 +53,7 @@ public class MobileOperators {
         return select("", null);
     }
 
-    public static long insert(MobileOperator operator)
-    {
+    public static long insert(MobileOperator operator) {
         ContentValues values = new ContentValues();
 
         values.put(Name, operator.getName());
@@ -63,8 +62,7 @@ public class MobileOperators {
         return da.insert(TableName, values);
     }
 
-    public static long update(MobileOperator operator)
-    {
+    public static long update(MobileOperator operator) {
         ContentValues values = new ContentValues();
 
         values.put(Name, operator.getName());
@@ -73,8 +71,7 @@ public class MobileOperators {
         return da.update(TableName, values, Id + " =? ", new String[]{String.valueOf(operator.getId())});
     }
 
-    public static long delete(MobileOperator operator)
-    {
+    public static long delete(MobileOperator operator) {
         DataAccess db = new DataAccess();
         return db.delete(TableName, Id + " =? ", new String[]{String.valueOf(operator.getId())});
     }

@@ -9,9 +9,6 @@ import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
 
 import java.util.ArrayList;
 
-/**
- * Created by Ali on 7/15/2015.
- */
 public class PackageHistories {
     static final String TableName     = "PackageHistories";
     static final String Id            = "Id";
@@ -68,8 +65,7 @@ public class PackageHistories {
         return select("", null);
     }
 
-    public static long insert(PackageHistory packageHistory)
-    {
+    public static long insert(PackageHistory packageHistory) {
         ContentValues values = new ContentValues();
 
         values.put(DataPackageId, packageHistory.getDataPackageId());
@@ -82,8 +78,7 @@ public class PackageHistories {
         return da.insert(TableName, values);
     }
 
-    public static long update(PackageHistory packageHistory)
-    {
+    public static long update(PackageHistory packageHistory) {
         ContentValues values = new ContentValues();
 
         values.put(DataPackageId, packageHistory.getDataPackageId());
@@ -96,8 +91,7 @@ public class PackageHistories {
         return da.update(TableName, values, Id + " =? ", new String[]{String.valueOf(packageHistory.getId())});
     }
 
-    public static long delete(PackageHistory packageHistory)
-    {
+    public static long delete(PackageHistory packageHistory) {
         DataAccess db = new DataAccess();
         return db.delete(TableName, Id + " =? ", new String[]{String.valueOf(packageHistory.getId())});
     }
