@@ -1,8 +1,5 @@
 package com.zohaltech.app.mobiledatamonitor.classes;
 
-/**
- * Created by Ali on 7/15/2015.
- */
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
