@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.zohaltech.app.mobiledatamonitor.fragments.PackageFragment;
 
 public class PackagePagerAdapter extends FragmentPagerAdapter {
-    final int PAGE_COUNT = 3;
+    final   int    PAGE_COUNT  = 3;
     private String tabTitles[] = new String[]{"رایتل", "ایرانسل", "همراه اول"};
     private Context context;
 
@@ -24,7 +24,12 @@ public class PackagePagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return PackageFragment.newInstance(position + 1);
+        if (position == 0)
+            return PackageFragment.newInstance(3);
+        else if (position == 1)
+            return PackageFragment.newInstance(2);
+        else
+            return PackageFragment.newInstance(1);
     }
 
     @Override

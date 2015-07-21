@@ -8,6 +8,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zohaltech.app.mobiledatamonitor.R;
+import com.zohaltech.app.mobiledatamonitor.classes.App;
+import com.zohaltech.app.mobiledatamonitor.classes.DialogManager;
+import com.zohaltech.app.mobiledatamonitor.classes.Helper;
+import com.zohaltech.app.mobiledatamonitor.entities.DataPackage;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,20 +20,20 @@ import widgets.AnimatedExpandableListView;
 
 public class ExpandablePackageAdapter extends AnimatedExpandableListView.AnimatedExpandableListAdapter {
 
-    private Context context;
-    private List<String> listDataHeader; // header titles
+    private Context                            context;
+    private List<String>                       periods; // header titles
     // child data in format of header title, child title
-    private HashMap<String, List<String>> listDataChild;
+    private HashMap<String, List<DataPackage>> dataPackages;
 
-    public ExpandablePackageAdapter(Context context, List<String> listDataHeader, HashMap<String, List<String>> listChildData) {
+    public ExpandablePackageAdapter(Context context, List<String> periods, HashMap<String, List<DataPackage>> dataPackages) {
         this.context = context;
-        this.listDataHeader = listDataHeader;
-        this.listDataChild = listChildData;
+        this.periods = periods;
+        this.dataPackages = dataPackages;
     }
 
     @Override
-    public Object getChild(int groupPosition, int childPosititon) {
-        return this.listDataChild.get(this.listDataHeader.get(groupPosition)).get(childPosititon);
+    public DataPackage getChild(int groupPosition, int childPosititon) {
+        return this.dataPackages.get(this.periods.get(groupPosition)).get(childPosititon);
     }
 
     @Override
@@ -39,22 +43,34 @@ public class ExpandablePackageAdapter extends AnimatedExpandableListView.Animate
 
     @Override
     public View getRealChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        final String childText = (String) getChild(groupPosition, childPosition);
+        final DataPackage dataPackage = getChild(groupPosition, childPosition);
 
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(context);
             convertView = inflater.inflate(R.layout.package_item, null);
         }
 
-        TextView txtListChild = (TextView) convertView.findViewById(R.id.txtPackage);
+        TextView txtPackage = (TextView) convertView.findViewById(R.id.txtPackage);
+        txtPackage.setText(dataPackage.getDescription());
 
-        txtListChild.setText(childText);
+        txtPackage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogManager.showConfirmationDialog(App.currentActivity, "خرید بسته", "آیا مایل به خرید بسته هستید؟", "بله", "خیر", null, new Runnable() {
+                    @Override
+                    public void run() {
+                        Helper.runUssd(dataPackage.getUssdCode());
+                    }
+                });
+            }
+        });
+
         return convertView;
     }
 
     @Override
     public int getRealChildrenCount(int groupPosition) {
-        return this.listDataChild.get(this.listDataHeader.get(groupPosition)).size();
+        return this.dataPackages.get(this.periods.get(groupPosition)).size();
     }
 
     @Override
@@ -78,17 +94,17 @@ public class ExpandablePackageAdapter extends AnimatedExpandableListView.Animate
     //
     //@Override
     //public int getChildrenCount(int groupPosition) {
-    //    return this.listDataChild.get(this.listDataHeader.get(groupPosition))
+    //    return this.dataPackages.get(this.periods.get(groupPosition))
     //                              .size();
     //}
 
     public Object getGroup(int groupPosition) {
-        return this.listDataHeader.get(groupPosition);
+        return this.periods.get(groupPosition);
     }
 
     @Override
     public int getGroupCount() {
-        return this.listDataHeader.size();
+        return this.periods.size();
     }
 
     @Override

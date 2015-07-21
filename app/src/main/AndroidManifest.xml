@@ -2,6 +2,8 @@
 <manifest package="com.zohaltech.app.mobiledatamonitor"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
     <application
         android:name=".classes.App"
         android:allowBackup="true"

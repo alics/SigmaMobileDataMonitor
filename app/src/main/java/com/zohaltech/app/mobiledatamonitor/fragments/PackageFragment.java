@@ -20,18 +20,18 @@ import java.util.List;
 import widgets.AnimatedExpandableListView;
 
 public class PackageFragment extends Fragment {
-    public static final String ARG_PAGE = "ARG_PAGE";
+    public static final String POSITION = "POSITION";
 
-    ExpandablePackageAdapter packageAdapter;
-    AnimatedExpandableListView lstPeriods;
-    List<String> listDataHeader;
-    HashMap<String, List<String>> listDataChild;
+    ExpandablePackageAdapter           packageAdapter;
+    AnimatedExpandableListView         lstPeriods;
+    List<String>                       periods;
+    HashMap<String, List<DataPackage>> dataPackages;
 
-    private int operatorPage;
+    private int position;
 
-    public static PackageFragment newInstance(int page) {
+    public static PackageFragment newInstance(int position) {
         Bundle args = new Bundle();
-        args.putInt(ARG_PAGE, page);
+        args.putInt(POSITION, position);
         PackageFragment fragment = new PackageFragment();
         fragment.setArguments(args);
         return fragment;
@@ -40,7 +40,7 @@ public class PackageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        operatorPage = getArguments().getInt(ARG_PAGE);
+        position = getArguments().getInt(POSITION);
     }
 
     @Override
@@ -51,9 +51,9 @@ public class PackageFragment extends Fragment {
         lstPeriods = (AnimatedExpandableListView) view.findViewById(R.id.lstPeriods);
 
         // preparing list data
-        prepareListData(operatorPage);
+        prepareListData(position);
 
-        packageAdapter = new ExpandablePackageAdapter(App.currentActivity, listDataHeader, listDataChild);
+        packageAdapter = new ExpandablePackageAdapter(App.currentActivity, periods, dataPackages);
 
         // setting list adapter
         lstPeriods.setAdapter(packageAdapter);
@@ -81,56 +81,57 @@ public class PackageFragment extends Fragment {
     }
 
     private void prepareListData(int operatorId) {
-        listDataHeader = new ArrayList<String>();
-        listDataChild = new HashMap<String, List<String>>();
+        periods = new ArrayList<String>();
+        dataPackages = new HashMap<String, List<DataPackage>>();
 
         ArrayList<Integer> operatorPeriodList = DataPackages.selectOperatorPeriods(operatorId);
 
         for (int i = 0; i < operatorPeriodList.size(); i++) {
             int period = operatorPeriodList.get(i);
-            listDataHeader.add(period + " روزه");
+            periods.add(period + " روزه");
 
-            List<String> childCat = new ArrayList<String>();
+            //List<DataPackage> operatorDataPackages = new ArrayList<>();
             ArrayList<DataPackage> packageList = DataPackages.selectPackagesByOperatorAndPeriod(operatorId, period);
-            for (int j = 0; j < packageList.size(); j++) {
-                childCat.add(packageList.get(j).getTitle());
-            }
-            listDataChild.put(listDataHeader.get(i), childCat);
+            //for (int j = 0; j < packageList.size(); j++) {
+            //    operatorDataPackages.add(packageList.get(j));
+            //    dataPackages.put(periods.get(i), operatorDataPackages);
+                dataPackages.put(periods.get(i), packageList);
+            //}
         }
 
 
         // Adding child data
-//        listDataHeader.add("Top 250");
-//        listDataHeader.add("Now Showing");
-//        listDataHeader.add("Coming Soon..");
-//
-//        // Adding child data
-//        List<String> top250 = new ArrayList<String>();
-//        top250.add("The Shawshank Redemption");
-//        top250.add("The Godfather");
-//        top250.add("The Godfather: Part II");
-//        top250.add("Pulp Fiction");
-//        top250.add("The Good, the Bad and the Ugly");
-//        top250.add("The Dark Knight");
-//        top250.add("12 Angry Men");
-//        //
-//        List<String> nowShowing = new ArrayList<String>();
-//        nowShowing.add("The Conjuring");
-//        nowShowing.add("Despicable Me 2");
-//        nowShowing.add("Turbo");
-//        nowShowing.add("Grown Ups 2");
-//        nowShowing.add("Red 2");
-//        nowShowing.add("The Wolverine");
-//        //
-//        List<String> comingSoon = new ArrayList<String>();
-//        comingSoon.add("2 Guns");
-//        comingSoon.add("The Smurfs 2");
-//        comingSoon.add("The Spectacular Now");
-//        comingSoon.add("The Canyons");
-//        comingSoon.add("Europa Report");
-//
-//        listDataChild.put(listDataHeader.get(0), top250); // Header, Child data
-//        listDataChild.put(listDataHeader.get(1), nowShowing);
-//        listDataChild.put(listDataHeader.get(2), comingSoon);
+        //        periods.add("Top 250");
+        //        periods.add("Now Showing");
+        //        periods.add("Coming Soon..");
+        //
+        //        // Adding child data
+        //        List<String> top250 = new ArrayList<String>();
+        //        top250.add("The Shawshank Redemption");
+        //        top250.add("The Godfather");
+        //        top250.add("The Godfather: Part II");
+        //        top250.add("Pulp Fiction");
+        //        top250.add("The Good, the Bad and the Ugly");
+        //        top250.add("The Dark Knight");
+        //        top250.add("12 Angry Men");
+        //        //
+        //        List<String> nowShowing = new ArrayList<String>();
+        //        nowShowing.add("The Conjuring");
+        //        nowShowing.add("Despicable Me 2");
+        //        nowShowing.add("Turbo");
+        //        nowShowing.add("Grown Ups 2");
+        //        nowShowing.add("Red 2");
+        //        nowShowing.add("The Wolverine");
+        //        //
+        //        List<String> comingSoon = new ArrayList<String>();
+        //        comingSoon.add("2 Guns");
+        //        comingSoon.add("The Smurfs 2");
+        //        comingSoon.add("The Spectacular Now");
+        //        comingSoon.add("The Canyons");
+        //        comingSoon.add("Europa Report");
+        //
+        //        dataPackages.put(periods.get(0), top250); // Header, Child data
+        //        dataPackages.put(periods.get(1), nowShowing);
+        //        dataPackages.put(periods.get(2), comingSoon);
     }
 }

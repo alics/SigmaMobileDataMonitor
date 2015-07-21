@@ -37,7 +37,7 @@ public class DataPackage {
     public DataPackage(Integer id,Integer operatorId , String title,Integer period,Integer price,Long primaryTraffic,Long secondaryTraffic,
                        Time secondaryTrafficEndTime,Time secondaryTrafficStartTime ,String ussdCode, Boolean custom)
     {
-        this(operatorId,title,period,price,primaryTraffic,secondaryTraffic,secondaryTrafficStartTime,secondaryTrafficEndTime,ussdCode,custom);
+        this(operatorId, title, period, price, primaryTraffic, secondaryTraffic, secondaryTrafficStartTime, secondaryTrafficEndTime, ussdCode, custom);
         this.id=id;
     }
 
@@ -127,5 +127,9 @@ public class DataPackage {
 
     public void setCustom(Boolean custom) {
         this.custom = custom;
+    }
+
+    public String getDescription() {
+        return String.format("%s %d تومان", getTitle(), getPrice());
     }
 }

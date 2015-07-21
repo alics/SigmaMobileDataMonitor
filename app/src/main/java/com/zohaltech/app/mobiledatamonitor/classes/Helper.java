@@ -61,19 +61,17 @@ public final class Helper {
 
     public static Time getTime(String timeStr) {
         Time time = null;
-        if (timeStr != null && TextUtils.isEmpty(timeStr) == false) {
+        if (timeStr != null && !TextUtils.isEmpty(timeStr)) {
             time = java.sql.Time.valueOf(timeStr);
         }
         return time;
     }
 
-    public static String getNewImageFileName() {
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        return ("img_" + timeStamp + ".jpg");
-    }
-
     public static void runUssd(String code) {
-        App.context.startActivity(new Intent("android.intent.action.CALL", Uri.parse("tel:" + code)));
+        code = String.format("%s%s", code.substring(0, code.length() - 1), Uri.encode("#"));
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("tel:" + code));
+        App.currentActivity.startActivity(callIntent);
     }
 
     //public static void goToWebsite(String url) {
