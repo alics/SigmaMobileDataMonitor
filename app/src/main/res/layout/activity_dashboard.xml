@@ -100,7 +100,7 @@
                 android:drawablePadding="10dp"
                 android:drawableTop="@drawable/ic_custom_packages"
                 android:padding="10dp"
-                android:text="بسته سفارشی"/>
+                android:text="مدیریت بسته"/>
 
         </LinearLayout>
 
