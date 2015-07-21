@@ -6,6 +6,21 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/app_main_color">
+
+        <widgets.MyTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="مدیریت اینترنت موبایل"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
         android:background="@color/app_main_color"
@@ -69,22 +84,45 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <widgets.MyButton
-            android:id="@+id/btnStartAnimation"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:background="@drawable/btn_white_flat"
-            android:text="Start Animation"/>
+            android:gravity="center"
+            android:orientation="vertical">
 
+            <widgets.MyButton
+                android:id="@+id/btnStartAnimation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_white_flat"
+                android:drawablePadding="10dp"
+                android:drawableTop="@drawable/ic_custom_packages"
+                android:padding="10dp"
+                android:text="بسته سفارشی"/>
 
-        <widgets.MyButton
-            android:id="@+id/btnPurchasePackage"
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:background="@drawable/btn_white_flat"
-            android:text="خرید بسته"/>
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <widgets.MyButton
+                android:id="@+id/btnPurchasePackage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_white_flat"
+                android:drawablePadding="10dp"
+                android:drawableTop="@drawable/ic_purchase_package"
+                android:padding="10dp"
+                android:text="خرید بسته"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -96,19 +134,44 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <widgets.MyButton
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:background="@drawable/btn_white_flat"
-            android:text="Start Animation"/>
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <widgets.MyButton
+            <widgets.MyButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_white_flat"
+                android:drawablePadding="10dp"
+                android:drawableTop="@drawable/ic_packages_history"
+                android:padding="10dp"
+                android:text="سوابق بسته ها"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:background="@drawable/btn_white_flat"
-            android:text="خرید بسته"/>
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <widgets.MyButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_white_flat"
+                android:drawablePadding="10dp"
+                android:drawableTop="@drawable/ic_usage_report"
+                android:padding="10dp"
+                android:text="گزارش مصرف"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
