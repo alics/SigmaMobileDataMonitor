@@ -1,26 +1,17 @@
 package com.zohaltech.app.mobiledatamonitor.activities;
 
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.zohaltech.app.mobiledatamonitor.R;
-import com.zohaltech.app.mobiledatamonitor.adapters.ExpandablePackageAdapter;
 import com.zohaltech.app.mobiledatamonitor.adapters.PackagePagerAdapter;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-
-public class PackagesActivity extends EnhancedActivity{
+public class PackagesActivity extends EnhancedActivity {
 
     ViewPager pagerPackages;
     TabLayout tabOperators;

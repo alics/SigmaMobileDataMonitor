@@ -3,6 +3,8 @@ package com.zohaltech.app.mobiledatamonitor.classes;
 import android.content.Intent;
 import android.net.Uri;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
+
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -58,7 +60,10 @@ public final class Helper {
     }
 
     public static Time getTime(String timeStr) {
-        Time time = java.sql.Time.valueOf(timeStr);
+        Time time = null;
+        if (timeStr != null && TextUtils.isEmpty(timeStr) == false) {
+            time = java.sql.Time.valueOf(timeStr);
+        }
         return time;
     }
 

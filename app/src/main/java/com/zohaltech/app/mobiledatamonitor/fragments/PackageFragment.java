@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
-import android.widget.TextView;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.adapters.ExpandablePackageAdapter;
@@ -23,9 +22,9 @@ import widgets.AnimatedExpandableListView;
 public class PackageFragment extends Fragment {
     public static final String ARG_PAGE = "ARG_PAGE";
 
-    ExpandablePackageAdapter      packageAdapter;
-    AnimatedExpandableListView    lstPeriods;
-    List<String>                  listDataHeader;
+    ExpandablePackageAdapter packageAdapter;
+    AnimatedExpandableListView lstPeriods;
+    List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
 
     private int operatorPage;
@@ -86,7 +85,7 @@ public class PackageFragment extends Fragment {
         listDataChild = new HashMap<String, List<String>>();
 
         ArrayList<Integer> operatorPeriodList = DataPackages.selectOperatorPeriods(operatorId);
-        //
+
         for (int i = 0; i < operatorPeriodList.size(); i++) {
             int period = operatorPeriodList.get(i);
             listDataHeader.add(period + " روزه");

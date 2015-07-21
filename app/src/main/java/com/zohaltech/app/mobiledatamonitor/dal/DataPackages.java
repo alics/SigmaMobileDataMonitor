@@ -9,23 +9,20 @@ import com.zohaltech.app.mobiledatamonitor.entities.DataPackage;
 
 import java.util.ArrayList;
 
-/**
- * Created by Ali on 7/15/2015.
- */
 public class DataPackages {
 
-    static final String TableName                 = "DataPackages";
-    static final String Id                        = "Id";
-    static final String OperatorId                = "OperatorId";
-    static final String Title                     = "Title";
-    static final String Period                    = "Period";
-    static final String Price                     = "Price";
-    static final String PrimaryTraffic            = "PrimaryTraffic";
-    static final String SecondaryTraffic          = "SecondaryTraffic";
+    static final String TableName = "DataPackages";
+    static final String Id = "Id";
+    static final String OperatorId = "OperatorId";
+    static final String Title = "Title";
+    static final String Period = "Period";
+    static final String Price = "Price";
+    static final String PrimaryTraffic = "PrimaryTraffic";
+    static final String SecondaryTraffic = "SecondaryTraffic";
     static final String SecondaryTrafficStartTime = "SecondaryTrafficStartTime";
-    static final String SecondaryTrafficEndTime   = "SecondaryTrafficEndTime";
-    static final String UssdCode                  = "UssdCode";
-    static final String Custom                    = "Custom";
+    static final String SecondaryTrafficEndTime = "SecondaryTrafficEndTime";
+    static final String UssdCode = "UssdCode";
+    static final String Custom = "Custom";
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
             Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
@@ -54,16 +51,16 @@ public class DataPackages {
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     DataPackage dataPackage = new DataPackage(cursor.getInt(cursor.getColumnIndex(Id)),
-                                                              cursor.getInt(cursor.getColumnIndex(OperatorId)),
-                                                              cursor.getString(cursor.getColumnIndex(Title)),
-                                                              cursor.getInt(cursor.getColumnIndex(Period)),
-                                                              cursor.getInt(cursor.getColumnIndex(Price)),
-                                                              cursor.getLong(cursor.getColumnIndex(PrimaryTraffic)),
-                                                              cursor.getLong(cursor.getColumnIndex(SecondaryTraffic)),
-                                                              Helper.getTime(cursor.getString(cursor.getColumnIndex(SecondaryTrafficStartTime))),
-                                                              Helper.getTime(cursor.getString(cursor.getColumnIndex(SecondaryTrafficEndTime))),
-                                                              cursor.getString(cursor.getColumnIndex(UssdCode)),
-                                                              cursor.getInt(cursor.getColumnIndex(Custom)) == 1);
+                            cursor.getInt(cursor.getColumnIndex(OperatorId)),
+                            cursor.getString(cursor.getColumnIndex(Title)),
+                            cursor.getInt(cursor.getColumnIndex(Period)),
+                            cursor.getInt(cursor.getColumnIndex(Price)),
+                            cursor.getLong(cursor.getColumnIndex(PrimaryTraffic)),
+                            cursor.getLong(cursor.getColumnIndex(SecondaryTraffic)),
+                            Helper.getTime(cursor.getString(cursor.getColumnIndex(SecondaryTrafficStartTime))),
+                            Helper.getTime(cursor.getString(cursor.getColumnIndex(SecondaryTrafficEndTime))),
+                            cursor.getString(cursor.getColumnIndex(UssdCode)),
+                            cursor.getInt(cursor.getColumnIndex(Custom)) == 1);
                     packageList.add(dataPackage);
                 } while (cursor.moveToNext());
             }
@@ -90,9 +87,8 @@ public class DataPackages {
         Cursor cursor = null;
 
         try {
-            String[] selectionArgs = {Period};
-            String query = "Select * From " + TableName + "  WHERE OperatorId=" + operatorId + " Order By Period ASC ";
-            cursor = db.rawQuery(query, selectionArgs);
+            String query = "Select DISTINCT " + Period + " FROM " + TableName + " WHERE " + OperatorId + " = " + operatorId + " Order By " + Period;
+            cursor = db.rawQuery(query, null);
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     periodList.add(cursor.getInt(cursor.getColumnIndex(Period)));
@@ -110,9 +106,8 @@ public class DataPackages {
     }
 
     public static ArrayList<DataPackage> selectPackagesByOperatorAndPeriod(int operatorId, int period) {
-        String whereClause = " WHERE " + OperatorId + "=" + operatorId + " AND " + Period + "=" + period;
-        String[] selectionArgs = {OperatorId, Period};
-        return select(whereClause, selectionArgs);
+        String whereClause = " WHERE " + OperatorId + " = " + operatorId + " AND " + Period + " = " + period;
+        return select(whereClause, null);
     }
 
     public static long insert(DataPackage dataPackage) {
@@ -155,6 +150,4 @@ public class DataPackages {
         DataAccess db = new DataAccess();
         return db.delete(TableName, Id + " =? ", new String[]{String.valueOf(dataPackage.getId())});
     }
-
-
 }
