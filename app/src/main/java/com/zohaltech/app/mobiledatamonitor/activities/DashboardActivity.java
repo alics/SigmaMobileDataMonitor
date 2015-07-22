@@ -23,6 +23,7 @@ public class DashboardActivity extends EnhancedActivity {
     TextView txtNightTraffic;
     Button btnStartAnimation;
     Button btnPurchasePackage;
+    Button btnUsageReport;
 
     int dayTraffic;
     int dayTotalTraffic;
@@ -43,6 +44,7 @@ public class DashboardActivity extends EnhancedActivity {
         btnStartAnimation = (Button) findViewById(R.id.btnStartAnimation);
         txtNightTraffic = (TextView) findViewById(R.id.txtNightTraffic);
         btnPurchasePackage = (Button) findViewById(R.id.btnPurchasePackage);
+        btnUsageReport = (Button) findViewById(R.id.btnUsageReport);
 
         int size1 = (getWindowManager().getDefaultDisplay().getWidth()) / 2;
         int size2 = (getWindowManager().getDefaultDisplay().getWidth()) / 4;
@@ -71,6 +73,14 @@ public class DashboardActivity extends EnhancedActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(App.currentActivity, PackagesActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnUsageReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(App.currentActivity, DailyTrafficMonitorActivity.class);
                 startActivity(intent);
             }
         });
