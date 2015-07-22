@@ -72,7 +72,7 @@ public class PackageHistories {
         values.put(StartDateTime, packageHistory.getStartDateTime().toString());
         values.put(EndDateTime, packageHistory.getEndDateTime().toString());
         values.put(SimId, packageHistory.getSimId());
-        values.put(Active, packageHistory.getActive() == true ? 1 : 0);
+        values.put(Active, packageHistory.getActive() ? 1 : 0);
 
         DataAccess da = new DataAccess();
         return da.insert(TableName, values);
@@ -85,7 +85,7 @@ public class PackageHistories {
         values.put(StartDateTime, packageHistory.getStartDateTime().toString());
         values.put(EndDateTime, packageHistory.getEndDateTime().toString());
         values.put(SimId, packageHistory.getSimId());
-        values.put(Active, packageHistory.getActive() == true ? 1 : 0);
+        values.put(Active, packageHistory.getActive() ? 1 : 0);
 
         DataAccess da = new DataAccess();
         return da.update(TableName, values, Id + " =? ", new String[]{String.valueOf(packageHistory.getId())});

@@ -18,8 +18,8 @@ public class SolarCalendar {
         calcSolarCalendar(new Date());
     }
 
-    private SolarCalendar(Date MiladiDate) {
-        calcSolarCalendar(MiladiDate);
+    private SolarCalendar(Date miladiDate) {
+        calcSolarCalendar(miladiDate);
     }
 
     private static String getCurrentShamsiDate() {

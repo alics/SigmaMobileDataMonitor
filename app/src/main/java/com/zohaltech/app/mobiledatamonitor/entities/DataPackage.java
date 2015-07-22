@@ -3,9 +3,6 @@ package com.zohaltech.app.mobiledatamonitor.entities;
 import java.sql.Time;
 import java.util.Date;
 
-/**
- * Created by Ali on 7/15/2015.
- */
 public class DataPackage {
     Integer id;
     Integer operatorId;

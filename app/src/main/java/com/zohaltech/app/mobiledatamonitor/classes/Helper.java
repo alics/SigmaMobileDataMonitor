@@ -38,6 +38,12 @@ public final class Helper {
         return dateFormat.format(date);
     }
 
+    public static String getCurrentDate() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
+
     public static Date getDateTime(String dateTime) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault());
         Date date = null;

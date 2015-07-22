@@ -106,7 +106,7 @@ public class DataPackages {
     }
 
     public static ArrayList<DataPackage> selectPackagesByOperatorAndPeriod(int operatorId, int period) {
-        String whereClause = " WHERE " + OperatorId + " = " + operatorId + " AND " + Period + " = " + period;
+        String whereClause = " WHERE " + OperatorId + " = " + operatorId + " AND " + Period + " = " + period + " AND " + Custom + " = " +0;
         return select(whereClause, null);
     }
 
@@ -121,8 +121,8 @@ public class DataPackages {
         values.put(SecondaryTraffic, dataPackage.getSecondaryTraffic());
         values.put(SecondaryTrafficStartTime, dataPackage.getSecondaryTrafficStartTime().toString());
         values.put(SecondaryTrafficEndTime, dataPackage.getSecondaryTrafficEndTime().toString());
-        values.put(UssdCode, dataPackage.getUssdCode().toString());
-        values.put(Custom, dataPackage.getCustom() == true ? 1 : 0);
+        values.put(UssdCode, dataPackage.getUssdCode());
+        values.put(Custom, dataPackage.getCustom() ? 1 : 0);
 
         DataAccess da = new DataAccess();
         return da.insert(TableName, values);
@@ -139,8 +139,8 @@ public class DataPackages {
         values.put(SecondaryTraffic, dataPackage.getSecondaryTraffic());
         values.put(SecondaryTrafficStartTime, dataPackage.getSecondaryTrafficStartTime().toString());
         values.put(SecondaryTrafficEndTime, dataPackage.getSecondaryTrafficEndTime().toString());
-        values.put(UssdCode, dataPackage.getUssdCode().toString());
-        values.put(Custom, dataPackage.getCustom() == true ? 1 : 0);
+        values.put(UssdCode, dataPackage.getUssdCode());
+        values.put(Custom, dataPackage.getCustom() ? 1 : 0);
 
         DataAccess da = new DataAccess();
         return da.update(TableName, values, Id + " =? ", new String[]{String.valueOf(dataPackage.getId())});

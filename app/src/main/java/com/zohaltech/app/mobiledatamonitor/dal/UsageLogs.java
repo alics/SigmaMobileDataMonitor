@@ -84,12 +84,12 @@ public class UsageLogs {
         SQLiteDatabase db = da.getReadableDB();
         Cursor cursor = null;
         try {
-            String query = "SELECT SUBSTR(LogDateTime,11,3) hourPeriod,SUM(TrafficBytes) SumTrrafic FROM UsageLogs " +
+            String query = "SELECT SUBSTR(LogDateTime,11,3) hourPeriod,SUM(TrafficBytes) SumTraffic FROM UsageLogs " +
                     "WHERE  SUBSTR(LogDateTime,1,10)='" + date + "' GROUP BY  SUBSTR(LogDateTime,11,3) ;";
             cursor = db.rawQuery(query, null);
             if (cursor != null && cursor.moveToFirst()) {
                 do {
-                    long sum = cursor.getLong(cursor.getColumnIndex("SumTrrafic"));
+                    long sum = cursor.getLong(cursor.getColumnIndex("SumTraffic"));
                     String hour = cursor.getString(cursor.getColumnIndex("hourPeriod"));
                     String beginningDateTime = date + " " + hour + ":00:00";
                     int endingHour = Integer.parseInt(hour.substring(1)) + 1;
