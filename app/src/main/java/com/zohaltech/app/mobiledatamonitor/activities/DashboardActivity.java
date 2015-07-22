@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zohaltech.app.mobiledatamonitor.R;
+import com.zohaltech.app.mobiledatamonitor.classes.AlarmHandler;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
 import com.zohaltech.app.mobiledatamonitor.dal.DataAccess;
 
@@ -34,6 +35,8 @@ public class DashboardActivity extends EnhancedActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+
+        AlarmHandler.start(App.currentActivity);
 
         progressDay = (ArcProgress) findViewById(R.id.progressDay);
         progressNight = (ArcProgress) findViewById(R.id.progressNight);
