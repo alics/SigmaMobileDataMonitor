@@ -14,12 +14,11 @@ public class SolarCalendar {
 	int				month;
 	int				year;
 
-	public SolarCalendar() {
-		Date MiladiDate = new Date();
-		calcSolarCalendar(MiladiDate);
+	private SolarCalendar() {
+		calcSolarCalendar(new Date());
 	}
 
-	public SolarCalendar(Date MiladiDate) {
+	private SolarCalendar(Date MiladiDate) {
 		calcSolarCalendar(MiladiDate);
 	}
 
@@ -243,10 +242,23 @@ public class SolarCalendar {
 		return String.valueOf(solarCalendar.year) + "/" + String.format(loc, "%02d", solarCalendar.month) + "/" + String.format(loc, "%02d", solarCalendar.date);
 	}
 
+	private static String getShamsiDate(Date date) {
+		Locale loc = new Locale("en_US");
+		SolarCalendar solarCalendar = new SolarCalendar(date);
+		return String.valueOf(solarCalendar.year) + "/" + String.format(loc, "%02d", solarCalendar.month) + "/" + String.format(loc, "%02d", solarCalendar.date);
+	}
+
 	public static String getCurrentShamsiDateTime() {
 		String dateString = getCurrentShamsiDate();
 		DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss.S");
 		String timeString = dateFormat.format(new Date());
+		return dateString + " " + timeString;
+	}
+
+	public static String getShamsiDateTime(Date date) {
+		String dateString = getShamsiDate(date);
+		DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss.S");
+		String timeString = dateFormat.format(date);
 		return dateString + " " + timeString;
 	}
 }
