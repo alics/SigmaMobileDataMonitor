@@ -48,10 +48,10 @@ public class DashboardActivity extends EnhancedActivity {
 
         txtNightTraffic.setLayoutParams(new LinearLayout.LayoutParams(size2, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        dayTraffic = 1243;
-        dayTotalTraffic = 3057;
-        nightTraffic = 120;
-        nightTotalTraffic = 3096;
+        dayTraffic = 96;
+        dayTotalTraffic = 100;
+        nightTraffic = 90;
+        nightTotalTraffic = 100;
         strDayTraffic = dayTraffic + "/" + dayTotalTraffic + "MB";
         strNightTraffic = nightTraffic + "/" + nightTotalTraffic + "MB";
         progressDay.setProgress(0, strDayTraffic);
@@ -92,8 +92,8 @@ public class DashboardActivity extends EnhancedActivity {
                 try {
                     int percent = dayTraffic * 100 / dayTotalTraffic;
                     int progress = 0;
-                    if (100 - percent >= 2) {
-                        while (progress < (percent + 2)) {
+                    if (100 - percent >= 4) {
+                        while (progress < (percent + 4)) {
                             Thread.sleep(10 - (percent / 10));
                             progress++;
                             progressDay.setProgress(progress, strDayTraffic);
@@ -123,8 +123,8 @@ public class DashboardActivity extends EnhancedActivity {
                 try {
                     int percent = nightTraffic * 100 / nightTotalTraffic;
                     int progress = 0;
-                    if (100 - percent >= 2) {
-                        while (progress < (percent + 2)) {
+                    if (100 - percent >= 4) {
+                        while (progress < (percent + 4)) {
                             Thread.sleep(10 - (percent / 10));
                             progress++;
                             progressNight.setProgress(percent, strNightTraffic);
