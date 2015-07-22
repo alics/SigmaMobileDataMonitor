@@ -125,7 +125,7 @@ public class UsageLogs {
         }
 
         values.put(TrafficBytes, usageLog.getTrafficBytes());
-        values.put(LogDateTime, usageLog.getLogDateTime().toString());
+        values.put(LogDateTime, Helper.getCurrentDateTime());
 
         DataAccess da = new DataAccess();
         return da.insert(TableName, values);

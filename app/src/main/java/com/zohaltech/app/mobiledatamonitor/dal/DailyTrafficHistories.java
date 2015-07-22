@@ -42,7 +42,7 @@ public class DailyTrafficHistories {
                     DailyTrafficHistory history = new DailyTrafficHistory(cursor.getInt(cursor.getColumnIndex(Id)),
                                                                           cursor.getLong(cursor.getColumnIndex(Traffic)),
                                                                           Helper.getDate(cursor.getString(cursor.getColumnIndex(BeginningDateTime))),
-                                                                          Helper.getDate(cursor.getString(cursor.getColumnIndex(EndingDateTime))));
+                                                                      Helper.getDate(cursor.getString(cursor.getColumnIndex(EndingDateTime))));
                     histories.add(history);
                 } while (cursor.moveToNext());
             }

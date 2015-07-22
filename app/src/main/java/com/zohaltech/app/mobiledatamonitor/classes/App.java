@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.view.LayoutInflater;
 
 public class App extends Application {
 
@@ -16,6 +17,7 @@ public class App extends Application {
     public static Typeface englishFont;
     public static Typeface persianFont;
     public static Handler handler;
+    public static LayoutInflater inflater;
 
     @Override
     public void onCreate() {
@@ -25,5 +27,6 @@ public class App extends Application {
         englishFont = Typeface.createFromAsset(context.getAssets(), "fonts/calibril.ttf");
         persianFont = Typeface.createFromAsset(context.getAssets(), "fonts/byekan.ttf");
         handler = new Handler();
+        inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
     }
 }

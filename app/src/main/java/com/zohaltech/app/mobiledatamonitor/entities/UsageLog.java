@@ -2,23 +2,24 @@ package com.zohaltech.app.mobiledatamonitor.entities;
 
 import java.util.Date;
 
-/**
- * Created by Ali on 7/15/2015.
- */
+
 public class UsageLog {
     private Integer id;
     private Long trafficBytes;
     private Date logDateTime;
 
-    public UsageLog( Long trafficBytes , Date logDateTime)
-    {
+    public UsageLog(Long trafficBytes) {
         setTrafficBytes(trafficBytes);
-        setLogDateTime(logDateTime);
+
     }
 
-    public UsageLog(Integer id, Long trafficBytes , Date logDateTime)
-    {
-        this(trafficBytes,logDateTime);
+    public UsageLog(Long trafficBytes, Date logDateTime) {
+        this(trafficBytes);
+        this.setLogDateTime(logDateTime);
+    }
+
+    public UsageLog(Integer id, Long trafficBytes, Date logDateTime) {
+        this(trafficBytes, logDateTime);
         this.id = id;
     }
 

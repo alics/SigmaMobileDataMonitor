@@ -3,6 +3,11 @@ package com.zohaltech.app.mobiledatamonitor.classes;
 import android.app.IntentService;
 import android.content.Intent;
 
+import com.zohaltech.app.mobiledatamonitor.dal.UsageLogs;
+import com.zohaltech.app.mobiledatamonitor.entities.UsageLog;
+
+import java.util.Locale;
+
 public class DataUsageUpdateService extends IntentService {
 
     //private static long    totalUsage   = 0;
@@ -30,6 +35,7 @@ public class DataUsageUpdateService extends IntentService {
         interval++;
         tempUsage = tempUsage + receiveBytes + sentBytes;
         if (interval == 60){
+            UsageLogs.insert(new UsageLog(tempUsage));
             //todo : import tempUsage to database
             interval = 0;
             tempUsage = 0;
