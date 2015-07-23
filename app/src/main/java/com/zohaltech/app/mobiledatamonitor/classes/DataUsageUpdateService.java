@@ -34,7 +34,8 @@ public class DataUsageUpdateService extends IntentService {
 
         interval++;
         tempUsage = tempUsage + receiveBytes + sentBytes;
-        if (interval == 60){
+        if (interval == 30){
+            tempUsage=30;
             UsageLogs.insert(new UsageLog(tempUsage));
             //todo : import tempUsage to database
             interval = 0;

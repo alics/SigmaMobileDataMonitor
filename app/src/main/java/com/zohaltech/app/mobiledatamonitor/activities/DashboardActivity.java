@@ -11,25 +11,22 @@ import android.widget.TextView;
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.classes.AlarmHandler;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
-import com.zohaltech.app.mobiledatamonitor.dal.DataAccess;
 
 import widgets.ArcProgress;
 
 public class DashboardActivity extends EnhancedActivity {
-
-
     ArcProgress progressDay;
     ArcProgress progressNight;
-    TextView txtNightTraffic;
-    Button btnStartAnimation;
-    Button btnPurchasePackage;
-    Button btnUsageReport;
+    TextView    txtNightTraffic;
+    Button      btnStartAnimation;
+    Button      btnPurchasePackage;
+    Button      btnUsageReport;
 
-    int dayTraffic;
-    int dayTotalTraffic;
+    int    dayTraffic;
+    int    dayTotalTraffic;
     String strDayTraffic;
-    int nightTraffic;
-    int nightTotalTraffic;
+    int    nightTraffic;
+    int    nightTotalTraffic;
     String strNightTraffic;
 
     @Override
