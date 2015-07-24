@@ -110,6 +110,11 @@ public class DataPackages {
         return select(whereClause, null);
     }
 
+    public static ArrayList<DataPackage> selectPackagesById(int packageId) {
+        String whereClause = " WHERE " + Id + " = " + packageId ;
+        return select(whereClause, null);
+    }
+
     public static long insert(DataPackage dataPackage) {
         ContentValues values = new ContentValues();
 

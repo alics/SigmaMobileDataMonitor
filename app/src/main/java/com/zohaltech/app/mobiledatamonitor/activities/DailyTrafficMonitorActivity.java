@@ -20,6 +20,7 @@ public class DailyTrafficMonitorActivity extends EnhancedActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_traffic_monitor);
+        initialize();
     }
 
     private void initialize() {
