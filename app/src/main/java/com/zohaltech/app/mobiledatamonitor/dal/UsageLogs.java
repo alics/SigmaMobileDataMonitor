@@ -118,14 +118,14 @@ public class UsageLogs {
     public static long insert(UsageLog usageLog) {
         ContentValues values = new ContentValues();
         Date maxDate = getMaxDateOfUsageLog();
-        Date currentDate = Helper.getDate(usageLog.getLogDateTime().toString());
+        Date currentDate = usageLog.getLogDateTime();
 
-        if (currentDate.compareTo(maxDate) > 0) {
+        if (maxDate != null && currentDate.compareTo(maxDate) > 0) {
             integrateSumUsedTrafficUsagePerHourInDate(maxDate);
         }
 
         values.put(TrafficBytes, usageLog.getTrafficBytes());
-        values.put(LogDateTime, Helper.getCurrentDateTime());
+        values.put(LogDateTime, String.valueOf(usageLog.getLogDateTime()));
 
         DataAccess da = new DataAccess();
         return da.insert(TableName, values);

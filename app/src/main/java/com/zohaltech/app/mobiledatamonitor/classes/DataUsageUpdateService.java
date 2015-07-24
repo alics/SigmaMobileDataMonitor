@@ -6,17 +6,17 @@ import android.content.Intent;
 import com.zohaltech.app.mobiledatamonitor.dal.UsageLogs;
 import com.zohaltech.app.mobiledatamonitor.entities.UsageLog;
 
-import java.util.Locale;
-
 public class DataUsageUpdateService extends IntentService {
 
-    //private static long    totalUsage   = 0;
-    private static long    receiveBytes = 0;
-    private static long    sentBytes    = 0;
-    private static boolean firstTime    = true;
+    private static final int USAGE_LOG_INTERVAL = 5;
 
-    private static int interval    = 0;
-    private static long tempUsage    = 0;
+    //private static long    totalUsage   = 0;
+    private static long receiveBytes = 0;
+    private static long sentBytes = 0;
+    private static boolean firstTime = true;
+
+    private static int interval = 0;
+    private static long tempUsage = 0;
 
     public DataUsageUpdateService() {
         super("Data Usage Update Service");
@@ -34,10 +34,8 @@ public class DataUsageUpdateService extends IntentService {
 
         interval++;
         tempUsage = tempUsage + receiveBytes + sentBytes;
-        if (interval == 30){
-            tempUsage=30;
-            UsageLogs.insert(new UsageLog(tempUsage));
-            //todo : import tempUsage to database
+        if (interval == USAGE_LOG_INTERVAL) {
+            UsageLogs.insert(new UsageLog(tempUsage, Helper.getCurrentDateTime()));
             interval = 0;
             tempUsage = 0;
         }

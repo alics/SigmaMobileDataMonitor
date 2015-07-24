@@ -58,7 +58,7 @@ public class ArcProgress extends ImageView {
         int color = Color.argb(230, 255, 255, 255);
 
         arcBackgroundPaint = new Paint();
-        arcBackgroundPaint.setColor(context.getResources().getColor(R.color.progress_background));
+        arcBackgroundPaint.setColor(context.getResources().getColor(R.color.primary_dark));
         arcBackgroundPaint.setAntiAlias(true);
         arcBackgroundPaint.setStyle(Style.STROKE);
         arcBackgroundPaint.setStrokeCap(Paint.Cap.ROUND);

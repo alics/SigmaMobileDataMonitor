@@ -8,19 +8,14 @@ public class UsageLog {
     private Long trafficBytes;
     private Date logDateTime;
 
-    public UsageLog(Long trafficBytes) {
-        setTrafficBytes(trafficBytes);
-
-    }
-
     public UsageLog(Long trafficBytes, Date logDateTime) {
-        this(trafficBytes);
-        this.setLogDateTime(logDateTime);
+        setTrafficBytes(trafficBytes);
+        setLogDateTime(logDateTime);
     }
 
     public UsageLog(Integer id, Long trafficBytes, Date logDateTime) {
         this(trafficBytes, logDateTime);
-        this.id = id;
+        this.setId(id);
     }
 
     public Integer getId() {

@@ -13,6 +13,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 
 import com.zohaltech.app.mobiledatamonitor.R;
+import com.zohaltech.app.mobiledatamonitor.activities.DashboardActivity;
 import com.zohaltech.app.mobiledatamonitor.activities.MainActivity;
 
 public class NotificationHandler {
@@ -52,7 +53,7 @@ public class NotificationHandler {
                             .setPriority(NotificationCompat.PRIORITY_MAX)
                             .setAutoCancel(false);
             // Creates an explicit intent for an Activity in your app
-            Intent resultIntent = new Intent(context, MainActivity.class);
+            Intent resultIntent = new Intent(context, DashboardActivity.class);
 
             // The stack builder object will contain an artificial back stack for the
             // started Activity.
@@ -60,7 +61,7 @@ public class NotificationHandler {
             // your application to the Home screen.
             TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
             // Adds the back stack for the Intent (but not the Intent itself)
-            stackBuilder.addParentStack(MainActivity.class);
+            stackBuilder.addParentStack(DashboardActivity.class);
             // Adds the Intent that starts the Activity to the top of the stack
             stackBuilder.addNextIntent(resultIntent);
             PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);

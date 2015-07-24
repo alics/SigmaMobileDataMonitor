@@ -25,7 +25,7 @@
                 android:gravity="right|center"
                 android:text="حذف مخاطب"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/app_main_color"/>
+                android:textColor="@color/primary"/>
         </LinearLayout>
 
         <!--<LinearLayout-->
@@ -63,7 +63,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:text="تایید"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/app_main_color"/>
+                android:textColor="@color/primary"/>
 
             <widgets.MyButton
                 android:id="@+id/negativeButton"

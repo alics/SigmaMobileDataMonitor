@@ -8,34 +8,21 @@ import android.text.TextUtils;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 
 public final class Helper {
 
-    public enum Operator {
-        MCI,
-        RIGHTELL,
-        IRANCELL
-    }
-
-    private Operator getOperator() {
-        TelephonyManager tm = (TelephonyManager) App.context.getSystemService(App.context.TELEPHONY_SERVICE);
-        String simOperatorName = tm.getSimOperatorName().toUpperCase();
-        if (simOperatorName.compareTo("IR-MCI") == 0 || simOperatorName.compareTo("IR-TCI") == 0) {
-            return Operator.MCI;
-        } else if (simOperatorName.compareTo("RIGHTEL") == 0) {
-            return Operator.RIGHTELL;
+    public static Date getCurrentDateTime() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
+        Date date = null;
+        try {
+            date = dateFormat.parse(String.valueOf(new Date()));
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-        return Operator.IRANCELL;
-    }
-
-    public static String getCurrentDateTime() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault());
-        Date date = new Date();
-        return dateFormat.format(date);
+        return date;
     }
 
     public static String getCurrentDate() {
@@ -43,6 +30,12 @@ public final class Helper {
         Date date = new Date();
         return dateFormat.format(date);
     }
+
+//    public static String getCurrentDateTime() {
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault());
+//        Date date = new Date();
+//        return dateFormat.format(date);
+//    }
 
     public static Date getDateTime(String dateTime) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault());
@@ -79,6 +72,23 @@ public final class Helper {
         Intent callIntent = new Intent(Intent.ACTION_CALL);
         callIntent.setData(Uri.parse("tel:" + code));
         App.currentActivity.startActivity(callIntent);
+    }
+
+    private Operator getOperator() {
+        TelephonyManager tm = (TelephonyManager) App.context.getSystemService(App.context.TELEPHONY_SERVICE);
+        String simOperatorName = tm.getSimOperatorName().toUpperCase();
+        if (simOperatorName.compareTo("IR-MCI") == 0 || simOperatorName.compareTo("IR-TCI") == 0) {
+            return Operator.MCI;
+        } else if (simOperatorName.compareTo("RIGHTEL") == 0) {
+            return Operator.RIGHTELL;
+        }
+        return Operator.IRANCELL;
+    }
+
+    public enum Operator {
+        MCI,
+        RIGHTELL,
+        IRANCELL
     }
 
     //public static void goToWebsite(String url) {
