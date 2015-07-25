@@ -108,6 +108,32 @@ public class UsageLogs {
         }
     }
 
+    public static long getCurrentDateSumTraffic() {
+        long sumTraffic = 0;
+        String strCurrentDateTime = Helper.getCurrentDateTime();
+        String strCurrentDate = strCurrentDateTime.substring(0, 10);
+        DataAccess da = new DataAccess();
+        SQLiteDatabase db = da.getReadableDB();
+        Cursor cursor = null;
+        try {
+            String query = "SELECT SUM(TrafficBytes) SumTraffic  FROM  " + TableName + " WHERE SUBSTR(LogDateTime,0,11)='" + strCurrentDate + "'";
+            cursor = db.rawQuery(query, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    sumTraffic = cursor.getLong(cursor.getColumnIndex("SumTraffic"));
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null && !cursor.isClosed())
+                cursor.close();
+            if (db != null && db.isOpen())
+                db.close();
+        }
+        return sumTraffic;
+    }
+
     public static ArrayList<UsageLog> select() {
         return select("", null);
     }

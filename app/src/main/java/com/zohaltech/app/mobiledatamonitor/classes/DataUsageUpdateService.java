@@ -11,7 +11,7 @@ public class DataUsageUpdateService extends IntentService {
 
     private static final int USAGE_LOG_INTERVAL = 5;
 
-    //private static long    totalUsage   = 0;
+    private static long currentDateTotalUsage = 0;
     private static long receiveBytes = 0;
     private static long sentBytes = 0;
     private static boolean firstTime = true;
@@ -30,7 +30,7 @@ public class DataUsageUpdateService extends IntentService {
         } else {
             receiveBytes = android.net.TrafficStats.getMobileRxBytes() - receiveBytes;
             sentBytes = android.net.TrafficStats.getMobileTxBytes() - sentBytes;
-            //totalUsage = totalUsage + receiveBytes + sentBytes;
+            currentDateTotalUsage = UsageLogs.getCurrentDateSumTraffic();
         }
 
         interval++;
@@ -41,7 +41,7 @@ public class DataUsageUpdateService extends IntentService {
             tempUsage = 0;
         }
         NotificationHandler.displayNotification(App.context, String.format("Down: %s B/s, Up:%s B/s", receiveBytes, sentBytes)
-                , String.format("Total: %s B", "per day total from database")
+                , String.format("Total: %s B", currentDateTotalUsage)
                 , "28% of 3 Gigabyte used");
 
         //Toast.makeText(context, String.format("Down: %s B/s, Up:%s B/s", receiveBytes, sentBytes), Toast.LENGTH_SHORT).show();
