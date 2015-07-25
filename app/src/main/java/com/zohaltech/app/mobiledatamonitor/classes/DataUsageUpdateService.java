@@ -30,7 +30,6 @@ public class DataUsageUpdateService extends IntentService {
         } else {
             receiveBytes = android.net.TrafficStats.getMobileRxBytes() - receiveBytes;
             sentBytes = android.net.TrafficStats.getMobileTxBytes() - sentBytes;
-            currentDateTotalUsage = UsageLogs.getCurrentDateSumTraffic();
         }
 
         interval++;
@@ -40,6 +39,8 @@ public class DataUsageUpdateService extends IntentService {
             interval = 0;
             tempUsage = 0;
         }
+
+        currentDateTotalUsage = UsageLogs.getCurrentDateSumTraffic();
         NotificationHandler.displayNotification(App.context, String.format("Down: %s B/s, Up:%s B/s", receiveBytes, sentBytes)
                 , String.format("Total: %s B", currentDateTotalUsage)
                 , "28% of 3 Gigabyte used");
