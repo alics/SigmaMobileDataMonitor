@@ -1,6 +1,8 @@
 package com.zohaltech.app.mobiledatamonitor.activities;
 
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +36,7 @@ public class DashboardActivity extends EnhancedActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        AlarmHandler.start(App.context);
+        //AlarmHandler.start(App.context);
 
         progressDay = (ArcProgress) findViewById(R.id.progressDay);
         progressNight = (ArcProgress) findViewById(R.id.progressNight);
@@ -52,7 +54,7 @@ public class DashboardActivity extends EnhancedActivity {
 
         dayTraffic = 96;
         dayTotalTraffic = 100;
-        nightTraffic = 90;
+        nightTraffic = 25;
         nightTotalTraffic = 100;
         strDayTraffic = dayTraffic + "/" + dayTotalTraffic + "MB";
         strNightTraffic = nightTraffic + "/" + nightTotalTraffic + "MB";
@@ -95,69 +97,153 @@ public class DashboardActivity extends EnhancedActivity {
     }
 
     private void startAnimation() {
-        final Thread dayThread = new Thread(new Runnable() {
+        //final Thread dayThread = new Thread(new Runnable() {
+        //
+        //    @Override
+        //    public void run() {
+        //        try {
+        //            int percent = dayTraffic * 100 / dayTotalTraffic;
+        //            int progress = 0;
+        //            if (100 - percent >= 4) {
+        //                while (progress < (percent + 4)) {
+        //                    Thread.sleep(15 - (percent / 10));
+        //                    progress++;
+        //                    progressDay.setProgress(progress, strDayTraffic);
+        //                }
+        //                while (progress > percent) {
+        //                    Thread.sleep(100);
+        //                    progress--;
+        //                    progressDay.setProgress(progress, strDayTraffic);
+        //                }
+        //            } else {
+        //                while (progress < percent) {
+        //                    Thread.sleep(15 - (percent / 10));
+        //                    progress++;
+        //                    progressDay.setProgress(progress, strDayTraffic);
+        //                }
+        //            }
+        //        } catch (InterruptedException e) {
+        //            e.printStackTrace();
+        //        }
+        //    }
+        //});
 
-            @Override
-            public void run() {
-                try {
-                    int percent = dayTraffic * 100 / dayTotalTraffic;
-                    int progress = 0;
-                    if (100 - percent >= 4) {
-                        while (progress < (percent + 4)) {
-                            Thread.sleep(10 - (percent / 10));
-                            progress++;
-                            progressDay.setProgress(progress, strDayTraffic);
-                        }
-                        while (progress > percent) {
-                            Thread.sleep(100);
-                            progress--;
-                            progressDay.setProgress(progress, strDayTraffic);
-                        }
-                    } else {
-                        while (progress < percent) {
-                            Thread.sleep(10 - (percent / 10));
-                            progress++;
-                            progressDay.setProgress(progress, strDayTraffic);
-                        }
+        //final Thread nightThread = new Thread(new Runnable() {
+        //
+        //    @Override
+        //    public void run() {
+        //        try {
+        //            int percent = nightTraffic * 100 / nightTotalTraffic;
+        //            int progress = 0;
+        //            if (100 - percent >= 4) {
+        //                while (progress < (percent + 4)) {
+        //                    Thread.sleep(15 - (percent / 10));
+        //                    progress++;
+        //                    progressNight.setProgress(percent, strNightTraffic);
+        //                }
+        //                while (progress > percent) {
+        //                    Thread.sleep(100);
+        //                    progress--;
+        //                    progressNight.setProgress(percent, strNightTraffic);
+        //                }
+        //            } else {
+        //                while (progress < percent) {
+        //                    Thread.sleep(15 - (percent / 10));
+        //                    progress++;
+        //                    progressNight.setProgress(percent, strNightTraffic);
+        //                }
+        //            }
+        //        } catch (InterruptedException e) {
+        //            e.printStackTrace();
+        //        }
+        //    }
+        //});
+
+        //dayThread.start();
+        //nightThread.start();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            new ProgressDayTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new ProgressNightTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }else{
+            new ProgressDayTask().execute();
+            new ProgressNightTask().execute();
+        }
+    }
+
+    private class ProgressDayTask extends AsyncTask<Void, Integer, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                int percent = dayTraffic * 100 / dayTotalTraffic;
+                int progress = 0;
+                if (100 - percent >= 4) {
+                    while (progress < (percent + 4)) {
+                        Thread.sleep(15 - (percent / 10));
+                        progress++;
+                        publishProgress(progress);
                     }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        final Thread nightThread = new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                try {
-                    int percent = nightTraffic * 100 / nightTotalTraffic;
-                    int progress = 0;
-                    if (100 - percent >= 4) {
-                        while (progress < (percent + 4)) {
-                            Thread.sleep(10 - (percent / 10));
-                            progress++;
-                            progressNight.setProgress(percent, strNightTraffic);
-                        }
-                        while (progress > percent) {
-                            Thread.sleep(100);
-                            progress--;
-                            progressNight.setProgress(percent, strNightTraffic);
-                        }
-                    } else {
-                        while (progress < percent) {
-                            Thread.sleep(10 - (percent / 10));
-                            progress++;
-                            progressNight.setProgress(percent, strNightTraffic);
-                        }
+                    while (progress > percent) {
+                        Thread.sleep(100);
+                        progress--;
+                        publishProgress(progress);
                     }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                } else {
+                    while (progress < percent) {
+                        Thread.sleep(15 - (percent / 10));
+                        progress++;
+                        publishProgress(progress);
+                    }
                 }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        });
+            return null;
+        }
 
-        dayThread.start();
-        nightThread.start();
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+            progressDay.setProgress(values[0], strDayTraffic);
+        }
+    }
+
+    private class ProgressNightTask extends AsyncTask<Void, Integer, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                int percent = nightTraffic * 100 / nightTotalTraffic;
+                int progress = 0;
+                if (100 - percent >= 4) {
+                    while (progress < (percent + 4)) {
+                        Thread.sleep(15 - (percent / 10));
+                        progress++;
+                        publishProgress(progress);
+                    }
+                    while (progress > percent) {
+                        Thread.sleep(100);
+                        progress--;
+                        publishProgress(progress);
+                    }
+                } else {
+                    while (progress < percent) {
+                        Thread.sleep(15 - (percent / 10));
+                        progress++;
+                        publishProgress(progress);
+                    }
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+            progressNight.setProgress(values[0], strNightTraffic);
+        }
     }
 }

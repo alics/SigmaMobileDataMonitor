@@ -116,7 +116,7 @@ public class UsageLogs {
         SQLiteDatabase db = da.getReadableDB();
         Cursor cursor = null;
         try {
-            String query = "SELECT SUM(TrafficBytes) SumTraffic  FROM  " + TableName + " WHERE SUBSTR(LogDateTime,0,11)='" + strCurrentDate + "'";
+            String query = "SELECT SUM(TrafficBytes) SumTraffic  FROM  " + TableName + " WHERE SUBSTR(LogDateTime,0,11) = '" + strCurrentDate + "'";
             cursor = db.rawQuery(query, null);
             if (cursor != null && cursor.moveToFirst()) {
                 do {

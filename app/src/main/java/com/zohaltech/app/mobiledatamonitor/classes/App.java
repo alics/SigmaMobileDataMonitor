@@ -28,5 +28,7 @@ public class App extends Application {
         persianFont = Typeface.createFromAsset(context.getAssets(), "fonts/byekan.ttf");
         handler = new Handler();
         inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+
+        AlarmHandler.start(context);
     }
 }

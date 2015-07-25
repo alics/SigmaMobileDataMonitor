@@ -12,14 +12,17 @@ public class AlarmHandler {
     private static AlarmManager  manager;
     private static PendingIntent pendingIntent;
 
-    static {
-        manager = (AlarmManager) App.context.getSystemService(Context.ALARM_SERVICE);
-        Intent alarmIntent = new Intent(App.context, AlarmReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(App.context, 0, alarmIntent, 0);
-    }
+    //static {
+    //manager = (AlarmManager) App.context.getSystemService(Context.ALARM_SERVICE);
+    //Intent alarmIntent = new Intent(App.context, AlarmReceiver.class);
+    //pendingIntent = PendingIntent.getBroadcast(App.context, 0, alarmIntent, 0);
+    //}
 
     public static void start(Context context) {
-        manager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), INTERVAL, pendingIntent);
+        manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent alarmIntent = new Intent(context, AlarmReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(context, 0, alarmIntent, 0);
+        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), INTERVAL, pendingIntent);
     }
 
     public static void cancel() {

@@ -1,11 +1,12 @@
 package com.zohaltech.app.mobiledatamonitor.classes;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.telephony.TelephonyManager;
-import android.text.TextUtils;
 
-import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,19 +15,18 @@ import java.util.Locale;
 
 public final class Helper {
 
-//    public static Date getCurrentDateTime() {
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
-//        Date date = null;
-//        try {
-//            date = dateFormat.parse(String.valueOf(new Date()));
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        return date;
-//    }
+    //    public static Date getCurrentDateTime() {
+    //        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
+    //        Date date = null;
+    //        try {
+    //            date = dateFormat.parse(String.valueOf(new Date()));
+    //        } catch (ParseException e) {
+    //            e.printStackTrace();
+    //        }
+    //        return date;
+    //    }
 
-    public static String getCurrentDateTime()
-    {
+    public static String getCurrentDateTime() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault());
         Date date = new Date();
         return dateFormat.format(date);
@@ -60,19 +60,25 @@ public final class Helper {
         return date;
     }
 
-//    public static Time getTime(String timeStr) {
-//        Time time = null;
-//        if (timeStr != null && !TextUtils.isEmpty(timeStr)) {
-//            time = java.sql.Time.valueOf(timeStr);
-//        }
-//        return time;
-//    }
+    //    public static Time getTime(String timeStr) {
+    //        Time time = null;
+    //        if (timeStr != null && !TextUtils.isEmpty(timeStr)) {
+    //            time = java.sql.Time.valueOf(timeStr);
+    //        }
+    //        return time;
+    //    }
 
     public static void runUssd(String code) {
         code = String.format("%s%s", code.substring(0, code.length() - 1), Uri.encode("#"));
         Intent callIntent = new Intent(Intent.ACTION_CALL);
         callIntent.setData(Uri.parse("tel:" + code));
         App.currentActivity.startActivity(callIntent);
+    }
+
+    public static boolean getConnectivityStatus() {
+        ConnectivityManager cm = (ConnectivityManager) App.context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null && (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE);
     }
 
     private Operator getOperator() {

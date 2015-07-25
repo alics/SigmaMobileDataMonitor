@@ -11,12 +11,12 @@ public class DataUsageUpdateService extends IntentService {
 
     private static final int USAGE_LOG_INTERVAL = 5;
 
-    private static long currentDateTotalUsage = 0;
-    private static long receiveBytes = 0;
-    private static long sentBytes = 0;
+    private static long tempReceivedBytes = 0;
+    private static long tempSentBytes     = 0;
+
     private static boolean firstTime = true;
 
-    private static int interval = 0;
+    private static int  interval  = 0;
     private static long tempUsage = 0;
 
     public DataUsageUpdateService() {
@@ -25,29 +25,52 @@ public class DataUsageUpdateService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if (firstTime) {
-            firstTime = false;
+        long currentReceivedBytes = android.net.TrafficStats.getMobileRxBytes();
+        long currentSentBytes = android.net.TrafficStats.getMobileTxBytes();
+        long receivedBytes = 0;
+        long sentBytes = 0;
+
+        if (currentReceivedBytes + currentSentBytes == 0) {
+            firstTime = true;
         } else {
-            receiveBytes = android.net.TrafficStats.getMobileRxBytes() - receiveBytes;
-            sentBytes = android.net.TrafficStats.getMobileTxBytes() - sentBytes;
+            if (firstTime) {
+                firstTime = false;
+                tempReceivedBytes = currentReceivedBytes;
+                tempSentBytes = currentSentBytes;
+            }
+            receivedBytes = currentReceivedBytes - tempReceivedBytes;
+            sentBytes = currentSentBytes - tempSentBytes;
+            tempReceivedBytes = currentReceivedBytes;
+            tempSentBytes = currentSentBytes;
+
+            interval++;
+            tempUsage = tempUsage + receivedBytes + sentBytes;
+            if (interval == USAGE_LOG_INTERVAL) {
+                UsageLogs.insert(new UsageLog(tempUsage));
+                interval = 0;
+                tempUsage = 0;
+            }
         }
 
-        interval++;
-        tempUsage = tempUsage + receiveBytes + sentBytes;
-        if (interval == USAGE_LOG_INTERVAL) {
-            UsageLogs.insert(new UsageLog(tempUsage));
-            interval = 0;
-            tempUsage = 0;
+        long tempCurrentDateSumTraffic = UsageLogs.getCurrentDateSumTraffic();
+        String strCurrentDateSumTraffic = tempCurrentDateSumTraffic + " B";
+        if (tempCurrentDateSumTraffic < 1024) {
+            strCurrentDateSumTraffic = tempCurrentDateSumTraffic + " B";
+        } else if (tempCurrentDateSumTraffic >= 1024 && tempCurrentDateSumTraffic < (1024 * 1024)) {
+            strCurrentDateSumTraffic = tempCurrentDateSumTraffic / 1024 + " KB";
+        } else if (tempCurrentDateSumTraffic > (1024 * 1024)) {
+            strCurrentDateSumTraffic = tempCurrentDateSumTraffic / (1024 * 1024) + " MB";
+        } else if (tempCurrentDateSumTraffic > (1024 * 1024 * 1024)) {
+            strCurrentDateSumTraffic = tempCurrentDateSumTraffic / (1024 * 1024 * 1024) + " GB";
         }
 
-        currentDateTotalUsage = UsageLogs.getCurrentDateSumTraffic();
-        NotificationHandler.displayNotification(App.context, String.format("Down: %s B/s, Up:%s B/s", receiveBytes, sentBytes)
-                , String.format("Total: %s B", currentDateTotalUsage)
+        NotificationHandler.displayNotification(App.context, String.format("Down: %s B/s, Up:%s B/s", receivedBytes, sentBytes)
+                , String.format("Total: %s", strCurrentDateSumTraffic)
                 , "28% of 3 Gigabyte used");
 
-        //Toast.makeText(context, String.format("Down: %s B/s, Up:%s B/s", receiveBytes, sentBytes), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, String.format("Down: %s B/s, Up:%s B/s", receivedBytes, sentBytes), Toast.LENGTH_SHORT).show();
 
-        receiveBytes = android.net.TrafficStats.getMobileRxBytes();
-        sentBytes = android.net.TrafficStats.getMobileTxBytes();
+        //receivedBytes = android.net.TrafficStats.getMobileRxBytes();
+        //sentBytes = android.net.TrafficStats.getMobileTxBytes();
     }
 }
