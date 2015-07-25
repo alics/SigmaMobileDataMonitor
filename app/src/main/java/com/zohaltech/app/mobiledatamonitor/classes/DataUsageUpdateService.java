@@ -37,7 +37,6 @@ public class DataUsageUpdateService extends IntentService {
         interval++;
         tempUsage = tempUsage + receiveBytes + sentBytes;
         if (interval == USAGE_LOG_INTERVAL) {
-            tempUsage = 70;
             UsageLogs.insert(new UsageLog(tempUsage));
             interval = 0;
             tempUsage = 0;
