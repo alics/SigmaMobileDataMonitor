@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.zohaltech.app.mobiledatamonitor.classes.Helper;
 import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
 
 import java.util.ArrayList;
@@ -20,12 +19,12 @@ public class PackageHistories {
 
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
-            Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-            DataPackageId + " INTEGER REFERENCES " + DataPackages.TableName + " (" + DataPackages.Id + "), " +
-            StartDateTime + " CHAR(19) NOT NULL," +
-            EndDateTime + " CHAR(19) NOT NULL," +
-            SimId + " INTEGER  NOT NULL ," +
-            Active + " BOOLEAN   );";
+                                      Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                                      DataPackageId + " INTEGER REFERENCES " + DataPackages.TableName + " (" + DataPackages.Id + "), " +
+                                      StartDateTime + " CHAR(19) NOT NULL," +
+                                      EndDateTime + " CHAR(19) NOT NULL," +
+                                      SimId + " INTEGER  NOT NULL ," +
+                                      Active + " BOOLEAN   );";
 
     static final String DropTable = "Drop Table If Exists " + TableName;
 

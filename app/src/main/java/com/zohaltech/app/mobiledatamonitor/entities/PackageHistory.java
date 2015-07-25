@@ -1,15 +1,13 @@
 package com.zohaltech.app.mobiledatamonitor.entities;
 
-import java.util.Date;
-
 public class PackageHistory {
+
     Integer id;
     Integer dataPackageId;
-    String    startDateTime;
-    String    endDateTime;
-    String  simId;
+    String startDateTime;
+    String endDateTime;
+    String simId;
     Boolean active;
-
 
     public PackageHistory(Integer dataPackageId, String startDateTime, String endDateTime, String simId, Boolean active) {
         setDataPackageId(dataPackageId);

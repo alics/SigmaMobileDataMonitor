@@ -1,13 +1,10 @@
 package com.zohaltech.app.mobiledatamonitor.entities;
 
 
-import java.util.Date;
-
 public class TrafficMonitor {
 
     private Long totalTraffic;
     private String date;
-
 
     public TrafficMonitor(Long totalTraffic, String date) {
         setTotalTraffic(totalTraffic);

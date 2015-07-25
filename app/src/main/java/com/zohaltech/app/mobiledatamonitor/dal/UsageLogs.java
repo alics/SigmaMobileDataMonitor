@@ -9,21 +9,18 @@ import com.zohaltech.app.mobiledatamonitor.entities.DailyTrafficHistory;
 import com.zohaltech.app.mobiledatamonitor.entities.UsageLog;
 
 import java.util.ArrayList;
-import java.util.Date;
 
-/**
- * Created by Ali on 7/15/2015.
- */
 public class UsageLogs {
+
     static final String TableName    = "UsageLogs";
     static final String Id           = "Id";
     static final String TrafficBytes = "TrafficBytes";
     static final String LogDateTime  = "LogDateTime";
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
-            Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-            TrafficBytes + " BIGINT NOT NULL, " +
-            LogDateTime + " CHAR(19) );";
+                                      Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                                      TrafficBytes + " BIGINT NOT NULL, " +
+                                      LogDateTime + " CHAR(19) );";
 
     static final String DropTable = "Drop Table If Exists " + TableName;
 
@@ -55,7 +52,7 @@ public class UsageLogs {
         return logList;
     }
 
-    private static String getMaxDateOfUsageLog() {
+    private static String getMaxDateTime() {
         String maxLogDate = null;
         DataAccess da = new DataAccess();
         SQLiteDatabase db = da.getReadableDB();
@@ -85,7 +82,7 @@ public class UsageLogs {
         Cursor cursor = null;
         try {
             String query = "SELECT SUBSTR(LogDateTime,11,3) hourPeriod,SUM(TrafficBytes) SumTraffic FROM UsageLogs " +
-                    "WHERE  SUBSTR(LogDateTime,1,10)='" + date + "' GROUP BY  SUBSTR(LogDateTime,11,3) ;";
+                           "WHERE  SUBSTR(LogDateTime,1,10)='" + date + "' GROUP BY  SUBSTR(LogDateTime,11,3) ;";
             cursor = db.rawQuery(query, null);
             if (cursor != null && cursor.moveToFirst()) {
                 do {
@@ -117,9 +114,9 @@ public class UsageLogs {
 
     public static long insert(UsageLog usageLog) {
         ContentValues values = new ContentValues();
-        String maxDateStr = getMaxDateOfUsageLog().substring(0,10);
+        String maxDateStr = getMaxDateTime().substring(0, 10);
         String strCurrentDateTime = Helper.getCurrentDateTime();
-        String strCurrentDate = strCurrentDateTime.substring(0,10);
+        String strCurrentDate = strCurrentDateTime.substring(0, 10);
 
         if (maxDateStr != null && strCurrentDate.compareTo(maxDateStr) > 0) {
             integrateSumUsedTrafficUsagePerHourInDate(maxDateStr);
@@ -136,7 +133,7 @@ public class UsageLogs {
         ContentValues values = new ContentValues();
 
         values.put(TrafficBytes, usageLog.getTrafficBytes());
-        values.put(LogDateTime, usageLog.getLogDateTime().toString());
+        values.put(LogDateTime, usageLog.getLogDateTime());
 
         DataAccess da = new DataAccess();
         return da.update(TableName, values, Id + " =? ", new String[]{String.valueOf(usageLog.getId())});

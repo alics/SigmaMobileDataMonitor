@@ -14,8 +14,8 @@ public class MobileOperators {
     static final String Name      = "Name";
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
-            Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-            Name + " VARCHAR(50)  NOT NULL ) ;";
+                                      Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                                      Name + " VARCHAR(50)  NOT NULL ) ;";
     static final String DropTable   = "Drop Table If Exists " + TableName;
 
     private static ArrayList<MobileOperator> select(String whereClause, String[] selectionArgs) {

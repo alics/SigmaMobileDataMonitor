@@ -7,14 +7,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.zohaltech.app.mobiledatamonitor.classes.App;
 import com.zohaltech.app.mobiledatamonitor.classes.CsvReader;
-import com.zohaltech.app.mobiledatamonitor.entities.MobileOperator;
 
 import java.io.InputStreamReader;
 
 
 public class DataAccess extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME = "ZH_DATA_MONITOR";
-    public static final int DATABASE_VERSION = 12;
+
+    public static final String DATABASE_NAME    = "ZT_DATA_MONITOR";
+    public static final int    DATABASE_VERSION = 14;
 
     public DataAccess() {
         super(App.context, DATABASE_NAME, null, DATABASE_VERSION);

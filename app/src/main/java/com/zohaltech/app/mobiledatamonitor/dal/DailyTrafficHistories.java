@@ -63,8 +63,8 @@ public class DailyTrafficHistories {
         ContentValues values = new ContentValues();
 
         values.put(Traffic, trafficHistory.getTraffic());
-        values.put(BeginningDateTime, trafficHistory.getBeginningDateTime().toString());
-        values.put(EndingDateTime, trafficHistory.getEndingDateTime().toString());
+        values.put(BeginningDateTime, trafficHistory.getBeginningDateTime());
+        values.put(EndingDateTime, trafficHistory.getEndingDateTime());
 
         DataAccess da = new DataAccess();
         return da.insert(TableName, values);
@@ -74,8 +74,8 @@ public class DailyTrafficHistories {
         ContentValues values = new ContentValues();
 
         values.put(Traffic, trafficHistory.getTraffic());
-        values.put(BeginningDateTime, trafficHistory.getBeginningDateTime().toString());
-        values.put(EndingDateTime, trafficHistory.getEndingDateTime().toString());
+        values.put(BeginningDateTime, trafficHistory.getBeginningDateTime());
+        values.put(EndingDateTime, trafficHistory.getEndingDateTime());
 
         DataAccess da = new DataAccess();
         return da.update(TableName, values, Id + " =? ", new String[]{String.valueOf(trafficHistory.getId())});

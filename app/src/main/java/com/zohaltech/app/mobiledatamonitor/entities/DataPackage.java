@@ -1,9 +1,7 @@
 package com.zohaltech.app.mobiledatamonitor.entities;
 
-import java.sql.Time;
-import java.util.Date;
-
 public class DataPackage {
+
     Integer id;
     Integer operatorId;
     String title;
@@ -16,9 +14,8 @@ public class DataPackage {
     String ussdCode;
     Boolean custom;
 
-    public DataPackage( Integer operatorId , String title,Integer period,Integer price,Long primaryTraffic,Long secondaryTraffic,
-                        String secondaryTrafficEndTime,String secondaryTrafficStartTime ,String ussdCode, Boolean custom)
-    {
+    public DataPackage(Integer operatorId, String title, Integer period, Integer price, Long primaryTraffic, Long secondaryTraffic,
+                       String secondaryTrafficEndTime, String secondaryTrafficStartTime, String ussdCode, Boolean custom) {
         setOperatorId(operatorId);
         setTitle(title);
         setPeriod(period);
@@ -31,11 +28,10 @@ public class DataPackage {
         setCustom(custom);
     }
 
-    public DataPackage(Integer id,Integer operatorId , String title,Integer period,Integer price,Long primaryTraffic,Long secondaryTraffic,
-                       String secondaryTrafficEndTime,String secondaryTrafficStartTime ,String ussdCode, Boolean custom)
-    {
+    public DataPackage(Integer id, Integer operatorId, String title, Integer period, Integer price, Long primaryTraffic, Long secondaryTraffic,
+                       String secondaryTrafficEndTime, String secondaryTrafficStartTime, String ussdCode, Boolean custom) {
         this(operatorId, title, period, price, primaryTraffic, secondaryTraffic, secondaryTrafficStartTime, secondaryTrafficEndTime, ussdCode, custom);
-        this.id=id;
+        this.id = id;
     }
 
     public Integer getId() {

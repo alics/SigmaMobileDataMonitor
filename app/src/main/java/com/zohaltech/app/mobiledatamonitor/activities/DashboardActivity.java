@@ -34,7 +34,7 @@ public class DashboardActivity extends EnhancedActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        AlarmHandler.start(App.currentActivity);
+        AlarmHandler.start(App.context);
 
         progressDay = (ArcProgress) findViewById(R.id.progressDay);
         progressNight = (ArcProgress) findViewById(R.id.progressNight);

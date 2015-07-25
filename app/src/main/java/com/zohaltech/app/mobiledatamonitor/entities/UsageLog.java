@@ -1,9 +1,7 @@
 package com.zohaltech.app.mobiledatamonitor.entities;
 
-import java.util.Date;
-
-
 public class UsageLog {
+
     private Integer id;
     private Long trafficBytes;
     private String logDateTime;

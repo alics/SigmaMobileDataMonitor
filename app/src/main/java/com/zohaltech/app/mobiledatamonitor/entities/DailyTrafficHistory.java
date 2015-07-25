@@ -1,10 +1,8 @@
 package com.zohaltech.app.mobiledatamonitor.entities;
 
 
-import java.sql.Time;
-import java.util.Date;
-
 public class DailyTrafficHistory {
+
     private Integer id;
     private Long traffic;
     private String beginningDateTime;
