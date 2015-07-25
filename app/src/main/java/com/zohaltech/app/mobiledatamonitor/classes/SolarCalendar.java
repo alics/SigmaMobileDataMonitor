@@ -28,7 +28,7 @@ public class SolarCalendar {
         return String.valueOf(solarCalendar.year) + "/" + String.format(loc, "%02d", solarCalendar.month) + "/" + String.format(loc, "%02d", solarCalendar.date);
     }
 
-    private static String getShamsiDate(Date date) {
+    public static String getShamsiDate(Date date) {
         Locale loc = new Locale("en_US");
         SolarCalendar solarCalendar = new SolarCalendar(date);
         return String.valueOf(solarCalendar.year) + "/" + String.format(loc, "%02d", solarCalendar.month) + "/" + String.format(loc, "%02d", solarCalendar.date);

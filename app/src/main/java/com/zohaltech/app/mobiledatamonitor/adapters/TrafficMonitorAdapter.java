@@ -23,18 +23,16 @@ public class TrafficMonitorAdapter extends ArrayAdapter<TrafficMonitor> {
     private static class ViewHolder {
 
         TextView     txtDate;
-        TextView     txtTotalTraffic;
-        LinearLayout layoutTrafficMonitor;
+        TextView     txtTraffic;
 
         public ViewHolder(View view) {
             txtDate = (TextView) view.findViewById(R.id.txtDate);
-            txtTotalTraffic = (TextView) view.findViewById(R.id.txtTotalTraffic);
-            layoutTrafficMonitor = (LinearLayout) view.findViewById(R.id.layoutTrafficMonitor);
+            txtTraffic = (TextView) view.findViewById(R.id.txtTraffic);
         }
 
         public void fill(final ArrayAdapter<TrafficMonitor> adapter, final TrafficMonitor item, final int position) {
-            txtDate.setText(SolarCalendar.getShamsiDateTime(Helper.getDateTime(item.getDate())));
-            txtTotalTraffic.setText(item.getTotalTraffic() + "");
+            txtDate.setText(SolarCalendar.getShamsiDate(Helper.getDate(item.getDate())));
+            txtTraffic.setText(item.getTotalTraffic() + "");
         }
     }
 

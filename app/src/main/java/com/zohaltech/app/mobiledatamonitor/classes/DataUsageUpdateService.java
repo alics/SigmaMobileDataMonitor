@@ -6,7 +6,6 @@ import android.content.Intent;
 import com.zohaltech.app.mobiledatamonitor.dal.UsageLogs;
 import com.zohaltech.app.mobiledatamonitor.entities.UsageLog;
 
-import java.util.Date;
 
 public class DataUsageUpdateService extends IntentService {
 
