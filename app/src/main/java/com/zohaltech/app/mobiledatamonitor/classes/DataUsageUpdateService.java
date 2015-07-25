@@ -52,17 +52,19 @@ public class DataUsageUpdateService extends IntentService {
             }
         }
 
+        //long tempCurrentDateSumTraffic = UsageLogs.getCurrentDateSumTraffic();
+        //String strCurrentDateSumTraffic = tempCurrentDateSumTraffic + " B";
+        //if (tempCurrentDateSumTraffic < 1024) {
+        //    strCurrentDateSumTraffic = tempCurrentDateSumTraffic + " B";
+        //} else if (tempCurrentDateSumTraffic >= 1024 && tempCurrentDateSumTraffic < (1024 * 1024)) {
+        //    strCurrentDateSumTraffic = tempCurrentDateSumTraffic / 1024 + " KB";
+        //} else if (tempCurrentDateSumTraffic > (1024 * 1024)) {
+        //    strCurrentDateSumTraffic = tempCurrentDateSumTraffic / (1024 * 1024) + " MB";
+        //} else if (tempCurrentDateSumTraffic > (1024 * 1024 * 1024)) {
+        //    strCurrentDateSumTraffic = tempCurrentDateSumTraffic / (1024 * 1024 * 1024) + " GB";
+        //}
         long tempCurrentDateSumTraffic = UsageLogs.getCurrentDateSumTraffic();
-        String strCurrentDateSumTraffic = tempCurrentDateSumTraffic + " B";
-        if (tempCurrentDateSumTraffic < 1024) {
-            strCurrentDateSumTraffic = tempCurrentDateSumTraffic + " B";
-        } else if (tempCurrentDateSumTraffic >= 1024 && tempCurrentDateSumTraffic < (1024 * 1024)) {
-            strCurrentDateSumTraffic = tempCurrentDateSumTraffic / 1024 + " KB";
-        } else if (tempCurrentDateSumTraffic > (1024 * 1024)) {
-            strCurrentDateSumTraffic = tempCurrentDateSumTraffic / (1024 * 1024) + " MB";
-        } else if (tempCurrentDateSumTraffic > (1024 * 1024 * 1024)) {
-            strCurrentDateSumTraffic = tempCurrentDateSumTraffic / (1024 * 1024 * 1024) + " GB";
-        }
+        String strCurrentDateSumTraffic = String.format("%.2f", (float) tempCurrentDateSumTraffic / (1024 * 1024)) + " MB";
 
         NotificationHandler.displayNotification(App.context, String.format("Down: %s B/s, Up:%s B/s", receivedBytes, sentBytes)
                 , String.format("Total: %s", strCurrentDateSumTraffic)
