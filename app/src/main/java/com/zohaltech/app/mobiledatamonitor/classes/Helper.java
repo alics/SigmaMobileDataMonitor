@@ -14,15 +14,22 @@ import java.util.Locale;
 
 public final class Helper {
 
-    public static Date getCurrentDateTime() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
-        Date date = null;
-        try {
-            date = dateFormat.parse(String.valueOf(new Date()));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return date;
+//    public static Date getCurrentDateTime() {
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
+//        Date date = null;
+//        try {
+//            date = dateFormat.parse(String.valueOf(new Date()));
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        return date;
+//    }
+
+    public static String getCurrentDateTime()
+    {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault());
+        Date date = new Date();
+        return dateFormat.format(date);
     }
 
     public static String getCurrentDate() {
@@ -30,12 +37,6 @@ public final class Helper {
         Date date = new Date();
         return dateFormat.format(date);
     }
-
-//    public static String getCurrentDateTime() {
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault());
-//        Date date = new Date();
-//        return dateFormat.format(date);
-//    }
 
     public static Date getDateTime(String dateTime) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault());

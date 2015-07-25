@@ -61,7 +61,7 @@ public class UsageLogs {
         SQLiteDatabase db = da.getReadableDB();
         Cursor cursor = null;
         try {
-            String query = "SELECT MAX(" + LogDateTime + ") MaxLogDate FROM UsageLogs";
+            String query = "SELECT MAX(" + LogDateTime + ") MaxLogDate FROM " + TableName;
             cursor = db.rawQuery(query, null);
             if (cursor != null && cursor.moveToFirst()) {
                 do {
@@ -118,14 +118,15 @@ public class UsageLogs {
     public static long insert(UsageLog usageLog) {
         ContentValues values = new ContentValues();
         Date maxDate = getMaxDateOfUsageLog();
-        Date currentDate = usageLog.getLogDateTime();
+        String strCurrentDateTime = Helper.getCurrentDateTime();
+        Date currentDate = Helper.getDate(strCurrentDateTime);
 
         if (maxDate != null && currentDate.compareTo(maxDate) > 0) {
             integrateSumUsedTrafficUsagePerHourInDate(maxDate);
         }
 
         values.put(TrafficBytes, usageLog.getTrafficBytes());
-        values.put(LogDateTime, String.valueOf(usageLog.getLogDateTime()));
+        values.put(LogDateTime, strCurrentDateTime);
 
         DataAccess da = new DataAccess();
         return da.insert(TableName, values);

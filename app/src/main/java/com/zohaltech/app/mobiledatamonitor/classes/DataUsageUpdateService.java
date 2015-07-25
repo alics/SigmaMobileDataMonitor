@@ -6,6 +6,8 @@ import android.content.Intent;
 import com.zohaltech.app.mobiledatamonitor.dal.UsageLogs;
 import com.zohaltech.app.mobiledatamonitor.entities.UsageLog;
 
+import java.util.Date;
+
 public class DataUsageUpdateService extends IntentService {
 
     private static final int USAGE_LOG_INTERVAL = 5;
@@ -35,7 +37,8 @@ public class DataUsageUpdateService extends IntentService {
         interval++;
         tempUsage = tempUsage + receiveBytes + sentBytes;
         if (interval == USAGE_LOG_INTERVAL) {
-            UsageLogs.insert(new UsageLog(tempUsage, Helper.getCurrentDateTime()));
+            tempUsage = 70;
+            UsageLogs.insert(new UsageLog(tempUsage));
             interval = 0;
             tempUsage = 0;
         }
