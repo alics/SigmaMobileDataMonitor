@@ -23,7 +23,7 @@ public class UsageLogs {
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
             Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
             TrafficBytes + " BIGINT NOT NULL, " +
-            LogDateTime + " DATE );";
+            LogDateTime + " CHAR(19) );";
 
     static final String DropTable = "Drop Table If Exists " + TableName;
 
@@ -40,7 +40,7 @@ public class UsageLogs {
                 do {
                     UsageLog log = new UsageLog(cursor.getInt(cursor.getColumnIndex(Id)),
                                                 cursor.getLong(cursor.getColumnIndex(TrafficBytes)),
-                                                Helper.getDate(cursor.getString(cursor.getColumnIndex(LogDateTime))));
+                                                cursor.getString(cursor.getColumnIndex(LogDateTime)));
                     logList.add(log);
                 } while (cursor.moveToNext());
             }
@@ -55,8 +55,8 @@ public class UsageLogs {
         return logList;
     }
 
-    private static Date getMaxDateOfUsageLog() {
-        Date maxLogDate = null;
+    private static String getMaxDateOfUsageLog() {
+        String maxLogDate = null;
         DataAccess da = new DataAccess();
         SQLiteDatabase db = da.getReadableDB();
         Cursor cursor = null;
@@ -65,7 +65,7 @@ public class UsageLogs {
             cursor = db.rawQuery(query, null);
             if (cursor != null && cursor.moveToFirst()) {
                 do {
-                    maxLogDate = Helper.getDate(cursor.getString(cursor.getColumnIndex("MaxLogDate")));
+                    maxLogDate = cursor.getString(cursor.getColumnIndex("MaxLogDate"));
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
@@ -79,7 +79,7 @@ public class UsageLogs {
         return maxLogDate;
     }
 
-    private static void integrateSumUsedTrafficUsagePerHourInDate(Date date) {
+    private static void integrateSumUsedTrafficUsagePerHourInDate(String date) {
         DataAccess da = new DataAccess();
         SQLiteDatabase db = da.getReadableDB();
         Cursor cursor = null;
@@ -96,8 +96,8 @@ public class UsageLogs {
                     String endingDateTime = date + " " + endingHour + ":00:00";
 
                     DailyTrafficHistory history = new DailyTrafficHistory(sum,
-                                                                          Helper.getDate(beginningDateTime),
-                                                                          Helper.getDate(endingDateTime));
+                                                                          beginningDateTime,
+                                                                          endingDateTime);
                     DailyTrafficHistories.insert(history);
                 } while (cursor.moveToNext());
             }
@@ -117,12 +117,12 @@ public class UsageLogs {
 
     public static long insert(UsageLog usageLog) {
         ContentValues values = new ContentValues();
-        Date maxDate = getMaxDateOfUsageLog();
+        String maxDateStr = getMaxDateOfUsageLog().substring(0,10);
         String strCurrentDateTime = Helper.getCurrentDateTime();
-        Date currentDate = Helper.getDate(strCurrentDateTime);
+        String strCurrentDate = strCurrentDateTime.substring(0,10);
 
-        if (maxDate != null && currentDate.compareTo(maxDate) > 0) {
-            integrateSumUsedTrafficUsagePerHourInDate(maxDate);
+        if (maxDateStr != null && strCurrentDate.compareTo(maxDateStr) > 0) {
+            integrateSumUsedTrafficUsagePerHourInDate(maxDateStr);
         }
 
         values.put(TrafficBytes, usageLog.getTrafficBytes());

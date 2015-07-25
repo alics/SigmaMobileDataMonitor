@@ -5,13 +5,13 @@ import java.util.Date;
 public class PackageHistory {
     Integer id;
     Integer dataPackageId;
-    Date    startDateTime;
-    Date    endDateTime;
+    String    startDateTime;
+    String    endDateTime;
     String  simId;
     Boolean active;
 
 
-    public PackageHistory(Integer dataPackageId, Date startDateTime, Date endDateTime, String simId, Boolean active) {
+    public PackageHistory(Integer dataPackageId, String startDateTime, String endDateTime, String simId, Boolean active) {
         setDataPackageId(dataPackageId);
         setStartDateTime(startDateTime);
         setEndDateTime(endDateTime);
@@ -19,7 +19,7 @@ public class PackageHistory {
         setActive(active);
     }
 
-    public PackageHistory(Integer id, Integer dataPackageId, Date startDateTime, Date endDateTime, String simId, Boolean active) {
+    public PackageHistory(Integer id, Integer dataPackageId, String startDateTime, String endDateTime, String simId, Boolean active) {
         this(dataPackageId, startDateTime, endDateTime, simId, active);
         this.id = id;
     }
@@ -40,19 +40,19 @@ public class PackageHistory {
         this.dataPackageId = dataPackageId;
     }
 
-    public Date getStartDateTime() {
+    public String getStartDateTime() {
         return startDateTime;
     }
 
-    public void setStartDateTime(Date startDateTime) {
+    public void setStartDateTime(String startDateTime) {
         this.startDateTime = startDateTime;
     }
 
-    public Date getEndDateTime() {
+    public String getEndDateTime() {
         return endDateTime;
     }
 
-    public void setEndDateTime(Date endDateTime) {
+    public void setEndDateTime(String endDateTime) {
         this.endDateTime = endDateTime;
     }
 

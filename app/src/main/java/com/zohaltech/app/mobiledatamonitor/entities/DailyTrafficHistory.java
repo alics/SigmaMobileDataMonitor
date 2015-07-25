@@ -7,16 +7,16 @@ import java.util.Date;
 public class DailyTrafficHistory {
     private Integer id;
     private Long traffic;
-    private Date beginningDateTime;
-    private Date endingDateTime;
+    private String beginningDateTime;
+    private String endingDateTime;
 
-    public DailyTrafficHistory(Long traffic, Date beginningDateTime, Date endingDateTime) {
+    public DailyTrafficHistory(Long traffic, String beginningDateTime, String endingDateTime) {
         setTraffic(traffic);
         setBeginningDateTime(beginningDateTime);
         setEndingDateTime(endingDateTime);
     }
 
-    public DailyTrafficHistory(Integer id, Long traffic, Date beginningDateTime, Date endingDateTime) {
+    public DailyTrafficHistory(Integer id, Long traffic, String beginningDateTime, String endingDateTime) {
         this(traffic, beginningDateTime, endingDateTime);
         this.id = id;
     }
@@ -38,19 +38,19 @@ public class DailyTrafficHistory {
     }
 
 
-    public Date getBeginningDateTime() {
+    public String getBeginningDateTime() {
         return beginningDateTime;
     }
 
-    public void setBeginningDateTime(Date beginningDateTime) {
+    public void setBeginningDateTime(String beginningDateTime) {
         this.beginningDateTime = beginningDateTime;
     }
 
-    public Date getEndingDateTime() {
+    public String getEndingDateTime() {
         return endingDateTime;
     }
 
-    public void setEndingDateTime(Date endingDateTime) {
+    public void setEndingDateTime(String endingDateTime) {
         this.endingDateTime = endingDateTime;
     }
 }

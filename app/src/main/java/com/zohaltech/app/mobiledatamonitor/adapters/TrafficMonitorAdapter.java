@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
+import com.zohaltech.app.mobiledatamonitor.classes.Helper;
 import com.zohaltech.app.mobiledatamonitor.classes.SolarCalendar;
 import com.zohaltech.app.mobiledatamonitor.entities.TrafficMonitor;
 
@@ -32,7 +33,7 @@ public class TrafficMonitorAdapter extends ArrayAdapter<TrafficMonitor> {
         }
 
         public void fill(final ArrayAdapter<TrafficMonitor> adapter, final TrafficMonitor item, final int position) {
-            txtDate.setText(SolarCalendar.getShamsiDateTime(item.getDate()));
+            txtDate.setText(SolarCalendar.getShamsiDateTime(Helper.getDateTime(item.getDate())));
             txtTotalTraffic.setText(item.getTotalTraffic() + "");
         }
     }

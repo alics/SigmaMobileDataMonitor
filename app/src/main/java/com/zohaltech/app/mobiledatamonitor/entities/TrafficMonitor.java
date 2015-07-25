@@ -6,10 +6,10 @@ import java.util.Date;
 public class TrafficMonitor {
 
     private Long totalTraffic;
-    private Date date;
+    private String date;
 
 
-    public TrafficMonitor(Long totalTraffic, Date date) {
+    public TrafficMonitor(Long totalTraffic, String date) {
         setTotalTraffic(totalTraffic);
         setDate(date);
     }
@@ -22,11 +22,11 @@ public class TrafficMonitor {
         this.totalTraffic = totalTraffic;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }

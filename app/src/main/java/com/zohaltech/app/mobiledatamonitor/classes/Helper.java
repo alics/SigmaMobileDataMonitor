@@ -60,13 +60,13 @@ public final class Helper {
         return date;
     }
 
-    public static Time getTime(String timeStr) {
-        Time time = null;
-        if (timeStr != null && !TextUtils.isEmpty(timeStr)) {
-            time = java.sql.Time.valueOf(timeStr);
-        }
-        return time;
-    }
+//    public static Time getTime(String timeStr) {
+//        Time time = null;
+//        if (timeStr != null && !TextUtils.isEmpty(timeStr)) {
+//            time = java.sql.Time.valueOf(timeStr);
+//        }
+//        return time;
+//    }
 
     public static void runUssd(String code) {
         code = String.format("%s%s", code.substring(0, code.length() - 1), Uri.encode("#"));

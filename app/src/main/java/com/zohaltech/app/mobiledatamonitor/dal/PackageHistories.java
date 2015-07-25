@@ -22,8 +22,8 @@ public class PackageHistories {
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
             Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
             DataPackageId + " INTEGER REFERENCES " + DataPackages.TableName + " (" + DataPackages.Id + "), " +
-            StartDateTime + " DATE NOT NULL," +
-            EndDateTime + " DATE NOT NULL," +
+            StartDateTime + " CHAR(19) NOT NULL," +
+            EndDateTime + " CHAR(19) NOT NULL," +
             SimId + " INTEGER  NOT NULL ," +
             Active + " BOOLEAN   );";
 
@@ -43,8 +43,8 @@ public class PackageHistories {
                 do {
                     PackageHistory packageHistory = new PackageHistory(cursor.getInt(cursor.getColumnIndex(Id)),
                                                                        cursor.getInt(cursor.getColumnIndex(DataPackageId)),
-                                                                       Helper.getDateTime(cursor.getString(cursor.getColumnIndex(StartDateTime))),
-                                                                       Helper.getDateTime(cursor.getString(cursor.getColumnIndex(EndDateTime))),
+                                                                       cursor.getString(cursor.getColumnIndex(StartDateTime)),
+                                                                       cursor.getString(cursor.getColumnIndex(EndDateTime)),
                                                                        cursor.getString(cursor.getColumnIndex(SimId)),
                                                                        cursor.getInt(cursor.getColumnIndex(Active)) == 1);
                     packageList.add(packageHistory);

@@ -36,14 +36,14 @@ public class SolarCalendar {
 
     public static String getCurrentShamsiDateTime() {
         String dateString = getCurrentShamsiDate();
-        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss.S");
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
         String timeString = dateFormat.format(new Date());
         return dateString + " " + timeString;
     }
 
     public static String getShamsiDateTime(Date date) {
         String dateString = getShamsiDate(date);
-        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss.S");
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
         String timeString = dateFormat.format(date);
         return dateString + " " + timeString;
     }

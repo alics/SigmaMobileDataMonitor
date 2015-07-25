@@ -21,8 +21,8 @@ public class DailyTrafficHistories {
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
                                       Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                                       Traffic + " BIGINT  NOT NULL," +
-                                      BeginningDateTime + " Date  NOT NULL, " +
-                                      EndingDateTime + " Date  NOT NULL );";
+                                      BeginningDateTime + " CHAR(19)  NOT NULL, " +
+                                      EndingDateTime + " CHAR(19)  NOT NULL );";
     static final String DropTable   = "Drop Table If Exists " + TableName;
 
 
@@ -39,8 +39,8 @@ public class DailyTrafficHistories {
                 do {
                     DailyTrafficHistory history = new DailyTrafficHistory(cursor.getInt(cursor.getColumnIndex(Id)),
                                                                           cursor.getLong(cursor.getColumnIndex(Traffic)),
-                                                                          Helper.getDate(cursor.getString(cursor.getColumnIndex(BeginningDateTime))),
-                                                                          Helper.getDate(cursor.getString(cursor.getColumnIndex(EndingDateTime))));
+                                                                          cursor.getString(cursor.getColumnIndex(BeginningDateTime)),
+                                                                          cursor.getString(cursor.getColumnIndex(EndingDateTime)));
                     histories.add(history);
                 } while (cursor.moveToNext());
             }
@@ -103,7 +103,7 @@ public class DailyTrafficHistories {
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     TrafficMonitor trafficMonitor = new TrafficMonitor(cursor.getLong(cursor.getColumnIndex("total")),
-                                                                       Helper.getDate(cursor.getString(cursor.getColumnIndex("date"))));
+                                                                       cursor.getString(cursor.getColumnIndex("date")));
                     trafficMonitors.add(trafficMonitor);
                 } while (cursor.moveToNext());
             }

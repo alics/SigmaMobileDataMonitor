@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
+import com.zohaltech.app.mobiledatamonitor.classes.Helper;
 import com.zohaltech.app.mobiledatamonitor.classes.SolarCalendar;
 import com.zohaltech.app.mobiledatamonitor.dal.DataPackages;
 import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
@@ -37,8 +38,8 @@ public class PackagesHistoryAdapter extends ArrayAdapter<PackageHistory> {
 
         public void fill(final ArrayAdapter<PackageHistory> adapter, final PackageHistory item, final int position) {
             txtPackageDesc.setText(DataPackages.selectPackagesById(item.getDataPackageId()).get(0).getTitle());
-            txtActivateDate.setText(SolarCalendar.getShamsiDateTime(item.getStartDateTime()));
-            txtExpDate.setText(SolarCalendar.getShamsiDateTime(item.getEndDateTime()));
+            txtActivateDate.setText(SolarCalendar.getShamsiDateTime(Helper.getDateTime(item.getStartDateTime())));
+            txtExpDate.setText(SolarCalendar.getShamsiDateTime(Helper.getDateTime(item.getEndDateTime())));
             txtStatus.setText(item.getActive() ? "فعال" : "غیر فعال");
         }
     }

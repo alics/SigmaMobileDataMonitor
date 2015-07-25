@@ -11,13 +11,13 @@ public class DataPackage {
     Integer price;
     Long primaryTraffic;
     Long secondaryTraffic;
-    Time secondaryTrafficStartTime;
-    Time secondaryTrafficEndTime;
+    String secondaryTrafficStartTime;
+    String secondaryTrafficEndTime;
     String ussdCode;
     Boolean custom;
 
     public DataPackage( Integer operatorId , String title,Integer period,Integer price,Long primaryTraffic,Long secondaryTraffic,
-                        Time secondaryTrafficEndTime,Time secondaryTrafficStartTime ,String ussdCode, Boolean custom)
+                        String secondaryTrafficEndTime,String secondaryTrafficStartTime ,String ussdCode, Boolean custom)
     {
         setOperatorId(operatorId);
         setTitle(title);
@@ -32,7 +32,7 @@ public class DataPackage {
     }
 
     public DataPackage(Integer id,Integer operatorId , String title,Integer period,Integer price,Long primaryTraffic,Long secondaryTraffic,
-                       Time secondaryTrafficEndTime,Time secondaryTrafficStartTime ,String ussdCode, Boolean custom)
+                       String secondaryTrafficEndTime,String secondaryTrafficStartTime ,String ussdCode, Boolean custom)
     {
         this(operatorId, title, period, price, primaryTraffic, secondaryTraffic, secondaryTrafficStartTime, secondaryTrafficEndTime, ussdCode, custom);
         this.id=id;
@@ -94,19 +94,19 @@ public class DataPackage {
         this.secondaryTraffic = secondaryTraffic;
     }
 
-    public Time getSecondaryTrafficStartTime() {
+    public String getSecondaryTrafficStartTime() {
         return secondaryTrafficStartTime;
     }
 
-    public void setSecondaryTrafficStartTime(Time secondaryTrafficStartTime) {
+    public void setSecondaryTrafficStartTime(String secondaryTrafficStartTime) {
         this.secondaryTrafficStartTime = secondaryTrafficStartTime;
     }
 
-    public Time getSecondaryTrafficEndTime() {
+    public String getSecondaryTrafficEndTime() {
         return secondaryTrafficEndTime;
     }
 
-    public void setSecondaryTrafficEndTime(Time secondaryTrafficEndTime) {
+    public void setSecondaryTrafficEndTime(String secondaryTrafficEndTime) {
         this.secondaryTrafficEndTime = secondaryTrafficEndTime;
     }
 

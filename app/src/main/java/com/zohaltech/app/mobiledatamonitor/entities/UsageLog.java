@@ -6,13 +6,13 @@ import java.util.Date;
 public class UsageLog {
     private Integer id;
     private Long trafficBytes;
-    private Date logDateTime;
+    private String logDateTime;
 
     public UsageLog(Long trafficBytes) {
         setTrafficBytes(trafficBytes);
     }
 
-    public UsageLog(Integer id, Long trafficBytes, Date logDateTime) {
+    public UsageLog(Integer id, Long trafficBytes, String logDateTime) {
         this(trafficBytes);
         setId(id);
         setLogDateTime(logDateTime);
@@ -34,11 +34,11 @@ public class UsageLog {
         this.trafficBytes = trafficBytes;
     }
 
-    public Date getLogDateTime() {
+    public String getLogDateTime() {
         return logDateTime;
     }
 
-    public void setLogDateTime(Date logDateTime) {
+    public void setLogDateTime(String logDateTime) {
         this.logDateTime = logDateTime;
     }
 }

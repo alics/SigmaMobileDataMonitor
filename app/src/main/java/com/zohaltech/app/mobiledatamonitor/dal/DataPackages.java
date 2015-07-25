@@ -32,8 +32,8 @@ public class DataPackages {
             Price + " INTEGER  NOT NULL ," +
             PrimaryTraffic + " BIGINT  NOT NULL ," +
             SecondaryTraffic + " BIGINT   ," +
-            SecondaryTrafficStartTime + " TIME   ," +
-            SecondaryTrafficEndTime + " TIME   ," +
+            SecondaryTrafficStartTime + " CHAR(8)   ," +
+            SecondaryTrafficEndTime + " CHAR(8)   ," +
             UssdCode + " VARCHAR(50)   ," +
             Custom + " BOOLEAN   )";
 
@@ -57,8 +57,8 @@ public class DataPackages {
                             cursor.getInt(cursor.getColumnIndex(Price)),
                             cursor.getLong(cursor.getColumnIndex(PrimaryTraffic)),
                             cursor.getLong(cursor.getColumnIndex(SecondaryTraffic)),
-                            Helper.getTime(cursor.getString(cursor.getColumnIndex(SecondaryTrafficStartTime))),
-                            Helper.getTime(cursor.getString(cursor.getColumnIndex(SecondaryTrafficEndTime))),
+                            cursor.getString(cursor.getColumnIndex(SecondaryTrafficStartTime)),
+                            cursor.getString(cursor.getColumnIndex(SecondaryTrafficEndTime)),
                             cursor.getString(cursor.getColumnIndex(UssdCode)),
                             cursor.getInt(cursor.getColumnIndex(Custom)) == 1);
                     packageList.add(dataPackage);

@@ -8,9 +8,6 @@ import com.zohaltech.app.mobiledatamonitor.entities.MobileOperator;
 
 import java.util.ArrayList;
 
-/**
- * Created by Ali on 7/15/2015.
- */
 public class MobileOperators {
     static final String TableName = "MobileOperators";
     static final String Id        = "Id";
