@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.zohaltech.app.mobiledatamonitor.classes.MyRuntimeException;
 import com.zohaltech.app.mobiledatamonitor.entities.MobileOperator;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class MobileOperators {
                     operatorList.add(operator);
                 } while (cursor.moveToNext());
             }
-        } catch (Exception e) {
+        } catch (MyRuntimeException e) {
             e.printStackTrace();
         } finally {
             if (cursor != null && !cursor.isClosed())

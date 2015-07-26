@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.zohaltech.app.mobiledatamonitor.classes.Helper;
+import com.zohaltech.app.mobiledatamonitor.classes.MyRuntimeException;
 import com.zohaltech.app.mobiledatamonitor.entities.DailyTrafficHistory;
 import com.zohaltech.app.mobiledatamonitor.entities.TrafficMonitor;
 
@@ -44,7 +45,7 @@ public class DailyTrafficHistories {
                     histories.add(history);
                 } while (cursor.moveToNext());
             }
-        } catch (Exception e) {
+        } catch (MyRuntimeException e) {
             e.printStackTrace();
         } finally {
             if (cursor != null && !cursor.isClosed())
@@ -107,7 +108,7 @@ public class DailyTrafficHistories {
                     trafficMonitors.add(trafficMonitor);
                 } while (cursor.moveToNext());
             }
-        } catch (Exception e) {
+        } catch (MyRuntimeException e) {
             e.printStackTrace();
         } finally {
             if (cursor != null && !cursor.isClosed())

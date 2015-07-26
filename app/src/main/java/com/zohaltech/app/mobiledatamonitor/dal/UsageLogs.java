@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.zohaltech.app.mobiledatamonitor.classes.Helper;
+import com.zohaltech.app.mobiledatamonitor.classes.MyRuntimeException;
 import com.zohaltech.app.mobiledatamonitor.entities.DailyTrafficHistory;
 import com.zohaltech.app.mobiledatamonitor.entities.UsageLog;
 
@@ -41,7 +42,7 @@ public class UsageLogs {
                     logList.add(log);
                 } while (cursor.moveToNext());
             }
-        } catch (Exception e) {
+        } catch (MyRuntimeException e) {
             e.printStackTrace();
         } finally {
             if (cursor != null && !cursor.isClosed())
@@ -65,7 +66,7 @@ public class UsageLogs {
                     maxLogDate = cursor.getString(cursor.getColumnIndex("MaxLogDate"));
                 } while (cursor.moveToNext());
             }
-        } catch (Exception e) {
+        } catch (MyRuntimeException e) {
             e.printStackTrace();
         } finally {
             if (cursor != null && !cursor.isClosed())
@@ -98,7 +99,7 @@ public class UsageLogs {
                     DailyTrafficHistories.insert(history);
                 } while (cursor.moveToNext());
             }
-        } catch (Exception e) {
+        } catch (MyRuntimeException e) {
             e.printStackTrace();
         } finally {
             if (cursor != null && !cursor.isClosed())
@@ -123,7 +124,7 @@ public class UsageLogs {
                     sumTraffic = cursor.getLong(cursor.getColumnIndex("SumTraffic"));
                 } while (cursor.moveToNext());
             }
-        } catch (Exception e) {
+        } catch (MyRuntimeException e) {
             e.printStackTrace();
         } finally {
             if (cursor != null && !cursor.isClosed())

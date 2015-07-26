@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.zohaltech.app.mobiledatamonitor.classes.App;
 import com.zohaltech.app.mobiledatamonitor.classes.CsvReader;
+import com.zohaltech.app.mobiledatamonitor.classes.MyRuntimeException;
 
 import java.io.InputStreamReader;
 
@@ -32,7 +33,7 @@ public class DataAccess extends SQLiteOpenHelper {
             insertDataFromAsset(database, MobileOperators.TableName, "data/operators.csv", ';');
             insertDataFromAsset(database, DataPackages.TableName, "data/packages.csv", ';');
 
-        } catch (SQLException e) {
+        } catch (MyRuntimeException e) {
             e.printStackTrace();
         }
     }
@@ -46,7 +47,7 @@ public class DataAccess extends SQLiteOpenHelper {
             database.execSQL(UsageLogs.DropTable);
             database.execSQL(DailyTrafficHistories.DropTable);
             onCreate(database);
-        } catch (SQLException e) {
+        } catch (MyRuntimeException e) {
             e.printStackTrace();
         }
     }
@@ -70,7 +71,7 @@ public class DataAccess extends SQLiteOpenHelper {
             SQLiteDatabase db = this.getWritableDB();
             result = db.insert(table, null, values);
             db.close();
-        } catch (Exception e) {
+        } catch (MyRuntimeException e) {
             e.printStackTrace();
         }
         return result;
@@ -82,7 +83,7 @@ public class DataAccess extends SQLiteOpenHelper {
             SQLiteDatabase db = this.getWritableDB();
             result = db.update(table, values, whereClause, selectionArgs);
             db.close();
-        } catch (Exception e) {
+        } catch (MyRuntimeException e) {
             e.printStackTrace();
         }
         return result;
@@ -94,7 +95,7 @@ public class DataAccess extends SQLiteOpenHelper {
             SQLiteDatabase db = this.getWritableDB();
             result = db.delete(table, whereClause, selectionArgs);
             db.close();
-        } catch (Exception e) {
+        } catch (MyRuntimeException e) {
             e.printStackTrace();
         }
         return result;

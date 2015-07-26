@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.zohaltech.app.mobiledatamonitor.classes.MyRuntimeException;
 import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
 
 import java.util.ArrayList;
@@ -49,7 +50,7 @@ public class PackageHistories {
                     packageList.add(packageHistory);
                 } while (cursor.moveToNext());
             }
-        } catch (Exception e) {
+        } catch (MyRuntimeException e) {
             e.printStackTrace();
         } finally {
             if (cursor != null && !cursor.isClosed())

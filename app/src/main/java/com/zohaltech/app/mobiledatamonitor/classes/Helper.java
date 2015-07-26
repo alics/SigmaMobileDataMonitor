@@ -54,7 +54,7 @@ public final class Helper {
         Date date = null;
         try {
             date = dateFormat.parse(dateTime);
-        } catch (ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return date;
