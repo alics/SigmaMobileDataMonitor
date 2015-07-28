@@ -5,24 +5,28 @@
                 tools:context=".MainActivity">
 
     <Button
+        android:id="@+id/btnStartMonitoring"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Start Monitoring"
-        android:id="@+id/btnStartMonitoring"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="25dp"
-        android:onClick="startMonitoring"/>
+        android:onClick="startMonitoring"
+        android:text="Start Monitoring"/>
 
     <Button
+        android:id="@+id/btnStopMonitoring"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Stop Monitoring"
-        android:id="@+id/btnStopMonitoring"
-        android:onClick="stopMonitoring"
-        android:layout_below="@+id/btnStartMonitoring"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        />
+        android:layout_below="@+id/btnStartMonitoring"
+        android:onClick="stopMonitoring"
+        android:text="Stop Monitoring"/>
+
+    <TextView
+        android:id="@+id/txtTransferRate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>

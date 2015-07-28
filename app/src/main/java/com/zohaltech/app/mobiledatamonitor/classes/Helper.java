@@ -5,8 +5,12 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.telephony.TelephonyManager;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -79,6 +83,54 @@ public final class Helper {
         ConnectivityManager cm = (ConnectivityManager) App.context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         return activeNetwork != null && (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE);
+    }
+
+    public static String getTransferRate(long bytes) {
+        String result = bytes + " B/s";
+        if (bytes >= 1024 && bytes < (1024 * 1024)) {
+            result = bytes / 1024 + "KB/s";
+        } else if (bytes >= (1024 * 1024)) {
+            result = bytes / (1024 * 1024) + "MB/s";
+        }
+        return result;
+    }
+
+    public static void setMobileDataEnabled(boolean enabled) throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+        try {
+            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.FROYO) {
+                Method dataConnSwitchmethod;
+                Class telephonyManagerClass;
+                Object ITelephonyStub;
+                Class ITelephonyClass;
+                TelephonyManager telephonyManager = (TelephonyManager) App.context.getSystemService(Context.TELEPHONY_SERVICE);
+
+                telephonyManagerClass = Class.forName(telephonyManager.getClass().getName());
+                Method getITelephonyMethod = telephonyManagerClass.getDeclaredMethod("getITelephony");
+                getITelephonyMethod.setAccessible(true);
+                ITelephonyStub = getITelephonyMethod.invoke(telephonyManager);
+                ITelephonyClass = Class.forName(ITelephonyStub.getClass().getName());
+
+                if (enabled) {
+                    dataConnSwitchmethod = ITelephonyClass.getDeclaredMethod("enableDataConnectivity");
+                } else {
+                    dataConnSwitchmethod = ITelephonyClass.getDeclaredMethod("disableDataConnectivity");
+                }
+                dataConnSwitchmethod.setAccessible(true);
+                dataConnSwitchmethod.invoke(ITelephonyStub);
+            } else {
+                final ConnectivityManager conman = (ConnectivityManager) App.context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                final Class conmanClass = Class.forName(conman.getClass().getName());
+                final Field connectivityManagerField = conmanClass.getDeclaredField("mService");
+                connectivityManagerField.setAccessible(true);
+                final Object connectivityManager = connectivityManagerField.get(conman);
+                final Class connectivityManagerClass = Class.forName(connectivityManager.getClass().getName());
+                final Method setMobileDataEnabledMethod = connectivityManagerClass.getDeclaredMethod("setMobileDataEnabled", Boolean.TYPE);
+                setMobileDataEnabledMethod.setAccessible(true);
+                setMobileDataEnabledMethod.invoke(connectivityManager, enabled);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private Operator getOperator() {

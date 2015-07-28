@@ -36,10 +36,10 @@ public class NotificationHandler {
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(R.drawable.ic_notification)
-                        .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_notification))
+                        //.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_notification))
                         .setContentTitle(title)
                         .setContentText(text)
-                        .setSubText(subText)
+                        //.setSubText(subText)
                                 //.setVisibility(NotificationCompat.VISIBILITY_SECRET) //invisible in lock screen
                         .setVisibility(NotificationCompat.VISIBILITY_PUBLIC) //visible in lock screen
                         .setOngoing(true)

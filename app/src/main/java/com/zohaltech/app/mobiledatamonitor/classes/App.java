@@ -11,13 +11,13 @@ import android.view.LayoutInflater;
 
 public class App extends Application {
 
-    public static Context context;
-    public static Activity currentActivity;
+    public static Context           context;
+    public static Activity          currentActivity;
     public static SharedPreferences preferences;
-    public static Typeface englishFont;
-    public static Typeface persianFont;
-    public static Handler handler;
-    public static LayoutInflater inflater;
+    public static Typeface          englishFont;
+    public static Typeface          persianFont;
+    public static Handler           handler;
+    public static LayoutInflater    inflater;
 
     @Override
     public void onCreate() {
@@ -29,6 +29,6 @@ public class App extends Application {
         handler = new Handler();
         inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 
-        AlarmHandler.start(context);
+        //AlarmHandler.start(context);
     }
 }

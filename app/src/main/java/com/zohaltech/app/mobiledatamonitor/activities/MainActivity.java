@@ -1,20 +1,29 @@
 package com.zohaltech.app.mobiledatamonitor.activities;
 
-import com.zohaltech.app.mobiledatamonitor.classes.AlarmHandler;
-import com.zohaltech.app.mobiledatamonitor.R;
-import com.zohaltech.app.mobiledatamonitor.classes.App;
-
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.zohaltech.app.mobiledatamonitor.R;
+import com.zohaltech.app.mobiledatamonitor.classes.AlarmHandler;
+import com.zohaltech.app.mobiledatamonitor.classes.App;
+import com.zohaltech.app.mobiledatamonitor.classes.DataUsageUpdateService;
+
 public class MainActivity extends EnhancedActivity {
+
+    TextView txtTransferRate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        txtTransferRate = (TextView) findViewById(R.id.txtTransferRate);
+
+        //new TransferTask().execute();
 
         findViewById(R.id.btnStartMonitoring).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,5 +40,37 @@ public class MainActivity extends EnhancedActivity {
                 Toast.makeText(App.currentActivity, "Monitoring has been stopped!", Toast.LENGTH_SHORT).show();
             }
         });
+
+        Intent service = new Intent(App.context, DataUsageUpdateService.class);
+        startService(service);
+    }
+
+    private class TransferTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            //while (true) {
+            //    try {
+            //        Thread.sleep(1000);
+            //        //return "Transfer Rate : " + TrafficStats.getMobileRxBytes() + TrafficStats.getMobileTxBytes() + " Bytes";
+            //
+            //        //NotificationHandler.displayNotification(App.context,"Transfer Rate",TrafficStats.getMobileRxBytes() + TrafficStats.getMobileTxBytes() + " Bytes","");
+            //
+            //        Intent intent = new Intent(App.context, DataUsageUpdateService.class);
+            //        App.context.startService(intent);
+            //
+            //    } catch (InterruptedException e) {
+            //        e.printStackTrace();
+            //    }
+            //}
+
+            AlarmHandler.start(App.context);
+            return null;
+        }
+        //
+        //@Override
+        //protected void onPostExecute(Void s) {
+        //    super.onPostExecute(s);
+        //}
     }
 }

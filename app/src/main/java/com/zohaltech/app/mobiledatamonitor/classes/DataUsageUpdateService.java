@@ -1,64 +1,120 @@
 package com.zohaltech.app.mobiledatamonitor.classes;
 
-import android.app.IntentService;
+import android.app.Service;
 import android.content.Intent;
+import android.os.IBinder;
 
-import com.zohaltech.app.mobiledatamonitor.dal.UsageLogs;
-import com.zohaltech.app.mobiledatamonitor.entities.UsageLog;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
-public class DataUsageUpdateService extends IntentService {
+public class DataUsageUpdateService extends Service {
 
-    private static final int USAGE_LOG_INTERVAL       = 10;
 
+    private static final int USAGE_LOG_INTERVAL = 10;
+    private static final String TAG = DataUsageUpdateService.class.getSimpleName();
     private static long tempReceivedBytes = 0;
     private static long tempSentBytes     = 0;
-
     private static boolean firstTime = true;
-
     private static int    usageLogInterval           = 0;
     private static long   tempUsage                  = 0;
     private static long   currentDateSumTraffic      = 0;
-    private static String strCurrentDateTotalTraffic = "0.00 MB";
+    private static String strCurrentDateTotalTraffic = "0.00000 MB";
+    private Timer timer;
 
-    public DataUsageUpdateService() {
-        super("Data Usage Update Service");
+    private TimerTask updateTask = new TimerTask() {
+        @Override
+        public void run() {
+            //while (true) {
+                //
+                long currentReceivedBytes = android.net.TrafficStats.getMobileRxBytes();
+                long currentSentBytes = android.net.TrafficStats.getMobileTxBytes();
+                long receivedBytes = 0;
+                long sentBytes = 0;
+
+                if (currentReceivedBytes + currentSentBytes == 0) {
+                    //log("transfer = 0");
+                    firstTime = true;
+                } else {
+                    if (firstTime) {
+                        firstTime = false;
+                        tempReceivedBytes = currentReceivedBytes;
+                        App.preferences.edit().putLong("tempReceivedBytes", tempReceivedBytes).commit();
+                        tempSentBytes = currentSentBytes;
+                        App.preferences.edit().putLong("tempSentBytes", tempSentBytes).commit();
+                    }
+                    //////////receivedBytes = currentReceivedBytes - tempReceivedBytes;
+                    receivedBytes = currentReceivedBytes - App.preferences.getLong("tempReceivedBytes", 0);
+                    //log("receivedBytes = " + receivedBytes);
+                    //////////sentBytes = currentSentBytes - tempSentBytes;
+                    sentBytes = currentSentBytes - App.preferences.getLong("tempSentBytes", 0);
+                    ;
+                    //log("sentBytes = " + sentBytes);
+                    tempReceivedBytes = currentReceivedBytes;
+                    App.preferences.edit().putLong("tempReceivedBytes", tempReceivedBytes).commit();
+                    tempSentBytes = currentSentBytes;
+                    App.preferences.edit().putLong("tempSentBytes", tempSentBytes).commit();
+
+                    tempUsage = App.preferences.getLong("tempUsage", 0);
+
+                    tempUsage = tempUsage + receivedBytes + sentBytes;
+
+                    App.preferences.edit().putLong("tempUsage", tempUsage).commit();
+
+                    //log("tempUsage = " + tempUsage);
+
+                    //usageLogInterval++;
+                    //if (usageLogInterval == USAGE_LOG_INTERVAL) {
+                    //UsageLogs.insert(new UsageLog(tempUsage));
+                    //log(tempUsage + " inserted");
+                    //currentDateSumTraffic = UsageLogs.getCurrentDateSumTraffic();
+                    //log("currentDateSumTraffic = " + currentDateSumTraffic);
+                    //strCurrentDateTotalTraffic = String.format("%.2f MB", (float) currentDateSumTraffic / (1024 * 1024));
+                    //log("strCurrentDateTotalTraffic = " + strCurrentDateTotalTraffic);
+                    //usageLogInterval = 0;
+                    //tempUsage = 0;
+                    //}
+                    //strCurrentDateTotalTraffic = String.format("%.2f MB", (float) tempUsage / (1024 * 1024));
+
+                }
+
+                NotificationHandler.displayNotification(App.context, String.format("Down: %s, Up: %s", Helper.getTransferRate(receivedBytes), Helper.getTransferRate(sentBytes))
+                        , String.format("Total: %s", String.format("%.2f MB", (float) App.preferences.getLong("tempUsage", 0) / (1024 * 1024)))
+                        , "28% of 3 Gigabyte used");
+
+                //log("Notification : receivedBytes = " + receivedBytes + ", sentBytes = " + sentBytes + ", total = " + strCurrentDateTotalTraffic);
+                //log("total = " + strCurrentDateTotalTraffic);
+
+                //AlarmReceiver.completeWakefulIntent(intent);
+            //}
+        }
+    };
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
     }
 
     @Override
-    protected void onHandleIntent(Intent intent) {
-        long currentReceivedBytes = android.net.TrafficStats.getMobileRxBytes();
-        long currentSentBytes = android.net.TrafficStats.getMobileTxBytes();
-        long receivedBytes = 0;
-        long sentBytes = 0;
+    public void onCreate() {
+        super.onCreate();
 
-        if (currentReceivedBytes + currentSentBytes == 0) {
-            firstTime = true;
-        } else {
-            if (firstTime) {
-                firstTime = false;
-                tempReceivedBytes = currentReceivedBytes;
-                tempSentBytes = currentSentBytes;
-            }
-            receivedBytes = currentReceivedBytes - tempReceivedBytes;
-            sentBytes = currentSentBytes - tempSentBytes;
-            tempReceivedBytes = currentReceivedBytes;
-            tempSentBytes = currentSentBytes;
+        timer = new Timer("DataUsageUpdate");
+        timer.schedule(updateTask, 0L, 1000L);
+    }
 
-            tempUsage = tempUsage + receivedBytes + sentBytes;
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
 
-            usageLogInterval++;
-            if (usageLogInterval == USAGE_LOG_INTERVAL) {
-                UsageLogs.insert(new UsageLog(tempUsage));
-                currentDateSumTraffic = UsageLogs.getCurrentDateSumTraffic();
-                strCurrentDateTotalTraffic = String.format("%.2f MB", (float) currentDateSumTraffic / (1024 * 1024));
-                usageLogInterval = 0;
-                tempUsage = 0;
-            }
-        }
+        timer.cancel();
+        timer = null;
 
-        NotificationHandler.displayNotification(App.context, String.format("Down: %s B/s, Up:%s B/s", receivedBytes, sentBytes)
-                , String.format("Total: %s", strCurrentDateTotalTraffic)
-                , "28% of 3 Gigabyte used");
+        NotificationHandler.cancelNotification(App.context);
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        return super.onStartCommand(intent, flags, startId);
     }
 }

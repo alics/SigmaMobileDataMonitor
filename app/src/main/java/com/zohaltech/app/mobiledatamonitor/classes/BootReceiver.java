@@ -8,8 +8,10 @@ public class BootReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if(SettingsHandler.isMonitoringServiceActive()){
-            AlarmHandler.start(context);
-        }
+        //if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
+            if (SettingsHandler.isMonitoringServiceActive()) {
+                AlarmHandler.start(context);
+            }
+        //}
     }
 }
