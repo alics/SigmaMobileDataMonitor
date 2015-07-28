@@ -41,7 +41,11 @@
             android:name=".classes.DataUsageUpdateService"
             android:enabled="true"
             android:exported="false"
-            android:process=":data_usage"/>
+            android:process=":data_usage">
+            <intent-filter>
+                <action android:name="com.zohaltech.app.mobiledatamonitor.classes.DataUsageUpdateService"/>
+            </intent-filter>
+        </service>
 
         <activity
             android:name=".activities.MainActivity"

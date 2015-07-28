@@ -11,7 +11,7 @@ import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.classes.AlarmHandler;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
 import com.zohaltech.app.mobiledatamonitor.classes.DataUsageUpdateService;
-import com.zohaltech.app.mobiledatamonitor.classes.Webservice;
+import com.zohaltech.app.mobiledatamonitor.classes.WebService;
 
 public class MainActivity extends EnhancedActivity {
 
@@ -42,8 +42,8 @@ public class MainActivity extends EnhancedActivity {
             }
         });
 
-        Intent service = new Intent(App.context, DataUsageUpdateService.class);
-        startService(service);
+        //Intent service = new Intent(App.context, DataUsageUpdateService.class);
+        //startService(service);
     }
 
     private class TransferTask extends AsyncTask<Void, Void, String> {
@@ -65,8 +65,8 @@ public class MainActivity extends EnhancedActivity {
             //    }
             //}
 
-//            AlarmHandler.start(App.context);
-           return Webservice.verify("9","mci");
+            // AlarmHandler.start(App.context);
+           return WebService.verify();
 
             //return null;
         }

@@ -3,6 +3,7 @@ package com.zohaltech.app.mobiledatamonitor.classes;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Handler;
@@ -30,5 +31,8 @@ public class App extends Application {
         inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 
         //AlarmHandler.start(context);
+
+        Intent service = new Intent(context, DataUsageUpdateService.class);
+        context.startService(service);
     }
 }

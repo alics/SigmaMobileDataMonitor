@@ -133,21 +133,29 @@ public final class Helper {
         }
     }
 
-    private Operator getOperator() {
-        TelephonyManager tm = (TelephonyManager) App.context.getSystemService(App.context.TELEPHONY_SERVICE);
-        String simOperatorName = tm.getSimOperatorName().toUpperCase();
-        if (simOperatorName.compareTo("IR-MCI") == 0 || simOperatorName.compareTo("IR-TCI") == 0) {
-            return Operator.MCI;
-        } else if (simOperatorName.compareTo("RIGHTEL") == 0) {
-            return Operator.RIGHTELL;
+    public static Operator getOperator() {
+        Operator operator = Operator.NO_SIM;
+        try {
+            TelephonyManager tm = (TelephonyManager) App.context.getSystemService(App.context.TELEPHONY_SERVICE);
+            String simOperatorName = tm.getSimOperatorName().toUpperCase();
+            if (simOperatorName.toUpperCase().compareTo("IR-MCI") == 0 || simOperatorName.compareTo("IR-TCI") == 0) {
+                operator = Operator.MCI;
+            } else if (simOperatorName.toUpperCase().compareTo("RIGHTEL") == 0) {
+                operator = Operator.RIGHTELL;
+            } else if (simOperatorName.toUpperCase().compareTo("IRANCELL") == 0) {
+                operator = Operator.IRANCELL;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return Operator.IRANCELL;
+        return operator;
     }
 
     public enum Operator {
         MCI,
         RIGHTELL,
-        IRANCELL
+        IRANCELL,
+        NO_SIM
     }
 
     //public static void goToWebsite(String url) {

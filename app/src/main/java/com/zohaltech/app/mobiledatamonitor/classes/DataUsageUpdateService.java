@@ -91,11 +91,6 @@ public class DataUsageUpdateService extends Service {
     };
 
     @Override
-    public IBinder onBind(Intent intent) {
-        return null;
-    }
-
-    @Override
     public void onCreate() {
         super.onCreate();
 
@@ -114,7 +109,15 @@ public class DataUsageUpdateService extends Service {
     }
 
     @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+
+    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        return super.onStartCommand(intent, flags, startId);
+        //return super.onStartCommand(intent, flags, startId);
+        //timer = new Timer("DataUsageUpdate");
+        //timer.schedule(updateTask, 0L, 1000L);
+        return START_STICKY;
     }
 }
