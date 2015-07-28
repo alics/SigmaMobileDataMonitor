@@ -11,6 +11,7 @@ import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.classes.AlarmHandler;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
 import com.zohaltech.app.mobiledatamonitor.classes.DataUsageUpdateService;
+import com.zohaltech.app.mobiledatamonitor.classes.Webservice;
 
 public class MainActivity extends EnhancedActivity {
 
@@ -23,7 +24,7 @@ public class MainActivity extends EnhancedActivity {
 
         txtTransferRate = (TextView) findViewById(R.id.txtTransferRate);
 
-        //new TransferTask().execute();
+        new TransferTask().execute();
 
         findViewById(R.id.btnStartMonitoring).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,10 +46,10 @@ public class MainActivity extends EnhancedActivity {
         startService(service);
     }
 
-    private class TransferTask extends AsyncTask<Void, Void, Void> {
+    private class TransferTask extends AsyncTask<Void, Void, String> {
 
         @Override
-        protected Void doInBackground(Void... voids) {
+        protected String doInBackground(Void... voids) {
             //while (true) {
             //    try {
             //        Thread.sleep(1000);
@@ -64,13 +65,16 @@ public class MainActivity extends EnhancedActivity {
             //    }
             //}
 
-            AlarmHandler.start(App.context);
-            return null;
+//            AlarmHandler.start(App.context);
+           return Webservice.verify("9","mci");
+
+            //return null;
         }
-        //
-        //@Override
-        //protected void onPostExecute(Void s) {
-        //    super.onPostExecute(s);
-        //}
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            txtTransferRate.setText(s);
+        }
     }
 }
