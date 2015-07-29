@@ -17,6 +17,7 @@ public class PackageHistories {
     static final String EndDateTime   = "EndDateTime";
     static final String SimId         = "SimId";
     static final String Active        = "Active";
+    static final String Reserved      = "Reserved";
 
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
@@ -24,8 +25,9 @@ public class PackageHistories {
                                       DataPackageId + " INTEGER REFERENCES " + DataPackages.TableName + " (" + DataPackages.Id + "), " +
                                       StartDateTime + " CHAR(19) NOT NULL," +
                                       EndDateTime + " CHAR(19) NOT NULL," +
-                                      SimId + " INTEGER  NOT NULL ," +
-                                      Active + " BOOLEAN   );";
+                                      SimId + " INTEGER NOT NULL ," +
+                                      Reserved + " BOOLEAN NOT NULL ," +
+                                      Active + " BOOLEAN NOT NULL );";
 
     static final String DropTable = "Drop Table If Exists " + TableName;
 
@@ -46,7 +48,8 @@ public class PackageHistories {
                                                                        cursor.getString(cursor.getColumnIndex(StartDateTime)),
                                                                        cursor.getString(cursor.getColumnIndex(EndDateTime)),
                                                                        cursor.getString(cursor.getColumnIndex(SimId)),
-                                                                       cursor.getInt(cursor.getColumnIndex(Active)) == 1);
+                                                                       cursor.getInt(cursor.getColumnIndex(Active)) == 1,
+                                                                       cursor.getInt(cursor.getColumnIndex(Reserved)) == 1);
                     packageList.add(packageHistory);
                 } while (cursor.moveToNext());
             }
@@ -69,10 +72,11 @@ public class PackageHistories {
         ContentValues values = new ContentValues();
 
         values.put(DataPackageId, packageHistory.getDataPackageId());
-        values.put(StartDateTime, packageHistory.getStartDateTime().toString());
-        values.put(EndDateTime, packageHistory.getEndDateTime().toString());
+        values.put(StartDateTime, packageHistory.getStartDateTime());
+        values.put(EndDateTime, packageHistory.getEndDateTime());
         values.put(SimId, packageHistory.getSimId());
         values.put(Active, packageHistory.getActive() ? 1 : 0);
+        values.put(Reserved, packageHistory.getReserved() ? 1 : 0);
 
         DataAccess da = new DataAccess();
         return da.insert(TableName, values);
@@ -82,10 +86,11 @@ public class PackageHistories {
         ContentValues values = new ContentValues();
 
         values.put(DataPackageId, packageHistory.getDataPackageId());
-        values.put(StartDateTime, packageHistory.getStartDateTime().toString());
-        values.put(EndDateTime, packageHistory.getEndDateTime().toString());
+        values.put(StartDateTime, packageHistory.getStartDateTime());
+        values.put(EndDateTime, packageHistory.getEndDateTime());
         values.put(SimId, packageHistory.getSimId());
         values.put(Active, packageHistory.getActive() ? 1 : 0);
+        values.put(Reserved, packageHistory.getReserved() ? 1 : 0);
 
         DataAccess da = new DataAccess();
         return da.update(TableName, values, Id + " =? ", new String[]{String.valueOf(packageHistory.getId())});
