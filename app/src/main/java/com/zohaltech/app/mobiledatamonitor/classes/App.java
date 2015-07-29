@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -32,7 +35,7 @@ public class App extends Application {
 
         //AlarmHandler.start(context);
 
-        Intent service = new Intent(context, DataUsageUpdateService.class);
+        Intent service = new Intent(context, DataUsageService.class);
         context.startService(service);
     }
 }

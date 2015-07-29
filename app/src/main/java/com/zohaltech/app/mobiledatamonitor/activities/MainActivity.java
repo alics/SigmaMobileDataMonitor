@@ -1,6 +1,5 @@
 package com.zohaltech.app.mobiledatamonitor.activities;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -10,7 +9,6 @@ import android.widget.Toast;
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.classes.AlarmHandler;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
-import com.zohaltech.app.mobiledatamonitor.classes.DataUsageUpdateService;
 import com.zohaltech.app.mobiledatamonitor.classes.WebService;
 
 public class MainActivity extends EnhancedActivity {

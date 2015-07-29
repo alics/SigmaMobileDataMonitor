@@ -21,7 +21,7 @@ public class NotificationHandler {
         notificationManager = (NotificationManager) App.context.getSystemService(Context.NOTIFICATION_SERVICE);
     }
 
-    public static void displayNotification(Context context, String title, String text, String subText) {
+    public static void displayNotification(Context context,int iconId, String title, String text, String subText) {
         //if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB)
         //{
         //    Notification notification;
@@ -35,7 +35,8 @@ public class NotificationHandler {
         //{
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(context)
-                        .setSmallIcon(R.drawable.ic_notification)
+                        .setSmallIcon(iconId
+                                     )
                         //.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_notification))
                         .setContentTitle(title)
                         .setContentText(text)
@@ -44,6 +45,7 @@ public class NotificationHandler {
                         .setVisibility(NotificationCompat.VISIBILITY_PUBLIC) //visible in lock screen
                         .setOngoing(true)
                         .setShowWhen(false)
+                        .setColor(App.context.getResources().getColor(R.color.primary))
                         .setPriority(NotificationCompat.PRIORITY_MAX)
                         .setAutoCancel(false);
         // Creates an explicit intent for an Activity in your app

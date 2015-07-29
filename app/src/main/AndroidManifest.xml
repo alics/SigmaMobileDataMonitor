@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.modify_phone_state"/>
     <uses-permission android:name="android.permission.update_device_stats"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 
     <application
         android:name=".classes.App"
@@ -36,16 +37,19 @@
                 <action android:name="android.intent.action.QUICKBOOT_POWERON"/>
             </intent-filter>
         </receiver>
+        <receiver
+            android:name=".classes.ConnectivityStateReceiver">
+            <intent-filter android:priority="999">
+                <action android:name="android.net.wifi.STATE_CHANGE"/>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+            </intent-filter>
+        </receiver>
 
         <service
-            android:name=".classes.DataUsageUpdateService"
+            android:name=".classes.DataUsageService"
             android:enabled="true"
             android:exported="false"
-            android:process=":data_usage">
-            <intent-filter>
-                <action android:name="com.zohaltech.app.mobiledatamonitor.classes.DataUsageUpdateService"/>
-            </intent-filter>
-        </service>
+            android:process=":data_usage"/>
 
         <activity
             android:name=".activities.MainActivity"

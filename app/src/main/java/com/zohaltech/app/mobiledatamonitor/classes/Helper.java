@@ -98,7 +98,7 @@ public final class Helper {
     public static void setMobileDataEnabled(boolean enabled) throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         try {
             if (Build.VERSION.SDK_INT == Build.VERSION_CODES.FROYO) {
-                Method dataConnSwitchmethod;
+                Method dataConnSwitchMethod;
                 Class telephonyManagerClass;
                 Object ITelephonyStub;
                 Class ITelephonyClass;
@@ -111,12 +111,12 @@ public final class Helper {
                 ITelephonyClass = Class.forName(ITelephonyStub.getClass().getName());
 
                 if (enabled) {
-                    dataConnSwitchmethod = ITelephonyClass.getDeclaredMethod("enableDataConnectivity");
+                    dataConnSwitchMethod = ITelephonyClass.getDeclaredMethod("enableDataConnectivity");
                 } else {
-                    dataConnSwitchmethod = ITelephonyClass.getDeclaredMethod("disableDataConnectivity");
+                    dataConnSwitchMethod = ITelephonyClass.getDeclaredMethod("disableDataConnectivity");
                 }
-                dataConnSwitchmethod.setAccessible(true);
-                dataConnSwitchmethod.invoke(ITelephonyStub);
+                dataConnSwitchMethod.setAccessible(true);
+                dataConnSwitchMethod.invoke(ITelephonyStub);
             } else {
                 final ConnectivityManager conman = (ConnectivityManager) App.context.getSystemService(Context.CONNECTIVITY_SERVICE);
                 final Class conmanClass = Class.forName(conman.getClass().getName());
@@ -136,7 +136,7 @@ public final class Helper {
     public static Operator getOperator() {
         Operator operator = Operator.NO_SIM;
         try {
-            TelephonyManager tm = (TelephonyManager) App.context.getSystemService(App.context.TELEPHONY_SERVICE);
+            TelephonyManager tm = (TelephonyManager) App.context.getSystemService(Context.TELEPHONY_SERVICE);
             String simOperatorName = tm.getSimOperatorName().toUpperCase();
             if (simOperatorName.toUpperCase().compareTo("IR-MCI") == 0 || simOperatorName.compareTo("IR-TCI") == 0) {
                 operator = Operator.MCI;
