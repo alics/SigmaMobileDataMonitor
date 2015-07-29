@@ -7,7 +7,6 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
-
 public class WebService {
 
     private static final String SOAP_ACTION_VERIFICATION = "http://tempuri.org/MobileDataMonitorVerification";
