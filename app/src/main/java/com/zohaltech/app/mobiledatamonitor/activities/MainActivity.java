@@ -9,7 +9,7 @@ import android.widget.Toast;
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.classes.AlarmHandler;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
-import com.zohaltech.app.mobiledatamonitor.classes.WebService;
+import com.zohaltech.app.mobiledatamonitor.classes.WebserviceHandler;
 
 public class MainActivity extends EnhancedActivity {
 
@@ -64,7 +64,7 @@ public class MainActivity extends EnhancedActivity {
             //}
 
             // AlarmHandler.start(App.context);
-           return WebService.verify();
+           return WebserviceHandler.verify();
 
             //return null;
         }
