@@ -8,17 +8,20 @@ public class PackageHistory {
     String endDateTime;
     String simId;
     Boolean active;
+    Boolean reserved;
 
-    public PackageHistory(Integer dataPackageId, String startDateTime, String endDateTime, String simId, Boolean active) {
+
+    public PackageHistory(Integer dataPackageId, String startDateTime, String endDateTime, String simId, Boolean active, Boolean reserved) {
         setDataPackageId(dataPackageId);
         setStartDateTime(startDateTime);
         setEndDateTime(endDateTime);
         setSimId(simId);
         setActive(active);
+        setReserved(reserved);
     }
 
-    public PackageHistory(Integer id, Integer dataPackageId, String startDateTime, String endDateTime, String simId, Boolean active) {
-        this(dataPackageId, startDateTime, endDateTime, simId, active);
+    public PackageHistory(Integer id, Integer dataPackageId, String startDateTime, String endDateTime, String simId, Boolean active,Boolean reserved) {
+        this(dataPackageId, startDateTime, endDateTime, simId, active,reserved);
         this.id = id;
     }
 
@@ -68,5 +71,13 @@ public class PackageHistory {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public Boolean getReserved() {
+        return reserved;
+    }
+
+    public void setReserved(Boolean reserved) {
+        this.reserved = reserved;
     }
 }
