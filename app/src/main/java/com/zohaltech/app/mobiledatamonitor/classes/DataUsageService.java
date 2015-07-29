@@ -4,6 +4,9 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
+import com.zohaltech.app.mobiledatamonitor.R;
+
+import java.math.BigDecimal;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -11,7 +14,7 @@ import java.util.TimerTask;
 public class DataUsageService extends Service {
 
 
-    private static final int     USAGE_LOG_INTERVAL         = 10;
+    private static final int     USAGE_LOG_INTERVAL         = 60;
     private static       long    tempReceivedBytes          = 0;
     private static       long    tempSentBytes              = 0;
     private static       boolean firstTime                  = true;
@@ -76,16 +79,33 @@ public class DataUsageService extends Service {
             }
 
             int iconId;
-            long value1 = App.preferences.getLong("tempUsage", 0) / 1024;
-            if (value1 <= 999) {
-                iconId = getResources().getIdentifier("wkb" + value1, "drawable", getPackageName());
+            long value = (receivedBytes + sentBytes) / 1024;
+            //Random r = new Random();
+            //int Low = 10;
+            //int High = 1024 * 30;
+            //int value = r.nextInt(High - Low) + Low;
+
+            if (value < 1000) {
+                iconId = App.context.getResources().getIdentifier("wkb" + String.format("%03d", value), "drawable", getPackageName());
+            } else if (value >= 1000 && value <= 1024) {
+                iconId = App.context.getResources().getIdentifier("wmb010", "drawable", getPackageName());
+            } else if ((float) value / 1024 > 1 && (float) value / 1024 < 10) {
+                BigDecimal decimal = Helper.round((float) value / 1024, 1);
+                iconId = App.context.getResources().getIdentifier("wmb0" + decimal.toString().replace(".", ""), "drawable", getPackageName());
+            } else if (value / 1024 >= 10 && value / 1024 <= 200) {
+                value = (value / 1024) + 90;
+                iconId = App.context.getResources().getIdentifier("wmb" + value, "drawable", getPackageName());
+            } else if (value / 1024 > 200) {
+                value = (value / 1024) + 90;
+                iconId = App.context.getResources().getIdentifier("wmb" + value, "drawable", getPackageName());
             } else {
-                iconId = getResources().getIdentifier("wmb291", "drawable", getPackageName());
+                iconId = R.drawable.wkb000;
             }
 
-            NotificationHandler.displayNotification(App.context,iconId, String.format("Down: %s, Up: %s", Helper.getTransferRate(receivedBytes), Helper.getTransferRate(sentBytes))
-                    , String.format("Total: %s", String.format("%.2f MB", (float) App.preferences.getLong("tempUsage", 0) / (1024 * 1024)))
-                    , "28% of 3 Gigabyte used");
+            String total = Helper.getCorrectTrafficText((float) App.preferences.getLong("tempUsage", 0) / (1024 * 1024));
+
+            NotificationHandler.displayNotification(App.context, iconId, String.format("Down: %s, Up: %s", Helper.getTransferRate(receivedBytes), Helper.getTransferRate(sentBytes))
+                    , String.format("Total: %s MB", total));
 
             //log("Notification : receivedBytes = " + receivedBytes + ", sentBytes = " + sentBytes + ", total = " + strCurrentDateTotalTraffic);
         }
