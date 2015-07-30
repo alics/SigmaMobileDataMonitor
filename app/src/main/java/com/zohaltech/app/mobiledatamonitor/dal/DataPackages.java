@@ -124,8 +124,8 @@ public class DataPackages {
         values.put(Price, dataPackage.getPrice());
         values.put(PrimaryTraffic, dataPackage.getPrimaryTraffic());
         values.put(SecondaryTraffic, dataPackage.getSecondaryTraffic());
-        values.put(SecondaryTrafficStartTime, dataPackage.getSecondaryTrafficStartTime().toString());
-        values.put(SecondaryTrafficEndTime, dataPackage.getSecondaryTrafficEndTime().toString());
+        values.put(SecondaryTrafficStartTime, dataPackage.getSecondaryTrafficStartTime());
+        values.put(SecondaryTrafficEndTime, dataPackage.getSecondaryTrafficEndTime());
         values.put(UssdCode, dataPackage.getUssdCode());
         values.put(Custom, dataPackage.getCustom() ? 1 : 0);
 
@@ -142,8 +142,8 @@ public class DataPackages {
         values.put(Price, dataPackage.getPrice());
         values.put(PrimaryTraffic, dataPackage.getPrimaryTraffic());
         values.put(SecondaryTraffic, dataPackage.getSecondaryTraffic());
-        values.put(SecondaryTrafficStartTime, dataPackage.getSecondaryTrafficStartTime().toString());
-        values.put(SecondaryTrafficEndTime, dataPackage.getSecondaryTrafficEndTime().toString());
+        values.put(SecondaryTrafficStartTime, dataPackage.getSecondaryTrafficStartTime());
+        values.put(SecondaryTrafficEndTime, dataPackage.getSecondaryTrafficEndTime());
         values.put(UssdCode, dataPackage.getUssdCode());
         values.put(Custom, dataPackage.getCustom() ? 1 : 0);
 

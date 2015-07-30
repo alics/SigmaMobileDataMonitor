@@ -4,24 +4,26 @@ public class PackageHistory {
 
     Integer id;
     Integer dataPackageId;
-    String startDateTime;
-    String endDateTime;
-    String simId;
+    String  startDateTime;
+    String  endDateTime;
+    String  secondaryTrafficEndDateTime;
+    String  simId;
     Boolean active;
     Boolean reserved;
 
 
-    public PackageHistory(Integer dataPackageId, String startDateTime, String endDateTime, String simId, Boolean active, Boolean reserved) {
+    public PackageHistory(Integer dataPackageId, String startDateTime, String endDateTime, String secondaryTrafficEndDateTime, String simId, Boolean active, Boolean reserved) {
         setDataPackageId(dataPackageId);
         setStartDateTime(startDateTime);
         setEndDateTime(endDateTime);
         setSimId(simId);
         setActive(active);
         setReserved(reserved);
+        setSecondaryTrafficEndDateTime(secondaryTrafficEndDateTime);
     }
 
-    public PackageHistory(Integer id, Integer dataPackageId, String startDateTime, String endDateTime, String simId, Boolean active,Boolean reserved) {
-        this(dataPackageId, startDateTime, endDateTime, simId, active,reserved);
+    public PackageHistory(Integer id, Integer dataPackageId, String startDateTime, String endDateTime, String secondaryTrafficEndDateTime, String simId, Boolean active, Boolean reserved) {
+        this(dataPackageId, startDateTime, endDateTime, secondaryTrafficEndDateTime, simId, active, reserved);
         this.id = id;
     }
 
@@ -79,5 +81,13 @@ public class PackageHistory {
 
     public void setReserved(Boolean reserved) {
         this.reserved = reserved;
+    }
+
+    public String getSecondaryTrafficEndDateTime() {
+        return secondaryTrafficEndDateTime;
+    }
+
+    public void setSecondaryTrafficEndDateTime(String secondaryTrafficEndDateTime) {
+        this.secondaryTrafficEndDateTime = secondaryTrafficEndDateTime;
     }
 }

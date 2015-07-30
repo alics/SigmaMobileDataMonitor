@@ -11,6 +11,7 @@ import android.telephony.TelephonyManager;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -86,11 +87,21 @@ public final class Helper {
     }
 
     public static String getTransferRate(long bytes) {
-        String result = bytes + " B/s";
-        if (bytes >= 1024 && bytes < (1024 * 1024)) {
-            result = bytes / 1024 + "KB/s";
+        String result = "0 B/s";
+        if (bytes < 1024) {
+            result = bytes + " B/s";
+        } else if (bytes >= 1024 && bytes < (1024 * 1024)) {
+            result = getCorrectTrafficText((float) bytes / 1024) + " KB/s";
         } else if (bytes >= (1024 * 1024)) {
-            result = bytes / (1024 * 1024) + "MB/s";
+            result = getCorrectTrafficText((float) bytes / (1024 * 1024)) + " MB/s";
+        }
+        return result;
+    }
+
+    public static String getCorrectTrafficText(float value) {
+        String result = Helper.round(value, 1).toString();
+        if (result.endsWith(".0")) {
+            result = result.substring(0, result.length() - 2);
         }
         return result;
     }
@@ -149,6 +160,12 @@ public final class Helper {
             e.printStackTrace();
         }
         return operator;
+    }
+
+    public static BigDecimal round(float d, int decimalPlace) {
+        BigDecimal bd = new BigDecimal(Float.toString(d));
+        bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+        return bd;
     }
 
     public enum Operator {
