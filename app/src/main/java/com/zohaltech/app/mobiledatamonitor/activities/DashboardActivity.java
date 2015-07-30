@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zohaltech.app.mobiledatamonitor.R;
-import com.zohaltech.app.mobiledatamonitor.classes.AlarmHandler;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
 
 import widgets.ArcProgress;
@@ -20,7 +19,7 @@ public class DashboardActivity extends EnhancedActivity {
     ArcProgress progressDay;
     ArcProgress progressNight;
     TextView    txtNightTraffic;
-    Button      btnStartAnimation;
+    Button      btnPackageManagement;
     Button      btnPurchasePackage;
     Button      btnUsageReport;
 
@@ -40,7 +39,7 @@ public class DashboardActivity extends EnhancedActivity {
 
         progressDay = (ArcProgress) findViewById(R.id.progressDay);
         progressNight = (ArcProgress) findViewById(R.id.progressNight);
-        btnStartAnimation = (Button) findViewById(R.id.btnStartAnimation);
+        btnPackageManagement = (Button) findViewById(R.id.btnPackageManagement);
         txtNightTraffic = (TextView) findViewById(R.id.txtNightTraffic);
         btnPurchasePackage = (Button) findViewById(R.id.btnPurchasePackage);
         btnUsageReport = (Button) findViewById(R.id.btnUsageReport);
@@ -61,10 +60,11 @@ public class DashboardActivity extends EnhancedActivity {
         progressDay.setProgress(0, strDayTraffic);
         progressNight.setProgress(0, strNightTraffic);
 
-        btnStartAnimation.setOnClickListener(new View.OnClickListener() {
+        btnPackageManagement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startAnimation();
+                Intent myIntent = new Intent(App.currentActivity, PackageManagementActivity.class);
+                startActivity(myIntent);
             }
         });
 
