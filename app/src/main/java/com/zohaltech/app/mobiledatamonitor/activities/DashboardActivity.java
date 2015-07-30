@@ -88,12 +88,7 @@ public class DashboardActivity extends EnhancedActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        App.handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startAnimation();
-            }
-        }, 500);
+        startAnimation();
     }
 
     private void startAnimation() {
@@ -165,7 +160,7 @@ public class DashboardActivity extends EnhancedActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             new ProgressDayTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             new ProgressNightTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        }else{
+        } else {
             new ProgressDayTask().execute();
             new ProgressNightTask().execute();
         }

@@ -67,6 +67,9 @@
         <activity
             android:name=".activities.DailyTrafficMonitorActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activities.PackageManagementActivity"
+            android:screenOrientation="portrait"/>
 
     </application>
 
