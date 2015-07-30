@@ -1,6 +1,12 @@
 package com.zohaltech.app.mobiledatamonitor.classes;
 
 
+import com.zohaltech.app.mobiledatamonitor.dal.DataPackages;
+import com.zohaltech.app.mobiledatamonitor.dal.PackageHistories;
+import com.zohaltech.app.mobiledatamonitor.dal.UsageLogs;
+import com.zohaltech.app.mobiledatamonitor.entities.DataPackage;
+import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
+
 public final class PackageStatus {
     Boolean hasActivePackage;
     long    dailyTraffic;
@@ -70,9 +76,32 @@ public final class PackageStatus {
     }
 
     public static PackageStatus getCurrentStatus() {
+        PackageStatus status = new PackageStatus();
+        PackageHistory history = PackageHistories.getActivePackage();
 
-        return new PackageStatus();
+        if (history == null) {
+            status.hasActivePackage = false;
+            status.dailyTraffic = SettingsHandler.getDailyTraffic();
+            return status;
+        }
 
+        DataPackage dataPackage=DataPackages.selectPackagesById(history.getDataPackageId()).get(0);
+
+        if(dataPackage==null)
+            return null;
+
+        status.hasActivePackage = true;
+        status.setPrimaryTraffic(dataPackage.getPrimaryTraffic());
+        status.setUsedPrimaryTraffic(UsageLogs.getUsedPrimaryTrafficOfPackage(dataPackage, history));
+
+        if (dataPackage.getSecondaryTraffic() != null || dataPackage.getSecondaryTraffic() != 0){
+            status.setSecondaryTraffic(dataPackage.getSecondaryTraffic());
+            status.setUsedSecondaryTraffic(UsageLogs.getUsedSecondaryTrafficOfPackage(dataPackage,history.getStartDateTime()));
+        }
+
+
+
+        return status;
     }
 
     public static void setDailyTraffic(long traffic, String date) {

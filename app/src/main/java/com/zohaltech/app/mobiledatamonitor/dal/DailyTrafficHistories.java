@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.zohaltech.app.mobiledatamonitor.classes.Helper;
 import com.zohaltech.app.mobiledatamonitor.classes.MyRuntimeException;
 import com.zohaltech.app.mobiledatamonitor.entities.DailyTrafficHistory;
+import com.zohaltech.app.mobiledatamonitor.entities.DataPackage;
 import com.zohaltech.app.mobiledatamonitor.entities.TrafficMonitor;
 
 import java.util.ArrayList;
@@ -25,36 +26,6 @@ public class DailyTrafficHistories {
                                       BeginningDateTime + " CHAR(19)  NOT NULL, " +
                                       EndingDateTime + " CHAR(19)  NOT NULL );";
     static final String DropTable   = "Drop Table If Exists " + TableName;
-
-
-    private static ArrayList<DailyTrafficHistory> select(String whereClause, String[] selectionArgs) {
-        ArrayList<DailyTrafficHistory> histories = new ArrayList<>();
-        DataAccess da = new DataAccess();
-        SQLiteDatabase db = da.getReadableDB();
-        Cursor cursor = null;
-
-        try {
-            String query = "Select * From " + TableName + " " + whereClause;
-            cursor = db.rawQuery(query, selectionArgs);
-            if (cursor != null && cursor.moveToFirst()) {
-                do {
-                    DailyTrafficHistory history = new DailyTrafficHistory(cursor.getInt(cursor.getColumnIndex(Id)),
-                                                                          cursor.getLong(cursor.getColumnIndex(Traffic)),
-                                                                          cursor.getString(cursor.getColumnIndex(BeginningDateTime)),
-                                                                          cursor.getString(cursor.getColumnIndex(EndingDateTime)));
-                    histories.add(history);
-                } while (cursor.moveToNext());
-            }
-        } catch (MyRuntimeException e) {
-            e.printStackTrace();
-        } finally {
-            if (cursor != null && !cursor.isClosed())
-                cursor.close();
-            if (db != null && db.isOpen())
-                db.close();
-        }
-        return histories;
-    }
 
     public static ArrayList<DailyTrafficHistory> select() {
         return select("", null);
@@ -85,6 +56,35 @@ public class DailyTrafficHistories {
     public static long delete(DailyTrafficHistory trafficHistory) {
         DataAccess db = new DataAccess();
         return db.delete(TableName, Id + " =? ", new String[]{String.valueOf(trafficHistory.getId())});
+    }
+
+    private static ArrayList<DailyTrafficHistory> select(String whereClause, String[] selectionArgs) {
+        ArrayList<DailyTrafficHistory> histories = new ArrayList<>();
+        DataAccess da = new DataAccess();
+        SQLiteDatabase db = da.getReadableDB();
+        Cursor cursor = null;
+
+        try {
+            String query = "Select * From " + TableName + " " + whereClause;
+            cursor = db.rawQuery(query, selectionArgs);
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    DailyTrafficHistory history = new DailyTrafficHistory(cursor.getInt(cursor.getColumnIndex(Id)),
+                                                                          cursor.getLong(cursor.getColumnIndex(Traffic)),
+                                                                          cursor.getString(cursor.getColumnIndex(BeginningDateTime)),
+                                                                          cursor.getString(cursor.getColumnIndex(EndingDateTime)));
+                    histories.add(history);
+                } while (cursor.moveToNext());
+            }
+        } catch (MyRuntimeException e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null && !cursor.isClosed())
+                cursor.close();
+            if (db != null && db.isOpen())
+                db.close();
+        }
+        return histories;
     }
 
     public static ArrayList<TrafficMonitor> getMonthlyTraffic() {
@@ -118,4 +118,6 @@ public class DailyTrafficHistories {
         }
         return trafficMonitors;
     }
+
+
 }

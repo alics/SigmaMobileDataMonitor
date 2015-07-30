@@ -10,21 +10,23 @@ import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
 import java.util.ArrayList;
 
 public class PackageHistories {
-    static final String TableName     = "PackageHistories";
-    static final String Id            = "Id";
-    static final String DataPackageId = "DataPackageId";
-    static final String StartDateTime = "StartDateTime";
-    static final String EndDateTime   = "EndDateTime";
-    static final String SimId         = "SimId";
-    static final String Active        = "Active";
-    static final String Reserved      = "Reserved";
+    static final String TableName                   = "PackageHistories";
+    static final String Id                          = "Id";
+    static final String DataPackageId               = "DataPackageId";
+    static final String StartDateTime               = "StartDateTime";
+    static final String EndDateTime                 = "EndDateTime";
+    static final String SecondaryTrafficEndDateTime = "SecondaryTrafficEndDateTime";
+    static final String SimId                       = "SimId";
+    static final String Active                      = "Active";
+    static final String Reserved                    = "Reserved";
 
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
                                       Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                                       DataPackageId + " INTEGER REFERENCES " + DataPackages.TableName + " (" + DataPackages.Id + "), " +
-                                      StartDateTime + " CHAR(19) NOT NULL," +
-                                      EndDateTime + " CHAR(19) NOT NULL," +
+                                      StartDateTime + " CHAR(19)  ," +
+                                      EndDateTime + " CHAR(19)  ," +
+                                      SecondaryTrafficEndDateTime + " CHAR(19) ," +
                                       SimId + " INTEGER NOT NULL ," +
                                       Reserved + " BOOLEAN NOT NULL ," +
                                       Active + " BOOLEAN NOT NULL );";
@@ -47,6 +49,7 @@ public class PackageHistories {
                                                                        cursor.getInt(cursor.getColumnIndex(DataPackageId)),
                                                                        cursor.getString(cursor.getColumnIndex(StartDateTime)),
                                                                        cursor.getString(cursor.getColumnIndex(EndDateTime)),
+                                                                       cursor.getString(cursor.getColumnIndex(SecondaryTrafficEndDateTime)),
                                                                        cursor.getString(cursor.getColumnIndex(SimId)),
                                                                        cursor.getInt(cursor.getColumnIndex(Active)) == 1,
                                                                        cursor.getInt(cursor.getColumnIndex(Reserved)) == 1);
@@ -66,6 +69,33 @@ public class PackageHistories {
 
     public static ArrayList<PackageHistory> select() {
         return select("", null);
+    }
+
+    public static PackageHistory getActivePackage() {
+        String whereClause = " WHERE " + Active + " = " + 1;
+        ArrayList<PackageHistory> packageHistories = new ArrayList<>();
+        packageHistories = select(whereClause, null);
+        int count = packageHistories.size();
+
+        return (count == 0) ? null : packageHistories.get(count - 1);
+    }
+
+    public static PackageHistory getPackageById(int id) {
+        String whereClause = " WHERE " + Id + " = " + id;
+        ArrayList<PackageHistory> packageHistories = new ArrayList<>();
+        packageHistories = select(whereClause, null);
+        int count = packageHistories.size();
+
+        return (count == 0) ? null : packageHistories.get(count - 1);
+    }
+
+    public static long getPackageUsedTraffic(int packageId) {
+        PackageHistory packageHistory = getPackageById(packageId);
+        if (packageHistory == null || !packageHistory.getActive())
+            return 0;
+
+
+        return 1;
     }
 
     public static long insert(PackageHistory packageHistory) {
