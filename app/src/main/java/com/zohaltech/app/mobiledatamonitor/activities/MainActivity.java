@@ -151,8 +151,8 @@ public class MainActivity extends EnhancedActivity {
 
                     String total = Helper.getTotalUsedTraffic(App.preferences.getLong("tempUsage", 0));
 
-                    NotificationHandler.displayNotification(App.context, iconId, String.format("Down: %s, Up: %s", Helper.getTransferRate(receivedBytes), Helper.getTransferRate(sentBytes))
-                            , String.format("Total: %s MB", total));
+                    //NotificationHandler.displayNotification(App.context, iconId, String.format("Down: %s, Up: %s", Helper.getTransferRate(receivedBytes), Helper.getTransferRate(sentBytes))
+                    //        , "Total: " + total);
 
                     //log("Notification : receivedBytes = " + receivedBytes + ", sentBytes = " + sentBytes + ", total = " + strCurrentDateTotalTraffic);
 

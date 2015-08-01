@@ -7,7 +7,7 @@ import android.content.Intent;
 
 public class AlarmHandler {
 
-    private static final long INTERVAL = 1000L;
+    private static final long INTERVAL = 60000L;
 
     private static AlarmManager  manager;
     private static PendingIntent pendingIntent;
@@ -38,7 +38,8 @@ public class AlarmHandler {
         pendingIntent = PendingIntent.getBroadcast(context, 0, alarmIntent, 0);
 
         //cancel();
-        manager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), INTERVAL, pendingIntent);
+        //manager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), INTERVAL, pendingIntent);
+        manager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, System.currentTimeMillis(), AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent);
         //manager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()+2000, pendingIntent);
     }
 

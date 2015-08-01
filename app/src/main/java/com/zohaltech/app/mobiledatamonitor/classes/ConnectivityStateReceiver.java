@@ -8,6 +8,9 @@ public class ConnectivityStateReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+
+        AlarmHandler.start(context);
+
         Intent service = new Intent(context, DataUsageService.class);
         context.startService(service);
     }

@@ -20,6 +20,6 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         //Log.i("SimpleWakefulReceiver", "Starting service @ " + SystemClock.elapsedRealtime());
 
         Intent service = new Intent(context, DataUsageService.class);
-        context.startService(service);
+        startWakefulService(context, service);
     }
 }

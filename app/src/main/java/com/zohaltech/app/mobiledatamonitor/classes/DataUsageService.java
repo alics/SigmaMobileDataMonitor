@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.IBinder;
 
 import com.zohaltech.app.mobiledatamonitor.R;
+import com.zohaltech.app.mobiledatamonitor.dal.UsageLogs;
+import com.zohaltech.app.mobiledatamonitor.entities.UsageLog;
 
 import java.math.BigDecimal;
 import java.util.concurrent.Executors;
@@ -14,17 +16,14 @@ import java.util.concurrent.TimeUnit;
 
 public class DataUsageService extends Service {
 
+    private static final String LAST_RECEIVED_BYTES = "LAST_RECEIVED_BYTES";
+    private static final String LAST_SENT_BYTES     = "LAST_SENT_BYTES";
+    private static final String TOTAL_USAGE_BYTES   = "TOTAL_USAGE_BYTES";
+    private static final int    USAGE_LOG_INTERVAL  = 60;
 
-    private static final int     USAGE_LOG_INTERVAL         = 60;
-    private static       long    tempReceivedBytes          = 0;
-    private static       long    tempSentBytes              = 0;
-    private static       boolean firstTime                  = true;
-    private static       int     usageLogInterval           = 0;
-    private static       long    tempUsage                  = 0;
-    private static       long    currentDateSumTraffic      = 0;
-    private static       String  strCurrentDateTotalTraffic = "0.00000 MB";
-    //private Timer executorService;
-    private ScheduledExecutorService executorService;
+    private static boolean firstTime        = true;
+    private static int     usageLogInterval = 0;
+    private static ScheduledExecutorService executorService;
 
     private Runnable runnable = new Runnable() {
         @Override
@@ -35,79 +34,59 @@ public class DataUsageService extends Service {
             long sentBytes = 0;
 
             if (currentReceivedBytes + currentSentBytes == 0) {
-                //log("transfer = 0");
                 firstTime = true;
             } else {
                 if (firstTime) {
                     firstTime = false;
-                    tempReceivedBytes = currentReceivedBytes;
-                    App.preferences.edit().putLong("tempReceivedBytes", tempReceivedBytes).commit();
-                    tempSentBytes = currentSentBytes;
-                    App.preferences.edit().putLong("tempSentBytes", tempSentBytes).commit();
+                    App.preferences.edit().putLong(LAST_RECEIVED_BYTES, currentReceivedBytes).commit();
+                    App.preferences.edit().putLong(LAST_SENT_BYTES, currentSentBytes).commit();
                 }
-                //////////receivedBytes = currentReceivedBytes - tempReceivedBytes;
-                receivedBytes = currentReceivedBytes - App.preferences.getLong("tempReceivedBytes", 0);
-                //log("receivedBytes = " + receivedBytes);
-                //////////sentBytes = currentSentBytes - tempSentBytes;
-                sentBytes = currentSentBytes - App.preferences.getLong("tempSentBytes", 0);
-                ;
-                //log("sentBytes = " + sentBytes);
-                tempReceivedBytes = currentReceivedBytes;
-                App.preferences.edit().putLong("tempReceivedBytes", tempReceivedBytes).commit();
-                tempSentBytes = currentSentBytes;
-                App.preferences.edit().putLong("tempSentBytes", tempSentBytes).commit();
+                receivedBytes = currentReceivedBytes - App.preferences.getLong(LAST_RECEIVED_BYTES, 0);
+                sentBytes = currentSentBytes - App.preferences.getLong(LAST_SENT_BYTES, 0);
+                App.preferences.edit().putLong(LAST_RECEIVED_BYTES, currentReceivedBytes).commit();
+                App.preferences.edit().putLong(LAST_SENT_BYTES, currentSentBytes).commit();
+                App.preferences.edit().putLong(TOTAL_USAGE_BYTES, App.preferences.getLong(TOTAL_USAGE_BYTES, 0) + receivedBytes + sentBytes).commit();
 
-                tempUsage = App.preferences.getLong("tempUsage", 0);
-
-                tempUsage = tempUsage + receivedBytes + sentBytes;
-
-                App.preferences.edit().putLong("tempUsage", tempUsage).commit();
-
-                //log("tempUsage = " + tempUsage);
-
-                //usageLogInterval++;
-                //if (usageLogInterval == USAGE_LOG_INTERVAL) {
-                //UsageLogs.insert(new UsageLog(tempUsage));
-                //log(tempUsage + " inserted");
-                //currentDateSumTraffic = UsageLogs.getCurrentDateSumTraffic();
-                //log("currentDateSumTraffic = " + currentDateSumTraffic);
-                //strCurrentDateTotalTraffic = String.format("%.2f MB", (float) currentDateSumTraffic / (1024 * 1024));
-                //log("strCurrentDateTotalTraffic = " + strCurrentDateTotalTraffic);
-                //usageLogInterval = 0;
-                //tempUsage = 0;
-                //}
-                //strCurrentDateTotalTraffic = String.format("%.2f MB", (float) tempUsage / (1024 * 1024));
-
+                usageLogInterval++;
+                if (usageLogInterval == USAGE_LOG_INTERVAL) {
+                    new Thread(new Runnable() {
+                        public void run() {
+                            UsageLogs.insert(new UsageLog(App.preferences.getLong(TOTAL_USAGE_BYTES, 0)));
+                        }
+                    }).start();
+                    usageLogInterval = 0;
+                }
             }
 
-            int iconId;
-            long value = (receivedBytes + sentBytes) / 1024;
             //Random r = new Random();
             //int Low = 10;
             //int High = 1024 * 30;
-            //int value = r.nextInt(High - Low) + Low;
+            //int sumReceivedSent = r.nextInt(High - Low) + Low;
 
-            if (value < 1000) {
-                iconId = App.context.getResources().getIdentifier("wkb" + String.format("%03d", value), "drawable", getPackageName());
-            } else if (value >= 1000 && value <= 1024) {
+            int iconId = R.drawable.wkb000;
+            long sumReceivedSent = (receivedBytes + sentBytes) / 1024;
+
+            if (sumReceivedSent < 1000) {
+                iconId = App.context.getResources().getIdentifier("wkb" + String.format("%03d", sumReceivedSent), "drawable", getPackageName());
+            } else if (sumReceivedSent >= 1000 && sumReceivedSent <= 1024) {
                 iconId = App.context.getResources().getIdentifier("wmb010", "drawable", getPackageName());
-            } else if ((float) value / 1024 > 1 && (float) value / 1024 < 10) {
-                BigDecimal decimal = Helper.round((float) value / 1024, 1);
+            } else if ((float) sumReceivedSent / 1024 > 1 && (float) sumReceivedSent / 1024 < 10) {
+                BigDecimal decimal = Helper.round((float) sumReceivedSent / 1024, 1);
                 iconId = App.context.getResources().getIdentifier("wmb0" + decimal.toString().replace(".", ""), "drawable", getPackageName());
-            } else if (value / 1024 >= 10 && value / 1024 <= 200) {
-                value = (value / 1024) + 90;
-                iconId = App.context.getResources().getIdentifier("wmb" + value, "drawable", getPackageName());
-            } else if (value / 1024 > 200) {
-                value = (value / 1024) + 90;
-                iconId = App.context.getResources().getIdentifier("wmb" + value, "drawable", getPackageName());
-            } else {
-                iconId = R.drawable.wkb000;
+            } else if (sumReceivedSent / 1024 >= 10 && sumReceivedSent / 1024 <= 200) {
+                sumReceivedSent = (sumReceivedSent / 1024) + 90;
+                iconId = App.context.getResources().getIdentifier("wmb" + sumReceivedSent, "drawable", getPackageName());
+            } else if (sumReceivedSent / 1024 > 200) {
+                sumReceivedSent = (sumReceivedSent / 1024) + 90;
+                iconId = App.context.getResources().getIdentifier("wmb" + sumReceivedSent, "drawable", getPackageName());
             }
 
-            String total = Helper.getTotalUsedTraffic(App.preferences.getLong("tempUsage", 0));
+            String total = Helper.getTotalUsedTraffic(App.preferences.getLong(TOTAL_USAGE_BYTES, 0));
 
-            NotificationHandler.displayNotification(App.context, iconId, String.format("Down: %s, Up: %s", Helper.getTransferRate(receivedBytes), Helper.getTransferRate(sentBytes))
-                    , String.format("Total: %s MB", total));
+            startForeground(1, NotificationHandler.getNotification(DataUsageService.this, iconId, String.format("Down: %s, Up: %s", Helper.getTransferRate(receivedBytes), Helper.getTransferRate(sentBytes)), "Total: " + total, "86% used"));
+
+            //NotificationHandler.displayNotification(App.context, iconId, String.format("Down: %s, Up: %s", Helper.getTransferRate(receivedBytes), Helper.getTransferRate(sentBytes))
+            //        , "Total: " + total, "65% used");
 
             //log("Notification : receivedBytes = " + receivedBytes + ", sentBytes = " + sentBytes + ", total = " + strCurrentDateTotalTraffic);
         }
@@ -116,7 +95,9 @@ public class DataUsageService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        executorService = Executors.newSingleThreadScheduledExecutor();
+        if (executorService == null) {
+            executorService = Executors.newSingleThreadScheduledExecutor();
+        }
         executorService.scheduleAtFixedRate(runnable, 0L, 1000L, TimeUnit.MILLISECONDS);
     }
 

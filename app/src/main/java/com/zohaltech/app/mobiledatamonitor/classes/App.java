@@ -33,7 +33,7 @@ public class App extends Application {
         handler = new Handler();
         inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 
-        //AlarmHandler.start(context);
+        AlarmHandler.start(context);
 
         Intent service = new Intent(context, DataUsageService.class);
         context.startService(service);
