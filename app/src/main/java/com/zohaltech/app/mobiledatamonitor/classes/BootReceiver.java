@@ -10,6 +10,7 @@ public class BootReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
             if (SettingsHandler.isMonitoringServiceActive()) {
                 //AlarmHandler.start(context);
+
                 Intent service = new Intent(context, DataUsageService.class);
                 context.startService(service);
             }
