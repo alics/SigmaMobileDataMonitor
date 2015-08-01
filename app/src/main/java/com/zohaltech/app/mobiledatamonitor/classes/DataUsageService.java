@@ -7,8 +7,9 @@ import android.os.IBinder;
 import com.zohaltech.app.mobiledatamonitor.R;
 
 import java.math.BigDecimal;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 
 public class DataUsageService extends Service {
@@ -22,9 +23,10 @@ public class DataUsageService extends Service {
     private static       long    tempUsage                  = 0;
     private static       long    currentDateSumTraffic      = 0;
     private static       String  strCurrentDateTotalTraffic = "0.00000 MB";
-    private Timer timer;
+    //private Timer executorService;
+    private ScheduledExecutorService executorService;
 
-    private TimerTask updateTask = new TimerTask() {
+    private Runnable runnable = new Runnable() {
         @Override
         public void run() {
             long currentReceivedBytes = android.net.TrafficStats.getMobileRxBytes();
@@ -102,7 +104,7 @@ public class DataUsageService extends Service {
                 iconId = R.drawable.wkb000;
             }
 
-            String total = Helper.getCorrectTrafficText((float) App.preferences.getLong("tempUsage", 0) / (1024 * 1024));
+            String total = Helper.getTotalUsedTraffic(App.preferences.getLong("tempUsage", 0));
 
             NotificationHandler.displayNotification(App.context, iconId, String.format("Down: %s, Up: %s", Helper.getTransferRate(receivedBytes), Helper.getTransferRate(sentBytes))
                     , String.format("Total: %s MB", total));
@@ -114,15 +116,15 @@ public class DataUsageService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        timer = new Timer("DataUsageUpdate");
-        timer.schedule(updateTask, 0L, 1000L);
+        executorService = Executors.newSingleThreadScheduledExecutor();
+        executorService.scheduleAtFixedRate(runnable, 0L, 1000L, TimeUnit.MILLISECONDS);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        timer.cancel();
-        timer = null;
+        executorService.shutdown();
+        executorService = null;
         NotificationHandler.cancelNotification(App.context);
     }
 

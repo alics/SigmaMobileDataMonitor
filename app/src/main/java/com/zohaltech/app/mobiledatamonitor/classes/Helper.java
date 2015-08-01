@@ -98,7 +98,17 @@ public final class Helper {
         return result;
     }
 
-    public static String getCorrectTrafficText(float value) {
+    public static String getTotalUsedTraffic(long bytes) {
+        String result = "0 MB";
+        if (bytes < (1024 * 1024 * 1024)) {
+            result = getCorrectTrafficText((float) bytes / (1024 * 1024)) + " MB";
+        } else if (bytes >= (1024 * 1024 * 1024)) {
+            result = getCorrectTrafficText((float) bytes / (1024 * 1024 * 1024)) + " GB";
+        }
+        return result;
+    }
+
+    private static String getCorrectTrafficText(float value) {
         String result = Helper.round(value, 1).toString();
         if (result.endsWith(".0")) {
             result = result.substring(0, result.length() - 2);
