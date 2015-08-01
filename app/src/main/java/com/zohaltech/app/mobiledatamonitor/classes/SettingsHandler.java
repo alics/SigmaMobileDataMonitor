@@ -4,7 +4,7 @@ public final class SettingsHandler {
 
     private static final String PREF_IS_MONITORING_SERVICE_ON = "IS_MONITORING_SERVICE_ON";
     private static final String PREF_DAILY_TRAFFIC            = "DAILY_TRAFFIC";
-    private static final String PREF_LAST_LOG_DATE            = "LAST_LOG__DATE";
+    private static final String PREF_LAST_LOG_DATE            = "LAST_LOG_DATE";
 
     public static boolean isMonitoringServiceActive() {
         return App.preferences.getBoolean(PREF_IS_MONITORING_SERVICE_ON, true);
