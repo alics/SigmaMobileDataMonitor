@@ -18,6 +18,36 @@ public final class PackageStatus {
     int     period;
     int     leftDays;
 
+    public static PackageStatus getCurrentStatus() {
+        PackageStatus status = new PackageStatus();
+        PackageHistory history = PackageHistories.getActivePackage();
+
+        if (history == null) {
+            status.hasActivePackage = false;
+            status.dailyTraffic = SettingsHandler.getDailyTraffic();
+            return status;
+        }
+
+        DataPackage dataPackage = DataPackages.selectPackageById(history.getDataPackageId());
+
+        if (dataPackage == null)
+            return null;
+
+        status.hasActivePackage = true;
+        status.setPrimaryTraffic(dataPackage.getPrimaryTraffic());
+        status.setUsedPrimaryTraffic(UsageLogs.getUsedPrimaryTrafficOfPackage(dataPackage, history));
+
+        if (dataPackage.getSecondaryTraffic() != null && dataPackage.getSecondaryTraffic() != 0) {
+            status.setSecondaryTraffic(dataPackage.getSecondaryTraffic());
+            status.setUsedSecondaryTraffic(UsageLogs.getUsedSecondaryTrafficOfPackage(dataPackage, history.getStartDateTime()));
+        }
+
+        return status;
+    }
+
+    public static void setDailyTraffic(long traffic, String date) {
+
+    }
 
     public long getPrimaryTraffic() {
         return primaryTraffic;
@@ -73,39 +103,6 @@ public final class PackageStatus {
 
     public void setLeftDays(int leftDays) {
         this.leftDays = leftDays;
-    }
-
-    public static PackageStatus getCurrentStatus() {
-        PackageStatus status = new PackageStatus();
-        PackageHistory history = PackageHistories.getActivePackage();
-
-        if (history == null) {
-            status.hasActivePackage = false;
-            status.dailyTraffic = SettingsHandler.getDailyTraffic();
-            return status;
-        }
-
-        DataPackage dataPackage=DataPackages.selectPackagesById(history.getDataPackageId()).get(0);
-
-        if(dataPackage==null)
-            return null;
-
-        status.hasActivePackage = true;
-        status.setPrimaryTraffic(dataPackage.getPrimaryTraffic());
-        status.setUsedPrimaryTraffic(UsageLogs.getUsedPrimaryTrafficOfPackage(dataPackage, history));
-
-        if (dataPackage.getSecondaryTraffic() != null || dataPackage.getSecondaryTraffic() != 0){
-            status.setSecondaryTraffic(dataPackage.getSecondaryTraffic());
-            status.setUsedSecondaryTraffic(UsageLogs.getUsedSecondaryTrafficOfPackage(dataPackage,history.getStartDateTime()));
-        }
-
-
-
-        return status;
-    }
-
-    public static void setDailyTraffic(long traffic, String date) {
-
     }
 
 

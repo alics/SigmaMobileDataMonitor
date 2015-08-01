@@ -110,9 +110,19 @@ public class DataPackages {
         return select(whereClause, null);
     }
 
-    public static ArrayList<DataPackage> selectPackagesById(int packageId) {
-        String whereClause = " WHERE " + Id + " = " + packageId;
-        return select(whereClause, null);
+    public static DataPackage selectPackageById(int packageId) {
+        //String whereClause = " WHERE " + Id + " = " + packageId;
+        //return select(whereClause, null).get(0);
+
+        ArrayList<DataPackage> dataPackages = select("Where " + Id + " = ? ", new String[]{String.valueOf(packageId)});
+        if (dataPackages.size() == 1)
+        {
+            return dataPackages.get(0);
+        }
+        else
+        {
+            return null;
+        }
     }
 
     public static long insert(DataPackage dataPackage) {
