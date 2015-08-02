@@ -43,7 +43,7 @@
             android:src="@drawable/ic_edit"
             android:id="@+id/imgBtnActivePackageSetting"/>
 
-        <TextView
+        <widgets.MyTextView
             android:id="@+id/txtActivePackageTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
             android:text="بسته فعال"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <TextView
+        <widgets.MyTextView
             android:id="@+id/txtActivePackageDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
             android:id="@+id/imgBtnReservedPackageSetting"/>
 
 
-        <TextView
+        <widgets.MyTextView
             android:id="@+id/txtReservedPackageTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -103,7 +103,7 @@
             android:text=" بسته رزور شده"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <TextView
+        <widgets.MyTextView
             android:id="@+id/txtReservedPackageDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

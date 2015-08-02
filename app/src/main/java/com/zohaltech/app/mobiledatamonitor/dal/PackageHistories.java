@@ -114,6 +114,15 @@ public class PackageHistories {
         return (count == 0) ? null : packageHistories.get(count - 1);
     }
 
+    public static PackageHistory getReservedPackage() {
+        String whereClause = " WHERE " + Reserved + " = " + 1;
+        ArrayList<PackageHistory> packageHistories = new ArrayList<>();
+        packageHistories = select(whereClause, null);
+        int count = packageHistories.size();
+
+        return (count == 0) ? null : packageHistories.get(count - 1);
+    }
+
     public static PackageHistory getPackageById(int id) {
         String whereClause = " WHERE " + Id + " = " + id;
         ArrayList<PackageHistory> packageHistories = new ArrayList<>();

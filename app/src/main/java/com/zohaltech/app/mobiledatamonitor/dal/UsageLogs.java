@@ -199,7 +199,7 @@ public class UsageLogs {
         }
 
         if (usedTraffic >= dataPackage.getPrimaryTraffic()) {
-            PackageHistories.terminateDataPackageSecondaryPlan(history);
+            PackageHistories.terminateDataPackage(history);
         }
         return usedTraffic;
     }
