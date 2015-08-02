@@ -39,6 +39,7 @@ public class PackageManagementActivity extends EnhancedActivity {
             @Override
             public void onClick(View view) {
                 Intent myIntent = new Intent(App.currentActivity, PackageSettingsActivity.class);
+                myIntent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_INSERT_CUSTOM);
                 startActivity(myIntent);
             }
         });
@@ -47,7 +48,8 @@ public class PackageManagementActivity extends EnhancedActivity {
             @Override
             public void onClick(View view) {
                 Intent myIntent = new Intent(App.currentActivity, PackageSettingsActivity.class);
-                myIntent.putExtra("activePackageId",activePackage.getId());
+                myIntent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_SETTING_ACTIVE);
+                myIntent.putExtra("activePackageId", activePackage.getId());
                 startActivity(myIntent);
             }
         });
@@ -56,7 +58,8 @@ public class PackageManagementActivity extends EnhancedActivity {
             @Override
             public void onClick(View view) {
                 Intent myIntent = new Intent(App.currentActivity, PackageSettingsActivity.class);
-                myIntent.putExtra("reservedPackageId",reservedPackage.getId());
+                myIntent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_SETTING_RESERVED);
+                myIntent.putExtra(PackageSettingsActivity.PACKAGE_ID_KEY, reservedPackage.getId());
                 startActivity(myIntent);
             }
         });
