@@ -26,53 +26,10 @@
         android:background="@color/primary"
         android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <widgets.ArcProgress
-                android:id="@+id/progressDay"
-                android:layout_width="96dp"
-                android:layout_height="96dp"
-                android:scaleType="centerInside"/>
-
-            <widgets.MyTextView
-                android:id="@+id/txtDayTraffic"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="حجم شبانه روزی"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/white"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center|left"
-            android:orientation="vertical">
-
-            <widgets.ArcProgress
-                android:id="@+id/progressNight"
-                android:layout_width="96dp"
-                android:layout_height="96dp"
-                android:scaleType="centerInside"/>
-
-            <widgets.MyTextView
-                android:id="@+id/txtNightTraffic"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="حجم شبانه"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/white"/>
-
-        </LinearLayout>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pagerUsages"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
 

@@ -16,7 +16,7 @@ public class PackageHistories {
     static final String StartDateTime               = "StartDateTime";
     static final String EndDateTime                 = "EndDateTime";
     static final String SecondaryTrafficEndDateTime = "SecondaryTrafficEndDateTime";
-    static final String SimId                       = "SimId";
+    static final String SimSerial                   = "SimSerial";
     static final String Active                      = "Active";
     static final String Reserved                    = "Reserved";
 
@@ -27,7 +27,7 @@ public class PackageHistories {
                                       StartDateTime + " CHAR(19)  ," +
                                       EndDateTime + " CHAR(19)  ," +
                                       SecondaryTrafficEndDateTime + " CHAR(19) ," +
-                                      SimId + " INTEGER NOT NULL ," +
+                                      SimSerial + " VARCHAR(50) NOT NULL ," +
                                       Reserved + " BOOLEAN NOT NULL ," +
                                       Active + " BOOLEAN NOT NULL );";
 
@@ -50,7 +50,7 @@ public class PackageHistories {
                                                                        cursor.getString(cursor.getColumnIndex(StartDateTime)),
                                                                        cursor.getString(cursor.getColumnIndex(EndDateTime)),
                                                                        cursor.getString(cursor.getColumnIndex(SecondaryTrafficEndDateTime)),
-                                                                       cursor.getString(cursor.getColumnIndex(SimId)),
+                                                                       cursor.getString(cursor.getColumnIndex(SimSerial)),
                                                                        cursor.getInt(cursor.getColumnIndex(Active)) == 1,
                                                                        cursor.getInt(cursor.getColumnIndex(Reserved)) == 1);
                     packageList.add(packageHistory);
@@ -104,7 +104,7 @@ public class PackageHistories {
         values.put(DataPackageId, packageHistory.getDataPackageId());
         values.put(StartDateTime, packageHistory.getStartDateTime());
         values.put(EndDateTime, packageHistory.getEndDateTime());
-        values.put(SimId, packageHistory.getSimId());
+        values.put(SimSerial, packageHistory.getSimSerial());
         values.put(Active, packageHistory.getActive() ? 1 : 0);
         values.put(Reserved, packageHistory.getReserved() ? 1 : 0);
 
@@ -118,7 +118,7 @@ public class PackageHistories {
         values.put(DataPackageId, packageHistory.getDataPackageId());
         values.put(StartDateTime, packageHistory.getStartDateTime());
         values.put(EndDateTime, packageHistory.getEndDateTime());
-        values.put(SimId, packageHistory.getSimId());
+        values.put(SimSerial, packageHistory.getSimSerial());
         values.put(Active, packageHistory.getActive() ? 1 : 0);
         values.put(Reserved, packageHistory.getReserved() ? 1 : 0);
 

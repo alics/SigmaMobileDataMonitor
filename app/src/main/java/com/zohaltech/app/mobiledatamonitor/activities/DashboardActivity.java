@@ -16,9 +16,7 @@ import com.zohaltech.app.mobiledatamonitor.classes.App;
 import widgets.ArcProgress;
 
 public class DashboardActivity extends EnhancedActivity {
-    ArcProgress progressDay;
-    ArcProgress progressNight;
-    TextView    txtNightTraffic;
+
     Button      btnPackageManagement;
     Button      btnPurchasePackage;
     Button      btnUsageReport;
@@ -37,19 +35,12 @@ public class DashboardActivity extends EnhancedActivity {
 
         //AlarmHandler.start(App.context);
 
-        progressDay = (ArcProgress) findViewById(R.id.progressDay);
-        progressNight = (ArcProgress) findViewById(R.id.progressNight);
         btnPackageManagement = (Button) findViewById(R.id.btnPackageManagement);
-        txtNightTraffic = (TextView) findViewById(R.id.txtNightTraffic);
         btnPurchasePackage = (Button) findViewById(R.id.btnPurchasePackage);
         btnUsageReport = (Button) findViewById(R.id.btnUsageReport);
 
         int size1 = (getWindowManager().getDefaultDisplay().getWidth()) / 2;
         int size2 = (getWindowManager().getDefaultDisplay().getWidth()) / 4;
-        progressDay.setLayoutParams(new LinearLayout.LayoutParams(size1, size1));
-        progressNight.setLayoutParams(new LinearLayout.LayoutParams(size2, size2));
-
-        txtNightTraffic.setLayoutParams(new LinearLayout.LayoutParams(size2, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         dayTraffic = 96;
         dayTotalTraffic = 100;
@@ -57,8 +48,6 @@ public class DashboardActivity extends EnhancedActivity {
         nightTotalTraffic = 100;
         strDayTraffic = dayTraffic + "/" + dayTotalTraffic + "MB";
         strNightTraffic = nightTraffic + "/" + nightTotalTraffic + "MB";
-        progressDay.setProgress(0, strDayTraffic);
-        progressNight.setProgress(0, strNightTraffic);
 
         btnPackageManagement.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,7 +189,6 @@ public class DashboardActivity extends EnhancedActivity {
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
-            progressDay.setProgress(values[0], strDayTraffic);
         }
     }
 
@@ -238,7 +226,6 @@ public class DashboardActivity extends EnhancedActivity {
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
-            progressNight.setProgress(values[0], strNightTraffic);
         }
     }
 }

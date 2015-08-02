@@ -60,6 +60,15 @@ public class ExpandablePackageAdapter extends AnimatedExpandableListView.Animate
                     @Override
                     public void run() {
                         Helper.runUssd(dataPackage.getUssdCode());
+                        //todo : if there is no active package
+                        DialogManager.showConfirmationDialog(App.currentActivity, "فعالسازی بسته", "آیا مایل به فعالسازی بسته " + dataPackage.getDescription() + " هستید؟",
+                                                             "بله", "خیر", null, new Runnable() {
+                                    @Override
+                                    public void run() {
+
+                                    }
+                                });
+                        //todo : if there is an active package
                     }
                 });
             }
