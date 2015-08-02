@@ -85,6 +85,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/circle_button"
             android:scaleType="centerInside"
+            android:layout_margin="10dp"
             android:src="@drawable/ic_edit"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
