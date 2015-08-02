@@ -49,7 +49,7 @@ public class DataUsageService extends Service {
                 App.preferences.edit().putLong(LAST_SENT_BYTES, currentSentBytes).commit();
 
                 String currentDate = Helper.getCurrentDate();
-                if (App.preferences.getString(DAILY_USAGE_DATE, currentDate).equals(currentDate)) {
+                if (currentDate.equals(App.preferences.getString(DAILY_USAGE_DATE, currentDate))) {
                     App.preferences.edit().putLong(DAILY_USAGE_BYTES, App.preferences.getLong(DAILY_USAGE_BYTES, 0) + receivedBytes + sentBytes).commit();
                 } else {
                     App.preferences.edit().putLong(DAILY_USAGE_BYTES, receivedBytes + sentBytes).commit();
@@ -96,7 +96,7 @@ public class DataUsageService extends Service {
             String dailyUsage = Helper.getUsedTraffic(App.preferences.getLong(DAILY_USAGE_BYTES, 0));
             String totalUsage = Helper.getUsedTraffic(App.preferences.getLong(TOTAL_USAGE_BYTES, 0));
 
-            startForeground(1, NotificationHandler.getNotification(DataUsageService.this, iconId, String.format("Down: %s, Up: %s", Helper.getTransferRate(receivedBytes), Helper.getTransferRate(sentBytes)), "Daily Usage : " + dailyUsage, "Total Usage : " + totalUsage));
+            startForeground(1, NotificationHandler.getNotification(DataUsageService.this, iconId, String.format("Down: %s, Up: %s", Helper.getTransferRate(receivedBytes), Helper.getTransferRate(sentBytes)), "Daily : " + dailyUsage, "Total : " + totalUsage));
 
             //NotificationHandler.displayNotification(App.context, iconId, String.format("Down: %s, Up: %s", Helper.getTransferRate(receivedBytes), Helper.getTransferRate(sentBytes))
             //        , "Total: " + totalUsage, "65% used");

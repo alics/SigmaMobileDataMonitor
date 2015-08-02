@@ -7,23 +7,23 @@ public class PackageHistory {
     String  startDateTime;
     String  endDateTime;
     String  secondaryTrafficEndDateTime;
-    String  simId;
+    String  simSerial;
     Boolean active;
     Boolean reserved;
 
 
-    public PackageHistory(Integer dataPackageId, String startDateTime, String endDateTime, String secondaryTrafficEndDateTime, String simId, Boolean active, Boolean reserved) {
+    public PackageHistory(Integer dataPackageId, String startDateTime, String endDateTime, String secondaryTrafficEndDateTime, String simSerial, Boolean active, Boolean reserved) {
         setDataPackageId(dataPackageId);
         setStartDateTime(startDateTime);
         setEndDateTime(endDateTime);
-        setSimId(simId);
+        setSimSerial(simSerial);
         setActive(active);
         setReserved(reserved);
         setSecondaryTrafficEndDateTime(secondaryTrafficEndDateTime);
     }
 
-    public PackageHistory(Integer id, Integer dataPackageId, String startDateTime, String endDateTime, String secondaryTrafficEndDateTime, String simId, Boolean active, Boolean reserved) {
-        this(dataPackageId, startDateTime, endDateTime, secondaryTrafficEndDateTime, simId, active, reserved);
+    public PackageHistory(Integer id, Integer dataPackageId, String startDateTime, String endDateTime, String secondaryTrafficEndDateTime, String simSerial, Boolean active, Boolean reserved) {
+        this(dataPackageId, startDateTime, endDateTime, secondaryTrafficEndDateTime, simSerial, active, reserved);
         this.id = id;
     }
 
@@ -59,12 +59,12 @@ public class PackageHistory {
         this.endDateTime = endDateTime;
     }
 
-    public String getSimId() {
-        return simId;
+    public String getSimSerial() {
+        return simSerial;
     }
 
-    public void setSimId(String simId) {
-        this.simId = simId;
+    public void setSimSerial(String simSerial) {
+        this.simSerial = simSerial;
     }
 
     public Boolean getActive() {
