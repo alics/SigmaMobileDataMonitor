@@ -98,7 +98,7 @@ public final class Helper {
         return result;
     }
 
-    public static String getTotalUsedTraffic(long bytes) {
+    public static String getUsedTraffic(long bytes) {
         String result = "0 MB";
         if (bytes < (1024 * 1024 * 1024)) {
             result = getCorrectTrafficText((float) bytes / (1024 * 1024)) + " MB";

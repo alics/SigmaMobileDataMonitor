@@ -18,6 +18,8 @@ public class DataUsageService extends Service {
 
     private static final String LAST_RECEIVED_BYTES = "LAST_RECEIVED_BYTES";
     private static final String LAST_SENT_BYTES     = "LAST_SENT_BYTES";
+    private static final String DAILY_USAGE_DATE    = "DAILY_USAGE_DATE";
+    private static final String DAILY_USAGE_BYTES   = "DAILY_USAGE_BYTES";
     private static final String TOTAL_USAGE_BYTES   = "TOTAL_USAGE_BYTES";
     private static final int    USAGE_LOG_INTERVAL  = 60;
 
@@ -45,13 +47,23 @@ public class DataUsageService extends Service {
                 sentBytes = currentSentBytes - App.preferences.getLong(LAST_SENT_BYTES, 0);
                 App.preferences.edit().putLong(LAST_RECEIVED_BYTES, currentReceivedBytes).commit();
                 App.preferences.edit().putLong(LAST_SENT_BYTES, currentSentBytes).commit();
+
+                String currentDate = Helper.getCurrentDate();
+                if (App.preferences.getString(DAILY_USAGE_DATE, currentDate).equals(currentDate)) {
+                    App.preferences.edit().putLong(DAILY_USAGE_BYTES, App.preferences.getLong(DAILY_USAGE_BYTES, 0) + receivedBytes + sentBytes).commit();
+                } else {
+                    App.preferences.edit().putLong(DAILY_USAGE_BYTES, receivedBytes + sentBytes).commit();
+                }
+                App.preferences.edit().putString(DAILY_USAGE_DATE, currentDate).commit();
+
                 App.preferences.edit().putLong(TOTAL_USAGE_BYTES, App.preferences.getLong(TOTAL_USAGE_BYTES, 0) + receivedBytes + sentBytes).commit();
 
+                final long currentUsedTraffic = receivedBytes + sentBytes;
                 usageLogInterval++;
                 if (usageLogInterval == USAGE_LOG_INTERVAL) {
                     new Thread(new Runnable() {
                         public void run() {
-                            UsageLogs.insert(new UsageLog(App.preferences.getLong(TOTAL_USAGE_BYTES, 0)));
+                            UsageLogs.insert(new UsageLog(currentUsedTraffic));
                         }
                     }).start();
                     usageLogInterval = 0;
@@ -81,14 +93,15 @@ public class DataUsageService extends Service {
                 iconId = App.context.getResources().getIdentifier("wmb" + sumReceivedSent, "drawable", getPackageName());
             }
 
-            String total = Helper.getTotalUsedTraffic(App.preferences.getLong(TOTAL_USAGE_BYTES, 0));
+            String dailyUsage = Helper.getUsedTraffic(App.preferences.getLong(DAILY_USAGE_BYTES, 0));
+            String totalUsage = Helper.getUsedTraffic(App.preferences.getLong(TOTAL_USAGE_BYTES, 0));
 
-            startForeground(1, NotificationHandler.getNotification(DataUsageService.this, iconId, String.format("Down: %s, Up: %s", Helper.getTransferRate(receivedBytes), Helper.getTransferRate(sentBytes)), "Total: " + total, "86% used"));
+            startForeground(1, NotificationHandler.getNotification(DataUsageService.this, iconId, String.format("Down: %s, Up: %s", Helper.getTransferRate(receivedBytes), Helper.getTransferRate(sentBytes)), "Daily Usage : " + dailyUsage, "Total Usage : " + totalUsage));
 
             //NotificationHandler.displayNotification(App.context, iconId, String.format("Down: %s, Up: %s", Helper.getTransferRate(receivedBytes), Helper.getTransferRate(sentBytes))
-            //        , "Total: " + total, "65% used");
+            //        , "Total: " + totalUsage, "65% used");
 
-            //log("Notification : receivedBytes = " + receivedBytes + ", sentBytes = " + sentBytes + ", total = " + strCurrentDateTotalTraffic);
+            //log("Notification : receivedBytes = " + receivedBytes + ", sentBytes = " + sentBytes + ", totalUsage = " + strCurrentDateTotalTraffic);
         }
     };
 
