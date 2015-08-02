@@ -77,7 +77,7 @@ public class PackageManagementActivity extends EnhancedActivity {
             imgBtnActivePackageSetting.setEnabled(false);
 
         } else {
-            activePackage = DataPackages.selectPackageById(activePackageHistory.getId());
+            activePackage = DataPackages.selectPackageById(activePackageHistory.getDataPackageId());
             if (activePackage != null)
                 txtActivePackageDescription.setText(activePackage.getDescription());
         }
@@ -87,7 +87,7 @@ public class PackageManagementActivity extends EnhancedActivity {
             imgBtnReservedPackageSetting.setEnabled(false);
 
         } else {
-            reservedPackage = DataPackages.selectPackageById(reservedPackageHistory.getId());
+            reservedPackage = DataPackages.selectPackageById(reservedPackageHistory.getDataPackageId());
             if (reservedPackage != null)
                 txtReservedPackageDescription.setText(reservedPackage.getDescription());
         }

@@ -7,7 +7,7 @@
               android:orientation="vertical">
 
         <widgets.ArcProgress
-            android:id="@+id/progressDay"
+            android:id="@+id/progressPrimaryUsage"
             android:layout_width="96dp"
             android:layout_height="96dp"
             android:scaleType="centerInside"/>

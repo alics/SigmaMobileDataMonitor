@@ -37,8 +37,8 @@ public class DashboardActivity_ extends EnhancedActivity {
 
         //AlarmHandler.start(App.context);
 
-        progressDay = (ArcProgress) findViewById(R.id.progressDay);
-        progressNight = (ArcProgress) findViewById(R.id.progressNight);
+        progressDay = (ArcProgress) findViewById(R.id.progressPrimaryUsage);
+        progressNight = (ArcProgress) findViewById(R.id.progressSecondaryUsage);
         txtNightTraffic = (TextView) findViewById(R.id.txtNightTraffic);
         btnPackageManagement = (Button) findViewById(R.id.btnPackageManagement);
         btnPurchasePackage = (Button) findViewById(R.id.btnPurchasePackage);

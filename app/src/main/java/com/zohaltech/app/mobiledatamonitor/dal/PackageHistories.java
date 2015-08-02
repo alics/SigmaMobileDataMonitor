@@ -27,8 +27,9 @@ public class PackageHistories {
                                       DataPackageId + " INTEGER REFERENCES " + DataPackages.TableName + " (" + DataPackages.Id + "), " +
                                       StartDateTime + " CHAR(19)  ," +
                                       EndDateTime + " CHAR(19)  ," +
-                                      SecondaryTrafficEndDateTime + " CHAR(19) ," +
-                                      SimSerial + " VARCHAR(50) NOT NULL ," +
+                                      SecondaryTrafficEndDateTime + " " +
+                                      "CHAR(19) ," +
+                                      SimSerial + " VARCHAR(50) ," +
                                       Reserved + " BOOLEAN NOT NULL ," +
                                       Active + " BOOLEAN NOT NULL );";
 
@@ -152,6 +153,15 @@ public class PackageHistories {
             packageHistory.setSecondaryTrafficEndDateTime(Helper.getCurrentDateTime());
         }
         update(packageHistory);
+    }
+
+    public static void terminateAll() {
+        for (PackageHistory packageHistory : PackageHistories.select()){
+            packageHistory.setActive(false);
+            packageHistory.setReserved(false);
+            packageHistory.setEndDateTime(Helper.getCurrentDateTime());
+            PackageHistories.update(packageHistory);
+        }
     }
 
     public static void terminateDataPackageSecondaryPlan(PackageHistory packageHistory) {

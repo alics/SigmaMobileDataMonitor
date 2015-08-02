@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
+import com.zohaltech.app.mobiledatamonitor.classes.Helper;
+import com.zohaltech.app.mobiledatamonitor.classes.PackageStatus;
 
 import widgets.ArcProgress;
 import widgets.CircleProgress;
@@ -17,14 +19,16 @@ import widgets.CircleProgress;
 public class UsagePagerAdapter extends PagerAdapter {
 
     CircleProgress progressTodayUsage;
-    ArcProgress    progressDay;
-    ArcProgress    progressNight;
-    int            dayTraffic;
-    int            dayTotalTraffic;
-    String         strDayTraffic;
-    int            nightTraffic;
-    int            nightTotalTraffic;
-    String         strNightTraffic;
+    ArcProgress    progressPrimaryUsage;
+    ArcProgress    progressSecondaryUsage;
+
+    long   usedPrimaryTraffic;
+    long   totalPrimaryTraffic;
+    String strPrimaryTraffic;
+
+    long   usedSecondaryTraffic;
+    long   totalSecondaryTraffic;
+    String strSecondaryTraffic;
 
     //private Context context;
     //
@@ -52,24 +56,28 @@ public class UsagePagerAdapter extends PagerAdapter {
             progressTodayUsage.setLayoutParams(new LinearLayout.LayoutParams(size1, size1));
         } else if (position == 1) {
             view = App.inflater.inflate(R.layout.pager_adapter_traffic_usage, null);
-            progressDay = (ArcProgress) view.findViewById(R.id.progressDay);
-            progressNight = (ArcProgress) view.findViewById(R.id.progressNight);
+            progressPrimaryUsage = (ArcProgress) view.findViewById(R.id.progressPrimaryUsage);
+            progressSecondaryUsage = (ArcProgress) view.findViewById(R.id.progressSecondaryUsage);
             TextView txtNightTraffic = (TextView) view.findViewById(R.id.txtNightTraffic);
 
 
-            progressDay.setLayoutParams(new LinearLayout.LayoutParams(size1, size1));
-            progressNight.setLayoutParams(new LinearLayout.LayoutParams(size2, size2));
+            progressPrimaryUsage.setLayoutParams(new LinearLayout.LayoutParams(size1, size1));
+            progressSecondaryUsage.setLayoutParams(new LinearLayout.LayoutParams(size2, size2));
 
             txtNightTraffic.setLayoutParams(new LinearLayout.LayoutParams(size2, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-            dayTraffic = 96;
-            dayTotalTraffic = 100;
-            nightTraffic = 25;
-            nightTotalTraffic = 100;
-            strDayTraffic = dayTraffic + "/" + dayTotalTraffic + "MB";
-            strNightTraffic = nightTraffic + "/" + nightTotalTraffic + "MB";
-            progressDay.setProgress(0, strDayTraffic);
-            progressNight.setProgress(0, strNightTraffic);
+            PackageStatus status = PackageStatus.getCurrentStatus();
+
+            if (status.getHasActivePackage()) {
+                usedPrimaryTraffic = status.getUsedPrimaryTraffic();
+                totalPrimaryTraffic = status.getPrimaryTraffic();
+                usedSecondaryTraffic = status.getUsedSecondaryTraffic();
+                totalSecondaryTraffic = status.getSecondaryTraffic();
+                strPrimaryTraffic = Helper.getArcTraffic(usedPrimaryTraffic, totalPrimaryTraffic);
+                strSecondaryTraffic = Helper.getArcTraffic(usedSecondaryTraffic, totalSecondaryTraffic);
+                progressPrimaryUsage.setProgress(0, strPrimaryTraffic);
+                progressSecondaryUsage.setProgress(0, strSecondaryTraffic);
+            }
 
             startAnimation1();
 
@@ -106,24 +114,26 @@ public class UsagePagerAdapter extends PagerAdapter {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                int percent = dayTraffic * 100 / dayTotalTraffic;
-                int progress = 0;
-                if (100 - percent >= 4) {
-                    while (progress < (percent + 4)) {
-                        Thread.sleep(15 - (percent / 10));
-                        progress++;
-                        publishProgress(progress);
-                    }
-                    while (progress > percent) {
-                        Thread.sleep(100);
-                        progress--;
-                        publishProgress(progress);
-                    }
-                } else {
-                    while (progress < percent) {
-                        Thread.sleep(15 - (percent / 10));
-                        progress++;
-                        publishProgress(progress);
+                if (totalPrimaryTraffic != 0) {
+                    int percent = (int) (usedPrimaryTraffic * 100 / totalPrimaryTraffic);
+                    int progress = 0;
+                    if (100 - percent >= 4) {
+                        while (progress < (percent + 4)) {
+                            Thread.sleep(15 - (percent / 10));
+                            progress++;
+                            publishProgress(progress);
+                        }
+                        while (progress > percent) {
+                            Thread.sleep(100);
+                            progress--;
+                            publishProgress(progress);
+                        }
+                    } else {
+                        while (progress < percent) {
+                            Thread.sleep(15 - (percent / 10));
+                            progress++;
+                            publishProgress(progress);
+                        }
                     }
                 }
             } catch (InterruptedException e) {
@@ -135,7 +145,7 @@ public class UsagePagerAdapter extends PagerAdapter {
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
-            progressDay.setProgress(values[0], strDayTraffic);
+            progressPrimaryUsage.setProgress(values[0], strPrimaryTraffic);
         }
     }
 
@@ -144,24 +154,26 @@ public class UsagePagerAdapter extends PagerAdapter {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                int percent = nightTraffic * 100 / nightTotalTraffic;
-                int progress = 0;
-                if (100 - percent >= 4) {
-                    while (progress < (percent + 4)) {
-                        Thread.sleep(15 - (percent / 10));
-                        progress++;
-                        publishProgress(progress);
-                    }
-                    while (progress > percent) {
-                        Thread.sleep(100);
-                        progress--;
-                        publishProgress(progress);
-                    }
-                } else {
-                    while (progress < percent) {
-                        Thread.sleep(15 - (percent / 10));
-                        progress++;
-                        publishProgress(progress);
+                if (totalSecondaryTraffic != 0) {
+                    int percent = (int) (usedSecondaryTraffic * 100 / totalSecondaryTraffic);
+                    int progress = 0;
+                    if (100 - percent >= 4) {
+                        while (progress < (percent + 4)) {
+                            Thread.sleep(15 - (percent / 10));
+                            progress++;
+                            publishProgress(progress);
+                        }
+                        while (progress > percent) {
+                            Thread.sleep(100);
+                            progress--;
+                            publishProgress(progress);
+                        }
+                    } else {
+                        while (progress < percent) {
+                            Thread.sleep(15 - (percent / 10));
+                            progress++;
+                            publishProgress(progress);
+                        }
                     }
                 }
             } catch (InterruptedException e) {
@@ -173,7 +185,7 @@ public class UsagePagerAdapter extends PagerAdapter {
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
-            progressNight.setProgress(values[0], strNightTraffic);
+            progressSecondaryUsage.setProgress(values[0], strSecondaryTraffic);
         }
     }
 }

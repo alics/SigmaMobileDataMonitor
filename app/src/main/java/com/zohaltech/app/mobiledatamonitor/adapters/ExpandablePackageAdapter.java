@@ -11,7 +11,9 @@ import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
 import com.zohaltech.app.mobiledatamonitor.classes.DialogManager;
 import com.zohaltech.app.mobiledatamonitor.classes.Helper;
+import com.zohaltech.app.mobiledatamonitor.dal.PackageHistories;
 import com.zohaltech.app.mobiledatamonitor.entities.DataPackage;
+import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
 
 import java.util.HashMap;
 import java.util.List;
@@ -65,7 +67,8 @@ public class ExpandablePackageAdapter extends AnimatedExpandableListView.Animate
                                                              "بله", "خیر", null, new Runnable() {
                                     @Override
                                     public void run() {
-
+                                        PackageHistories.terminateAll();
+                                        PackageHistories.insert(new PackageHistory(dataPackage.getId(), Helper.getCurrentDateTime(), null, null, null, true, false));
                                     }
                                 });
                         //todo : if there is an active package

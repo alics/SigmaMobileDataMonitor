@@ -56,7 +56,6 @@ public class CircleProgress extends ImageView {
         arcBackgroundPaint.setColor(context.getResources().getColor(R.color.primary_dark));
         arcBackgroundPaint.setAntiAlias(true);
         arcBackgroundPaint.setStyle(Style.STROKE);
-        arcBackgroundPaint.setStrokeCap(Paint.Cap.ROUND);
 
         arcForegroundPaint = new Paint();
         arcForegroundPaint.setColor(color);

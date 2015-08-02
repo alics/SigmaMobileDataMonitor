@@ -11,42 +11,54 @@ public final class PackageStatus {
     Boolean hasActivePackage;
     long    dailyTraffic;
     long    primaryTraffic;
-    long    usedPrimaryTraffic;
-    long    secondaryTraffic;
-    long    usedSecondaryTraffic;
-    String  secondaryCaption;
-    int     period;
-    int     leftDays;
+
+    long   usedPrimaryTraffic;
+    long   secondaryTraffic;
+    long   usedSecondaryTraffic;
+    String secondaryCaption;
+    int    period;
+    int    leftDays;
 
     public static PackageStatus getCurrentStatus() {
         PackageStatus status = new PackageStatus();
         PackageHistory history = PackageHistories.getActivePackage();
 
+        status.dailyTraffic = SettingsHandler.getDailyTraffic();
+
         if (history == null) {
             status.hasActivePackage = false;
-            status.dailyTraffic = SettingsHandler.getDailyTraffic();
             return status;
         }
 
         DataPackage dataPackage = DataPackages.selectPackageById(history.getDataPackageId());
 
-        if (dataPackage == null)
-            return null;
+        if (dataPackage != null) {
+            status.hasActivePackage = true;
+            status.setPrimaryTraffic(dataPackage.getPrimaryTraffic());
+            status.setUsedPrimaryTraffic(UsageLogs.getUsedPrimaryTrafficOfPackage(dataPackage, history));
 
-        status.hasActivePackage = true;
-        status.setPrimaryTraffic(dataPackage.getPrimaryTraffic());
-        status.setUsedPrimaryTraffic(UsageLogs.getUsedPrimaryTrafficOfPackage(dataPackage, history));
-
-        if (dataPackage.getSecondaryTraffic() != null && dataPackage.getSecondaryTraffic() != 0) {
-            status.setSecondaryTraffic(dataPackage.getSecondaryTraffic());
-            status.setUsedSecondaryTraffic(UsageLogs.getUsedSecondaryTrafficOfPackage(dataPackage, history));
+            if (dataPackage.getSecondaryTraffic() != null && dataPackage.getSecondaryTraffic() != 0) {
+                status.setSecondaryTraffic(dataPackage.getSecondaryTraffic());
+                status.setUsedSecondaryTraffic(UsageLogs.getUsedSecondaryTrafficOfPackage(dataPackage, history));
+            }
         }
-
         return status;
     }
 
-    public static void setDailyTraffic(long traffic, String date) {
+    public Boolean getHasActivePackage() {
+        return hasActivePackage;
+    }
 
+    public void setHasActivePackage(Boolean hasActivePackage) {
+        this.hasActivePackage = hasActivePackage;
+    }
+
+    public long getDailyTraffic() {
+        return dailyTraffic;
+    }
+
+    public void setDailyTraffic(long dailyTraffic) {
+        this.dailyTraffic = dailyTraffic;
     }
 
     public long getPrimaryTraffic() {
@@ -104,6 +116,4 @@ public final class PackageStatus {
     public void setLeftDays(int leftDays) {
         this.leftDays = leftDays;
     }
-
-
 }

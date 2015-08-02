@@ -108,6 +108,10 @@ public final class Helper {
         return result;
     }
 
+    public static String getArcTraffic(long usedBytes, long totalBytes) {
+        return getCorrectTrafficText((float) usedBytes / (1024 * 1024)) + "/" + getCorrectTrafficText((float) totalBytes / (1024 * 1024)) + " MB";
+    }
+
     private static String getCorrectTrafficText(float value) {
         String result = Helper.round(value, 1).toString();
         if (result.endsWith(".0")) {

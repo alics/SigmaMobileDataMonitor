@@ -16,12 +16,13 @@ import java.util.concurrent.TimeUnit;
 
 public class DataUsageService extends Service {
 
-    private static final String LAST_RECEIVED_BYTES = "LAST_RECEIVED_BYTES";
-    private static final String LAST_SENT_BYTES     = "LAST_SENT_BYTES";
-    private static final String DAILY_USAGE_DATE    = "DAILY_USAGE_DATE";
-    private static final String DAILY_USAGE_BYTES   = "DAILY_USAGE_BYTES";
-    private static final String TOTAL_USAGE_BYTES   = "TOTAL_USAGE_BYTES";
-    private static final int    USAGE_LOG_INTERVAL  = 60;
+    private static final String LAST_RECEIVED_BYTES   = "LAST_RECEIVED_BYTES";
+    private static final String LAST_SENT_BYTES       = "LAST_SENT_BYTES";
+    private static final String DAILY_USAGE_DATE      = "DAILY_USAGE_DATE";
+    private static final String DAILY_USAGE_BYTES     = "DAILY_USAGE_BYTES";
+    private static final String TOTAL_USAGE_BYTES     = "TOTAL_USAGE_BYTES";
+    private static final String ONE_MINUTE_USED_BYTES = "ONE_MINUTE_USED_BYTES";
+    private static final int    USAGE_LOG_INTERVAL    = 60;
 
     private static boolean firstTime        = true;
     private static int     usageLogInterval = 0;
@@ -58,12 +59,15 @@ public class DataUsageService extends Service {
 
                 App.preferences.edit().putLong(TOTAL_USAGE_BYTES, App.preferences.getLong(TOTAL_USAGE_BYTES, 0) + receivedBytes + sentBytes).commit();
 
-                final long currentUsedTraffic = receivedBytes + sentBytes;
+                final long oneMinuteUsedBytes = App.preferences.getLong(ONE_MINUTE_USED_BYTES, 0) + receivedBytes + sentBytes;
+                App.preferences.edit().putLong(ONE_MINUTE_USED_BYTES, oneMinuteUsedBytes).commit();
+
                 usageLogInterval++;
                 if (usageLogInterval == USAGE_LOG_INTERVAL) {
                     new Thread(new Runnable() {
                         public void run() {
-                            UsageLogs.insert(new UsageLog(currentUsedTraffic));
+                            App.preferences.edit().putLong(ONE_MINUTE_USED_BYTES,0).commit();
+                            UsageLogs.insert(new UsageLog(oneMinuteUsedBytes));
                         }
                     }).start();
                     usageLogInterval = 0;
