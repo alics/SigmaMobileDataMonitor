@@ -39,7 +39,7 @@ public final class PackageStatus {
 
         if (dataPackage.getSecondaryTraffic() != null && dataPackage.getSecondaryTraffic() != 0) {
             status.setSecondaryTraffic(dataPackage.getSecondaryTraffic());
-            status.setUsedSecondaryTraffic(UsageLogs.getUsedSecondaryTrafficOfPackage(dataPackage, history.getStartDateTime()));
+            status.setUsedSecondaryTraffic(UsageLogs.getUsedSecondaryTrafficOfPackage(dataPackage, history));
         }
 
         return status;

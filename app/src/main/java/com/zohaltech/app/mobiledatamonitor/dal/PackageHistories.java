@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.zohaltech.app.mobiledatamonitor.classes.Helper;
 import com.zohaltech.app.mobiledatamonitor.classes.MyRuntimeException;
 import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
 
@@ -71,33 +72,6 @@ public class PackageHistories {
         return select("", null);
     }
 
-    public static PackageHistory getActivePackage() {
-        String whereClause = " WHERE " + Active + " = " + 1;
-        ArrayList<PackageHistory> packageHistories = new ArrayList<>();
-        packageHistories = select(whereClause, null);
-        int count = packageHistories.size();
-
-        return (count == 0) ? null : packageHistories.get(count - 1);
-    }
-
-    public static PackageHistory getPackageById(int id) {
-        String whereClause = " WHERE " + Id + " = " + id;
-        ArrayList<PackageHistory> packageHistories = new ArrayList<>();
-        packageHistories = select(whereClause, null);
-        int count = packageHistories.size();
-
-        return (count == 0) ? null : packageHistories.get(count - 1);
-    }
-
-    public static long getPackageUsedTraffic(int packageId) {
-        PackageHistory packageHistory = getPackageById(packageId);
-        if (packageHistory == null || !packageHistory.getActive())
-            return 0;
-
-
-        return 1;
-    }
-
     public static long insert(PackageHistory packageHistory) {
         ContentValues values = new ContentValues();
 
@@ -130,4 +104,50 @@ public class PackageHistories {
         DataAccess db = new DataAccess();
         return db.delete(TableName, Id + " =? ", new String[]{String.valueOf(packageHistory.getId())});
     }
+
+    public static PackageHistory getActivePackage() {
+        String whereClause = " WHERE " + Active + " = " + 1;
+        ArrayList<PackageHistory> packageHistories = new ArrayList<>();
+        packageHistories = select(whereClause, null);
+        int count = packageHistories.size();
+
+        return (count == 0) ? null : packageHistories.get(count - 1);
+    }
+
+    public static PackageHistory getPackageById(int id) {
+        String whereClause = " WHERE " + Id + " = " + id;
+        ArrayList<PackageHistory> packageHistories = new ArrayList<>();
+        packageHistories = select(whereClause, null);
+        int count = packageHistories.size();
+
+        return (count == 0) ? null : packageHistories.get(count - 1);
+    }
+
+    public static long getPackageUsedTraffic(int packageId) {
+        PackageHistory packageHistory = getPackageById(packageId);
+        if (packageHistory == null || !packageHistory.getActive())
+            return 0;
+
+
+        return 1;
+    }
+
+
+
+    public static void terminateDataPackage(PackageHistory packageHistory) {
+        packageHistory.setActive(false);
+        packageHistory.setEndDateTime(Helper.getCurrentDateTime());
+
+        if (packageHistory.getSecondaryTrafficEndDateTime() == null ||
+            "".equals(packageHistory.getSecondaryTrafficEndDateTime())) {
+            packageHistory.setSecondaryTrafficEndDateTime(Helper.getCurrentDateTime());
+        }
+        update(packageHistory);
+    }
+
+    public static void terminateDataPackageSecondaryPlan(PackageHistory packageHistory) {
+        packageHistory.setSecondaryTrafficEndDateTime(Helper.getCurrentDateTime());
+        update(packageHistory);
+    }
 }
+
