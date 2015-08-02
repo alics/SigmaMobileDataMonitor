@@ -1,6 +1,5 @@
 package com.zohaltech.app.mobiledatamonitor.adapters;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v4.view.PagerAdapter;
@@ -13,17 +12,19 @@ import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
 
 import widgets.ArcProgress;
+import widgets.CircleProgress;
 
 public class UsagePagerAdapter extends PagerAdapter {
 
-    ArcProgress progressDay;
-    ArcProgress progressNight;
-    int         dayTraffic;
-    int         dayTotalTraffic;
-    String      strDayTraffic;
-    int         nightTraffic;
-    int         nightTotalTraffic;
-    String      strNightTraffic;
+    CircleProgress progressTodayUsage;
+    ArcProgress    progressDay;
+    ArcProgress    progressNight;
+    int            dayTraffic;
+    int            dayTotalTraffic;
+    String         strDayTraffic;
+    int            nightTraffic;
+    int            nightTotalTraffic;
+    String         strNightTraffic;
 
     //private Context context;
     //
@@ -38,19 +39,23 @@ public class UsagePagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
+        int size1 = (App.currentActivity.getWindowManager().getDefaultDisplay().getWidth()) / 2;
+        int size2 = (App.currentActivity.getWindowManager().getDefaultDisplay().getWidth()) / 4;
+        //int size1 = (container.getWidth()) / 2;
+        //int size2 = (container.getWidth()) / 4;
+
         View view;
         if (position == 0) {
             view = App.inflater.inflate(R.layout.pager_adapter_today_usage, null);
+            progressTodayUsage = (CircleProgress) view.findViewById(R.id.progressTodayUsage);
+            progressTodayUsage.setProgress(25, "daily usage");
+            progressTodayUsage.setLayoutParams(new LinearLayout.LayoutParams(size1, size1));
         } else if (position == 1) {
             view = App.inflater.inflate(R.layout.pager_adapter_traffic_usage, null);
             progressDay = (ArcProgress) view.findViewById(R.id.progressDay);
             progressNight = (ArcProgress) view.findViewById(R.id.progressNight);
             TextView txtNightTraffic = (TextView) view.findViewById(R.id.txtNightTraffic);
 
-            int size1 = (App.currentActivity.getWindowManager().getDefaultDisplay().getWidth()) / 2;
-            int size2 = (App.currentActivity.getWindowManager().getDefaultDisplay().getWidth()) / 4;
-            //int size1 = (container.getWidth()) / 2;
-            //int size2 = (container.getWidth()) / 4;
 
             progressDay.setLayoutParams(new LinearLayout.LayoutParams(size1, size1));
             progressNight.setLayoutParams(new LinearLayout.LayoutParams(size2, size2));
@@ -66,13 +71,7 @@ public class UsagePagerAdapter extends PagerAdapter {
             progressDay.setProgress(0, strDayTraffic);
             progressNight.setProgress(0, strNightTraffic);
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                new ProgressDayTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                new ProgressNightTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            } else {
-                new ProgressDayTask().execute();
-                new ProgressNightTask().execute();
-            }
+            startAnimation1();
 
         } else {
             view = App.inflater.inflate(R.layout.pager_adapter_day_remain, null);
@@ -80,6 +79,16 @@ public class UsagePagerAdapter extends PagerAdapter {
 
         container.addView(view);
         return view;
+    }
+
+    public void startAnimation1() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            new ProgressDayTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new ProgressNightTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } else {
+            new ProgressDayTask().execute();
+            new ProgressNightTask().execute();
+        }
     }
 
     @Override

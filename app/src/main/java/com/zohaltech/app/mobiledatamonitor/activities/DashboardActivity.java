@@ -1,8 +1,6 @@
 package com.zohaltech.app.mobiledatamonitor.activities;
 
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -37,7 +35,6 @@ public class DashboardActivity extends EnhancedActivity {
         pagerUsages.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
@@ -46,7 +43,15 @@ public class DashboardActivity extends EnhancedActivity {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
+                if (state == 2) {
+                    if (pagerUsages.getCurrentItem() == 0) {
+                        //usagePagerAdapter.startAnimation0();
+                    } else if (pagerUsages.getCurrentItem() == 1) {
+                        usagePagerAdapter.startAnimation1();
+                    } else if (pagerUsages.getCurrentItem() == 2) {
+                        //usagePagerAdapter.startAnimation2();
+                    }
+                }
             }
         });
 
