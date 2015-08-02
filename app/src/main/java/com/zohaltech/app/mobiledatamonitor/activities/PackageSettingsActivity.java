@@ -4,6 +4,8 @@ package com.zohaltech.app.mobiledatamonitor.activities;
 import android.os.Bundle;
 
 import com.zohaltech.app.mobiledatamonitor.R;
+import com.zohaltech.app.mobiledatamonitor.dal.DataPackages;
+import com.zohaltech.app.mobiledatamonitor.entities.DataPackage;
 
 public class PackageSettingsActivity extends EnhancedActivity {
 
@@ -22,6 +24,19 @@ public class PackageSettingsActivity extends EnhancedActivity {
     private void initialize() {
         final String initMode = getIntent().getStringExtra(INIT_MODE_KEY);
         final int packageId = getIntent().getIntExtra(PACKAGE_ID_KEY, 0);
+
+        DataPackage dataPackage = DataPackages.selectPackageById(packageId);
+
+        if(INIT_MODE_KEY==MODE_SETTING_ACTIVE){
+
+//TODO
+        }
+        else if(INIT_MODE_KEY==MODE_SETTING_RESERVED){
+
+            //TODO  visible cancel
+
+        }
+
 
     }
 }
