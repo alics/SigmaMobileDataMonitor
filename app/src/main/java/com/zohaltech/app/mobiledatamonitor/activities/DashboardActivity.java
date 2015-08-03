@@ -16,6 +16,7 @@ public class DashboardActivity extends EnhancedActivity {
     Button    btnPackageManagement;
     Button    btnPurchasePackage;
     Button    btnUsageReport;
+    Button    btnPackagesHistory;
 
     UsagePagerAdapter usagePagerAdapter;
 
@@ -31,6 +32,7 @@ public class DashboardActivity extends EnhancedActivity {
         btnPackageManagement = (Button) findViewById(R.id.btnPackageManagement);
         btnPurchasePackage = (Button) findViewById(R.id.btnPurchasePackage);
         btnUsageReport = (Button) findViewById(R.id.btnUsageReport);
+        btnPackagesHistory = (Button) findViewById(R.id.btnPackagesHistory);
 
         pagerUsages.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -78,6 +80,16 @@ public class DashboardActivity extends EnhancedActivity {
                 startActivity(intent);
             }
         });
+
+        btnPackagesHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(App.currentActivity, PackagesHistoryActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     @Override
