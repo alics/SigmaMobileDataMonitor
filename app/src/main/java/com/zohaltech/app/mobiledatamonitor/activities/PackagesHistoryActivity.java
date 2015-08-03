@@ -20,6 +20,7 @@ public class PackagesHistoryActivity extends EnhancedActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_packages_history);
+        initialize();
     }
 
     private void initialize() {

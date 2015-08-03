@@ -12,10 +12,13 @@ import com.zohaltech.app.mobiledatamonitor.classes.App;
 
 public class DashboardActivity extends EnhancedActivity {
 
+    public static final String DASHBOARD_PAGE_INDEX = "DASHBOARD_PAGE_INDEX";
+
     ViewPager pagerUsages;
     Button    btnPackageManagement;
     Button    btnPurchasePackage;
     Button    btnUsageReport;
+    Button    btnPackagesHistory;
 
     UsagePagerAdapter usagePagerAdapter;
 
@@ -31,6 +34,7 @@ public class DashboardActivity extends EnhancedActivity {
         btnPackageManagement = (Button) findViewById(R.id.btnPackageManagement);
         btnPurchasePackage = (Button) findViewById(R.id.btnPurchasePackage);
         btnUsageReport = (Button) findViewById(R.id.btnUsageReport);
+        btnPackagesHistory = (Button) findViewById(R.id.btnPackagesHistory);
 
         pagerUsages.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -44,13 +48,15 @@ public class DashboardActivity extends EnhancedActivity {
             @Override
             public void onPageScrollStateChanged(int state) {
                 if (state == 2) {
-                    if (pagerUsages.getCurrentItem() == 0) {
-                        //usagePagerAdapter.startAnimation0();
-                    } else if (pagerUsages.getCurrentItem() == 1) {
+                    int pageIndex = pagerUsages.getCurrentItem();
+                    if (pageIndex == 0) {
+                        usagePagerAdapter.startAnimation0();
+                    } else if (pageIndex == 1) {
                         usagePagerAdapter.startAnimation1();
-                    } else if (pagerUsages.getCurrentItem() == 2) {
+                    } else if (pageIndex == 2) {
                         //usagePagerAdapter.startAnimation2();
                     }
+                    App.preferences.edit().putInt(DASHBOARD_PAGE_INDEX, pageIndex).commit();
                 }
             }
         });
@@ -78,6 +84,16 @@ public class DashboardActivity extends EnhancedActivity {
                 startActivity(intent);
             }
         });
+
+        btnPackagesHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(App.currentActivity, PackagesHistoryActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     @Override
@@ -86,6 +102,6 @@ public class DashboardActivity extends EnhancedActivity {
 
         usagePagerAdapter = new UsagePagerAdapter();
         pagerUsages.setAdapter(usagePagerAdapter);
-        pagerUsages.setCurrentItem(1);
+        pagerUsages.setCurrentItem(App.preferences.getInt(DASHBOARD_PAGE_INDEX, 1));
     }
 }

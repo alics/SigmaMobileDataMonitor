@@ -41,7 +41,7 @@ public class PackagesHistoryAdapter extends ArrayAdapter<PackageHistory> {
             DataPackage dataPackage = DataPackages.selectPackageById(item.getDataPackageId());
             txtPackageDesc.setText(dataPackage.getTitle());
             txtActivateDate.setText(SolarCalendar.getShamsiDateTime(Helper.getDateTime(item.getStartDateTime())));
-            txtExpDate.setText(SolarCalendar.getShamsiDateTime(Helper.getDateTime(item.getEndDateTime())));
+            //txtExpDate.setText(SolarCalendar.getShamsiDateTime(Helper.getDateTime(item.getEndDateTime())));
             txtStatus.setText(item.getActive() ? "فعال" : "غیر فعال");
         }
     }

@@ -91,9 +91,9 @@ public class DataUsageService_ extends Service {
                 iconId = R.drawable.wkb000;
             }
 
-            String total = Helper.getUsedTraffic(App.preferences.getLong("tempUsage", 0));
+            String total = TrafficDisplay.getUsedTraffic(App.preferences.getLong("tempUsage", 0));
 
-            NotificationHandler.displayNotification(App.context, iconId, String.format("Down: %s, Up: %s", Helper.getTransferRate(receivedBytes), Helper.getTransferRate(sentBytes))
+            NotificationHandler.displayNotification(App.context, iconId, String.format("Down: %s, Up: %s", TrafficDisplay.getTransferRate(receivedBytes), TrafficDisplay.getTransferRate(sentBytes))
                     , "Total: " + total, "65% used");
         }
     };

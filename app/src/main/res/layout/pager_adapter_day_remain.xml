@@ -6,18 +6,26 @@
               android:gravity="center"
               android:orientation="vertical">
 
-        <widgets.ArcProgress
-            android:id="@+id/progressPrimaryUsage"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:scaleType="centerInside"/>
+        <!--<widgets.ArcProgress-->
+            <!--android:id="@+id/progressPrimaryUsage"-->
+            <!--android:layout_width="96dp"-->
+            <!--android:layout_height="96dp"-->
+            <!--android:scaleType="centerInside"/>-->
+
+    <TextView
+        android:id="@+id/txtDaysRemain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="0"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/white"/>
 
         <widgets.MyTextView
-            android:id="@+id/txtDayTraffic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="تعداد روز باقیمانده به اتمام بسته"
+            android:text="روز باقیمانده به اتمام بسته"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/white"/>
 
