@@ -19,7 +19,7 @@ public class DataUsageService extends Service {
     private static final String LAST_RECEIVED_BYTES   = "LAST_RECEIVED_BYTES";
     private static final String LAST_SENT_BYTES       = "LAST_SENT_BYTES";
     private static final String DAILY_USAGE_DATE      = "DAILY_USAGE_DATE";
-    private static final String DAILY_USAGE_BYTES     = "DAILY_USAGE_BYTES";
+    public static final String DAILY_USAGE_BYTES     = "DAILY_USAGE_BYTES";
     private static final String TOTAL_USAGE_BYTES     = "TOTAL_USAGE_BYTES";
     private static final String ONE_MINUTE_USED_BYTES = "ONE_MINUTE_USED_BYTES";
     private static final int    USAGE_LOG_INTERVAL    = 60;
@@ -97,10 +97,10 @@ public class DataUsageService extends Service {
                 iconId = App.context.getResources().getIdentifier("wmb" + sumReceivedSent, "drawable", getPackageName());
             }
 
-            String dailyUsage = Helper.getUsedTraffic(App.preferences.getLong(DAILY_USAGE_BYTES, 0));
-            String totalUsage = Helper.getUsedTraffic(App.preferences.getLong(TOTAL_USAGE_BYTES, 0));
+            String dailyUsage = TrafficDisplay.getUsedTraffic(App.preferences.getLong(DAILY_USAGE_BYTES, 0));
+            String totalUsage = TrafficDisplay.getUsedTraffic(App.preferences.getLong(TOTAL_USAGE_BYTES, 0));
 
-            startForeground(1, NotificationHandler.getNotification(DataUsageService.this, iconId, String.format("Down: %s, Up: %s", Helper.getTransferRate(receivedBytes), Helper.getTransferRate(sentBytes)), "Daily : " + dailyUsage, "Total : " + totalUsage));
+            startForeground(1, NotificationHandler.getNotification(DataUsageService.this, iconId, String.format("Down: %s, Up: %s", TrafficDisplay.getTransferRate(receivedBytes), TrafficDisplay.getTransferRate(sentBytes)), "Daily : " + dailyUsage, "Total : " + totalUsage));
 
             //NotificationHandler.displayNotification(App.context, iconId, String.format("Down: %s, Up: %s", Helper.getTransferRate(receivedBytes), Helper.getTransferRate(sentBytes))
             //        , "Total: " + totalUsage, "65% used");

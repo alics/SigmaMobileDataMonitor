@@ -29,7 +29,7 @@ public class App extends Application {
         context = getApplicationContext();
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
         englishFont = Typeface.createFromAsset(context.getAssets(), "fonts/calibril.ttf");
-        persianFont = Typeface.createFromAsset(context.getAssets(), "fonts/byekan.ttf");
+        persianFont = Typeface.createFromAsset(context.getAssets(), "fonts/default.ttf");
         handler = new Handler();
         inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 
