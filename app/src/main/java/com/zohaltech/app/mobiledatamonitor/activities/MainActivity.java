@@ -12,6 +12,7 @@ import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.classes.AlarmHandler;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
 import com.zohaltech.app.mobiledatamonitor.classes.Helper;
+import com.zohaltech.app.mobiledatamonitor.classes.TrafficDisplay;
 
 import java.math.BigDecimal;
 
@@ -147,7 +148,7 @@ public class MainActivity extends EnhancedActivity {
                         iconId = R.drawable.wkb000;
                     }
 
-                    String total = Helper.getUsedTraffic(App.preferences.getLong("tempUsage", 0));
+                    String total = TrafficDisplay.getUsedTraffic(App.preferences.getLong("tempUsage", 0));
 
                     //NotificationHandler.displayNotification(App.context, iconId, String.format("Down: %s, Up: %s", Helper.getTransferRate(receivedBytes), Helper.getTransferRate(sentBytes))
                     //        , "Total: " + total);

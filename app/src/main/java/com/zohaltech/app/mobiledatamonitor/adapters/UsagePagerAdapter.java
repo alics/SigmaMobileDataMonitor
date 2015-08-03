@@ -10,8 +10,9 @@ import android.widget.TextView;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
-import com.zohaltech.app.mobiledatamonitor.classes.Helper;
+import com.zohaltech.app.mobiledatamonitor.classes.DataUsageService;
 import com.zohaltech.app.mobiledatamonitor.classes.PackageStatus;
+import com.zohaltech.app.mobiledatamonitor.classes.TrafficDisplay;
 
 import widgets.ArcProgress;
 import widgets.CircleProgress;
@@ -50,21 +51,25 @@ public class UsagePagerAdapter extends PagerAdapter {
 
         View view;
         if (position == 0) {
+
             view = App.inflater.inflate(R.layout.pager_adapter_today_usage, null);
             progressTodayUsage = (CircleProgress) view.findViewById(R.id.progressTodayUsage);
-            progressTodayUsage.setProgress(25, "daily usage");
             progressTodayUsage.setLayoutParams(new LinearLayout.LayoutParams(size1, size1));
+
+            startAnimation0();
+
         } else if (position == 1) {
+
             view = App.inflater.inflate(R.layout.pager_adapter_traffic_usage, null);
             progressPrimaryUsage = (ArcProgress) view.findViewById(R.id.progressPrimaryUsage);
             progressSecondaryUsage = (ArcProgress) view.findViewById(R.id.progressSecondaryUsage);
-            TextView txtNightTraffic = (TextView) view.findViewById(R.id.txtNightTraffic);
+            TextView txtSecondaryCaption = (TextView) view.findViewById(R.id.txtSecondaryCaption);
 
 
             progressPrimaryUsage.setLayoutParams(new LinearLayout.LayoutParams(size1, size1));
             progressSecondaryUsage.setLayoutParams(new LinearLayout.LayoutParams(size2, size2));
 
-            txtNightTraffic.setLayoutParams(new LinearLayout.LayoutParams(size2, ViewGroup.LayoutParams.WRAP_CONTENT));
+            txtSecondaryCaption.setLayoutParams(new LinearLayout.LayoutParams(size2, ViewGroup.LayoutParams.WRAP_CONTENT));
 
             PackageStatus status = PackageStatus.getCurrentStatus();
 
@@ -73,8 +78,8 @@ public class UsagePagerAdapter extends PagerAdapter {
                 totalPrimaryTraffic = status.getPrimaryTraffic();
                 usedSecondaryTraffic = status.getUsedSecondaryTraffic();
                 totalSecondaryTraffic = status.getSecondaryTraffic();
-                strPrimaryTraffic = Helper.getArcTraffic(usedPrimaryTraffic, totalPrimaryTraffic);
-                strSecondaryTraffic = Helper.getArcTraffic(usedSecondaryTraffic, totalSecondaryTraffic);
+                strPrimaryTraffic = TrafficDisplay.getArcTraffic(usedPrimaryTraffic, totalPrimaryTraffic);
+                strSecondaryTraffic = TrafficDisplay.getArcTraffic(usedSecondaryTraffic, totalSecondaryTraffic);
                 progressPrimaryUsage.setProgress(0, strPrimaryTraffic);
                 progressSecondaryUsage.setProgress(0, strSecondaryTraffic);
             }
@@ -89,13 +94,21 @@ public class UsagePagerAdapter extends PagerAdapter {
         return view;
     }
 
+    public void startAnimation0() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            new TodayTrafficTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } else {
+            new TodayTrafficTask().execute();
+        }
+    }
+
     public void startAnimation1() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            new ProgressDayTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            new ProgressNightTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new PrimaryProgressTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new SecondaryTrafficTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } else {
-            new ProgressDayTask().execute();
-            new ProgressNightTask().execute();
+            new PrimaryProgressTask().execute();
+            new SecondaryTrafficTask().execute();
         }
     }
 
@@ -109,7 +122,7 @@ public class UsagePagerAdapter extends PagerAdapter {
         container.removeView((View) object);
     }
 
-    private class ProgressDayTask extends AsyncTask<Void, Integer, Void> {
+    private class PrimaryProgressTask extends AsyncTask<Void, Integer, Void> {
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -149,7 +162,7 @@ public class UsagePagerAdapter extends PagerAdapter {
         }
     }
 
-    private class ProgressNightTask extends AsyncTask<Void, Integer, Void> {
+    private class SecondaryTrafficTask extends AsyncTask<Void, Integer, Void> {
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -186,6 +199,31 @@ public class UsagePagerAdapter extends PagerAdapter {
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
             progressSecondaryUsage.setProgress(values[0], strSecondaryTraffic);
+        }
+    }
+
+    private class TodayTrafficTask extends AsyncTask<Void, Integer, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                int progress = 0;
+                while (progress < 100) {
+                    Thread.sleep(5 + (progress / 10));
+                    progress++;
+                    publishProgress(progress);
+                }
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+            progressTodayUsage.setProgress(values[0], App.preferences.getLong(DataUsageService.DAILY_USAGE_BYTES, 0));
         }
     }
 }

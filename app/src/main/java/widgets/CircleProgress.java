@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
+import com.zohaltech.app.mobiledatamonitor.classes.TrafficDisplay;
 
 
 public class CircleProgress extends ImageView {
@@ -23,7 +24,7 @@ public class CircleProgress extends ImageView {
     private Paint arcBackgroundPaint;
     private Paint textPaint;
     private int progress = 0;
-    private String traffic = "";
+    private TrafficDisplay trafficDisplay;
 
     public CircleProgress(Context context) {
         super(context);
@@ -43,13 +44,16 @@ public class CircleProgress extends ImageView {
         initialize();
     }
 
-    public void setProgress(int progress, String traffic) {
+    public void setProgress(int progress, long bytes) {
         this.progress = progress;
-        this.traffic = traffic;
+        trafficDisplay = TrafficDisplay.getTodayTraffic(bytes);
         postInvalidate();
     }
 
     private void initialize() {
+
+        trafficDisplay = new TrafficDisplay("0", "KB");
+
         int color = Color.argb(230, 255, 255, 255);
 
         arcBackgroundPaint = new Paint();
@@ -61,7 +65,6 @@ public class CircleProgress extends ImageView {
         arcForegroundPaint.setColor(color);
         arcForegroundPaint.setAntiAlias(true);
         arcForegroundPaint.setStyle(Style.STROKE);
-        arcForegroundPaint.setStrokeCap(Paint.Cap.ROUND);
 
         textPaint = new Paint();
         textPaint.setColor(color);
@@ -97,10 +100,10 @@ public class CircleProgress extends ImageView {
 
         textPaint.setTextSize(textSize);
         textPaint.setShadowLayer(strokeWidth / 2, strokeWidth / 4, strokeWidth / 4, context.getResources().getColor(R.color.shadow));
-        canvas.drawText(progress + "%", baseSize / 2, getHeight() / 2, textPaint);
+        canvas.drawText(trafficDisplay.getValue(), baseSize / 2, getHeight() / 2, textPaint);
 
         textPaint.setTextSize(textSize / 3);
         textPaint.setShadowLayer(strokeWidth / 3, strokeWidth / 4, strokeWidth / 4, context.getResources().getColor(R.color.shadow));
-        canvas.drawText(traffic, baseSize / 2, getHeight() - (getHeight() / 6), textPaint);
+        canvas.drawText(trafficDisplay.getPostfix(), baseSize / 2, getHeight() - (getHeight() / 6), textPaint);
     }
 }

@@ -19,7 +19,6 @@
             android:scaleType="centerInside"/>
 
         <widgets.MyTextView
-            android:id="@+id/txtDayTraffic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -43,7 +42,7 @@
             android:scaleType="centerInside"/>
 
         <widgets.MyTextView
-            android:id="@+id/txtNightTraffic"
+            android:id="@+id/txtSecondaryCaption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

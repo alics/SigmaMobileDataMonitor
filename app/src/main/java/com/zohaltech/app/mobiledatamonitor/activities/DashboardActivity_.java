@@ -18,7 +18,7 @@ import widgets.ArcProgress;
 public class DashboardActivity_ extends EnhancedActivity {
     ArcProgress progressDay;
     ArcProgress progressNight;
-    TextView    txtNightTraffic;
+    TextView    txtSecondaryCaption;
     Button      btnPackageManagement;
     Button      btnPurchasePackage;
     Button      btnUsageReport;
@@ -39,7 +39,7 @@ public class DashboardActivity_ extends EnhancedActivity {
 
         progressDay = (ArcProgress) findViewById(R.id.progressPrimaryUsage);
         progressNight = (ArcProgress) findViewById(R.id.progressSecondaryUsage);
-        txtNightTraffic = (TextView) findViewById(R.id.txtNightTraffic);
+        txtSecondaryCaption = (TextView) findViewById(R.id.txtSecondaryCaption);
         btnPackageManagement = (Button) findViewById(R.id.btnPackageManagement);
         btnPurchasePackage = (Button) findViewById(R.id.btnPurchasePackage);
         btnUsageReport = (Button) findViewById(R.id.btnUsageReport);
@@ -49,7 +49,7 @@ public class DashboardActivity_ extends EnhancedActivity {
         progressDay.setLayoutParams(new LinearLayout.LayoutParams(size1, size1));
         progressNight.setLayoutParams(new LinearLayout.LayoutParams(size2, size2));
 
-        txtNightTraffic.setLayoutParams(new LinearLayout.LayoutParams(size2, ViewGroup.LayoutParams.WRAP_CONTENT));
+        txtSecondaryCaption.setLayoutParams(new LinearLayout.LayoutParams(size2, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         dayTraffic = 96;
         dayTotalTraffic = 100;
