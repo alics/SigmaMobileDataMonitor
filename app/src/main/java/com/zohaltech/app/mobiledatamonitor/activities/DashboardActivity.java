@@ -48,7 +48,6 @@ public class DashboardActivity extends EnhancedActivity {
             @Override
             public void onPageScrollStateChanged(int state) {
                 if (state == 2) {
-                    usagePagerAdapter.notifyDataSetChanged();
                     int pageIndex = pagerUsages.getCurrentItem();
                     if (pageIndex == 0) {
                         usagePagerAdapter.startAnimation0();
