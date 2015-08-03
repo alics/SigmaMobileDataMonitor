@@ -29,9 +29,15 @@ public class PackageSettingsActivity extends EnhancedActivity {
 
         if(INIT_MODE_KEY==MODE_SETTING_ACTIVE){
 
-//TODO
+            //TODO
         }
         else if(INIT_MODE_KEY==MODE_SETTING_RESERVED){
+
+            //TODO  visible cancel
+
+        }
+
+        else if(INIT_MODE_KEY==MODE_INSERT_CUSTOM){
 
             //TODO  visible cancel
 

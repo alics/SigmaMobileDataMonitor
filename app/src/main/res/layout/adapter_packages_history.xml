@@ -7,33 +7,44 @@
     android:orientation="horizontal"
     android:padding="15dp">
 
-    <widgets.MyTextView
-        android:id="@+id/txtPackageDesc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingBottom="5dp"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        />
 
-    <widgets.MyTextView
-        android:id="@+id/txtActivateDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingBottom="5dp"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        />
-    <widgets.MyTextView
-        android:id="@+id/txtExpDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingBottom="5dp"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        />
-    <widgets.MyTextView
-        android:id="@+id/txtStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingBottom="5dp"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <widgets.MyTextView
+            android:id="@+id/txtPackageDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            />
+
+        <widgets.MyTextView
+            android:id="@+id/txtActivateDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            />
+
+        <widgets.MyTextView
+            android:id="@+id/txtExpDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            />
+
+        <widgets.MyTextView
+            android:id="@+id/txtStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            />
+
+    </LinearLayout>
 </android:LinearLayout>
