@@ -179,6 +179,7 @@ public class PackageHistories {
         PackageHistories.terminateDataPackage(history);
         String yesterdayDateStr = SolarCalendar.getPastDateString(-1);
         UsageLogs.integrateSumUsedTrafficUsagePerHourInDate(yesterdayDateStr);
+        UsageLogs.deleteLogs(yesterdayDateStr);
         PackageHistory reservedPackage = PackageHistories.getReservedPackage();
         if (reservedPackage != null) {
             reservedPackage.setActive(true);
