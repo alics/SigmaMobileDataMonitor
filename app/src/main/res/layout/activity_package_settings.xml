@@ -27,7 +27,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="10dp">
 
@@ -79,8 +79,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="روز"
                     android:layout_marginLeft="20dp"
+                    android:text="روز"
                     />
 
                 <widgets.MyEditText
@@ -173,9 +173,9 @@
                 <widgets.MyEditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
+                    android:layout_weight="1"
                     android:inputType="time"/>
 
                 <widgets.MyTextView
@@ -202,8 +202,8 @@
                     android:id="@+id/spinner1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="2"
                     android:layout_marginLeft="20dp"
+                    android:layout_weight="2"
                     android:background="@android:drawable/btn_dropdown"
                     android:spinnerMode="dropdown"/>
 
@@ -217,13 +217,13 @@
 
 
                 <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/switch1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="اخطار حجمی"
-                    android:id="@+id/switch1"
-                    android:checked="false"
+                    android:layout_marginEnd="2dp"
                     android:layout_marginRight="2dp"
-                    android:layout_marginEnd="2dp"/>
+                    android:checked="false"
+                    android:text="اخطار حجمی"/>
 
             </LinearLayout>
 
@@ -248,21 +248,20 @@
                     <widgets.MyEditText
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="20dp"
+                        android:layout_weight="1"
                         android:inputType="numberDecimal"/>
 
 
-
                     <android.support.v7.widget.SwitchCompat
+                        android:id="@+id/switch2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="اخطار روز باقیمانده"
-                        android:id="@+id/switch2"
-                        android:checked="false"
+                        android:layout_marginEnd="2dp"
                         android:layout_marginRight="2dp"
-                        android:layout_marginEnd="2dp"/>
+                        android:checked="false"
+                        android:text="اخطار روز باقیمانده"/>
 
                 </LinearLayout>
 
@@ -271,18 +270,53 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="end">
+                android:gravity="end"
+                android:orientation="horizontal">
 
 
                 <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/switch3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="قطع خودکار اینترنت موبایل پس از اتمام حجم یا مدت"
-                    android:id="@+id/switch3"
-                    android:checked="false"
+                    android:layout_marginEnd="2dp"
                     android:layout_marginRight="2dp"
-                    android:layout_marginEnd="2dp"/>
+                    android:checked="false"
+                    android:text="قطع خودکار اینترنت موبایل پس از اتمام حجم یا مدت"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/imgBtnCancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginRight="30dp"
+                    android:background="@drawable/circle_button"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_cancel"/>
+
+
+                <ImageButton
+                    android:id="@+id/imgBtnSave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginStart="30dp"
+                    android:background="@drawable/circle_button"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_save"/>
+
 
             </LinearLayout>
 
