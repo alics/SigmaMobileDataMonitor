@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.adapters.PackagePagerAdapter;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
+import com.zohaltech.app.mobiledatamonitor.classes.Helper;
 
 public class PackagesActivity extends EnhancedActivity {
 
@@ -31,7 +32,19 @@ public class PackagesActivity extends EnhancedActivity {
         //((ViewGroup)tabOperators.getChildAt(0)).getChildAt().setTypeface(App.persianFont);
         tabOperators.setupWithViewPager(pagerPackages);
 
+        selectTabByOperator();
+
         changeTabsFont();
+    }
+
+    private void selectTabByOperator() {
+        pagerPackages.setCurrentItem(2);
+        Helper.Operator operator = Helper.getOperator();
+        if (operator == Helper.Operator.IRANCELL){
+            pagerPackages.setCurrentItem(1);
+        } else if(operator == Helper.Operator.RIGHTELL){
+            pagerPackages.setCurrentItem(0);
+        }
     }
 
     private void changeTabsFont() {
@@ -44,7 +57,9 @@ public class PackagesActivity extends EnhancedActivity {
             for (int i = 0; i < tabChildCount; i++) {
                 View tabViewChild = vgTab.getChildAt(i);
                 if (tabViewChild instanceof TextView) {
-                    ((TextView) tabViewChild).setTypeface(App.persianFont);
+                    TextView textView = (TextView) tabViewChild;
+                    textView.setWidth(App.screenWidth / 3);
+                    textView.setTypeface(App.persianFont);
                 }
             }
         }
