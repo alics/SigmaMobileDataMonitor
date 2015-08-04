@@ -2,6 +2,7 @@ package com.zohaltech.app.mobiledatamonitor.activities;
 
 
 import android.os.Bundle;
+import android.view.WindowManager;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.dal.DataPackages;
@@ -19,6 +20,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_package_settings);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     private void initialize() {
