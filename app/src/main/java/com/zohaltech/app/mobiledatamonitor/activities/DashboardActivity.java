@@ -5,23 +5,28 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.adapters.UsagePagerAdapter;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
+
+import widgets.MyToast;
+import widgets.MyViewPagerIndicator;
 
 public class DashboardActivity extends EnhancedActivity {
 
     public static final String DASHBOARD_PAGE_INDEX = "DASHBOARD_PAGE_INDEX";
 
     ViewPager pagerUsages;
+    MyViewPagerIndicator indicator;
     Button    btnPackageManagement;
     Button    btnPurchasePackage;
     Button    btnUsageReport;
     Button    btnPackagesHistory;
 
+    long        startTime;
     UsagePagerAdapter usagePagerAdapter;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,8 +34,10 @@ public class DashboardActivity extends EnhancedActivity {
         setContentView(R.layout.activity_dashboard);
 
         //AlarmHandler.start(App.context);
+        startTime = System.currentTimeMillis() - 5000;
 
         pagerUsages = (ViewPager) findViewById(R.id.pagerUsages);
+        indicator = (MyViewPagerIndicator) findViewById(R.id.indicator);
         btnPackageManagement = (Button) findViewById(R.id.btnPackageManagement);
         btnPurchasePackage = (Button) findViewById(R.id.btnPurchasePackage);
         btnUsageReport = (Button) findViewById(R.id.btnUsageReport);
@@ -39,6 +46,8 @@ public class DashboardActivity extends EnhancedActivity {
         pagerUsages.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                indicator.setPercent(positionOffset);
+                indicator.setCurrentPage(position);
             }
 
             @Override
@@ -50,16 +59,20 @@ public class DashboardActivity extends EnhancedActivity {
                 if (state == 2) {
                     int pageIndex = pagerUsages.getCurrentItem();
                     if (pageIndex == 0) {
-                        usagePagerAdapter.startAnimation0();
-                    } else if (pageIndex == 1) {
+                        //usagePagerAdapter.startAnimation0();
+                        usagePagerAdapter.notifyDataSetChanged();
+                    } else
+                    if (pageIndex == 1) {
                         usagePagerAdapter.startAnimation1();
-                    } else if (pageIndex == 2) {
-                        //usagePagerAdapter.startAnimation2();
                     }
-                    App.preferences.edit().putInt(DASHBOARD_PAGE_INDEX, pageIndex).commit();
+                    //else if (pageIndex == 2) {
+                    //    //usagePagerAdapter.startAnimation2();
+                    //}
                 }
             }
         });
+
+        indicator.setIndicatorsCount(3);
 
         btnPackageManagement.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,15 +106,25 @@ public class DashboardActivity extends EnhancedActivity {
             }
         });
 
-
+        usagePagerAdapter = new UsagePagerAdapter();
+        pagerUsages.setAdapter(usagePagerAdapter);
+        pagerUsages.setCurrentItem(1);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        usagePagerAdapter.notifyDataSetChanged();
+    }
 
-        usagePagerAdapter = new UsagePagerAdapter();
-        pagerUsages.setAdapter(usagePagerAdapter);
-        pagerUsages.setCurrentItem(App.preferences.getInt(DASHBOARD_PAGE_INDEX, 1));
+    @Override
+    public void onBackPressed() {
+        if ((System.currentTimeMillis() - startTime) > 2000) {
+            startTime = System.currentTimeMillis();
+            MyToast.show(getString(R.string.press_back_again_to_exit), Toast.LENGTH_SHORT);
+            //Toast.makeText(App.context, getString(R.string.press_back_again_to_exit), Toast.LENGTH_SHORT).show();
+        } else {
+            finish();
+        }
     }
 }

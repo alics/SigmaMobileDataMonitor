@@ -22,6 +22,8 @@ public class App extends Application {
     public static Typeface          persianFont;
     public static Handler           handler;
     public static LayoutInflater    inflater;
+    public static int    screenWidth;
+    public static int    screenHeight;
 
     @Override
     public void onCreate() {
@@ -32,6 +34,8 @@ public class App extends Application {
         persianFont = Typeface.createFromAsset(context.getAssets(), "fonts/default.ttf");
         handler = new Handler();
         inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        screenWidth = getResources().getDisplayMetrics().widthPixels;
+        screenHeight = getResources().getDisplayMetrics().heightPixels;
 
         AlarmHandler.start(context);
 

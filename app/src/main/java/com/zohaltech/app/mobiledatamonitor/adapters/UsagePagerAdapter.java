@@ -19,9 +19,12 @@ import widgets.CircleProgress;
 
 public class UsagePagerAdapter extends PagerAdapter {
 
+    final   int    PAGE_COUNT  = 3;
+
     CircleProgress progressTodayUsage;
     ArcProgress    progressPrimaryUsage;
     ArcProgress    progressSecondaryUsage;
+    CircleProgress progressDayRemain;
 
     long   usedPrimaryTraffic;
     long   totalPrimaryTraffic;
@@ -39,15 +42,22 @@ public class UsagePagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return PAGE_COUNT;
     }
+
+    //@Override
+    //public int getItemPosition(Object object) {
+    //    return POSITION_NONE;
+    //}
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        int size1 = (App.currentActivity.getWindowManager().getDefaultDisplay().getWidth()) / 2;
-        int size2 = (App.currentActivity.getWindowManager().getDefaultDisplay().getWidth()) / 4;
-        //int size1 = (container.getWidth()) / 2;
-        //int size2 = (container.getWidth()) / 4;
+        //int size1 = (App.currentActivity.getWindowManager().getDefaultDisplay().getWidth()) / 2;
+        //int size2 = (App.currentActivity.getWindowManager().getDefaultDisplay().getWidth()) / 4;
+        //int size1 = (App.context.getResources().getDisplayMetrics().widthPixels) / 2;
+        //int size2 = (App.context.getResources().getDisplayMetrics().widthPixels) / 4;
+        int size1 = (App.screenWidth) / 2;
+        int size2 = (App.screenWidth) / 4;
 
         View view;
         if (position == 0) {
@@ -56,7 +66,8 @@ public class UsagePagerAdapter extends PagerAdapter {
             progressTodayUsage = (CircleProgress) view.findViewById(R.id.progressTodayUsage);
             progressTodayUsage.setLayoutParams(new LinearLayout.LayoutParams(size1, size1));
 
-            startAnimation0();
+            TrafficDisplay trafficDisplay = TrafficDisplay.getTodayTraffic(App.preferences.getLong(DataUsageService.DAILY_USAGE_BYTES, 0));
+            progressTodayUsage.setProgress(trafficDisplay.getValue(), trafficDisplay.getPostfix());
 
         } else if (position == 1) {
 
@@ -88,19 +99,23 @@ public class UsagePagerAdapter extends PagerAdapter {
 
         } else {
             view = App.inflater.inflate(R.layout.pager_adapter_day_remain, null);
+            progressDayRemain = (CircleProgress) view.findViewById(R.id.progressDayRemain);
+            progressDayRemain.setLayoutParams(new LinearLayout.LayoutParams(size1, size1));
+
+            progressDayRemain.setProgress("" + PackageStatus.getCurrentStatus().getLeftDays(), "روز");
         }
 
         container.addView(view);
         return view;
     }
 
-    public void startAnimation0() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            new TodayTrafficTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        } else {
-            new TodayTrafficTask().execute();
-        }
-    }
+    //public void startAnimation0() {
+    //    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+    //        new TodayTrafficTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    //    } else {
+    //        new TodayTrafficTask().execute();
+    //    }
+    //}
 
     public void startAnimation1() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -202,28 +217,28 @@ public class UsagePagerAdapter extends PagerAdapter {
         }
     }
 
-    private class TodayTrafficTask extends AsyncTask<Void, Integer, Void> {
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            try {
-                int progress = 0;
-                while (progress < 100) {
-                    Thread.sleep(5 + (progress / 10));
-                    progress++;
-                    publishProgress(progress);
-                }
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
-            progressTodayUsage.setProgress(values[0], App.preferences.getLong(DataUsageService.DAILY_USAGE_BYTES, 0));
-        }
-    }
+    //private class TodayTrafficTask extends AsyncTask<Void, Integer, Void> {
+    //
+    //    @Override
+    //    protected Void doInBackground(Void... voids) {
+    //        try {
+    //            int progress = 0;
+    //            while (progress < 100) {
+    //                Thread.sleep(5 + (progress / 10));
+    //                progress++;
+    //                publishProgress(progress);
+    //            }
+    //
+    //        } catch (InterruptedException e) {
+    //            e.printStackTrace();
+    //        }
+    //        return null;
+    //    }
+    //
+    //    @Override
+    //    protected void onProgressUpdate(Integer... values) {
+    //        super.onProgressUpdate(values);
+    //        progressTodayUsage.setProgress(values[0], App.preferences.getLong(DataUsageService.DAILY_USAGE_BYTES, 0));
+    //    }
+    //}
 }

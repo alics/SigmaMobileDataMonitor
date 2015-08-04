@@ -12,7 +12,6 @@ import android.widget.ImageView;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
-import com.zohaltech.app.mobiledatamonitor.classes.TrafficDisplay;
 
 
 public class CircleProgress extends ImageView {
@@ -20,11 +19,12 @@ public class CircleProgress extends ImageView {
     private static final int START_ANGLE = 90;
     private static final int SWEEP_ANGLE = 360;
     Context context;
-    private Paint arcForegroundPaint;
-    private Paint arcBackgroundPaint;
-    private Paint textPaint;
-    private int progress = 0;
-    private TrafficDisplay trafficDisplay;
+    private Paint  arcBackgroundPaint;
+    private Paint  arcForegroundPaint;
+    private Paint  textPaintValue;
+    private Paint  textPaintCaption;
+    private String value;
+    private String caption;
 
     public CircleProgress(Context context) {
         super(context);
@@ -44,34 +44,34 @@ public class CircleProgress extends ImageView {
         initialize();
     }
 
-    public void setProgress(int progress, long bytes) {
-        this.progress = progress;
-        trafficDisplay = TrafficDisplay.getTodayTraffic(bytes);
+    public void setProgress(String value, String caption) {
+        this.value = value;
+        this.caption=caption;
         postInvalidate();
     }
 
     private void initialize() {
 
-        trafficDisplay = new TrafficDisplay("0", "KB");
-
         int color = Color.argb(230, 255, 255, 255);
-
-        arcBackgroundPaint = new Paint();
-        arcBackgroundPaint.setColor(context.getResources().getColor(R.color.primary_dark));
-        arcBackgroundPaint.setAntiAlias(true);
-        arcBackgroundPaint.setStyle(Style.STROKE);
 
         arcForegroundPaint = new Paint();
         arcForegroundPaint.setColor(color);
         arcForegroundPaint.setAntiAlias(true);
         arcForegroundPaint.setStyle(Style.STROKE);
 
-        textPaint = new Paint();
-        textPaint.setColor(color);
-        textPaint.setAntiAlias(true);
-        textPaint.setTextAlign(Align.CENTER);
-        textPaint.setTypeface(App.englishFont);
-        textPaint.setStyle(Style.FILL_AND_STROKE);
+        textPaintValue = new Paint();
+        textPaintValue.setColor(color);
+        textPaintValue.setAntiAlias(true);
+        textPaintValue.setTextAlign(Align.CENTER);
+        textPaintValue.setTypeface(App.englishFont);
+        textPaintValue.setStyle(Style.FILL_AND_STROKE);
+
+        textPaintCaption = new Paint();
+        textPaintCaption.setColor(color);
+        textPaintCaption.setAntiAlias(true);
+        textPaintCaption.setTextAlign(Align.CENTER);
+        textPaintCaption.setTypeface(App.persianFont);
+        textPaintCaption.setStyle(Style.FILL_AND_STROKE);
     }
 
     @Override
@@ -90,20 +90,15 @@ public class CircleProgress extends ImageView {
         rect.bottom = baseSize - strokeWidth;
 
         arcForegroundPaint.setStrokeWidth(strokeWidth);
-        arcBackgroundPaint.setStrokeWidth(strokeWidth);
 
-        canvas.drawArc(rect, START_ANGLE, SWEEP_ANGLE, false, arcBackgroundPaint);
+        canvas.drawArc(rect, START_ANGLE, SWEEP_ANGLE, false, arcForegroundPaint);
 
+        textPaintValue.setTextSize(textSize);
+        textPaintValue.setShadowLayer(strokeWidth / 2, strokeWidth / 4, strokeWidth / 4, context.getResources().getColor(R.color.shadow));
+        canvas.drawText(value, baseSize / 2, getHeight() / 2, textPaintValue);
 
-        int sweepAngle = progress * SWEEP_ANGLE / 100;
-        canvas.drawArc(rect, START_ANGLE, sweepAngle, false, arcForegroundPaint);
-
-        textPaint.setTextSize(textSize);
-        textPaint.setShadowLayer(strokeWidth / 2, strokeWidth / 4, strokeWidth / 4, context.getResources().getColor(R.color.shadow));
-        canvas.drawText(trafficDisplay.getValue(), baseSize / 2, getHeight() / 2, textPaint);
-
-        textPaint.setTextSize(textSize / 3);
-        textPaint.setShadowLayer(strokeWidth / 3, strokeWidth / 4, strokeWidth / 4, context.getResources().getColor(R.color.shadow));
-        canvas.drawText(trafficDisplay.getPostfix(), baseSize / 2, getHeight() - (getHeight() / 6), textPaint);
+        textPaintCaption.setTextSize(textSize / 3);
+        textPaintCaption.setShadowLayer(strokeWidth / 3, strokeWidth / 4, strokeWidth / 4, context.getResources().getColor(R.color.shadow));
+        canvas.drawText(caption, baseSize / 2, getHeight() - (getHeight() / 6), textPaintCaption);
     }
 }
