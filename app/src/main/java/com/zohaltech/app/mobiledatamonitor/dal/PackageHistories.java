@@ -176,11 +176,11 @@ public class PackageHistories {
     }
 
     public static void finishPackageProcess(PackageHistory history) {
-        PackageHistories.terminateDataPackage(history);
+        terminateDataPackage(history);
         String yesterdayDateStr = SolarCalendar.getPastDateString(-1);
         UsageLogs.integrateSumUsedTrafficUsagePerHourInDate(yesterdayDateStr);
         UsageLogs.deleteLogs(yesterdayDateStr);
-        PackageHistory reservedPackage = PackageHistories.getReservedPackage();
+        PackageHistory reservedPackage = getReservedPackage();
         if (reservedPackage != null) {
             reservedPackage.setActive(true);
             reservedPackage.setReserved(false);
