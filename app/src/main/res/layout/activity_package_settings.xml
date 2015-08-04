@@ -5,7 +5,6 @@
               android:background="@color/white"
               android:orientation="vertical">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -50,14 +49,18 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <widgets.MyEditText
+            <Spinner
+                android:id="@+id/spinner3"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"/>
+                android:layout_height="40dp"
+                android:layout_weight="2"
+                android:background="@android:drawable/btn_dropdown"
+                android:spinnerMode="dropdown"/>
 
             <widgets.MyTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:text="اپراتور:"/>
 
@@ -71,7 +74,8 @@
             <widgets.MyEditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"/>
+                android:layout_weight="2"
+                android:inputType="numberDecimal"/>
 
             <widgets.MyTextView
                 android:layout_width="0dp"
@@ -86,10 +90,18 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
+            <widgets.MyTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:text="تومان"
+                android:layout_gravity="center"/>
+
             <widgets.MyEditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"/>
+                android:layout_weight="2"
+                android:inputType="numberDecimal"/>
 
             <widgets.MyTextView
                 android:layout_width="0dp"
@@ -107,7 +119,8 @@
             <widgets.MyEditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"/>
+                android:layout_weight="2"
+                android:inputType="number"/>
 
             <widgets.MyTextView
                 android:layout_width="0dp"
@@ -125,7 +138,8 @@
             <widgets.MyEditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"/>
+                android:layout_weight="2"
+                android:inputType="number"/>
 
             <widgets.MyTextView
                 android:layout_width="0dp"
@@ -143,7 +157,8 @@
             <widgets.MyEditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"/>
+                android:layout_weight="2"
+                android:inputType="time"/>
 
             <widgets.MyTextView
                 android:layout_width="0dp"
@@ -166,23 +181,27 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
+            <Spinner
+                android:id="@+id/spinner1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="@android:drawable/btn_dropdown"
+                android:spinnerMode="dropdown"/>
+
 
             <widgets.MyEditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="% حجم باقیانده"/>
-            <widgets.MyEditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_weight="2"/>
+                android:layout_weight="2"
+                android:inputType="numberDecimal"/>
 
             <widgets.MyTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
                 android:layout_alignParentLeft="true"
+                android:layout_weight="2"
                 android:text="اخطار حجمی"/>
 
             <widgets.MyCheckBox
@@ -199,53 +218,64 @@
             android:orientation="horizontal">
 
 
-            <widgets.MyEditText
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="روز باقیمانده"/>
-            <widgets.MyEditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_weight="1"/>
+                android:orientation="horizontal">
 
-            <widgets.MyTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:layout_alignParentLeft="true"
-                android:text="اخطار روز باقیمانده"/>
+                <Spinner
+                    android:id="@+id/spinner2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:background="@android:drawable/btn_dropdown"
+                    android:spinnerMode="dropdown"/>
 
-            <widgets.MyCheckBox
-                android:layout_width="0dp"
+                <widgets.MyEditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_weight="1"
+                    android:inputType="numberDecimal"/>
+
+                <widgets.MyTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_weight="2"
+                    android:text="اخطار روز باقیمانده"/>
+
+                <widgets.MyCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_weight="0.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_weight="0.5"/>
+                android:orientation="horizontal">
+
+                <widgets.MyTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_weight="10"
+                    android:text="قطع خودکار اینترنت موبایل پس از اتمام حجم یا مدت"/>
+
+                <widgets.MyCheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <widgets.MyTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="10"
-                android:layout_alignParentLeft="true"
-                android:text="قطع خودکار اینترنت موبایل پس از اتمام حجم یا مدت"/>
-
-            <widgets.MyCheckBox
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_weight="1"/>
-
-        </LinearLayout>
 
     </LinearLayout>
-
 
 </LinearLayout>

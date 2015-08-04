@@ -2,6 +2,7 @@ package com.zohaltech.app.mobiledatamonitor.classes;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -46,6 +47,13 @@ public class SolarCalendar {
         DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
         String timeString = dateFormat.format(date);
         return dateString + " " + timeString;
+    }
+
+    public static String getPastDateString(int pastDateNum) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, pastDateNum);
+        return getShamsiDate(cal.getTime());
     }
 
     private void calcSolarCalendar(Date MiladiDate) {

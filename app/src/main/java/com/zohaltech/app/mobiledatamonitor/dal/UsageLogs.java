@@ -3,7 +3,6 @@ package com.zohaltech.app.mobiledatamonitor.dal;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.preference.PreferenceActivity;
 
 import com.zohaltech.app.mobiledatamonitor.classes.Helper;
 import com.zohaltech.app.mobiledatamonitor.classes.MyRuntimeException;
@@ -16,15 +15,15 @@ import java.util.ArrayList;
 
 public class UsageLogs {
 
-    static final String TableName = "UsageLogs";
-    static final String Id = "Id";
+    static final String TableName    = "UsageLogs";
+    static final String Id           = "Id";
     static final String TrafficBytes = "TrafficBytes";
-    static final String LogDateTime = "LogDateTime";
+    static final String LogDateTime  = "LogDateTime";
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
-            Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-            TrafficBytes + " BIGINT NOT NULL, " +
-            LogDateTime + " CHAR(19) );";
+                                      Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                                      TrafficBytes + " BIGINT NOT NULL, " +
+                                      LogDateTime + " CHAR(19) );";
 
     static final String DropTable = "Drop Table If Exists " + TableName;
 
@@ -40,8 +39,8 @@ public class UsageLogs {
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     UsageLog log = new UsageLog(cursor.getInt(cursor.getColumnIndex(Id)),
-                            cursor.getLong(cursor.getColumnIndex(TrafficBytes)),
-                            cursor.getString(cursor.getColumnIndex(LogDateTime)));
+                                                cursor.getLong(cursor.getColumnIndex(TrafficBytes)),
+                                                cursor.getString(cursor.getColumnIndex(LogDateTime)));
                     logList.add(log);
                 } while (cursor.moveToNext());
             }
@@ -93,7 +92,6 @@ public class UsageLogs {
         return db.delete(TableName, Id + " =? ", new String[]{String.valueOf(usageLog.getId())});
     }
 
-
     private static String getMaxDateTime() {
         String maxLogDate = null;
         DataAccess da = new DataAccess();
@@ -118,13 +116,13 @@ public class UsageLogs {
         return maxLogDate;
     }
 
-    private static void integrateSumUsedTrafficUsagePerHourInDate(String date) {
+    public static void integrateSumUsedTrafficUsagePerHourInDate(String date) {
         DataAccess da = new DataAccess();
         SQLiteDatabase db = da.getReadableDB();
         Cursor cursor = null;
         try {
             String query = "SELECT SUBSTR(LogDateTime,11,3) hourPeriod,SUM(TrafficBytes) SumTraffic FROM UsageLogs " +
-                    "WHERE  SUBSTR(LogDateTime,1,10)='" + date + "' GROUP BY  SUBSTR(LogDateTime,11,3) ;";
+                           "WHERE  SUBSTR(LogDateTime,1,10)='" + date + "' GROUP BY  SUBSTR(LogDateTime,11,3) ;";
             cursor = db.rawQuery(query, null);
             if (cursor != null && cursor.moveToFirst()) {
                 do {
@@ -135,8 +133,8 @@ public class UsageLogs {
                     String endingDateTime = date + " " + endingHour + ":00:00";
 
                     DailyTrafficHistory history = new DailyTrafficHistory(sum,
-                            beginningDateTime,
-                            endingDateTime);
+                                                                          beginningDateTime,
+                                                                          endingDateTime);
                     DailyTrafficHistories.insert(history);
                 } while (cursor.moveToNext());
             }
@@ -197,9 +195,8 @@ public class UsageLogs {
             if (db != null && db.isOpen())
                 db.close();
         }
-
         if (usedTraffic >= dataPackage.getPrimaryTraffic()) {
-            PackageHistories.terminateDataPackage(history);
+            PackageHistories.finishPackageProcess(history);
         }
         return usedTraffic;
     }
@@ -211,10 +208,10 @@ public class UsageLogs {
 
         if (history.getSecondaryTrafficEndDateTime() == null || "".equals(history.getSecondaryTrafficEndDateTime())) {
             return "SELECT SUM(" + TrafficBytes + ") SumTraffic FROM " + TableName + " WHERE " + LogDateTime + " > '" + history.getStartDateTime() + "'" +
-                    "AND SUBSTR(" + LogDateTime + ",11,9) NOT BETWEEN '" + dataPackage.getSecondaryTrafficStartTime() + "' AND '" + dataPackage.getSecondaryTrafficEndTime() + "'";
+                   "AND SUBSTR(" + LogDateTime + ",11,9) NOT BETWEEN '" + dataPackage.getSecondaryTrafficStartTime() + "' AND '" + dataPackage.getSecondaryTrafficEndTime() + "'";
         }
         return "SELECT (SELECT SUM(" + TrafficBytes + ") FROM " + TableName + " WHERE " + LogDateTime + " >= '" + history.getStartDateTime() + "' )-\n" +
-                "(SELECT SUM(TrafficBytes)  FROM " + TableName + " WHERE (" + LogDateTime + " BETWEEN '" + history.getStartDateTime() + "' AND '" + history.getSecondaryTrafficEndDateTime() + "')\n";
+               "(SELECT SUM(TrafficBytes)  FROM " + TableName + " WHERE (" + LogDateTime + " BETWEEN '" + history.getStartDateTime() + "' AND '" + history.getSecondaryTrafficEndDateTime() + "')\n";
     }
 
     public static long getUsedSecondaryTrafficOfPackage(DataPackage dataPackage, PackageHistory history) {
@@ -224,8 +221,8 @@ public class UsageLogs {
         Cursor cursor = null;
         try {
             String query = "SELECT SUM(TrafficBytes) SumTraffic FROM " + TableName +
-                    " WHERE " + LogDateTime + " > '" + history.getStartDateTime() + "'" +
-                    "AND SUBSTR(" + LogDateTime + ",11,9) BETWEEN '" + dataPackage.getSecondaryTrafficStartTime() + "' AND '" + dataPackage.getSecondaryTrafficEndTime() + "'";
+                           " WHERE " + LogDateTime + " > '" + history.getStartDateTime() + "'" +
+                           "AND SUBSTR(" + LogDateTime + ",11,9) BETWEEN '" + dataPackage.getSecondaryTrafficStartTime() + "' AND '" + dataPackage.getSecondaryTrafficEndTime() + "'";
 
             cursor = db.rawQuery(query, null);
             if (cursor != null && cursor.moveToFirst()) {
@@ -245,6 +242,13 @@ public class UsageLogs {
             PackageHistories.terminateDataPackageSecondaryPlan(history);
         }
         return usedTraffic;
+    }
+
+    public static void deleteLogs(String date) {
+        ArrayList<UsageLog> logs = select("Where " + LogDateTime + " < " + date, null);
+        for (int i = 0; i < logs.size(); i++) {
+            delete(logs.get(i));
+        }
     }
 }
 

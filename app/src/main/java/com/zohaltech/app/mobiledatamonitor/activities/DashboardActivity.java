@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.adapters.UsagePagerAdapter;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
+import com.zohaltech.app.mobiledatamonitor.classes.SolarCalendar;
 
 import widgets.MyToast;
 import widgets.MyViewPagerIndicator;
@@ -32,7 +33,6 @@ public class DashboardActivity extends EnhancedActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-
         //AlarmHandler.start(App.context);
         startTime = System.currentTimeMillis() - 5000;
 

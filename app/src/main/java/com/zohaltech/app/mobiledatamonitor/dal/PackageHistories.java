@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.zohaltech.app.mobiledatamonitor.classes.Helper;
 import com.zohaltech.app.mobiledatamonitor.classes.MyRuntimeException;
+import com.zohaltech.app.mobiledatamonitor.classes.SolarCalendar;
 import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
 
 import java.util.ArrayList;
@@ -53,6 +54,8 @@ public class PackageHistories {
                                                                        cursor.getString(cursor.getColumnIndex(EndDateTime)),
                                                                        cursor.getString(cursor.getColumnIndex(SecondaryTrafficEndDateTime)),
                                                                        cursor.getString(cursor.getColumnIndex(SimSerial)),
+
+
                                                                        cursor.getInt(cursor.getColumnIndex(Active)) == 1,
                                                                        cursor.getInt(cursor.getColumnIndex(Reserved)) == 1);
                     packageList.add(packageHistory);
@@ -137,12 +140,8 @@ public class PackageHistories {
         PackageHistory packageHistory = getPackageById(packageId);
         if (packageHistory == null || !packageHistory.getActive())
             return 0;
-
-
         return 1;
     }
-
-
 
     public static void terminateDataPackage(PackageHistory packageHistory) {
         packageHistory.setActive(false);
@@ -156,7 +155,7 @@ public class PackageHistories {
     }
 
     public static void terminateAll() {
-        for (PackageHistory packageHistory : PackageHistories.select()){
+        for (PackageHistory packageHistory : PackageHistories.select()) {
             packageHistory.setActive(false);
             packageHistory.setReserved(false);
             packageHistory.setEndDateTime(Helper.getCurrentDateTime());
@@ -167,6 +166,27 @@ public class PackageHistories {
     public static void terminateDataPackageSecondaryPlan(PackageHistory packageHistory) {
         packageHistory.setSecondaryTrafficEndDateTime(Helper.getCurrentDateTime());
         update(packageHistory);
+    }
+
+    public static void deletedReservedPackages() {
+        ArrayList<PackageHistory> histories = select("Where " + Reserved + " = 1 ", null);
+        for (int i = 0; i < histories.size(); i++) {
+            delete(histories.get(i));
+        }
+    }
+
+    public static void finishPackageProcess(PackageHistory history) {
+        terminateDataPackage(history);
+        String yesterdayDateStr = SolarCalendar.getPastDateString(-1);
+        UsageLogs.integrateSumUsedTrafficUsagePerHourInDate(yesterdayDateStr);
+        UsageLogs.deleteLogs(yesterdayDateStr);
+        PackageHistory reservedPackage = getReservedPackage();
+        if (reservedPackage != null) {
+            reservedPackage.setActive(true);
+            reservedPackage.setReserved(false);
+            reservedPackage.setStartDateTime(Helper.getCurrentDateTime());
+            update(reservedPackage);
+        }
     }
 }
 
