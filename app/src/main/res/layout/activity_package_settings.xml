@@ -2,28 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/white"
-              android:orientation="vertical">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/primary">
-
-        <widgets.MyTextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="تنظیمات بسته"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/white"/>
-
-    </LinearLayout>
+              android:background="@color/white">
 
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -211,12 +195,11 @@
                 <widgets.MyEditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
                     android:layout_weight="2"
                     android:inputType="numberDecimal"/>
 
 
-                <android.support.v7.widget.SwitchCompat
+                <widgets.MySwitch
                     android:id="@+id/switch1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -254,7 +237,7 @@
                         android:inputType="numberDecimal"/>
 
 
-                    <android.support.v7.widget.SwitchCompat
+                    <widgets.MySwitch
                         android:id="@+id/switch2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -273,8 +256,7 @@
                 android:gravity="end"
                 android:orientation="horizontal">
 
-
-                <android.support.v7.widget.SwitchCompat
+                <widgets.MySwitch
                     android:id="@+id/switch3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -310,9 +292,9 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
 
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="30dp"
                     android:layout_marginStart="30dp"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/circle_button"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_save"/>
@@ -320,8 +302,8 @@
 
             </LinearLayout>
 
-
         </LinearLayout>
+
     </ScrollView>
 
 </LinearLayout>

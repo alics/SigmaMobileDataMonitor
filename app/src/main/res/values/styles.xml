@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="MyMaterialTheme" parent="MyMaterialTheme.Base">
+    <style name="AppTheme" parent="MyMaterialTheme.Base">
         <!-- Customize your theme here. -->
 
     </style>
