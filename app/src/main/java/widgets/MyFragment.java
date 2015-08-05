@@ -1,4 +1,4 @@
-package com.zohaltech.app.mobiledatamonitor.classes;
+package widgets;
 
 import android.support.v4.app.Fragment;
 

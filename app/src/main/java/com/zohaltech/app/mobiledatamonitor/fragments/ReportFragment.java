@@ -11,8 +11,8 @@ import android.widget.ListView;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.activities.MainActivity;
-import com.zohaltech.app.mobiledatamonitor.adapters.TrafficMonitorAdapter;
-import com.zohaltech.app.mobiledatamonitor.classes.MyFragment;
+import com.zohaltech.app.mobiledatamonitor.adapters.ReportAdapter;
+import widgets.MyFragment;
 import com.zohaltech.app.mobiledatamonitor.dal.DailyTrafficHistories;
 import com.zohaltech.app.mobiledatamonitor.entities.TrafficMonitor;
 
@@ -22,7 +22,7 @@ public class ReportFragment extends MyFragment {
 
     ListView                  lstTraffics;
     ArrayList<TrafficMonitor> trafficMonitors;
-    TrafficMonitorAdapter     adapter;
+    ReportAdapter             adapter;
 
     public ReportFragment() {
     }
@@ -40,7 +40,7 @@ public class ReportFragment extends MyFragment {
 
         lstTraffics = (ListView) rootView.findViewById(R.id.lstTraffics);
         trafficMonitors = DailyTrafficHistories.getMonthlyTraffic();
-        adapter = new TrafficMonitorAdapter(trafficMonitors);
+        adapter = new ReportAdapter(trafficMonitors);
         lstTraffics.setAdapter(adapter);
 
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);

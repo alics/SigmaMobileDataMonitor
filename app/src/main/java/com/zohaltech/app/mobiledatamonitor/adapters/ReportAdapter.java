@@ -14,9 +14,9 @@ import com.zohaltech.app.mobiledatamonitor.entities.TrafficMonitor;
 import java.util.ArrayList;
 
 
-public class TrafficMonitorAdapter extends ArrayAdapter<TrafficMonitor> {
-    public TrafficMonitorAdapter(ArrayList<TrafficMonitor> trafficMonitorList) {
-        super(App.context, R.layout.adapter_traffic_monitor, trafficMonitorList);
+public class ReportAdapter extends ArrayAdapter<TrafficMonitor> {
+    public ReportAdapter(ArrayList<TrafficMonitor> trafficMonitorList) {
+        super(App.context, R.layout.adapter_report, trafficMonitorList);
     }
 
     private static class ViewHolder {
@@ -41,7 +41,7 @@ public class TrafficMonitorAdapter extends ArrayAdapter<TrafficMonitor> {
 
         TrafficMonitor item = getItem(position);
         if (convertView == null) {
-            convertView = App.inflater.inflate(R.layout.adapter_traffic_monitor, parent, false);
+            convertView = App.inflater.inflate(R.layout.adapter_report, parent, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {

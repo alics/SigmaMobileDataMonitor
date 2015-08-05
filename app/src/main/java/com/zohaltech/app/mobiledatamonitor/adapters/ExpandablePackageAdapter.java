@@ -130,7 +130,7 @@ public class ExpandablePackageAdapter extends AnimatedExpandableListView.Animate
         String headerTitle = (String) getGroup(groupPosition);
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(context);
-            convertView = inflater.inflate(R.layout.group_item, null);
+            convertView = inflater.inflate(R.layout.period_item, null);
         }
 
         TextView lblListHeader = (TextView) convertView.findViewById(R.id.txtPeriod);

@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zohaltech.app.mobiledatamonitor.R;
-import com.zohaltech.app.mobiledatamonitor.classes.MyFragment;
+import widgets.MyFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.DashboardFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.ReportFragment;
 
