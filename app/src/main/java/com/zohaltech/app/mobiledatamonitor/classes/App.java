@@ -4,11 +4,8 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.net.ConnectivityManager;
-import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -22,8 +19,8 @@ public class App extends Application {
     public static Typeface          persianFont;
     public static Handler           handler;
     public static LayoutInflater    inflater;
-    public static int    screenWidth;
-    public static int    screenHeight;
+    public static int               screenWidth;
+    public static int               screenHeight;
 
     @Override
     public void onCreate() {
@@ -31,7 +28,7 @@ public class App extends Application {
         context = getApplicationContext();
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
         englishFont = Typeface.createFromAsset(context.getAssets(), "fonts/calibril.ttf");
-        persianFont = Typeface.createFromAsset(context.getAssets(), "fonts/default.ttf");
+        persianFont = Typeface.createFromAsset(context.getAssets(), "fonts/IRAN Sans Light.ttf");
         handler = new Handler();
         inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         screenWidth = getResources().getDisplayMetrics().widthPixels;

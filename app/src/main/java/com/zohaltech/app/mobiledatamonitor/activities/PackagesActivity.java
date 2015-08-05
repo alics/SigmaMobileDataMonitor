@@ -34,7 +34,7 @@ public class PackagesActivity extends EnhancedActivity {
 
         selectTabByOperator();
 
-        changeTabsFont();
+        changeTabsFont(); 
     }
 
     private void selectTabByOperator() {

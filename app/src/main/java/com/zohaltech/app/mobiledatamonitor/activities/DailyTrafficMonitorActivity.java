@@ -19,7 +19,7 @@ public class DailyTrafficMonitorActivity extends EnhancedActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_daily_traffic_monitor);
+        setContentView(R.layout.fragment_report);
         initialize();
     }
 

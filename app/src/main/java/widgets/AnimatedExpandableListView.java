@@ -28,7 +28,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.Transformation;
-import android.widget.AbsListView;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
@@ -261,10 +260,10 @@ public class AnimatedExpandableListView extends ExpandableListView {
      * adapters used with AnimatedExpandableListView MUST extend this class.
      */
     public static abstract class AnimatedExpandableListAdapter extends BaseExpandableListAdapter {
-        private static final int STATE_IDLE = 0;
-        private static final int STATE_EXPANDING = 1;
-        private static final int STATE_COLLAPSING = 2;
-        private SparseArray<GroupInfo> groupInfo = new SparseArray<GroupInfo>();
+        private static final int                    STATE_IDLE       = 0;
+        private static final int                    STATE_EXPANDING  = 1;
+        private static final int                    STATE_COLLAPSING = 2;
+        private              SparseArray<GroupInfo> groupInfo        = new SparseArray<GroupInfo>();
         private AnimatedExpandableListView parent;
 
         private void setParent(AnimatedExpandableListView parent) {
@@ -344,8 +343,8 @@ public class AnimatedExpandableListView extends ExpandableListView {
         }
 
         protected ViewGroup.LayoutParams generateDefaultLayoutParams() {
-            return new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT, 0);
+            return new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                                    ViewGroup.LayoutParams.WRAP_CONTENT, 0);
         }
 
         /**
@@ -359,7 +358,7 @@ public class AnimatedExpandableListView extends ExpandableListView {
                 // If this group is animating, return the a DummyView...
                 if (convertView instanceof DummyView == false) {
                     convertView = new DummyView(parent.getContext());
-                    convertView.setLayoutParams(new AbsListView.LayoutParams(LayoutParams.MATCH_PARENT, 0));
+                    convertView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, 0));
                 }
 
                 if (childPosition < info.firstChildPosition) {
@@ -409,7 +408,7 @@ public class AnimatedExpandableListView extends ExpandableListView {
 
                     LayoutParams p = (LayoutParams) childView.getLayoutParams();
                     if (p == null) {
-                        p = (AbsListView.LayoutParams) generateDefaultLayoutParams();
+                        p = (LayoutParams) generateDefaultLayoutParams();
                         childView.setLayoutParams(p);
                     }
 
@@ -518,8 +517,8 @@ public class AnimatedExpandableListView extends ExpandableListView {
     private static class DummyView extends View {
         private List<View> views = new ArrayList<View>();
         private Drawable divider;
-        private int dividerWidth;
-        private int dividerHeight;
+        private int      dividerWidth;
+        private int      dividerHeight;
 
         public DummyView(Context context) {
             super(context);
