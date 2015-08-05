@@ -19,7 +19,7 @@ public class DataUsageService extends Service {
     private static final String LAST_RECEIVED_BYTES   = "LAST_RECEIVED_BYTES";
     private static final String LAST_SENT_BYTES       = "LAST_SENT_BYTES";
     private static final String DAILY_USAGE_DATE      = "DAILY_USAGE_DATE";
-    public static final String DAILY_USAGE_BYTES     = "DAILY_USAGE_BYTES";
+    public static final  String DAILY_USAGE_BYTES     = "DAILY_USAGE_BYTES";
     private static final String TOTAL_USAGE_BYTES     = "TOTAL_USAGE_BYTES";
     private static final String ONE_MINUTE_USED_BYTES = "ONE_MINUTE_USED_BYTES";
     private static final int    USAGE_LOG_INTERVAL    = 60;
@@ -66,7 +66,7 @@ public class DataUsageService extends Service {
                 if (usageLogInterval == USAGE_LOG_INTERVAL) {
                     new Thread(new Runnable() {
                         public void run() {
-                            App.preferences.edit().putLong(ONE_MINUTE_USED_BYTES,0).commit();
+                            App.preferences.edit().putLong(ONE_MINUTE_USED_BYTES, 0).commit();
                             UsageLogs.insert(new UsageLog(oneMinuteUsedBytes));
                         }
                     }).start();

@@ -19,7 +19,7 @@ import widgets.CircleProgress;
 
 public class UsagePagerAdapter extends PagerAdapter {
 
-    final   int    PAGE_COUNT  = 3;
+    final int PAGE_COUNT = 3;
 
     CircleProgress progressTodayUsage;
     ArcProgress    progressPrimaryUsage;
