@@ -20,7 +20,7 @@ public class PackagesActivity extends EnhancedActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_packages);
+        setContentView(R.layout.fragment_packages);
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         pagerPackages = (ViewPager) findViewById(R.id.pagerPackages);
@@ -48,7 +48,6 @@ public class PackagesActivity extends EnhancedActivity {
     }
 
     private void changeTabsFont() {
-
         ViewGroup vg = (ViewGroup) tabOperators.getChildAt(0);
         int tabsCount = vg.getChildCount();
         for (int j = 0; j < tabsCount; j++) {

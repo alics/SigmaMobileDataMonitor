@@ -103,8 +103,11 @@ public class DashboardFragment extends MyFragment {
         btnPurchasePackage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(App.currentActivity, PackagesActivity.class);
-                startActivity(intent);
+                //Intent intent = new Intent(App.currentActivity, PackagesActivity.class);
+                //startActivity(intent);
+                MainActivity parent = ((MainActivity)getActivity());
+                parent.animType = MainActivity.AnimType.OPEN;
+                parent.displayView(MainActivity.EnumFragment.PACKAGES);
             }
         });
 
@@ -156,6 +159,9 @@ public class DashboardFragment extends MyFragment {
     public void onResume() {
         super.onResume();
         usagePagerAdapter.notifyDataSetChanged();
+        if (pagerUsages.getCurrentItem() == 1){
+            usagePagerAdapter.startAnimation1();
+        }
     }
 
 

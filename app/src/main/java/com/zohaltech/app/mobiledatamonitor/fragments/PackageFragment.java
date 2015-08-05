@@ -57,6 +57,7 @@ public class PackageFragment extends Fragment {
 
         // setting list adapter
         lstPeriods.setAdapter(packageAdapter);
+        packageAdapter.notifyDataSetChanged();
 
         // In order to show animations, we need to use a custom click handler
         // for our ExpandableListView.
@@ -78,6 +79,11 @@ public class PackageFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
     }
 
     private void prepareListData(int operatorId) {

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.zohaltech.app.mobiledatamonitor.R;
 import widgets.MyFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.DashboardFragment;
+import com.zohaltech.app.mobiledatamonitor.fragments.PackagesFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.ReportFragment;
 
 import widgets.MyTextView;
@@ -41,11 +42,7 @@ public class MainActivity extends EnhancedActivity {
 
         setSupportActionBar(toolbar);
         //getSupportActionBar().setDisplayShowHomeEnabled(true);
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
         displayView(EnumFragment.DASHBOARD);
     }
 
@@ -65,6 +62,10 @@ public class MainActivity extends EnhancedActivity {
             case REPORT:
                 fragment = new ReportFragment();
                 title = "گزارش مصرف";
+                break;
+            case PACKAGES:
+                fragment = new PackagesFragment();
+                title = "خرید بسته";
                 break;
             default:
                 break;
@@ -89,7 +90,8 @@ public class MainActivity extends EnhancedActivity {
 
     public enum EnumFragment {
         DASHBOARD,
-        REPORT
+        REPORT,
+        PACKAGES
     }
 
     public enum AnimType {
