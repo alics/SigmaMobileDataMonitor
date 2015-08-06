@@ -25,7 +25,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:id="@+id/txtPackageTitle"/>
 
                 <widgets.MyTextView
                     android:layout_width="wrap_content"
@@ -44,7 +45,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="40dp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:id="@+id/txtOperators"/>
 
                 <widgets.MyTextView
                     android:layout_width="wrap_content"
@@ -73,7 +75,8 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="20dp"
                     android:layout_weight="1"
-                    android:inputType="numberDecimal"/>
+                    android:inputType="numberDecimal"
+                    android:id="@+id/txtPackageValidPeriod"/>
 
                 <widgets.MyTextView
                     android:layout_width="wrap_content"
@@ -100,7 +103,8 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="40dp"
                     android:layout_weight="1"
-                    android:inputType="numberDecimal"/>
+                    android:inputType="numberDecimal"
+                    android:id="@+id/txtPackagePrice"/>
 
                 <widgets.MyTextView
                     android:layout_width="wrap_content"
@@ -120,7 +124,8 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_weight="1"
-                    android:inputType="number"/>
+                    android:inputType="number"
+                    android:id="@+id/txtPrimaryTraffic"/>
 
                 <widgets.MyTextView
                     android:layout_width="wrap_content"
@@ -140,7 +145,8 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="40dp"
                     android:layout_weight="1"
-                    android:inputType="number"/>
+                    android:inputType="number"
+                    android:id="@+id/txtSecondaryTraffic"/>
 
                 <widgets.MyTextView
                     android:layout_width="wrap_content"
@@ -160,7 +166,8 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_weight="1"
-                    android:inputType="time"/>
+                    android:inputType="time"
+                    android:id="@+id/txtSecondaryTrafficPeriod"/>
 
                 <widgets.MyTextView
                     android:layout_width="wrap_content"
@@ -183,7 +190,7 @@
                 android:orientation="horizontal">
 
                 <Spinner
-                    android:id="@+id/spinner1"
+                    android:id="@+id/spinnerTrafficUnit"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="20dp"
@@ -196,11 +203,12 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:inputType="numberDecimal"/>
+                    android:inputType="numberDecimal"
+                    android:id="@+id/txtAlarmTriggerVolume"/>
 
 
                 <widgets.MySwitch
-                    android:id="@+id/switch1"
+                    android:id="@+id/switchEnableVolumeAlarm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="2dp"
@@ -234,11 +242,12 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="20dp"
                         android:layout_weight="1"
-                        android:inputType="numberDecimal"/>
+                        android:inputType="numberDecimal"
+                        android:id="@+id/txtAlarmDaysToExpDate"/>
 
 
                     <widgets.MySwitch
-                        android:id="@+id/switch2"
+                        android:id="@+id/switchEnableAlarmDaysToExpDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="2dp"
@@ -257,7 +266,7 @@
                 android:orientation="horizontal">
 
                 <widgets.MySwitch
-                    android:id="@+id/switch3"
+                    android:id="@+id/switchAutoMobileDataOff"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="2dp"
