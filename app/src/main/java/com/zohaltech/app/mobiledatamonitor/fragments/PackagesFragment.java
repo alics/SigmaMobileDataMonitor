@@ -44,7 +44,7 @@ public class PackagesFragment extends MyFragment {
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         pagerPackages = (ViewPager) rootView.findViewById(R.id.pagerPackages);
-        packagePagerAdapter = new PackagePagerAdapter(getActivity().getSupportFragmentManager(), App.context);
+        packagePagerAdapter = new PackagePagerAdapter(getActivity().getSupportFragmentManager());
         pagerPackages.setAdapter(packagePagerAdapter);
         packagePagerAdapter.notifyDataSetChanged();
 

@@ -85,7 +85,7 @@ public class ExpandablePackageAdapter extends AnimatedExpandableListView.Animate
         return this.dataPackages.get(this.periods.get(groupPosition)).size();
     }
 
-    @Override
+    //@Override
     //public View getChildView(int groupPosition, final int childPosition,
     //                         boolean isLastChild, View convertView, ViewGroup parent) {
     //
