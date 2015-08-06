@@ -8,6 +8,7 @@ import com.zohaltech.app.mobiledatamonitor.entities.DataPackage;
 import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public final class PackageStatus {
     Boolean hasActivePackage;
@@ -21,6 +22,7 @@ public final class PackageStatus {
     int     leftDays;
     static ArrayList<String> currentAlarms;
 
+
     public static PackageStatus getCurrentStatus() {
         PackageStatus status = new PackageStatus();
         PackageHistory history = PackageHistories.getActivePackage();
@@ -31,6 +33,7 @@ public final class PackageStatus {
             status.hasActivePackage = false;
             return status;
         }
+
 
         DataPackage dataPackage = DataPackages.selectPackageById(history.getDataPackageId());
 
@@ -43,8 +46,42 @@ public final class PackageStatus {
                 status.setSecondaryTraffic(dataPackage.getSecondaryTraffic());
                 status.setUsedSecondaryTraffic(UsageLogs.getUsedSecondaryTrafficOfPackage(dataPackage, history));
             }
+
+            Date packageActivationDate = Helper.getDateTime(history.getStartDateTime());
+            Date currentDateTime = Helper.getDate(Helper.getCurrentDateTime());
+            int diffDays = (int) ((currentDateTime.getTime() - packageActivationDate.getTime()) / (1000 * 60 * 60 * 24));
+
+            status.setPeriod(dataPackage.getPeriod() - diffDays);
+
+            currentAlarms.clear();
+
+            if (SettingsHandler.getAlarmType() == SettingsHandler.AlarmType.LeftDay.ordinal()) {
+                int leftDayAlarm = SettingsHandler.getLeftDaysAlarm();
+                if (leftDayAlarm >= diffDays)
+                    currentAlarms.add("روز باقیمانده به اتمام بسته " + diffDays);
+            } else if (SettingsHandler.getAlarmType() == SettingsHandler.AlarmType.RemindedBytes.ordinal()) {
+                long remindedByteAlarm = SettingsHandler.getRemindedByteAlarm() * 1024 * 1024;
+                long reminded = status.getPrimaryTraffic() - status.getUsedPrimaryTraffic();
+                if (reminded <= remindedByteAlarm) {
+                    currentAlarms.add("حجم رو به اتمام است");
+                }
+            } else if (SettingsHandler.getAlarmType() == SettingsHandler.AlarmType.Both.ordinal()) {
+                int leftDayAlarm = SettingsHandler.getLeftDaysAlarm();
+                if (leftDayAlarm >= diffDays)
+                    currentAlarms.add("روز باقیمانده به اتمام بسته " + diffDays);
+
+                long remindedByteAlarm = SettingsHandler.getRemindedByteAlarm() * 1024 * 1024;
+                long reminded = status.getPrimaryTraffic() - status.getUsedPrimaryTraffic();
+                if (reminded <= remindedByteAlarm) {
+                    currentAlarms.add("حجم رو به اتمام است");
+                }
+            }
         }
         return status;
+    }
+
+    public static ArrayList<String> getCurrentAlarms() {
+        return currentAlarms;
     }
 
     public Boolean getHasActivePackage() {
