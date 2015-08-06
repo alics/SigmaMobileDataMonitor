@@ -20,7 +20,7 @@ public final class PackageStatus {
     String  secondaryCaption;
     int     period;
     int     leftDays;
-    static ArrayList<String> currentAlarms;
+    static ArrayList<String> currentAlarms = new ArrayList<>();
 
 
     public static PackageStatus getCurrentStatus() {
