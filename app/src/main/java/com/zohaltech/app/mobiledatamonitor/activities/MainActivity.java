@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,6 +24,9 @@ public class MainActivity extends EnhancedActivity {
     MyFragment fragment = null;
     Toolbar  toolbar;
     TextView txtTitle;
+
+    Button v;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

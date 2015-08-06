@@ -7,17 +7,19 @@ import com.zohaltech.app.mobiledatamonitor.dal.UsageLogs;
 import com.zohaltech.app.mobiledatamonitor.entities.DataPackage;
 import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
 
+import java.util.ArrayList;
+
 public final class PackageStatus {
     Boolean hasActivePackage;
     long    dailyTraffic;
     long    primaryTraffic;
-
-    long   usedPrimaryTraffic;
-    long   secondaryTraffic;
-    long   usedSecondaryTraffic;
-    String secondaryCaption;
-    int    period;
-    int    leftDays;
+    long    usedPrimaryTraffic;
+    long    secondaryTraffic;
+    long    usedSecondaryTraffic;
+    String  secondaryCaption;
+    int     period;
+    int     leftDays;
+    static ArrayList<String> currentAlarms;
 
     public static PackageStatus getCurrentStatus() {
         PackageStatus status = new PackageStatus();
