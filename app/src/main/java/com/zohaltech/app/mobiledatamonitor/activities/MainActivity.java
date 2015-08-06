@@ -11,11 +11,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zohaltech.app.mobiledatamonitor.R;
-import widgets.MyFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.DashboardFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.PackagesFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.ReportFragment;
 
+import widgets.MyFragment;
 import widgets.MyTextView;
 
 public class MainActivity extends EnhancedActivity {
@@ -56,7 +56,7 @@ public class MainActivity extends EnhancedActivity {
     }
 
     public void displayView(EnumFragment input) {
-        fragment = null;
+        //fragment = null;
         String title = getString(R.string.app_name);
         switch (input) {
             case DASHBOARD:

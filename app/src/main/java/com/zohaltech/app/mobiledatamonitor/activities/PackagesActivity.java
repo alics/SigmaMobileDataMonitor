@@ -24,7 +24,7 @@ public class PackagesActivity extends EnhancedActivity {
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         pagerPackages = (ViewPager) findViewById(R.id.pagerPackages);
-        pagerPackages.setAdapter(new PackagePagerAdapter(getSupportFragmentManager(), PackagesActivity.this));
+        pagerPackages.setAdapter(new PackagePagerAdapter(getSupportFragmentManager()));
 
         // Give the TabLayout the ViewPager
         tabOperators = (TabLayout) findViewById(R.id.tabOperators);

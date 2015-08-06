@@ -85,10 +85,10 @@ public class UsagePagerAdapter extends PagerAdapter {
             PackageStatus status = PackageStatus.getCurrentStatus();
 
             if (status.getHasActivePackage()) {
-                usedPrimaryTraffic = 250;//status.getUsedPrimaryTraffic();
-                totalPrimaryTraffic = 500;//status.getPrimaryTraffic();
-                usedSecondaryTraffic = 600;//status.getUsedSecondaryTraffic();
-                totalSecondaryTraffic = 700;//status.getSecondaryTraffic();
+                usedPrimaryTraffic = status.getUsedPrimaryTraffic();
+                totalPrimaryTraffic = status.getPrimaryTraffic();
+                usedSecondaryTraffic = status.getUsedSecondaryTraffic();
+                totalSecondaryTraffic = status.getSecondaryTraffic();
                 strPrimaryTraffic = TrafficDisplay.getArcTraffic(usedPrimaryTraffic, totalPrimaryTraffic);
                 strSecondaryTraffic = TrafficDisplay.getArcTraffic(usedSecondaryTraffic, totalSecondaryTraffic);
                 progressPrimaryUsage.setProgress(0, strPrimaryTraffic);
