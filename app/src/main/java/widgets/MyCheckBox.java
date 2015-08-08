@@ -2,12 +2,12 @@ package widgets;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.CheckBox;
+import android.support.v7.widget.AppCompatCheckBox;
 
 import com.zohaltech.app.mobiledatamonitor.classes.App;
 
 
-public class MyCheckBox extends CheckBox
+public class MyCheckBox extends AppCompatCheckBox
 {
     public MyCheckBox(Context context)
     {

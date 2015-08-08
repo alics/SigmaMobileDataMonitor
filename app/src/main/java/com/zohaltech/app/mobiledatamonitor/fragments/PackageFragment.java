@@ -27,6 +27,12 @@ public class PackageFragment extends Fragment {
     HashMap<String, List<DataPackage>> dataPackages;
     ExpandablePackageAdapter packageAdapter;
 
+    //todo
+    ///////////////////////////////////////////
+    public PackageFragment() {
+    }
+    ///////////////////////////////////////////
+
     public static PackageFragment newInstance(int position) {
         Bundle args = new Bundle();
         args.putInt(POSITION, position);
@@ -90,37 +96,10 @@ public class PackageFragment extends Fragment {
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
-    @Override
     public void onPause() {
         super.onPause();
         periods.clear();
         dataPackages.clear();
         packageAdapter.notifyDataSetChanged();
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-
 }

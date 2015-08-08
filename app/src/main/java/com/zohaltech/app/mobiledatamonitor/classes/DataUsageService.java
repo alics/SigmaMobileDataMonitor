@@ -49,14 +49,6 @@ public class DataUsageService extends Service {
                 App.preferences.edit().putLong(LAST_RECEIVED_BYTES, currentReceivedBytes).commit();
                 App.preferences.edit().putLong(LAST_SENT_BYTES, currentSentBytes).commit();
 
-                String currentDate = Helper.getCurrentDate();
-                if (currentDate.equals(App.preferences.getString(DAILY_USAGE_DATE, currentDate))) {
-                    App.preferences.edit().putLong(DAILY_USAGE_BYTES, App.preferences.getLong(DAILY_USAGE_BYTES, 0) + receivedBytes + sentBytes).commit();
-                } else {
-                    App.preferences.edit().putLong(DAILY_USAGE_BYTES, receivedBytes + sentBytes).commit();
-                }
-                App.preferences.edit().putString(DAILY_USAGE_DATE, currentDate).commit();
-
                 App.preferences.edit().putLong(TOTAL_USAGE_BYTES, App.preferences.getLong(TOTAL_USAGE_BYTES, 0) + receivedBytes + sentBytes).commit();
 
                 final long oneMinuteUsedBytes = App.preferences.getLong(ONE_MINUTE_USED_BYTES, 0) + receivedBytes + sentBytes;
@@ -73,6 +65,14 @@ public class DataUsageService extends Service {
                     usageLogInterval = 0;
                 }
             }
+
+            String currentDate = Helper.getCurrentDate();
+            if (currentDate.equals(App.preferences.getString(DAILY_USAGE_DATE, currentDate))) {
+                App.preferences.edit().putLong(DAILY_USAGE_BYTES, App.preferences.getLong(DAILY_USAGE_BYTES, 0) + receivedBytes + sentBytes).commit();
+            } else {
+                App.preferences.edit().putLong(DAILY_USAGE_BYTES, receivedBytes + sentBytes).commit();
+            }
+            App.preferences.edit().putString(DAILY_USAGE_DATE, currentDate).commit();
 
             //Random r = new Random();
             //int Low = 10;

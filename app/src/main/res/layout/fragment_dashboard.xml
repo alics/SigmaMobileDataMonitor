@@ -4,21 +4,6 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="?attr/actionBarSize"-->
-        <!--android:background="@color/primary">-->
-
-        <!--<widgets.MyTextView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:gravity="center"-->
-            <!--android:text="مدیریت اینترنت موبایل"-->
-            <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
-            <!--android:textColor="@color/white"/>-->
-
-    <!--</LinearLayout>-->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -43,7 +28,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/white"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -57,12 +41,10 @@
 
             <widgets.MyButton
                 android:id="@+id/btnPackageManagement"
+                style="@style/MyButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/btn_white_flat"
-                android:drawablePadding="10dp"
-                android:drawableTop="@drawable/ic_custom_packages"
-                android:padding="10dp"
+                android:drawableTop="@drawable/ic_manage_packages"
                 android:text="مدیریت بسته"/>
 
         </LinearLayout>
@@ -77,12 +59,10 @@
 
             <widgets.MyButton
                 android:id="@+id/btnPurchasePackage"
+                style="@style/MyButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/btn_white_flat"
-                android:drawablePadding="10dp"
                 android:drawableTop="@drawable/ic_purchase_package"
-                android:padding="10dp"
                 android:text="خرید بسته"/>
 
         </LinearLayout>
@@ -93,7 +73,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/white"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -107,12 +86,10 @@
 
             <widgets.MyButton
                 android:id="@+id/btnPackagesHistory"
+                style="@style/MyButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/btn_white_flat"
-                android:drawablePadding="10dp"
                 android:drawableTop="@drawable/ic_packages_history"
-                android:padding="10dp"
                 android:text="سوابق بسته ها"/>
 
         </LinearLayout>
@@ -123,17 +100,14 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:orientation="vertical">
 
             <widgets.MyButton
                 android:id="@+id/btnUsageReport"
+                style="@style/MyButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/btn_white_flat"
-                android:drawablePadding="10dp"
                 android:drawableTop="@drawable/ic_usage_report"
-                android:padding="10dp"
                 android:text="گزارش مصرف"/>
 
         </LinearLayout>

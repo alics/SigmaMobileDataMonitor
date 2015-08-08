@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.activities.MainActivity;
 import com.zohaltech.app.mobiledatamonitor.activities.PackageManagementActivity;
-import com.zohaltech.app.mobiledatamonitor.activities.PackagesHistoryActivity;
 import com.zohaltech.app.mobiledatamonitor.adapters.UsagePagerAdapter;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
 
@@ -77,14 +76,12 @@ public class DashboardFragment extends MyFragment {
                 if (state == 2) {
                     int pageIndex = pagerUsages.getCurrentItem();
                     if (pageIndex == 0) {
-                        //usagePagerAdapter.startAnimation0();
-                        usagePagerAdapter.notifyDataSetChanged();
+                        usagePagerAdapter.loadTodayUsage();
                     } else if (pageIndex == 1) {
-                        usagePagerAdapter.startAnimation1();
+                        usagePagerAdapter.loadTrafficUsage();
+                    } else if (pageIndex == 2) {
+                        usagePagerAdapter.loadRemainDays();
                     }
-                    //else if (pageIndex == 2) {
-                    //    //usagePagerAdapter.startAnimation2();
-                    //}
                 }
             }
         });
@@ -124,8 +121,11 @@ public class DashboardFragment extends MyFragment {
         btnPackagesHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(App.currentActivity, PackagesHistoryActivity.class);
-                startActivity(intent);
+                //Intent intent = new Intent(App.currentActivity, PackagesHistoryActivity.class);
+                //startActivity(intent);
+                MainActivity parent = ((MainActivity) getActivity());
+                parent.animType = MainActivity.AnimType.OPEN;
+                parent.displayView(MainActivity.EnumFragment.HISTORY);
             }
         });
 
@@ -157,10 +157,14 @@ public class DashboardFragment extends MyFragment {
     @Override
     public void onResume() {
         super.onResume();
-        usagePagerAdapter.notifyDataSetChanged();
-        if (pagerUsages.getCurrentItem() == 1) {
-            usagePagerAdapter.startAnimation1();
-        }
+        //usagePagerAdapter.notifyDataSetChanged();
+        //if (pagerUsages.getCurrentItem() == 0) {
+        //    usagePagerAdapter.loadTodayUsage();
+        //} else if (pagerUsages.getCurrentItem() == 1) {
+        //    usagePagerAdapter.loadTrafficUsage();
+        //} else {
+        //    usagePagerAdapter.loadRemainDays();
+        //}
     }
 
     @Override

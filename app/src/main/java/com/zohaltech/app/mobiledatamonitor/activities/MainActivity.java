@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.fragments.DashboardFragment;
+import com.zohaltech.app.mobiledatamonitor.fragments.HistoryFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.PackagesFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.ReportFragment;
 
@@ -71,6 +72,10 @@ public class MainActivity extends EnhancedActivity {
                 fragment = new PackagesFragment();
                 title = "خرید بسته";
                 break;
+            case HISTORY:
+                fragment = new HistoryFragment();
+                title = "سوابق بسته ها";
+                break;
             default:
                 break;
         }
@@ -95,7 +100,8 @@ public class MainActivity extends EnhancedActivity {
     public enum EnumFragment {
         DASHBOARD,
         REPORT,
-        PACKAGES
+        PACKAGES,
+        HISTORY
     }
 
     public enum AnimType {

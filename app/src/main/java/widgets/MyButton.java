@@ -2,12 +2,12 @@ package widgets;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.Button;
+import android.support.v7.widget.AppCompatButton;
 
 import com.zohaltech.app.mobiledatamonitor.classes.App;
 
 
-public class MyButton extends Button
+public class MyButton extends AppCompatButton
 {
     public MyButton(Context context)
     {

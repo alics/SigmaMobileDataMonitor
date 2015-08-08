@@ -2,12 +2,12 @@ package widgets;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.EditText;
+import android.support.v7.widget.AppCompatEditText;
 
 import com.zohaltech.app.mobiledatamonitor.classes.App;
 
 
-public class MyEditText extends EditText
+public class MyEditText extends AppCompatEditText
 {
     public MyEditText(Context context)
     {

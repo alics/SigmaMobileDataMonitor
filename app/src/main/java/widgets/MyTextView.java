@@ -2,12 +2,12 @@ package widgets;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.TextView;
+import android.support.v7.widget.AppCompatTextView;
 
 import com.zohaltech.app.mobiledatamonitor.classes.App;
 
 
-public class MyTextView extends TextView {
+public class MyTextView extends AppCompatTextView {
     public MyTextView(Context context) {
         super(context);
         initialize();

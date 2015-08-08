@@ -9,4 +9,8 @@
         <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
     </style>
 
+    <style name="MyButton" parent="Widget.AppCompat.ActionButton">
+
+    </style>
+
 </resources>

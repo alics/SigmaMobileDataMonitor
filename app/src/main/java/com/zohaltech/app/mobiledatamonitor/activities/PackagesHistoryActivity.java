@@ -19,7 +19,7 @@ public class PackagesHistoryActivity extends EnhancedActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_packages_history);
+        setContentView(R.layout.fragment_history);
         initialize();
     }
 

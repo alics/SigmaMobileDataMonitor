@@ -3,7 +3,6 @@ package widgets;
 import android.content.Context;
 import android.support.v7.widget.SwitchCompat;
 import android.util.AttributeSet;
-import android.widget.TextView;
 
 import com.zohaltech.app.mobiledatamonitor.classes.App;
 

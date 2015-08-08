@@ -45,10 +45,10 @@ public class UsagePagerAdapter extends PagerAdapter {
         return PAGE_COUNT;
     }
 
-    //@Override
-    //public int getItemPosition(Object object) {
-    //    return POSITION_NONE;
-    //}
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
+    }
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
@@ -66,8 +66,9 @@ public class UsagePagerAdapter extends PagerAdapter {
             progressTodayUsage = (CircleProgress) view.findViewById(R.id.progressTodayUsage);
             progressTodayUsage.setLayoutParams(new LinearLayout.LayoutParams(size1, size1));
 
-            TrafficDisplay trafficDisplay = TrafficDisplay.getTodayTraffic(App.preferences.getLong(DataUsageService.DAILY_USAGE_BYTES, 0));
-            progressTodayUsage.setProgress(trafficDisplay.getValue(), trafficDisplay.getPostfix());
+            //TrafficDisplay trafficDisplay = TrafficDisplay.getTodayTraffic(App.preferences.getLong(DataUsageService.DAILY_USAGE_BYTES, 0));
+            //progressTodayUsage.setProgress(trafficDisplay.getValue(), trafficDisplay.getPostfix());
+            loadTodayUsage();
 
         } else if (position == 1) {
 
@@ -82,27 +83,28 @@ public class UsagePagerAdapter extends PagerAdapter {
 
             txtSecondaryCaption.setLayoutParams(new LinearLayout.LayoutParams(size2, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-            PackageStatus status = PackageStatus.getCurrentStatus();
+            //PackageStatus status = PackageStatus.getCurrentStatus();
+            //
+            //if (status.getHasActivePackage()) {
+            //    usedPrimaryTraffic = status.getUsedPrimaryTraffic();
+            //    totalPrimaryTraffic = status.getPrimaryTraffic();
+            //    usedSecondaryTraffic = status.getUsedSecondaryTraffic();
+            //    totalSecondaryTraffic = status.getSecondaryTraffic();
+            //    strPrimaryTraffic = TrafficDisplay.getArcTraffic(usedPrimaryTraffic, totalPrimaryTraffic);
+            //    strSecondaryTraffic = TrafficDisplay.getArcTraffic(usedSecondaryTraffic, totalSecondaryTraffic);
+            //    progressPrimaryUsage.setProgress(0, strPrimaryTraffic);
+            //    progressSecondaryUsage.setProgress(0, strSecondaryTraffic);
+            //}
 
-            if (status.getHasActivePackage()) {
-                usedPrimaryTraffic = status.getUsedPrimaryTraffic();
-                totalPrimaryTraffic = status.getPrimaryTraffic();
-                usedSecondaryTraffic = status.getUsedSecondaryTraffic();
-                totalSecondaryTraffic = status.getSecondaryTraffic();
-                strPrimaryTraffic = TrafficDisplay.getArcTraffic(usedPrimaryTraffic, totalPrimaryTraffic);
-                strSecondaryTraffic = TrafficDisplay.getArcTraffic(usedSecondaryTraffic, totalSecondaryTraffic);
-                progressPrimaryUsage.setProgress(0, strPrimaryTraffic);
-                progressSecondaryUsage.setProgress(0, strSecondaryTraffic);
-            }
-
-            startAnimation1();
+            loadTrafficUsage();
 
         } else {
             view = App.inflater.inflate(R.layout.pager_adapter_day_remain, null);
             progressDayRemain = (CircleProgress) view.findViewById(R.id.progressDayRemain);
             progressDayRemain.setLayoutParams(new LinearLayout.LayoutParams(size1, size1));
 
-            progressDayRemain.setProgress("" + PackageStatus.getCurrentStatus().getLeftDays(), "روز");
+            //progressDayRemain.setProgress("" + PackageStatus.getCurrentStatus().getLeftDays(), "روز");
+            loadRemainDays();
         }
 
         container.addView(view);
@@ -117,7 +119,20 @@ public class UsagePagerAdapter extends PagerAdapter {
     //    }
     //}
 
-    public void startAnimation1() {
+    public void loadTrafficUsage() {
+        PackageStatus status = PackageStatus.getCurrentStatus();
+
+        if (status.getHasActivePackage()) {
+            usedPrimaryTraffic = status.getUsedPrimaryTraffic();
+            totalPrimaryTraffic = status.getPrimaryTraffic();
+            usedSecondaryTraffic = status.getUsedSecondaryTraffic();
+            totalSecondaryTraffic = status.getSecondaryTraffic();
+            strPrimaryTraffic = TrafficDisplay.getArcTraffic(usedPrimaryTraffic, totalPrimaryTraffic);
+            strSecondaryTraffic = TrafficDisplay.getArcTraffic(usedSecondaryTraffic, totalSecondaryTraffic);
+            progressPrimaryUsage.setProgress(0, strPrimaryTraffic);
+            progressSecondaryUsage.setProgress(0, strSecondaryTraffic);
+        }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             new PrimaryProgressTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             new SecondaryTrafficTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -125,6 +140,25 @@ public class UsagePagerAdapter extends PagerAdapter {
             new PrimaryProgressTask().execute();
             new SecondaryTrafficTask().execute();
         }
+    }
+
+    public void loadTodayUsage() {
+        App.handler.post(new Runnable() {
+            @Override
+            public void run() {
+                TrafficDisplay trafficDisplay = TrafficDisplay.getTodayTraffic(App.preferences.getLong(DataUsageService.DAILY_USAGE_BYTES, 0));
+                progressTodayUsage.setProgress(trafficDisplay.getValue(), trafficDisplay.getPostfix());
+            }
+        });
+    }
+
+    public void loadRemainDays() {
+        App.handler.post(new Runnable() {
+            @Override
+            public void run() {
+                progressDayRemain.setProgress("" + PackageStatus.getCurrentStatus().getLeftDays(), "روز");
+            }
+        });
     }
 
     @Override

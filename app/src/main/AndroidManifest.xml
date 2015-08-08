@@ -62,9 +62,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.PackagesActivity"
-            android:screenOrientation="portrait"/>
-        <activity
             android:name=".activities.PackageManagementActivity"
             android:screenOrientation="portrait"/>
         <activity

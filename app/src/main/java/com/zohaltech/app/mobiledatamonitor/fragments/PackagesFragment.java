@@ -1,7 +1,7 @@
 package com.zohaltech.app.mobiledatamonitor.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.astuetz.PagerSlidingTabStrip;
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.activities.MainActivity;
 import com.zohaltech.app.mobiledatamonitor.adapters.PackagePagerAdapter;
@@ -20,45 +21,66 @@ import com.zohaltech.app.mobiledatamonitor.classes.Helper;
 import widgets.MyFragment;
 
 public class PackagesFragment extends MyFragment {
-
-    TabLayout tabOperators;
-    ViewPager pagerPackages;
-    PackagePagerAdapter packagePagerAdapter;
+    PagerSlidingTabStrip tabOperators;
+    ViewPager            pagerPackages;
+    PackagePagerAdapter  packagePagerAdapter;
 
     public PackagesFragment() {
     }
 
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
         View rootView = inflater.inflate(R.layout.fragment_packages, container, false);
 
-        // Give the TabLayout the ViewPager
-        tabOperators = (TabLayout) rootView.findViewById(R.id.tabOperators);
-
-        // Get the ViewPager and set it's PagerAdapter so that it can display items
+        // Initialize the ViewPager and set an adapter
         pagerPackages = (ViewPager) rootView.findViewById(R.id.pagerPackages);
-        packagePagerAdapter = new PackagePagerAdapter(getActivity().getSupportFragmentManager());
+        packagePagerAdapter = new PackagePagerAdapter(getFragmentManager());
         pagerPackages.setAdapter(packagePagerAdapter);
-        packagePagerAdapter.notifyDataSetChanged();
 
-        //((ViewGroup)tabOperators.getChildAt(0)).getChildAt().setTypeface(App.persianFont);
-        tabOperators.setupWithViewPager(pagerPackages);
+        // Bind the tabOperators to the ViewPager
+        tabOperators = (PagerSlidingTabStrip) rootView.findViewById(R.id.tabOperators);
+        tabOperators.setViewPager(pagerPackages);
 
-        selectTabByOperator();
+        pagerPackages.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                ((TextView) ((ViewGroup) tabOperators.getChildAt(0)).getChildAt(0)).setTextColor(Color.GRAY);
+                ((TextView) ((ViewGroup) tabOperators.getChildAt(0)).getChildAt(1)).setTextColor(Color.GRAY);
+                ((TextView) ((ViewGroup) tabOperators.getChildAt(0)).getChildAt(2)).setTextColor(Color.GRAY);
+                ((TextView) ((ViewGroup) tabOperators.getChildAt(0)).getChildAt(position)).setTextColor(Color.BLACK);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         changeTabsFont();
+
+        selectTabByOperator();
 
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         return rootView;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        packagePagerAdapter = null;
+        pagerPackages.setAdapter(null);
     }
 
     @Override
@@ -75,17 +97,9 @@ public class PackagesFragment extends MyFragment {
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     public void onBackPressed() {
         close();
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        packagePagerAdapter = null;
-        pagerPackages.setAdapter(null);
     }
 
     private void close() {
@@ -97,9 +111,9 @@ public class PackagesFragment extends MyFragment {
     private void selectTabByOperator() {
         pagerPackages.setCurrentItem(2);
         Helper.Operator operator = Helper.getOperator();
-        if (operator == Helper.Operator.IRANCELL){
+        if (operator == Helper.Operator.IRANCELL) {
             pagerPackages.setCurrentItem(1);
-        } else if(operator == Helper.Operator.RIGHTELL){
+        } else if (operator == Helper.Operator.RIGHTELL) {
             pagerPackages.setCurrentItem(0);
         }
     }
@@ -108,18 +122,18 @@ public class PackagesFragment extends MyFragment {
         ViewGroup vg = (ViewGroup) tabOperators.getChildAt(0);
         int tabsCount = vg.getChildCount();
         for (int j = 0; j < tabsCount; j++) {
-            ViewGroup vgTab = (ViewGroup) vg.getChildAt(j);
-            int tabChildCount = vgTab.getChildCount();
-            for (int i = 0; i < tabChildCount; i++) {
-                View tabViewChild = vgTab.getChildAt(i);
-                if (tabViewChild instanceof TextView) {
-                    TextView textView = (TextView) tabViewChild;
-                    textView.setWidth(App.screenWidth / 3);
-                    textView.setTypeface(App.persianFont);
-                }
-            }
+            TextView textView = (TextView) vg.getChildAt(j);
+            //int tabChildCount = vgTab.getChildCount();
+            //for (int i = 0; i < tabChildCount; i++) {
+            //    View tabViewChild = vgTab.getChildAt(i);
+            //    if (tabViewChild instanceof TextView) {
+            //        TextView textView = (TextView) tabViewChild;
+            textView.setWidth(App.screenWidth / 3);
+            textView.setTypeface(App.persianFont);
+            textView.setTextColor(Color.GRAY);
+            textView.setTextSize(16);
         }
+        //}
+        //}
     }
-
-
 }
