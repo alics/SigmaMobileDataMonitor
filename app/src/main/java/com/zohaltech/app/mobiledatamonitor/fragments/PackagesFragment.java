@@ -131,7 +131,7 @@ public class PackagesFragment extends MyFragment {
             textView.setWidth(App.screenWidth / 3);
             textView.setTypeface(App.persianFont);
             textView.setTextColor(Color.GRAY);
-            textView.setTextSize(16);
+            textView.setTextSize(14);
         }
         //}
         //}

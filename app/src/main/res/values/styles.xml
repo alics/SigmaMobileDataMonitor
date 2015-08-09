@@ -30,7 +30,11 @@
         <item name="android:textColor">?android:textColorSecondary</item>
     </style>
 
-    <style name="MyButton" parent="Widget.AppCompat.ActionButton">
+    <style name="MyButton" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:padding">15dp</item>
+    </style>
+
+    <style name="DashboardButton" parent="Widget.AppCompat.ActionButton">
         <item name="android:padding">15dp</item>
     </style>
 

@@ -123,7 +123,7 @@ public class DataUsageService extends Service {
         super.onDestroy();
         executorService.shutdown();
         executorService = null;
-        NotificationHandler.cancelNotification(App.context);
+        NotificationHandler.cancelNotification();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.zohaltech.app.mobiledatamonitor.fragments;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -22,10 +23,10 @@ import widgets.AnimatedExpandableListView;
 public class PackageFragment extends Fragment {
     public static final String POSITION = "POSITION";
 
-     AnimatedExpandableListView lstPeriods;
-    List<String> periods ;
+    AnimatedExpandableListView         lstPeriods;
+    List<String>                       periods;
     HashMap<String, List<DataPackage>> dataPackages;
-    ExpandablePackageAdapter packageAdapter;
+    ExpandablePackageAdapter           packageAdapter;
 
     //todo
     ///////////////////////////////////////////
@@ -56,6 +57,11 @@ public class PackageFragment extends Fragment {
         lstPeriods = (AnimatedExpandableListView) view.findViewById(R.id.lstPeriods);
 
 
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            lstPeriods.setIndicatorBounds(App.screenWidth-GetPixelFromDips(35), App.screenWidth-GetPixelFromDips(5));
+        } else {
+            lstPeriods.setIndicatorBoundsRelative(App.screenWidth-GetPixelFromDips(35), App.screenWidth-GetPixelFromDips(5));
+        }
 
         // In order to show animations, we need to use a custom click handler
         // for our ExpandableListView.
@@ -77,6 +83,13 @@ public class PackageFragment extends Fragment {
         });
 
         return view;
+    }
+
+    public int GetPixelFromDips(float pixels) {
+        // Get the screen's density scale
+        final float scale = getResources().getDisplayMetrics().density;
+        // Convert the dps to pixels, based on density scale
+        return (int) (pixels * scale + 0.5f);
     }
 
     @Override

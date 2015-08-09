@@ -1,12 +1,12 @@
 package com.zohaltech.app.mobiledatamonitor.activities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -25,9 +25,7 @@ public class MainActivity extends EnhancedActivity {
     MyFragment fragment = null;
     Toolbar  toolbar;
     TextView txtTitle;
-
-    Button v;
-
+    boolean notified = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +50,27 @@ public class MainActivity extends EnhancedActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (notified) {
+            displayView(EnumFragment.DASHBOARD);
+            notified = false;
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        notified = intent.getBooleanExtra("NOTIFIED", false);
+    }
+
+    @Override
     public void onBackPressed() {
         fragment.onBackPressed();
     }
 
     public void displayView(EnumFragment input) {
-        //fragment = null;
+        fragment = null;
         String title = getString(R.string.app_name);
         switch (input) {
             case DASHBOARD:

@@ -46,7 +46,7 @@ public class AlarmHandler {
     public static void cancel() {
         if (manager != null) {
             manager.cancel(pendingIntent);
-            NotificationHandler.cancelNotification(App.context);
+            NotificationHandler.cancelNotification();
         }
     }
 }
