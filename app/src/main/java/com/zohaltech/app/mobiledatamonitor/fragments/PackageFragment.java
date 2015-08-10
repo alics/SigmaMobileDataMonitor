@@ -58,9 +58,9 @@ public class PackageFragment extends Fragment {
 
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            lstPeriods.setIndicatorBounds(App.screenWidth-GetPixelFromDips(35), App.screenWidth-GetPixelFromDips(5));
+            lstPeriods.setIndicatorBounds(App.screenWidth - GetPixelFromDpi(35), App.screenWidth - GetPixelFromDpi(5));
         } else {
-            lstPeriods.setIndicatorBoundsRelative(App.screenWidth-GetPixelFromDips(35), App.screenWidth-GetPixelFromDips(5));
+            lstPeriods.setIndicatorBoundsRelative(App.screenWidth - GetPixelFromDpi(35), App.screenWidth - GetPixelFromDpi(5));
         }
 
         // In order to show animations, we need to use a custom click handler
@@ -85,11 +85,9 @@ public class PackageFragment extends Fragment {
         return view;
     }
 
-    public int GetPixelFromDips(float pixels) {
-        // Get the screen's density scale
-        final float scale = getResources().getDisplayMetrics().density;
-        // Convert the dps to pixels, based on density scale
-        return (int) (pixels * scale + 0.5f);
+    public int GetPixelFromDpi(float dpi) {
+        float scale = getResources().getDisplayMetrics().density;
+        return (int) (dpi * scale + 0.5f);
     }
 
     @Override

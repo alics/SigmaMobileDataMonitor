@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:paddingBottom="5dp"
         android:text="test"
-        android:textColor="@color/black"
+        android:textColor="@color/gray"
         android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <widgets.MyTextView
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:paddingBottom="5dp"
         android:text="test"
-        android:textColor="@color/black"
+        android:textColor="@color/gray"
         android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <widgets.MyTextView
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:paddingBottom="5dp"
         android:text="test"
-        android:textColor="@color/black"
+        android:textColor="@color/gray"
         android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <widgets.MyTextView
@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:paddingBottom="5dp"
         android:text="test"
-        android:textColor="@color/black"
+        android:textColor="@color/gray"
         android:textAppearance="?android:attr/textAppearanceMedium"/>
 
 </LinearLayout>

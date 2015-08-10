@@ -2,6 +2,7 @@ package com.zohaltech.app.mobiledatamonitor.activities;
 
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.SwitchCompat;
 import android.view.WindowManager;
 import android.widget.ImageButton;
@@ -41,8 +42,8 @@ public class PackageSettingsActivity extends EnhancedActivity {
         final MyEditText txtAlarmDaysToExpDate= (MyEditText) findViewById(R.id.txtAlarmDaysToExpDate);
         final SwitchCompat switchEnableAlarmDaysToExpDate= (SwitchCompat) findViewById(R.id.switchEnableAlarmDaysToExpDate);
         final SwitchCompat switchAutoMobileDataOff= (SwitchCompat) findViewById(R.id.switchAutoMobileDataOff);
-        final ImageButton imgBtnCancel= (ImageButton) findViewById(R.id.imgBtnCancel);
-        final ImageButton imgBtnSave= (ImageButton) findViewById(R.id.imgBtnSave);
+        final FloatingActionButton fabCancel= (FloatingActionButton) findViewById(R.id.fabCancel);
+        final FloatingActionButton fabDone= (FloatingActionButton) findViewById(R.id.fabDone);
 
     }
 

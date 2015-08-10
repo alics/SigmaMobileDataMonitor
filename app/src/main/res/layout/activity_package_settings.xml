@@ -21,12 +21,12 @@
                 android:orientation="horizontal">
 
                 <widgets.MyEditText
+                    android:id="@+id/txtPackageTitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:layout_weight="1"
-                    android:id="@+id/txtPackageTitle"/>
+                    android:layout_weight="1"/>
 
                 <widgets.MyTextView
                     android:layout_width="wrap_content"
@@ -41,12 +41,12 @@
                 android:orientation="horizontal">
 
                 <widgets.MyEditText
+                    android:id="@+id/txtOperators"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="40dp"
-                    android:layout_weight="1"
-                    android:id="@+id/txtOperators"/>
+                    android:layout_weight="1"/>
 
                 <widgets.MyTextView
                     android:layout_width="wrap_content"
@@ -70,13 +70,13 @@
                     />
 
                 <widgets.MyEditText
+                    android:id="@+id/txtPackageValidPeriod"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="20dp"
                     android:layout_weight="1"
-                    android:inputType="numberDecimal"
-                    android:id="@+id/txtPackageValidPeriod"/>
+                    android:inputType="numberDecimal"/>
 
                 <widgets.MyTextView
                     android:layout_width="wrap_content"
@@ -98,13 +98,13 @@
                     android:text="تومان"/>
 
                 <widgets.MyEditText
+                    android:id="@+id/txtPackagePrice"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="40dp"
                     android:layout_weight="1"
-                    android:inputType="numberDecimal"
-                    android:id="@+id/txtPackagePrice"/>
+                    android:inputType="numberDecimal"/>
 
                 <widgets.MyTextView
                     android:layout_width="wrap_content"
@@ -119,13 +119,13 @@
                 android:orientation="horizontal">
 
                 <widgets.MyEditText
+                    android:id="@+id/txtPrimaryTraffic"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_weight="1"
-                    android:inputType="number"
-                    android:id="@+id/txtPrimaryTraffic"/>
+                    android:inputType="number"/>
 
                 <widgets.MyTextView
                     android:layout_width="wrap_content"
@@ -140,13 +140,13 @@
                 android:orientation="horizontal">
 
                 <widgets.MyEditText
+                    android:id="@+id/txtSecondaryTraffic"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="40dp"
                     android:layout_weight="1"
-                    android:inputType="number"
-                    android:id="@+id/txtSecondaryTraffic"/>
+                    android:inputType="number"/>
 
                 <widgets.MyTextView
                     android:layout_width="wrap_content"
@@ -161,13 +161,13 @@
                 android:orientation="horizontal">
 
                 <widgets.MyEditText
+                    android:id="@+id/txtSecondaryTrafficPeriod"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_weight="1"
-                    android:inputType="time"
-                    android:id="@+id/txtSecondaryTrafficPeriod"/>
+                    android:inputType="time"/>
 
                 <widgets.MyTextView
                     android:layout_width="wrap_content"
@@ -200,11 +200,11 @@
 
 
                 <widgets.MyEditText
+                    android:id="@+id/txtAlarmTriggerVolume"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:inputType="numberDecimal"
-                    android:id="@+id/txtAlarmTriggerVolume"/>
+                    android:inputType="numberDecimal"/>
 
 
                 <widgets.MySwitch
@@ -237,13 +237,13 @@
                         android:text="روز"/>
 
                     <widgets.MyEditText
+                        android:id="@+id/txtAlarmDaysToExpDate"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="20dp"
                         android:layout_weight="1"
-                        android:inputType="numberDecimal"
-                        android:id="@+id/txtAlarmDaysToExpDate"/>
+                        android:inputType="numberDecimal"/>
 
 
                     <widgets.MySwitch
@@ -282,32 +282,19 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <ImageButton
-                    android:id="@+id/imgBtnCancel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="10dp"
-                    android:layout_marginEnd="30dp"
-                    android:layout_marginRight="30dp"
-                    android:background="@drawable/circle_button"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_cancel"/>
-
-
-                <ImageButton
-                    android:id="@+id/imgBtnSave"
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/fabCancel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
+                    android:src="@drawable/ic_cancel_white"/>
 
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/circle_button"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_save"/>
-
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/fabDone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/ic_done_white"/>
 
             </LinearLayout>
 

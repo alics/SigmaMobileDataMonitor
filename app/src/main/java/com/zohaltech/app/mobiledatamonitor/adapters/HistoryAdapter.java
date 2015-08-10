@@ -16,9 +16,9 @@ import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
 
 import java.util.ArrayList;
 
-public class PackagesHistoryAdapter extends ArrayAdapter<PackageHistory> {
-    public PackagesHistoryAdapter(ArrayList<PackageHistory> packageHistories) {
-        super(App.context, R.layout.adapter_package_history, packageHistories);
+public class HistoryAdapter extends ArrayAdapter<PackageHistory> {
+    public HistoryAdapter(ArrayList<PackageHistory> packageHistories) {
+        super(App.context, R.layout.adapter_history, packageHistories);
     }
 
     private static class ViewHolder {
@@ -52,7 +52,7 @@ public class PackagesHistoryAdapter extends ArrayAdapter<PackageHistory> {
 
         PackageHistory item = getItem(position);
         if (convertView == null) {
-            convertView = App.inflater.inflate(R.layout.adapter_package_history, parent, false);
+            convertView = App.inflater.inflate(R.layout.adapter_history, parent, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {

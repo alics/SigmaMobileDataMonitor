@@ -1,6 +1,5 @@
 package com.zohaltech.app.mobiledatamonitor.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -14,9 +13,7 @@ import android.widget.Toast;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.activities.MainActivity;
-import com.zohaltech.app.mobiledatamonitor.activities.PackageManagementActivity;
 import com.zohaltech.app.mobiledatamonitor.adapters.UsagePagerAdapter;
-import com.zohaltech.app.mobiledatamonitor.classes.App;
 
 import widgets.MyFragment;
 import widgets.MyToast;
@@ -91,8 +88,11 @@ public class DashboardFragment extends MyFragment {
         btnPackageManagement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(App.currentActivity, PackageManagementActivity.class);
-                startActivity(myIntent);
+                //Intent myIntent = new Intent(App.currentActivity, PackageManagementActivity.class);
+                //startActivity(myIntent);
+                MainActivity parent = ((MainActivity) getActivity());
+                parent.animType = MainActivity.AnimType.OPEN;
+                parent.displayView(MainActivity.EnumFragment.MANAGEMENT);
             }
         });
 
@@ -149,7 +149,7 @@ public class DashboardFragment extends MyFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            MyToast.show("سلام جان جان", Toast.LENGTH_SHORT, R.drawable.ic_warning);
+            MyToast.show("سلام جان جان", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
         }
         return super.onOptionsItemSelected(item);
     }

@@ -1,6 +1,7 @@
 package com.zohaltech.app.mobiledatamonitor.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -11,8 +12,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zohaltech.app.mobiledatamonitor.R;
+import com.zohaltech.app.mobiledatamonitor.classes.App;
 import com.zohaltech.app.mobiledatamonitor.fragments.DashboardFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.HistoryFragment;
+import com.zohaltech.app.mobiledatamonitor.fragments.ManagementFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.PackagesFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.ReportFragment;
 
@@ -89,6 +92,10 @@ public class MainActivity extends EnhancedActivity {
                 fragment = new HistoryFragment();
                 title = "سوابق بسته ها";
                 break;
+            case MANAGEMENT:
+                fragment = new ManagementFragment();
+                title = "مدیریت بسته";
+                break;
             default:
                 break;
         }
@@ -114,7 +121,8 @@ public class MainActivity extends EnhancedActivity {
         DASHBOARD,
         REPORT,
         PACKAGES,
-        HISTORY
+        HISTORY,
+        MANAGEMENT
     }
 
     public enum AnimType {

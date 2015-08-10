@@ -79,8 +79,12 @@ public class PackagesFragment extends MyFragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        packagePagerAdapter = null;
-        pagerPackages.setAdapter(null);
+        try {
+            packagePagerAdapter = null;
+            pagerPackages.setAdapter(null);
+        } catch (Exception e) {
+            // nothing
+        }
     }
 
     @Override

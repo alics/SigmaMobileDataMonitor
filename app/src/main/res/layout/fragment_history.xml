@@ -9,9 +9,6 @@
         android:id="@+id/lstPackagesHistories"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal"
-        android:background="@color/white"
-        android:dividerHeight="1dp"
-        tools:listitem="@layout/adapter_packages_history" />
+        tools:listitem="@layout/adapter_history" />
 
 </LinearLayout>

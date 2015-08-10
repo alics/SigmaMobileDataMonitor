@@ -95,10 +95,11 @@ public class DailyTrafficHistories {
         Cursor cursor = null;
 
         try {
-            String query = "SELECT  SUM(Traffic) total,SUBSTR(BeginningDateTime,0,11) date FROM (\n" +
-                           "SELECT  *  FROM DailyTrafficHistories  \n" +
-                           "ORDER BY Id DESC LIMIT 30) t\n" +
-                           "GROUP BY SUBSTR(BeginningDateTime,0,11)";
+            String query = "SELECT  SUM(Traffic) total,SUBSTR(BeginningDateTime,0,11) date FROM (" +
+                           "SELECT  *  FROM DailyTrafficHistories " +
+                           "ORDER BY Id DESC LIMIT 30) t " +
+                           "GROUP BY SUBSTR(BeginningDateTime,0,11) " +
+                           "ORDER BY date DESC";
 
             cursor = db.rawQuery(query, null);
             if (cursor != null && cursor.moveToFirst()) {

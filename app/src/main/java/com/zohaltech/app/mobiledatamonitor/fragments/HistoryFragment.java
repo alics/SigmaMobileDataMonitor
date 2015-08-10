@@ -1,6 +1,7 @@
 package com.zohaltech.app.mobiledatamonitor.fragments;
 
 import android.os.Bundle;
+import android.support.v7.internal.widget.ListViewCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,12 +12,9 @@ import android.widget.ListView;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.activities.MainActivity;
-import com.zohaltech.app.mobiledatamonitor.adapters.PackagesHistoryAdapter;
-import com.zohaltech.app.mobiledatamonitor.adapters.ReportAdapter;
-import com.zohaltech.app.mobiledatamonitor.dal.DailyTrafficHistories;
+import com.zohaltech.app.mobiledatamonitor.adapters.HistoryAdapter;
 import com.zohaltech.app.mobiledatamonitor.dal.PackageHistories;
 import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
-import com.zohaltech.app.mobiledatamonitor.entities.TrafficMonitor;
 
 import java.util.ArrayList;
 
@@ -24,9 +22,9 @@ import widgets.MyFragment;
 
 public class HistoryFragment extends MyFragment {
 
-    ListView                  lstPackagesHistories;
+    ListView            lstPackagesHistories;
     ArrayList<PackageHistory> packageHistories;
-    PackagesHistoryAdapter    adapter;
+    HistoryAdapter            adapter;
 
     public HistoryFragment() {
     }
@@ -44,7 +42,7 @@ public class HistoryFragment extends MyFragment {
 
         lstPackagesHistories = (ListView) rootView.findViewById(R.id.lstPackagesHistories);
         packageHistories = PackageHistories.select();
-        adapter = new PackagesHistoryAdapter(packageHistories);
+        adapter = new HistoryAdapter(packageHistories);
         lstPackagesHistories.setAdapter(adapter);
 
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
