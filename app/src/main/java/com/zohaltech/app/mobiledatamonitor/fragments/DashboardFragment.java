@@ -149,7 +149,9 @@ public class DashboardFragment extends MyFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            MyToast.show("سلام جان جان", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
+            MainActivity parent = ((MainActivity) getActivity());
+            parent.animType = MainActivity.AnimType.OPEN;
+            parent.displayView(MainActivity.EnumFragment.GLOBAL_SETTINGS);
         }
         return super.onOptionsItemSelected(item);
     }
