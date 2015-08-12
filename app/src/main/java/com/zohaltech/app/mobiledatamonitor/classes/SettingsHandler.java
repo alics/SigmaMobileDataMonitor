@@ -7,9 +7,13 @@ public final class SettingsHandler {
     private static final String PREF_IS_MONITORING_SERVICE_ON = "IS_MONITORING_SERVICE_ON";
     private static final String PREF_DAILY_TRAFFIC            = "DAILY_TRAFFIC";
     private static final String PREF_LAST_LOG_DATE            = "LAST_LOG_DATE";
+    private static final String PREF_DC_DATA_AFTER_TERMINATE  = "DC_DATA_AFTER_TERMINATE";
     private static final String PREF_ALARM_TYPE               = "ALARM_TYPE";
     private static final String PREF_REMINDED_BYTE_ALARM      = "REMINDED_BYTE_ALARM";
     private static final String PREF_LEFT_DAYS_ALARM          = "LEFT_DAYS_ALARM";
+    private static final String PREF_ALARM_TYPE_RES           = "ALARM_TYPE_RES";
+    private static final String PREF_REMINDED_BYTE_ALARM_RES  = "REMINDED_BYTE_ALARM_RES";
+    private static final String PREF_LEFT_DAYS_ALARM_RES      = "LEFT_DAYS_ALARM_RES";
 
 
     public static boolean isMonitoringServiceActive() {
@@ -59,5 +63,30 @@ public final class SettingsHandler {
 
     public static void setLeftDaysAlarm(int leftDaysAlarm) {
         App.preferences.edit().putInt(PREF_LEFT_DAYS_ALARM, leftDaysAlarm);
+    }
+
+    public static int getAlarmTypeRes() {
+        return App.preferences.getInt(PREF_ALARM_TYPE_RES, AlarmType.Both.ordinal());
+    }
+
+    public static void setAlarmTypeRes(int alarmType) {
+        App.preferences.edit().putInt(PREF_ALARM_TYPE_RES, alarmType);
+    }
+
+
+    public static int getRemindedByteAlarmRes() {
+        return App.preferences.getInt(PREF_REMINDED_BYTE_ALARM_RES, 0);
+    }
+
+    public static void setRemindedByteAlarmRes(int threshold) {
+        App.preferences.edit().putInt(PREF_REMINDED_BYTE_ALARM_RES, threshold);
+    }
+
+    public static int getLeftDaysAlarmRes() {
+        return App.preferences.getInt(PREF_LEFT_DAYS_ALARM_RES, 0);
+    }
+
+    public static void setLeftDaysAlarmRes(int leftDaysAlarm) {
+        App.preferences.edit().putInt(PREF_LEFT_DAYS_ALARM_RES, leftDaysAlarm);
     }
 }
