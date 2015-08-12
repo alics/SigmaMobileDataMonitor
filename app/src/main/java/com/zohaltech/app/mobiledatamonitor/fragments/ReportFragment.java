@@ -81,7 +81,7 @@ public class ReportFragment extends MyFragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_dashboard, menu);
+        //inflater.inflate(R.menu.menu_dashboard, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -91,13 +91,13 @@ public class ReportFragment extends MyFragment {
         if (id == android.R.id.home) {
             close();
         }
-        else if (id == R.id.action_settings) {
-            trafficMonitors.clear();
-            trafficMonitors.addAll(DailyTrafficHistories.getMonthlyTraffic());
-            long bytes = App.preferences.getLong(DataUsageService.DAILY_USAGE_BYTES, 0);
-            trafficMonitors.add(0, new TrafficMonitor(bytes, Helper.getCurrentDate()));
-            adapter.notifyDataSetChanged();
-        }
+        //else if (id == R.id.action_settings) {
+        //    trafficMonitors.clear();
+        //    trafficMonitors.addAll(DailyTrafficHistories.getMonthlyTraffic());
+        //    long bytes = ((MainActivity)getActivity()).dailyUsage;
+        //    trafficMonitors.add(0, new TrafficMonitor(bytes, Helper.getCurrentDate()));
+        //    adapter.notifyDataSetChanged();
+        //}
         return super.onOptionsItemSelected(item);
     }
 

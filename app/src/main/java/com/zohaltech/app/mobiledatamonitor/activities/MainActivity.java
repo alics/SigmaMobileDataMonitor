@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
+import com.zohaltech.app.mobiledatamonitor.classes.DataUsageService;
 import com.zohaltech.app.mobiledatamonitor.fragments.DashboardFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.HistoryFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.ManagementFragment;
@@ -29,6 +30,8 @@ public class MainActivity extends EnhancedActivity {
     Toolbar  toolbar;
     TextView txtTitle;
     boolean notified = false;
+
+    public long dailyUsage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,8 @@ public class MainActivity extends EnhancedActivity {
             displayView(EnumFragment.DASHBOARD);
             notified = false;
         }
+
+        dailyUsage = App.preferences.getLong(DataUsageService.DAILY_USAGE_BYTES, 0);
     }
 
     @Override
@@ -73,7 +78,7 @@ public class MainActivity extends EnhancedActivity {
     }
 
     public void displayView(EnumFragment input) {
-        fragment = null;
+        //fragment = null;
         String title = getString(R.string.app_name);
         switch (input) {
             case DASHBOARD:
