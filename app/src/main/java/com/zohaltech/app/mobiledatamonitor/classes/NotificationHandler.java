@@ -12,25 +12,22 @@ import com.zohaltech.app.mobiledatamonitor.activities.MainActivity;
 
 public class NotificationHandler {
 
-    private static final int NOTIFICATION_ID = 1;
-
     private static NotificationManager notificationManager;
 
     static {
         notificationManager = (NotificationManager) App.context.getSystemService(Context.NOTIFICATION_SERVICE);
     }
 
-    public static void displayNotification(Context context, int iconId, String title, String text, String subText) {
-        //
-        notificationManager.notify(NOTIFICATION_ID, getNotification(context, iconId, title, text, subText));
-        //        }
+    public static void displayAlarmNotification(Context context, int notificationId, int iconId, String title, String text, boolean showWhen, boolean ongoing, int priority, int visibility) {
+        notificationManager.notify(notificationId, getDataUsageNotification(context, iconId, title, text));
     }
 
-    public static void cancelNotification() {
-        notificationManager.cancel(NOTIFICATION_ID);
+    public static void cancelNotification(int notificationId) {
+        notificationManager.cancel(notificationId);
     }
 
-    public static Notification getNotification(Context context, int iconId, String title, String text, String subText) {
+    //public static Notification getDataUsageNotification(Context context, int iconId, String title, String text, String subText) {
+    public static Notification getDataUsageNotification(Context context, int iconId, String title, String text) {
         //if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
         //            Notification notification;
         //            PendingIntent resultPendingIntent = PendingIntent.getBroadcast(context, 0, new Intent(context, DashboardActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
@@ -45,13 +42,13 @@ public class NotificationHandler {
                                 //.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), iconId))
                         .setContentTitle(title)
                         .setContentText(text)
-                        .setSubText(subText)
+                                //.setSubText(subText)
                                 //.setVisibility(NotificationCompat.VISIBILITY_SECRET) //invisible in lock screen
-                        .setVisibility(NotificationCompat.VISIBILITY_PUBLIC) //visible in lock screen
-                        .setOngoing(true)
                         .setShowWhen(false)
-                        .setColor(App.context.getResources().getColor(R.color.primary))
+                        .setOngoing(true)
                         .setPriority(NotificationCompat.PRIORITY_MAX)
+                        .setVisibility(NotificationCompat.VISIBILITY_PUBLIC) //visible in lock screen
+                        .setColor(App.context.getResources().getColor(R.color.primary))
                         .setAutoCancel(false);
 
         // Creates an explicit intent for an Activity in your app

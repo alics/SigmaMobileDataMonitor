@@ -1,7 +1,6 @@
 package com.zohaltech.app.mobiledatamonitor.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -26,12 +25,11 @@ import widgets.MyTextView;
 public class MainActivity extends EnhancedActivity {
 
     public AnimType animType = AnimType.OPEN;
+    public long dailyUsage;
     MyFragment fragment = null;
     Toolbar  toolbar;
     TextView txtTitle;
     boolean notified = false;
-
-    public long dailyUsage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +76,10 @@ public class MainActivity extends EnhancedActivity {
     }
 
     public void displayView(EnumFragment input) {
+        this.displayView(input, null);
+    }
+
+    public void displayView(EnumFragment input, Bundle bundle) {
         //fragment = null;
         String title = getString(R.string.app_name);
         switch (input) {
@@ -103,6 +105,10 @@ public class MainActivity extends EnhancedActivity {
                 break;
             default:
                 break;
+        }
+
+        if (fragment != null && bundle != null) {
+            fragment.setArguments(bundle);
         }
 
         if (fragment != null) {
