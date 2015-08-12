@@ -24,6 +24,14 @@ public final class SettingsHandler {
         App.preferences.edit().putBoolean(PREF_IS_MONITORING_SERVICE_ON, active);
     }
 
+    public static boolean dcDataAfterTerminatePackage() {
+        return App.preferences.getBoolean(PREF_DC_DATA_AFTER_TERMINATE, true);
+    }
+
+    public static void setDcDataAfterTerminatePackage(boolean active) {
+        App.preferences.edit().putBoolean(PREF_DC_DATA_AFTER_TERMINATE, active);
+    }
+
     public static long getDailyTraffic() {
         return App.preferences.getLong(PREF_DAILY_TRAFFIC, 0);
     }
