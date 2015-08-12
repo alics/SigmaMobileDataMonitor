@@ -20,16 +20,6 @@ import java.util.Locale;
 
 public final class Helper {
 
-    //    public static Date getCurrentDateTime() {
-    //        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
-    //        Date date = null;
-    //        try {
-    //            date = dateFormat.parse(String.valueOf(new Date()));
-    //        } catch (ParseException e) {
-    //            e.printStackTrace();
-    //        }
-    //        return date;
-    //    }
 
     public static String getCurrentDateTime() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault());
@@ -65,14 +55,6 @@ public final class Helper {
         return date;
     }
 
-    //    public static Time getTime(String timeStr) {
-    //        Time time = null;
-    //        if (timeStr != null && !TextUtils.isEmpty(timeStr)) {
-    //            time = java.sql.Time.valueOf(timeStr);
-    //        }
-    //        return time;
-    //    }
-
     public static void runUssd(String code) {
         code = String.format("%s%s", code.substring(0, code.length() - 1), Uri.encode("#"));
         Intent callIntent = new Intent(Intent.ACTION_CALL);
@@ -86,7 +68,7 @@ public final class Helper {
         return activeNetwork != null && (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE);
     }
 
-    public static void setMobileDataEnabled(boolean enabled) throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public static void setMobileDataEnabled(boolean enabled)  {
         try {
             if (Build.VERSION.SDK_INT == Build.VERSION_CODES.FROYO) {
                 Method dataConnSwitchMethod;

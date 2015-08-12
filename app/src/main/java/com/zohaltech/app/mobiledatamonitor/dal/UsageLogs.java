@@ -121,16 +121,17 @@ public class UsageLogs {
         SQLiteDatabase db = da.getReadableDB();
         Cursor cursor = null;
         try {
-            String query = "SELECT SUBSTR(LogDateTime,11,3) hourPeriod,SUM(TrafficBytes) SumTraffic FROM UsageLogs " +
-                           "WHERE  SUBSTR(LogDateTime,1,10)='" + date + "' GROUP BY  SUBSTR(LogDateTime,11,3) ;";
+            String query = "SELECT SUBSTR(LogDateTime,11,3) hourPeriod,SUBSTR(LogDateTime,1,10) datePeriod,SUM(TrafficBytes) SumTraffic FROM UsageLogs " +
+                           "WHERE  SUBSTR(LogDateTime,1,10)='" + date + "' GROUP BY  SUBSTR(LogDateTime,1,10), SUBSTR(LogDateTime,11,3) ;";
             cursor = db.rawQuery(query, null);
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     long sum = cursor.getLong(cursor.getColumnIndex("SumTraffic"));
+                    String datePeriod = cursor.getString(cursor.getColumnIndex("datePeriod"));
                     String hour = cursor.getString(cursor.getColumnIndex("hourPeriod"));
-                    String beginningDateTime = date + " " + hour + ":00:00";
+                    String beginningDateTime = datePeriod + " " + hour + ":00:00";
                     int endingHour = Integer.parseInt(hour.substring(1)) + 1;
-                    String endingDateTime = date + " " + endingHour + ":00:00";
+                    String endingDateTime = datePeriod + " " + endingHour + ":00:00";
 
                     DailyTrafficHistory history = new DailyTrafficHistory(sum,
                                                                           beginningDateTime,
@@ -195,9 +196,7 @@ public class UsageLogs {
             if (db != null && db.isOpen())
                 db.close();
         }
-        if (usedTraffic >= dataPackage.getPrimaryTraffic()) {
-            PackageHistories.finishPackageProcess(history);
-        }
+
         return usedTraffic;
     }
 
