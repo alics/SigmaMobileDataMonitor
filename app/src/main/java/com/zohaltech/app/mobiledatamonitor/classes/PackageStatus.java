@@ -41,7 +41,7 @@ public final class PackageStatus {
             status.setPrimaryTraffic(dataPackage.getPrimaryTraffic());
             status.setUsedPrimaryTraffic(UsageLogs.getUsedPrimaryTrafficOfPackage(dataPackage, history));
 
-            if (status.getPrimaryTraffic() >= dataPackage.getPrimaryTraffic()) {
+            if (status.getUsedPrimaryTraffic() >= dataPackage.getPrimaryTraffic()) {
                 currentAlarms += "اعتبار حجمی بسته به پایان رسید.";
                 PackageHistories.finishPackageProcess(history);
                 Helper.setMobileDataEnabled(false);
@@ -51,7 +51,7 @@ public final class PackageStatus {
                 status.setSecondaryTraffic(dataPackage.getSecondaryTraffic());
                 status.setUsedSecondaryTraffic(UsageLogs.getUsedSecondaryTrafficOfPackage(dataPackage, history));
 
-                if (status.getSecondaryTraffic() >= dataPackage.getSecondaryTraffic()) {
+                if (status.getUsedSecondaryTraffic() >= dataPackage.getSecondaryTraffic()) {
                     currentAlarms += " حجم شبانه بسته به پایان رسید.";
                 }
             }

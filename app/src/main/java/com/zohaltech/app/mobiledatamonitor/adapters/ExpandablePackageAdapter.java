@@ -6,11 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
 import com.zohaltech.app.mobiledatamonitor.classes.DialogManager;
 import com.zohaltech.app.mobiledatamonitor.classes.Helper;
+import com.zohaltech.app.mobiledatamonitor.dal.DataPackages;
 import com.zohaltech.app.mobiledatamonitor.dal.PackageHistories;
 import com.zohaltech.app.mobiledatamonitor.entities.DataPackage;
 import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
@@ -19,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import widgets.AnimatedExpandableListView;
+import widgets.MyToast;
 
 public class ExpandablePackageAdapter extends AnimatedExpandableListView.AnimatedExpandableListAdapter {
 
@@ -55,27 +58,53 @@ public class ExpandablePackageAdapter extends AnimatedExpandableListView.Animate
         TextView txtPackage = (TextView) convertView.findViewById(R.id.txtPackage);
         txtPackage.setText(dataPackage.getDescription());
 
-        txtPackage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DialogManager.showConfirmationDialog(App.currentActivity, "خرید بسته", "آیا مایل به خرید بسته هستید؟", "بله", "خیر", null, new Runnable() {
-                    @Override
-                    public void run() {
-                        Helper.runUssd(dataPackage.getUssdCode());
-                        //todo : if there is no active package
-                        DialogManager.showConfirmationDialog(App.currentActivity, "فعالسازی بسته", "آیا مایل به فعالسازی بسته " + dataPackage.getDescription() + " هستید؟",
-                                                             "بله", "خیر", null, new Runnable() {
+        txtPackage.setOnClickListener
+                (
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                DialogManager.showConfirmationDialog(App.currentActivity, "خرید بسته", "آیا مایل به خرید بسته هستید؟", "بله", "خیر", null, new Runnable() {
                                     @Override
                                     public void run() {
-                                        PackageHistories.terminateAll();
-                                        PackageHistories.insert(new PackageHistory(dataPackage.getId(), Helper.getCurrentDateTime(), null, null, null, true, false));
+                                        Helper.runUssd(dataPackage.getUssdCode());
+
+                                        DialogManager.showConfirmationDialog(App.currentActivity, "فعالسازی بسته", "آیا مایل به فعالسازی بسته " + dataPackage.getDescription() + " هستید؟",
+                                                                             "بله", "خیر", null, new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        PackageHistory history = PackageHistories.getActivePackage();
+                                                        if (history == null) {
+                                                            //PackageHistories.terminateAll();
+                                                            PackageHistories.insert(new PackageHistory(dataPackage.getId(), Helper.getCurrentDateTime(), null, null, null, true, false));
+                                                            MyToast.show("بسته فعال شد", Toast.LENGTH_LONG, R.drawable.ic_warning_white);
+
+                                                        } else {
+                                                            DataPackage activePackage = DataPackages.selectPackageById(history.getDataPackageId());
+                                                            DialogManager.showChoiceDialog(App.currentActivity, "رزرو بسته", "هم اکنون یک بسته فعال " + activePackage.getDescription() + " وجود دارد،آیا بسته" + dataPackage.getDescription() + "به عنوان رزرو در نظر گرفته شود یا از ابتدا محاسبه گردد؟",
+                                                                                           "از ابتدا محاسبه گردد", "رزرو شود", null, new Runnable() {
+                                                                        @Override
+                                                                        public void run() {
+                                                                            PackageHistories.deletedReservedPackages();
+                                                                            PackageHistories.terminateAll();
+                                                                            PackageHistories.insert(new PackageHistory(dataPackage.getId(), Helper.getCurrentDateTime(), null, null, null, true, false));
+                                                                            MyToast.show("بسته از ابتدا محاسبه و فعال شد", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
+                                                                        }
+
+                                                                    }, new Runnable() {
+                                                                        public void run() {
+                                                                            PackageHistories.deletedReservedPackages();
+                                                                            PackageHistories.insert(new PackageHistory(dataPackage.getId(), Helper.getCurrentDateTime(), null, null, null, false, true));
+                                                                            MyToast.show("بسته رزور شد", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
+                                                                        }
+                                                                    });
+                                                        }
+                                                    }
+                                                });
                                     }
                                 });
-                        //todo : if there is an active package
-                    }
-                });
-            }
-        });
+                            }
+                        }
+                );
 
         return convertView;
     }
