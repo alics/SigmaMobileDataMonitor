@@ -62,6 +62,7 @@ public final class PackageStatus {
 
             int leftDays = dataPackage.getPeriod() - diffDays;
             status.setPeriod(dataPackage.getPeriod());
+            status.setLeftDays(leftDays);
 
             if (leftDays <= 0)
                 currentAlarms += "مهلت اعتبار بسته به پایان رسید";
