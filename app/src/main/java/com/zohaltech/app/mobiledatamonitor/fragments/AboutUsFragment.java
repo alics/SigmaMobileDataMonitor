@@ -1,5 +1,6 @@
 package com.zohaltech.app.mobiledatamonitor.fragments;
 
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -13,9 +14,9 @@ import com.zohaltech.app.mobiledatamonitor.activities.MainActivity;
 
 import widgets.MyFragment;
 
-public class GlobalSettingsFragment extends MyFragment {
+public class AboutUsFragment extends MyFragment {
 
-    public GlobalSettingsFragment() {
+    public AboutUsFragment() {
     }
 
     @Override
@@ -28,7 +29,7 @@ public class GlobalSettingsFragment extends MyFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        View rootView = inflater.inflate(R.layout.fragment_global_settings, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_about_us, container, false);
 
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
