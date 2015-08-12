@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.activities.MainActivity;
 import com.zohaltech.app.mobiledatamonitor.dal.DataPackages;
+import com.zohaltech.app.mobiledatamonitor.dal.MobileOperators;
 import com.zohaltech.app.mobiledatamonitor.entities.DataPackage;
 
 import widgets.MyFragment;
@@ -37,7 +38,7 @@ public class SettingsFragment extends MyFragment {
     SwitchCompat         switchAutoMobileDataOff;
     FloatingActionButton fabCancel;
     FloatingActionButton fabDone;
-    DataPackage dataPackage;
+    DataPackage          dataPackage;
 
     public static final String INIT_MODE_KEY         = "INIT_MODE";
     public static final String MODE_INSERT_CUSTOM    = "INSERT_CUSTOM";
@@ -79,7 +80,6 @@ public class SettingsFragment extends MyFragment {
         fabDone = (FloatingActionButton) rootView.findViewById(R.id.fabDone);
 
 
-
         final String initMode = getArguments().getString(INIT_MODE_KEY);
         String packageId = getArguments().getString(PACKAGE_ID_KEY);
 
@@ -88,16 +88,15 @@ public class SettingsFragment extends MyFragment {
 
             if (dataPackage != null) {
                 txtPackageTitle.setText(dataPackage.getTitle());
+                txtOperators.setText(MobileOperators.getOperatorById(dataPackage.getOperatorId()).getName());
+                txtPackageValidPeriod.setText(String.valueOf(dataPackage.getPeriod()));
+                txtPackagePrice.setText(String.valueOf(dataPackage.getPrice()));
+                txtPrimaryTraffic.setText(String.valueOf(dataPackage.getPrimaryTraffic()));
+                txtSecondaryTraffic.setText(String.valueOf(dataPackage.getSecondaryTraffic()));
+                txtSecondaryTrafficPeriod.setText(dataPackage.getSecondaryTrafficStartTime() + " الی" + dataPackage.getSecondaryTrafficEndTime());
 
 
-                if (INIT_MODE_KEY == MODE_SETTING_ACTIVE) {
-                    txtPackageTitle.setText(dataPackage.getTitle());
-                    txtOperators.setText(dataPackage.getOperatorId());
-                    txtPackageValidPeriod.setText(dataPackage.getPeriod());
-                    txtPackagePrice.setText(dataPackage.getPrice());
-                    txtPrimaryTraffic.setText(String.valueOf(dataPackage.getPrimaryTraffic()));
-                    txtSecondaryTraffic.setText(String.valueOf(dataPackage.getSecondaryTraffic()));
-                    txtSecondaryTrafficPeriod.setText(dataPackage.getSecondaryTrafficStartTime()+" تا"+dataPackage.getSecondaryTrafficEndTime());
+                if (initMode.equals(MODE_SETTING_ACTIVE)) {
                     txtPackageTitle.setEnabled(false);
                     txtOperators.setEnabled(false);
                     txtPackageValidPeriod.setEnabled(false);
@@ -107,15 +106,7 @@ public class SettingsFragment extends MyFragment {
                     txtSecondaryTrafficPeriod.setEnabled(false);
 
 
-                } else if (INIT_MODE_KEY == MODE_SETTING_RESERVED) {
-
-                    txtPackageTitle.setText(dataPackage.getTitle());
-                    txtOperators.setText(dataPackage.getOperatorId());
-                    txtPackageValidPeriod.setText(dataPackage.getPeriod());
-                    txtPackagePrice.setText(dataPackage.getPrice());
-                    txtPrimaryTraffic.setText(String.valueOf(dataPackage.getPrimaryTraffic()));
-                    txtSecondaryTraffic.setText(String.valueOf(dataPackage.getSecondaryTraffic()));
-                    txtSecondaryTrafficPeriod.setText(dataPackage.getSecondaryTrafficStartTime()+" الی"+dataPackage.getSecondaryTrafficEndTime());
+                } else if (initMode.equals(MODE_SETTING_RESERVED)) {
                     txtPackageTitle.setEnabled(false);
                     txtOperators.setEnabled(false);
                     txtPackageValidPeriod.setEnabled(false);
@@ -123,17 +114,15 @@ public class SettingsFragment extends MyFragment {
                     txtPrimaryTraffic.setEnabled(false);
                     txtSecondaryTraffic.setEnabled(false);
                     txtSecondaryTrafficPeriod.setEnabled(false);
-
                 }
-
             }
-
         }
 
 
-        if (INIT_MODE_KEY == MODE_INSERT_CUSTOM) {
+        if (initMode.equals(MODE_INSERT_CUSTOM)) {
 
-            //TODO  visible cancel
+//            DataPackage customDataPackage=new DataPackage(op);
+//            DataPackages.insert(customDataPackage);
 
         }
         //  String initModeKey = getArguments().getString(MODE_SETTING_ACTIVE);
@@ -147,7 +136,6 @@ public class SettingsFragment extends MyFragment {
         //        trafficMonitors.add(0, new TrafficMonitor(bytes, Helper.getCurrentDate()));
         //        adapter = new ReportAdapter(trafficMonitors);
         //        lstTraffics.setAdapter(adapter);
-
 
 
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
