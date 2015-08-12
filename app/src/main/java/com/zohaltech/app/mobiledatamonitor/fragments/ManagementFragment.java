@@ -1,6 +1,5 @@
 package com.zohaltech.app.mobiledatamonitor.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
@@ -13,8 +12,6 @@ import android.widget.TextView;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.activities.MainActivity;
-import com.zohaltech.app.mobiledatamonitor.activities.PackageSettingsActivity;
-import com.zohaltech.app.mobiledatamonitor.classes.App;
 import com.zohaltech.app.mobiledatamonitor.dal.DataPackages;
 import com.zohaltech.app.mobiledatamonitor.dal.PackageHistories;
 import com.zohaltech.app.mobiledatamonitor.entities.DataPackage;
@@ -44,8 +41,10 @@ public class ManagementFragment extends MyFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-
         View rootView = inflater.inflate(R.layout.fragment_management, container, false);
+
+        PackageHistory activePackageHistory = PackageHistories.getActivePackage();
+        PackageHistory reservedPackageHistory = PackageHistories.getReservedPackage();
 
         txtActivePackageDescription = (TextView) rootView.findViewById(R.id.txtActivePackageDescription);
         fabActivePackageSettings = (FloatingActionButton) rootView.findViewById(R.id.fabActivePackageSettings);
@@ -56,34 +55,38 @@ public class ManagementFragment extends MyFragment {
         fabAddPackage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(App.currentActivity, PackageSettingsActivity.class);
-                myIntent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_INSERT_CUSTOM);
-                startActivity(myIntent);
+                MainActivity parent = ((MainActivity) getActivity());
+                parent.animType = MainActivity.AnimType.OPEN;
+                Bundle bundle = new Bundle();
+                bundle.putString(SettingsFragment.INIT_MODE_KEY, SettingsFragment.MODE_INSERT_CUSTOM);
+                parent.displayView(MainActivity.EnumFragment.SETTINGS, bundle);
             }
         });
 
         fabActivePackageSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(App.currentActivity, PackageSettingsActivity.class);
-                myIntent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_SETTING_ACTIVE);
-                myIntent.putExtra("activePackageId", activePackage.getId());
-                startActivity(myIntent);
+                MainActivity parent = ((MainActivity) getActivity());
+                parent.animType = MainActivity.AnimType.OPEN;
+                Bundle bundle = new Bundle();
+                bundle.putString(SettingsFragment.INIT_MODE_KEY, SettingsFragment.MODE_SETTING_ACTIVE);
+                bundle.putString(SettingsFragment.PACKAGE_ID_KEY, activePackage.getId() + "");
+                parent.displayView(MainActivity.EnumFragment.SETTINGS, bundle);
             }
         });
 
         fabReservedPackageSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(App.currentActivity, PackageSettingsActivity.class);
-                myIntent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_SETTING_RESERVED);
-                myIntent.putExtra(PackageSettingsActivity.PACKAGE_ID_KEY, reservedPackage.getId());
-                startActivity(myIntent);
+                MainActivity parent = ((MainActivity) getActivity());
+                parent.animType = MainActivity.AnimType.OPEN;
+                Bundle bundle = new Bundle();
+                bundle.putString(SettingsFragment.INIT_MODE_KEY, SettingsFragment.MODE_SETTING_RESERVED);
+                bundle.putString(SettingsFragment.PACKAGE_ID_KEY, reservedPackage.getId() + "");
+                parent.displayView(MainActivity.EnumFragment.SETTINGS, bundle);
             }
         });
 
-        PackageHistory activePackageHistory = PackageHistories.getActivePackage();
-        PackageHistory reservedPackageHistory = PackageHistories.getReservedPackage();
         if (activePackageHistory == null) {
             txtActivePackageDescription.setText("بسته فعالی برای نمایش وجود ندارد.");
             fabActivePackageSettings.setEnabled(false);

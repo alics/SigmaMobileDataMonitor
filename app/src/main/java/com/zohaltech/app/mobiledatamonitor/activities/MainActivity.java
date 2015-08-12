@@ -18,6 +18,7 @@ import com.zohaltech.app.mobiledatamonitor.fragments.HistoryFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.ManagementFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.PackagesFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.ReportFragment;
+import com.zohaltech.app.mobiledatamonitor.fragments.SettingsFragment;
 
 import widgets.MyFragment;
 import widgets.MyTextView;
@@ -103,6 +104,10 @@ public class MainActivity extends EnhancedActivity {
                 fragment = new ManagementFragment();
                 title = "مدیریت بسته";
                 break;
+            case SETTINGS:
+                fragment = new SettingsFragment();
+                title = "مدیریت بسته";
+                break;
             default:
                 break;
         }
@@ -133,7 +138,8 @@ public class MainActivity extends EnhancedActivity {
         REPORT,
         PACKAGES,
         HISTORY,
-        MANAGEMENT
+        MANAGEMENT,
+        SETTINGS
     }
 
     public enum AnimType {
