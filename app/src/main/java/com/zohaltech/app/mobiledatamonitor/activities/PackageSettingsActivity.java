@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.SwitchCompat;
 import android.view.WindowManager;
-import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.Switch;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.dal.DataPackages;
@@ -36,7 +34,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
         final MyEditText txtPrimaryTraffic= (MyEditText) findViewById(R.id.txtPrimaryTraffic);
         final MyEditText txtSecondaryTraffic= (MyEditText) findViewById(R.id.txtSecondaryTraffic);
         final Spinner spinnerTrafficUnit= (Spinner) findViewById(R.id.spinnerTrafficUnit);
-        final MyEditText txtSecondaryTrafficPeriod= (MyEditText) findViewById(R.id.txtSecondaryTrafficPeriod);
+        final MyEditText txtSecondaryTrafficPeriod= (MyEditText) findViewById(R.id.txtSecondaryStartTime);
         final MyEditText txtAlarmTriggerVolume= (MyEditText) findViewById(R.id.txtAlarmTriggerVolume);
         final SwitchCompat switchEnableVolumeAlarm= (SwitchCompat) findViewById(R.id.switchEnableVolumeAlarm);
         final MyEditText txtAlarmDaysToExpDate= (MyEditText) findViewById(R.id.txtAlarmDaysToExpDate);

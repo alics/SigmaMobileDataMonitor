@@ -161,7 +161,7 @@
                 android:orientation="horizontal">
 
                 <widgets.MyEditText
-                    android:id="@+id/txtSecondaryTrafficPeriod"
+                    android:id="@+id/txtSecondaryStartTime"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"

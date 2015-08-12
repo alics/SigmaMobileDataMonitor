@@ -30,7 +30,8 @@ public class SettingsFragment extends MyFragment {
     EditText             txtPrimaryTraffic;
     EditText             txtSecondaryTraffic;
     Spinner              spinnerTrafficUnit;
-    EditText             txtSecondaryTrafficPeriod;
+    EditText             txtSecondaryStartTime;
+    EditText             txtSecondaryEndTime;
     EditText             txtAlarmTriggerVolume;
     SwitchCompat         switchEnableVolumeAlarm;
     EditText             txtAlarmDaysToExpDate;
@@ -70,7 +71,8 @@ public class SettingsFragment extends MyFragment {
         txtPrimaryTraffic = (EditText) rootView.findViewById(R.id.txtPrimaryTraffic);
         txtSecondaryTraffic = (EditText) rootView.findViewById(R.id.txtSecondaryTraffic);
         spinnerTrafficUnit = (Spinner) rootView.findViewById(R.id.spinnerTrafficUnit);
-        txtSecondaryTrafficPeriod = (EditText) rootView.findViewById(R.id.txtSecondaryTrafficPeriod);
+        txtSecondaryStartTime = (EditText) rootView.findViewById(R.id.txtSecondaryStartTime);
+        txtSecondaryEndTime = (EditText) rootView.findViewById(R.id.txtSecondaryEndTime);
         txtAlarmTriggerVolume = (EditText) rootView.findViewById(R.id.txtAlarmTriggerVolume);
         switchEnableVolumeAlarm = (SwitchCompat) rootView.findViewById(R.id.switchEnableVolumeAlarm);
         txtAlarmDaysToExpDate = (EditText) rootView.findViewById(R.id.txtAlarmDaysToExpDate);
@@ -93,7 +95,8 @@ public class SettingsFragment extends MyFragment {
                 txtPackagePrice.setText(String.valueOf(dataPackage.getPrice()));
                 txtPrimaryTraffic.setText(String.valueOf(dataPackage.getPrimaryTraffic()));
                 txtSecondaryTraffic.setText(String.valueOf(dataPackage.getSecondaryTraffic()));
-                txtSecondaryTrafficPeriod.setText(dataPackage.getSecondaryTrafficStartTime() + " الی" + dataPackage.getSecondaryTrafficEndTime());
+                txtSecondaryStartTime.setText(dataPackage.getSecondaryTrafficStartTime());
+                txtSecondaryEndTime.setText(dataPackage.getSecondaryTrafficEndTime());
 
 
                 if (initMode.equals(MODE_SETTING_ACTIVE)) {
@@ -103,7 +106,8 @@ public class SettingsFragment extends MyFragment {
                     txtPackagePrice.setEnabled(false);
                     txtPrimaryTraffic.setEnabled(false);
                     txtSecondaryTraffic.setEnabled(false);
-                    txtSecondaryTrafficPeriod.setEnabled(false);
+                    txtSecondaryStartTime.setEnabled(false);
+                    txtSecondaryEndTime.setEnabled(false);
 
 
                 } else if (initMode.equals(MODE_SETTING_RESERVED)) {
@@ -113,16 +117,19 @@ public class SettingsFragment extends MyFragment {
                     txtPackagePrice.setEnabled(false);
                     txtPrimaryTraffic.setEnabled(false);
                     txtSecondaryTraffic.setEnabled(false);
-                    txtSecondaryTrafficPeriod.setEnabled(false);
+                    txtSecondaryStartTime.setEnabled(false);
+                    txtSecondaryEndTime.setEnabled(false);
+
                 }
             }
         }
 
 
         if (initMode.equals(MODE_INSERT_CUSTOM)) {
-
-//            DataPackage customDataPackage=new DataPackage(op);
-//            DataPackages.insert(customDataPackage);
+//            public DataPackage(Integer operatorId, String title, Integer period, Integer price, Long primaryTraffic, Long secondaryTraffic,
+//                               String secondaryTrafficEndTime, String secondaryTrafficStartTime, String ussdCode, Boolean custom)
+//            DataPackage customDataPackage=new DataPackage(txtOperators,txtPackageTitle,txtPackageValidPeriod,txtPackagePrice,txtPrimaryTraffic,txtSecondaryTraffic,txtSecondaryTrafficPeriod,);
+////            DataPackages.insert(customDataPackage);
 
         }
         //  String initModeKey = getArguments().getString(MODE_SETTING_ACTIVE);
