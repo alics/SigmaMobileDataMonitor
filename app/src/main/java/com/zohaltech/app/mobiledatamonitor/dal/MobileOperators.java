@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.zohaltech.app.mobiledatamonitor.classes.MyRuntimeException;
 import com.zohaltech.app.mobiledatamonitor.entities.MobileOperator;
+import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
 
 import java.util.ArrayList;
 
@@ -72,5 +73,14 @@ public class MobileOperators {
     public static long delete(MobileOperator operator) {
         DataAccess db = new DataAccess();
         return db.delete(TableName, Id + " =? ", new String[]{String.valueOf(operator.getId())});
+    }
+
+    public static MobileOperator getOperatorById(int id) {
+        String whereClause = " WHERE " + Id + " = " + id;
+        ArrayList<MobileOperator> operators = new ArrayList<>();
+        operators = select(whereClause, null);
+        int count = operators.size();
+
+        return (count == 0) ? null : operators.get(count - 1);
     }
 }
