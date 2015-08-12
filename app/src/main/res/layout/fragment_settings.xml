@@ -161,7 +161,7 @@
                 android:orientation="horizontal">
 
                 <widgets.MyEditText
-                    android:id="@+id/txtSecondaryStartTime"
+                    android:id="@+id/txtSecondaryEndTime"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -173,7 +173,7 @@
                     android:layout_height="wrap_content"
                     android:text="تا"/>
                 <widgets.MyEditText
-                    android:id="@+id/txtSecondaryEndTime"
+                    android:id="@+id/txtSecondaryStartTime"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
