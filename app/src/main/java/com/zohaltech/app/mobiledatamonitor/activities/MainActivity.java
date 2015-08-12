@@ -13,7 +13,9 @@ import android.widget.TextView;
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
 import com.zohaltech.app.mobiledatamonitor.classes.DataUsageService;
+import com.zohaltech.app.mobiledatamonitor.fragments.AboutUsFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.DashboardFragment;
+import com.zohaltech.app.mobiledatamonitor.fragments.GlobalSettingsFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.HistoryFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.ManagementFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.PackagesFragment;
@@ -108,6 +110,14 @@ public class MainActivity extends EnhancedActivity {
                 fragment = new SettingsFragment();
                 title = "مدیریت بسته";
                 break;
+            case GLOBAL_SETTINGS:
+                fragment = new GlobalSettingsFragment();
+                title = "تظیمات";
+                break;
+            case ABOUT_US:
+                fragment = new AboutUsFragment();
+                title = "درباره ما";
+                break;
             default:
                 break;
         }
@@ -139,7 +149,9 @@ public class MainActivity extends EnhancedActivity {
         PACKAGES,
         HISTORY,
         MANAGEMENT,
-        SETTINGS
+        SETTINGS,
+        GLOBAL_SETTINGS,
+        ABOUT_US
     }
 
     public enum AnimType {
