@@ -9,7 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.zohaltech.app.mobiledatamonitor.R;
@@ -17,11 +17,26 @@ import com.zohaltech.app.mobiledatamonitor.activities.MainActivity;
 import com.zohaltech.app.mobiledatamonitor.dal.DataPackages;
 import com.zohaltech.app.mobiledatamonitor.entities.DataPackage;
 
-import widgets.MyEditText;
 import widgets.MyFragment;
 
 
 public class SettingsFragment extends MyFragment {
+
+    EditText             txtPackageTitle;
+    EditText             txtOperators;
+    EditText             txtPackageValidPeriod;
+    EditText             txtPackagePrice;
+    EditText             txtPrimaryTraffic;
+    EditText             txtSecondaryTraffic;
+    Spinner              spinnerTrafficUnit;
+    EditText             txtSecondaryTrafficPeriod;
+    EditText             txtAlarmTriggerVolume;
+    SwitchCompat         switchEnableVolumeAlarm;
+    EditText             txtAlarmDaysToExpDate;
+    SwitchCompat         switchEnableAlarmDaysToExpDate;
+    SwitchCompat         switchAutoMobileDataOff;
+    FloatingActionButton fabCancel;
+    FloatingActionButton fabDone;
 
     public static final String INIT_MODE_KEY         = "INIT_MODE";
     public static final String MODE_INSERT_CUSTOM    = "INSERT_CUSTOM";
@@ -40,61 +55,62 @@ public class SettingsFragment extends MyFragment {
 
     }
 
-//    private void setTableView(int packageId){
-//        if (packageId==0){
-//
-//
-//        }
-//
-//
-//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
 
-
-//        final MyEditText txtPackageTitle= (MyEditText) rootView.findViewById(R.id.txtPackageTitle);
-//        final MyEditText txtOperators= (MyEditText) rootView.findViewById(R.id.txtOperators);
-//        final MyEditText txtPackageValidPeriod= (MyEditText) rootView.findViewById(R.id.txtPackageValidPeriod);
-//        final MyEditText txtPackagePrice= (MyEditText) rootView.findViewById(R.id.txtPackagePrice);
-//        final MyEditText txtPrimaryTraffic= (MyEditText) rootView.findViewById(R.id.txtPrimaryTraffic);
-//        final MyEditText txtSecondaryTraffic= (MyEditText) rootView.findViewById(R.id.txtSecondaryTraffic);
-//        final Spinner spinnerTrafficUnit= (Spinner) rootView.findViewById(R.id.spinnerTrafficUnit);
-//        final MyEditText txtSecondaryTrafficPeriod= (MyEditText) rootView.findViewById(R.id.txtSecondaryTrafficPeriod);
-//        final MyEditText txtAlarmTriggerVolume= (MyEditText) rootView.findViewById(R.id.txtAlarmTriggerVolume);
-//        final SwitchCompat switchEnableVolumeAlarm= (SwitchCompat) rootView.findViewById(R.id.switchEnableVolumeAlarm);
-//        final MyEditText txtAlarmDaysToExpDate= (MyEditText) rootView.findViewById(R.id.txtAlarmDaysToExpDate);
-//        final SwitchCompat switchEnableAlarmDaysToExpDate= (SwitchCompat) rootView.findViewById(R.id.switchEnableAlarmDaysToExpDate);
-//        final SwitchCompat switchAutoMobileDataOff= (SwitchCompat) rootView.findViewById(R.id.switchAutoMobileDataOff);
-//        final FloatingActionButton fabCancel= (FloatingActionButton) rootView.findViewById(R.id.fabCancel);
-//        final FloatingActionButton fabDone= (FloatingActionButton) rootView.findViewById(R.id.fabDone);
-
-//        View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
+        txtPackageTitle = (EditText) rootView.findViewById(R.id.txtPackageTitle);
+        txtOperators = (EditText) rootView.findViewById(R.id.txtOperators);
+        txtPackageValidPeriod = (EditText) rootView.findViewById(R.id.txtPackageValidPeriod);
+        txtPackagePrice = (EditText) rootView.findViewById(R.id.txtPackagePrice);
+        txtPrimaryTraffic = (EditText) rootView.findViewById(R.id.txtPrimaryTraffic);
+        txtSecondaryTraffic = (EditText) rootView.findViewById(R.id.txtSecondaryTraffic);
+        spinnerTrafficUnit = (Spinner) rootView.findViewById(R.id.spinnerTrafficUnit);
+        txtSecondaryTrafficPeriod = (EditText) rootView.findViewById(R.id.txtSecondaryTrafficPeriod);
+        txtAlarmTriggerVolume = (EditText) rootView.findViewById(R.id.txtAlarmTriggerVolume);
+        switchEnableVolumeAlarm = (SwitchCompat) rootView.findViewById(R.id.switchEnableVolumeAlarm);
+        txtAlarmDaysToExpDate = (EditText) rootView.findViewById(R.id.txtAlarmDaysToExpDate);
+        switchEnableAlarmDaysToExpDate = (SwitchCompat) rootView.findViewById(R.id.switchEnableAlarmDaysToExpDate);
+        switchAutoMobileDataOff = (SwitchCompat) rootView.findViewById(R.id.switchAutoMobileDataOff);
+        fabCancel = (FloatingActionButton) rootView.findViewById(R.id.fabCancel);
+        fabDone = (FloatingActionButton) rootView.findViewById(R.id.fabDone);
 
         final String initMode = getArguments().getString(INIT_MODE_KEY);
         String packageId = getArguments().getString(PACKAGE_ID_KEY);
-        DataPackage dataPackage = DataPackages.selectPackageById(Integer.valueOf(packageId));
+
+        if (packageId != null) {
+            DataPackage dataPackage = DataPackages.selectPackageById(Integer.valueOf(packageId));
+
+            if(dataPackage!=null){
+                txtPackageTitle.setText(dataPackage.getTitle());
+
+            }
 
 
 
-//        txtPackageTitle.setEnabled(false);
-//        txtOperators.setEnabled(false);
-//        txtPackageValidPeriod.setEnabled(false);
-//        txtPackagePrice.setEnabled(false);
-//        txtPrimaryTraffic.setEnabled(false);
-//        switchAutoMobileDataOff.setEnabled(false);
-
-        if (INIT_MODE_KEY == MODE_SETTING_ACTIVE) {
+            if (INIT_MODE_KEY == MODE_SETTING_ACTIVE) {
 
 
 
-        } else if (INIT_MODE_KEY == MODE_SETTING_RESERVED) {
+            } else if (INIT_MODE_KEY == MODE_SETTING_RESERVED) {
 
-            //TODO  visible cancel
+                //TODO  visible cancel
 
-        } else if (INIT_MODE_KEY == MODE_INSERT_CUSTOM) {
+            }
+
+        }
+
+
+        //        txtPackageTitle.setEnabled(false);
+        //        txtOperators.setEnabled(false);
+        //        txtPackageValidPeriod.setEnabled(false);
+        //        txtPackagePrice.setEnabled(false);
+        //        txtPrimaryTraffic.setEnabled(false);
+        //        switchAutoMobileDataOff.setEnabled(false);
+
+        if (INIT_MODE_KEY == MODE_INSERT_CUSTOM) {
 
             //TODO  visible cancel
 
