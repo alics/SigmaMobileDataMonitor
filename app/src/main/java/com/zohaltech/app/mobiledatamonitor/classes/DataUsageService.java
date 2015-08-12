@@ -101,7 +101,7 @@ public class DataUsageService extends Service {
             //String totalUsage = TrafficDisplay.getUsedTraffic(App.preferences.getLong(TOTAL_USAGE_BYTES, 0));
 
             //startForeground(1, NotificationHandler.getDataUsageNotification(DataUsageService.this, iconId, String.format("Down: %s, Up: %s", TrafficDisplay.getTransferRate(receivedBytes), TrafficDisplay.getTransferRate(sentBytes)), "Daily : " + dailyUsage, "Total : " + totalUsage));
-            startForeground(1, NotificationHandler.getDataUsageNotification(DataUsageService.this, iconId, String.format("Down: %s, Up: %s", TrafficDisplay.getTransferRate(receivedBytes), TrafficDisplay.getTransferRate(sentBytes)), "Daily : " + dailyUsage));
+            startForeground(1, NotificationHandler.getDataUsageNotification(DataUsageService.this, iconId, String.format("Down: %s, Up: %s", TrafficDisplay.getTransferRate(receivedBytes), TrafficDisplay.getTransferRate(sentBytes)), "Today : " + dailyUsage));
 
             //NotificationHandler.displayNotification(App.context, iconId, String.format("Down: %s, Up: %s", Helper.getTransferRate(receivedBytes), Helper.getTransferRate(sentBytes))
             //        , "Total: " + totalUsage, "65% used");
