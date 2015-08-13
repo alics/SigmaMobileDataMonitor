@@ -19,9 +19,7 @@ public class PackageHistories {
     static final String EndDateTime                 = "EndDateTime";
     static final String SecondaryTrafficEndDateTime = "SecondaryTrafficEndDateTime";
     static final String SimSerial                   = "SimSerial";
-    static final String Active                      = "Active";
-    static final String Reserved                    = "Reserved";
-
+    static final String Status                      = "Status";
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
                                       Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
@@ -31,8 +29,7 @@ public class PackageHistories {
                                       SecondaryTrafficEndDateTime + " " +
                                       "CHAR(19) ," +
                                       SimSerial + " VARCHAR(50) ," +
-                                      Reserved + " BOOLEAN NOT NULL ," +
-                                      Active + " BOOLEAN NOT NULL );";
+                                      Status + " INTEGER NOT NULL );";
 
     static final String DropTable = "Drop Table If Exists " + TableName;
 
@@ -54,10 +51,8 @@ public class PackageHistories {
                                                                        cursor.getString(cursor.getColumnIndex(EndDateTime)),
                                                                        cursor.getString(cursor.getColumnIndex(SecondaryTrafficEndDateTime)),
                                                                        cursor.getString(cursor.getColumnIndex(SimSerial)),
+                                                                       cursor.getInt(cursor.getColumnIndex(Status)));
 
-
-                                                                       cursor.getInt(cursor.getColumnIndex(Active)) == 1,
-                                                                       cursor.getInt(cursor.getColumnIndex(Reserved)) == 1);
                     packageList.add(packageHistory);
                 } while (cursor.moveToNext());
             }
@@ -83,8 +78,7 @@ public class PackageHistories {
         values.put(StartDateTime, packageHistory.getStartDateTime());
         values.put(EndDateTime, packageHistory.getEndDateTime());
         values.put(SimSerial, packageHistory.getSimSerial());
-        values.put(Active, packageHistory.getActive() ? 1 : 0);
-        values.put(Reserved, packageHistory.getReserved() ? 1 : 0);
+        values.put(Status, packageHistory.getStatus());
 
         DataAccess da = new DataAccess();
         return da.insert(TableName, values);
@@ -97,8 +91,7 @@ public class PackageHistories {
         values.put(StartDateTime, packageHistory.getStartDateTime());
         values.put(EndDateTime, packageHistory.getEndDateTime());
         values.put(SimSerial, packageHistory.getSimSerial());
-        values.put(Active, packageHistory.getActive() ? 1 : 0);
-        values.put(Reserved, packageHistory.getReserved() ? 1 : 0);
+        values.put(Status, packageHistory.getStatus());
 
         DataAccess da = new DataAccess();
         return da.update(TableName, values, Id + " =? ", new String[]{String.valueOf(packageHistory.getId())});
@@ -110,7 +103,7 @@ public class PackageHistories {
     }
 
     public static PackageHistory getActivePackage() {
-        String whereClause = " WHERE " + Active + " = " + 1;
+        String whereClause = " WHERE " + Status + " = " + PackageHistory.StatusEnum.ACTIVE.ordinal();
         ArrayList<PackageHistory> packageHistories = new ArrayList<>();
         packageHistories = select(whereClause, null);
         int count = packageHistories.size();
@@ -119,7 +112,7 @@ public class PackageHistories {
     }
 
     public static PackageHistory getReservedPackage() {
-        String whereClause = " WHERE " + Reserved + " = " + 1;
+        String whereClause = " WHERE " + Status + " = " +  PackageHistory.StatusEnum.RESERVED.ordinal();
         ArrayList<PackageHistory> packageHistories = new ArrayList<>();
         packageHistories = select(whereClause, null);
         int count = packageHistories.size();
@@ -136,15 +129,8 @@ public class PackageHistories {
         return (count == 0) ? null : packageHistories.get(count - 1);
     }
 
-    public static long getPackageUsedTraffic(int packageId) {
-        PackageHistory packageHistory = getPackageById(packageId);
-        if (packageHistory == null || !packageHistory.getActive())
-            return 0;
-        return 1;
-    }
-
-    public static void terminateDataPackage(PackageHistory packageHistory) {
-        packageHistory.setActive(false);
+    public static void terminateDataPackage(PackageHistory packageHistory,PackageHistory.StatusEnum terminationStatus) {
+        packageHistory.setStatus(terminationStatus.ordinal());
         packageHistory.setEndDateTime(Helper.getCurrentDateTime());
 
         if (packageHistory.getSecondaryTrafficEndDateTime() == null ||
@@ -154,10 +140,9 @@ public class PackageHistories {
         update(packageHistory);
     }
 
-    public static void terminateAll() {
+    public static void terminateAll(PackageHistory.StatusEnum terminationStatus) {
         for (PackageHistory packageHistory : PackageHistories.select()) {
-            packageHistory.setActive(false);
-            packageHistory.setReserved(false);
+            packageHistory.setStatus(terminationStatus.ordinal());
             packageHistory.setEndDateTime(Helper.getCurrentDateTime());
             PackageHistories.update(packageHistory);
         }
@@ -169,21 +154,20 @@ public class PackageHistories {
     }
 
     public static void deletedReservedPackages() {
-        ArrayList<PackageHistory> histories = select("Where " + Reserved + " = 1 ", null);
+        ArrayList<PackageHistory> histories = select("Where " + Status + " = "+ PackageHistory.StatusEnum.RESERVED.ordinal(), null);
         for (int i = 0; i < histories.size(); i++) {
             delete(histories.get(i));
         }
     }
 
-    public static void finishPackageProcess(PackageHistory history) {
-        terminateDataPackage(history);
+    public static void finishPackageProcess(PackageHistory history,PackageHistory.StatusEnum terminationStatus) {
+        terminateDataPackage(history,terminationStatus);
         String yesterdayDateStr = SolarCalendar.getPastDateString(-1);
         UsageLogs.integrateSumUsedTrafficUsagePerHourInDate(yesterdayDateStr);
         UsageLogs.deleteLogs(yesterdayDateStr);
         PackageHistory reservedPackage = getReservedPackage();
         if (reservedPackage != null) {
-            reservedPackage.setActive(true);
-            reservedPackage.setReserved(false);
+            reservedPackage.setStatus(terminationStatus.ordinal());
             reservedPackage.setStartDateTime(Helper.getCurrentDateTime());
             update(reservedPackage);
         }

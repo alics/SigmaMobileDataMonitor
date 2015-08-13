@@ -22,6 +22,7 @@ import com.zohaltech.app.mobiledatamonitor.dal.MobileOperators;
 import com.zohaltech.app.mobiledatamonitor.dal.PackageHistories;
 import com.zohaltech.app.mobiledatamonitor.entities.DataPackage;
 import com.zohaltech.app.mobiledatamonitor.entities.MobileOperator;
+import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
 
 import java.util.ArrayList;
 
@@ -178,7 +179,7 @@ public class SettingsFragment extends MyFragment {
                             public void run() {
                                 addCustomPackage();
                                 saveReservedPackageSettings();
-                                PackageHistories.terminateAll();
+                                PackageHistories.terminateAll(PackageHistory.StatusEnum.CANCELED);
                                 PackageHistories.deletedReservedPackages();
                             }
                         });

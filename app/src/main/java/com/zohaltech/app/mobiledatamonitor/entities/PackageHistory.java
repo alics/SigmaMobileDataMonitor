@@ -8,22 +8,28 @@ public class PackageHistory {
     String  endDateTime;
     String  secondaryTrafficEndDateTime;
     String  simSerial;
-    Boolean active;
-    Boolean reserved;
+    Integer status;
 
+    public enum StatusEnum {
+        ACTIVE,
+        RESERVED,
+        CANCELED,
+        TRAFFIC_FINISHED,
+        PERIOD_FINISHED
+    }
 
-    public PackageHistory(Integer dataPackageId, String startDateTime, String endDateTime, String secondaryTrafficEndDateTime, String simSerial, Boolean active, Boolean reserved) {
+    public PackageHistory(Integer dataPackageId, String startDateTime, String endDateTime, String secondaryTrafficEndDateTime, String simSerial, Integer status) {
         setDataPackageId(dataPackageId);
         setStartDateTime(startDateTime);
         setEndDateTime(endDateTime);
         setSimSerial(simSerial);
-        setActive(active);
-        setReserved(reserved);
         setSecondaryTrafficEndDateTime(secondaryTrafficEndDateTime);
+        setStatus(status);
+
     }
 
-    public PackageHistory(Integer id, Integer dataPackageId, String startDateTime, String endDateTime, String secondaryTrafficEndDateTime, String simSerial, Boolean active, Boolean reserved) {
-        this(dataPackageId, startDateTime, endDateTime, secondaryTrafficEndDateTime, simSerial, active, reserved);
+    public PackageHistory(Integer id, Integer dataPackageId, String startDateTime, String endDateTime, String secondaryTrafficEndDateTime, String simSerial, Integer status) {
+        this(dataPackageId, startDateTime, endDateTime, secondaryTrafficEndDateTime, simSerial, status);
         this.id = id;
     }
 
@@ -67,27 +73,19 @@ public class PackageHistory {
         this.simSerial = simSerial;
     }
 
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public Boolean getReserved() {
-        return reserved;
-    }
-
-    public void setReserved(Boolean reserved) {
-        this.reserved = reserved;
-    }
-
     public String getSecondaryTrafficEndDateTime() {
         return secondaryTrafficEndDateTime;
     }
 
     public void setSecondaryTrafficEndDateTime(String secondaryTrafficEndDateTime) {
         this.secondaryTrafficEndDateTime = secondaryTrafficEndDateTime;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

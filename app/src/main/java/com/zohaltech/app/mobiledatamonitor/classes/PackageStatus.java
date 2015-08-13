@@ -43,7 +43,7 @@ public final class PackageStatus {
 
             if (status.getUsedPrimaryTraffic() >= dataPackage.getPrimaryTraffic()) {
                 currentAlarms += "اعتبار حجمی بسته به پایان رسید.";
-                PackageHistories.finishPackageProcess(history);
+                PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.TRAFFIC_FINISHED);
                 Helper.setMobileDataEnabled(false);
             }
 
@@ -64,8 +64,11 @@ public final class PackageStatus {
             status.setPeriod(dataPackage.getPeriod());
             status.setLeftDays(leftDays);
 
-            if (leftDays <= 0)
+            if (leftDays <= 0) {
                 currentAlarms += "مهلت اعتبار بسته به پایان رسید";
+                PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.PERIOD_FINISHED);
+                Helper.setMobileDataEnabled(false);
+            }
 
             if (SettingsHandler.getAlarmType() == SettingsHandler.AlarmType.LeftDay.ordinal()) {
                 int leftDayAlarm = SettingsHandler.getLeftDaysAlarm();
