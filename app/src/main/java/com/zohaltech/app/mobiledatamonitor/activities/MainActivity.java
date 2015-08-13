@@ -28,7 +28,6 @@ import widgets.MyTextView;
 public class MainActivity extends EnhancedActivity {
 
     public AnimType animType = AnimType.OPEN;
-    public long dailyUsage;
     MyFragment fragment = null;
     Toolbar  toolbar;
     TextView txtTitle;
@@ -63,8 +62,6 @@ public class MainActivity extends EnhancedActivity {
             displayView(EnumFragment.DASHBOARD);
             notified = false;
         }
-
-        dailyUsage = App.preferences.getLong(DataUsageService.DAILY_USAGE_BYTES, 0);
     }
 
     @Override

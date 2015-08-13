@@ -70,16 +70,6 @@ public class DashboardFragment extends MyFragment {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-                if (state == 2) {
-                    int pageIndex = pagerUsages.getCurrentItem();
-                    if (pageIndex == 0) {
-                        usagePagerAdapter.loadTodayUsage();
-                    } else if (pageIndex == 1) {
-                        usagePagerAdapter.loadTrafficUsage();
-                    } else if (pageIndex == 2) {
-                        usagePagerAdapter.loadRemainDays();
-                    }
-                }
             }
         });
 
@@ -129,7 +119,7 @@ public class DashboardFragment extends MyFragment {
             }
         });
 
-        usagePagerAdapter = new UsagePagerAdapter();
+        usagePagerAdapter = new UsagePagerAdapter(getChildFragmentManager());
         pagerUsages.setAdapter(usagePagerAdapter);
         pagerUsages.setCurrentItem(1);
 
@@ -156,17 +146,24 @@ public class DashboardFragment extends MyFragment {
         return super.onOptionsItemSelected(item);
     }
 
+    //@Override
+    //public void onResume() {
+    //    super.onResume();
+    //    usagePagerAdapter.notifyDataSetChanged();
+    //    if (pagerUsages.getCurrentItem() == 0) {
+    //        usagePagerAdapter.loadTodayUsage();
+    //    } else if (pagerUsages.getCurrentItem() == 1) {
+    //        usagePagerAdapter.loadTrafficUsage();
+    //    } else {
+    //        usagePagerAdapter.loadRemainDays();
+    //    }
+    //    //LocalBroadcastManager.getInstance(App.context).registerReceiver(broadcastReceiver, new IntentFilter(DataUsageService.DAILY_USAGE_ACTION));
+    //}
+
     @Override
-    public void onResume() {
-        super.onResume();
-        //usagePagerAdapter.notifyDataSetChanged();
-        //if (pagerUsages.getCurrentItem() == 0) {
-        //    usagePagerAdapter.loadTodayUsage();
-        //} else if (pagerUsages.getCurrentItem() == 1) {
-        //    usagePagerAdapter.loadTrafficUsage();
-        //} else {
-        //    usagePagerAdapter.loadRemainDays();
-        //}
+    public void onPause() {
+        super.onPause();
+        //LocalBroadcastManager.getInstance(App.context).unregisterReceiver(broadcastReceiver);
     }
 
     @Override
