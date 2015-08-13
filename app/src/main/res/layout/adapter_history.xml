@@ -7,40 +7,86 @@
     android:orientation="vertical"
     android:padding="15dp">
 
-    <widgets.MyTextView
-        android:id="@+id/txtPackageDesc"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="5dp"
-        android:text="test"
-        android:textColor="@color/gray"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
+        android:layout_height="wrap_content">
 
-    <widgets.MyTextView
-        android:id="@+id/txtActivateDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="5dp"
-        android:text="test"
-        android:textColor="@color/gray"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
+        <widgets.MyTextView
+            android:id="@+id/txtPackageDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:paddingBottom="5dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/gray"/>
 
-    <widgets.MyTextView
-        android:id="@+id/txtExpDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="5dp"
-        android:text="test"
-        android:textColor="@color/gray"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
+    </LinearLayout>
 
-    <widgets.MyTextView
-        android:id="@+id/txtStatus"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="5dp"
-        android:text="test"
-        android:textColor="@color/gray"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
+        android:gravity="right"
+        android:orientation="horizontal">
+
+        <widgets.MyTextView
+            android:id="@+id/txtActivateDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:textColor="@color/gray"/>
+
+        <widgets.MyTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:text="تاریخ فعال سازی:"
+            android:textColor="@color/gray"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="horizontal">
+
+        <widgets.MyTextView
+            android:id="@+id/txtExpDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:textColor="@color/gray"/>
+
+        <widgets.MyTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:text="تاریخ انقضا:"
+            android:textColor="@color/gray"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="horizontal">
+
+        <widgets.MyTextView
+            android:id="@+id/txtStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:textColor="@color/gray"/>
+
+        <widgets.MyTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:text="وضعیت بسته:"
+            android:textColor="@color/gray"/>
+
+    </LinearLayout>
 
 </LinearLayout>
