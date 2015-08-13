@@ -118,14 +118,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <Spinner
-                    android:id="@+id/spinnerPrimaryTrafficUnit"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                <widgets.MyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
-                    android:layout_weight="2"
-                    android:background="@android:drawable/btn_dropdown"
-                    android:spinnerMode="dropdown"/>
+                    android:text="مگابایت"/>
 
                 <widgets.MyEditText
                     android:id="@+id/txtPrimaryTraffic"
@@ -151,14 +149,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <Spinner
-                    android:id="@+id/spinnerSecondaryTrafficUnit"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                <widgets.MyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
-                    android:layout_weight="2"
-                    android:background="@android:drawable/btn_dropdown"
-                    android:spinnerMode="dropdown"/>
+                    android:text="مگابایت"/>
 
                 <widgets.MyEditText
                     android:id="@+id/txtSecondaryTraffic"
@@ -224,14 +220,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <Spinner
-                    android:id="@+id/spinnerTrafficUnit"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                <widgets.MyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
-                    android:layout_weight="2"
-                    android:background="@android:drawable/btn_dropdown"
-                    android:spinnerMode="dropdown"/>
+                    android:text="مگابایت"/>
 
 
                 <widgets.MyEditText

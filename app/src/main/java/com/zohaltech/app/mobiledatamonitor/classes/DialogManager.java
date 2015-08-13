@@ -2,15 +2,23 @@ package com.zohaltech.app.mobiledatamonitor.classes;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.graphics.Path;
+import android.text.Layout;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.rey.material.app.TimePickerDialog;
 import com.zohaltech.app.mobiledatamonitor.R;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 public final class DialogManager {
+
+    public static String timeResult;
 
     public static void showConfirmationDialog(
             Activity activity
@@ -96,5 +104,34 @@ public final class DialogManager {
             }
         });
         dialog.show();
+    }
+
+    public static void showTimePickerDialog(Activity activity
+            , String caption, int hour, int minute, final Runnable onPositiveActionClick) {
+
+        final TimePickerDialog timePickerDialog = new TimePickerDialog(activity);
+        timePickerDialog.title(caption);
+        timePickerDialog.cancelable(true);
+        timePickerDialog.cornerRadius(5);
+        timePickerDialog.hour(hour);
+        timePickerDialog.minute(minute);
+        timePickerDialog.negativeAction("انصراف");
+        timePickerDialog.positiveAction("تایید");
+        timePickerDialog.positiveActionClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                timeResult = timePickerDialog.getFormattedTime(new SimpleDateFormat("HH:mm"));
+                onPositiveActionClick.run();
+                timeResult = "";
+                timePickerDialog.dismiss();
+            }
+        });
+        timePickerDialog.negativeActionClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                timePickerDialog.dismiss();
+            }
+        });
+        timePickerDialog.show();
     }
 }

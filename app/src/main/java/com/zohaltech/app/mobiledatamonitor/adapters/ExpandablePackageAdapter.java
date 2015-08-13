@@ -76,7 +76,7 @@ public class ExpandablePackageAdapter extends AnimatedExpandableListView.Animate
                                                         if (history == null) {
                                                             //PackageHistories.terminateAll();
                                                             PackageHistories.insert(new PackageHistory(dataPackage.getId(), Helper.getCurrentDateTime(), null, null, null, true, false));
-                                                            MyToast.show("بسته فعال شد", Toast.LENGTH_LONG, R.drawable.ic_warning_white);
+                                                            MyToast.show("بسته فعال شد", Toast.LENGTH_SHORT);
 
                                                         } else {
                                                             DataPackage activePackage = DataPackages.selectPackageById(history.getDataPackageId());
@@ -87,14 +87,14 @@ public class ExpandablePackageAdapter extends AnimatedExpandableListView.Animate
                                                                             PackageHistories.deletedReservedPackages();
                                                                             PackageHistories.terminateAll();
                                                                             PackageHistories.insert(new PackageHistory(dataPackage.getId(), Helper.getCurrentDateTime(), null, null, null, true, false));
-                                                                            MyToast.show("بسته از ابتدا محاسبه و فعال شد", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
+                                                                            MyToast.show("بسته از ابتدا محاسبه و فعال شد", Toast.LENGTH_SHORT);
                                                                         }
 
                                                                     }, new Runnable() {
                                                                         public void run() {
                                                                             PackageHistories.deletedReservedPackages();
                                                                             PackageHistories.insert(new PackageHistory(dataPackage.getId(), Helper.getCurrentDateTime(), null, null, null, false, true));
-                                                                            MyToast.show("بسته رزور شد", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
+                                                                            MyToast.show("بسته رزور شد", Toast.LENGTH_SHORT);
                                                                         }
                                                                     });
                                                         }
