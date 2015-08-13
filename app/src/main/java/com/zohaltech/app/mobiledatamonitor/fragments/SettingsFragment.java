@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -35,8 +36,8 @@ public class SettingsFragment extends MyFragment {
     EditText     txtPrimaryTraffic;
     EditText     txtSecondaryTraffic;
     Spinner      spinnerTrafficUnit;
-    EditText     txtSecondaryStartTime;
-    EditText     txtSecondaryEndTime;
+    Button       btnSecondaryStartTime;
+    Button       btnSecondaryEndTime;
     EditText     txtAlarmTriggerVolume;
     SwitchCompat switchEnableVolumeAlarm;
     EditText     txtAlarmDaysToExpDate;
@@ -71,8 +72,8 @@ public class SettingsFragment extends MyFragment {
         txtPrimaryTraffic = (EditText) rootView.findViewById(R.id.txtPrimaryTraffic);
         txtSecondaryTraffic = (EditText) rootView.findViewById(R.id.txtSecondaryTraffic);
         spinnerTrafficUnit = (Spinner) rootView.findViewById(R.id.spinnerTrafficUnit);
-        // txtSecondaryStartTime = (EditText) rootView.findViewById(R.id.txtSecondaryStartTime);
-        //txtSecondaryEndTime = (EditText) rootView.findViewById(R.id.txtSecondaryEndTime);
+        btnSecondaryStartTime = (Button) rootView.findViewById(R.id.btnSecondaryStartTime);
+        btnSecondaryEndTime = (Button) rootView.findViewById(R.id.btnSecondaryEndTime);
         txtAlarmTriggerVolume = (EditText) rootView.findViewById(R.id.txtAlarmTriggerVolume);
         switchEnableVolumeAlarm = (SwitchCompat) rootView.findViewById(R.id.switchEnableVolumeAlarm);
         txtAlarmDaysToExpDate = (EditText) rootView.findViewById(R.id.txtAlarmDaysToExpDate);
@@ -89,13 +90,13 @@ public class SettingsFragment extends MyFragment {
 
             if (dataPackage != null) {
                 txtPackageTitle.setText(dataPackage.getTitle());
-                //txtOperators.setText(MobileOperators.getOperatorById(dataPackage.getOperatorId()).getName());
+                spinnerOperators.setSelection(dataPackage.getOperatorId());
                 txtPackageValidPeriod.setText(String.valueOf(dataPackage.getPeriod()));
                 txtPackagePrice.setText(String.valueOf(dataPackage.getPrice()));
                 txtPrimaryTraffic.setText(String.valueOf(dataPackage.getPrimaryTraffic()));
                 txtSecondaryTraffic.setText(String.valueOf(dataPackage.getSecondaryTraffic()));
-                //txtSecondaryStartTime.setText(dataPackage.getSecondaryTrafficStartTime());
-                // txtSecondaryEndTime.setText(dataPackage.getSecondaryTrafficEndTime());
+                btnSecondaryStartTime.setText(dataPackage.getSecondaryTrafficStartTime());
+                btnSecondaryEndTime.setText(dataPackage.getSecondaryTrafficEndTime());
 
                 if (initMode.equals(MODE_SETTING_ACTIVE)) {
                     freezePackageInformation();
@@ -206,6 +207,10 @@ public class SettingsFragment extends MyFragment {
     }
 
     private void addCustomPackage() {
+        int operatorId = spinnerOperators.getSelectedItemPosition() + 1;
+        String title = txtPackageTitle.getText().toString();
+
+
 
     }
 
