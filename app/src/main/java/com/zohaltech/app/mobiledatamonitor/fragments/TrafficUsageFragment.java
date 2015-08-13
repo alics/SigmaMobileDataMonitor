@@ -5,7 +5,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,10 +86,10 @@ public class TrafficUsageFragment extends Fragment {
         PackageStatus status = PackageStatus.getCurrentStatus();
 
         if (status.getHasActivePackage()) {
-            usedPrimaryTraffic = 100;//status.getUsedPrimaryTraffic();
-            totalPrimaryTraffic = 200;//status.getPrimaryTraffic();
-            usedSecondaryTraffic = 75;//status.getUsedSecondaryTraffic();
-            totalSecondaryTraffic =80;// status.getSecondaryTraffic();
+            usedPrimaryTraffic = status.getUsedPrimaryTraffic();
+            totalPrimaryTraffic = status.getPrimaryTraffic();
+            usedSecondaryTraffic = status.getUsedSecondaryTraffic();
+            totalSecondaryTraffic = status.getSecondaryTraffic();
             strPrimaryTraffic = TrafficDisplay.getArcTraffic(usedPrimaryTraffic, totalPrimaryTraffic);
             strSecondaryTraffic = TrafficDisplay.getArcTraffic(usedSecondaryTraffic, totalSecondaryTraffic);
             //progressPrimaryUsage.setProgress(0, strPrimaryTraffic);
