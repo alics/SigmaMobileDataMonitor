@@ -35,7 +35,6 @@ public class SettingsFragment extends MyFragment {
     EditText     txtPackagePrice;
     EditText     txtPrimaryTraffic;
     EditText     txtSecondaryTraffic;
-    Spinner      spinnerTrafficUnit;
     Button       btnSecondaryStartTime;
     Button       btnSecondaryEndTime;
     EditText     txtAlarmTriggerVolume;
@@ -71,7 +70,6 @@ public class SettingsFragment extends MyFragment {
         txtPackagePrice = (EditText) rootView.findViewById(R.id.txtPackagePrice);
         txtPrimaryTraffic = (EditText) rootView.findViewById(R.id.txtPrimaryTraffic);
         txtSecondaryTraffic = (EditText) rootView.findViewById(R.id.txtSecondaryTraffic);
-        spinnerTrafficUnit = (Spinner) rootView.findViewById(R.id.spinnerTrafficUnit);
         btnSecondaryStartTime = (Button) rootView.findViewById(R.id.btnSecondaryStartTime);
         btnSecondaryEndTime = (Button) rootView.findViewById(R.id.btnSecondaryEndTime);
         txtAlarmTriggerVolume = (EditText) rootView.findViewById(R.id.txtAlarmTriggerVolume);
@@ -79,6 +77,30 @@ public class SettingsFragment extends MyFragment {
         txtAlarmDaysToExpDate = (EditText) rootView.findViewById(R.id.txtAlarmDaysToExpDate);
         switchEnableAlarmDaysToExpDate = (SwitchCompat) rootView.findViewById(R.id.switchEnableAlarmDaysToExpDate);
         switchAutoMobileDataOff = (SwitchCompat) rootView.findViewById(R.id.switchAutoMobileDataOff);
+
+
+        btnSecondaryStartTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (btnSecondaryStartTime.getText().length() > 0) {
+                    int hour = Integer.valueOf(btnSecondaryStartTime.getText().toString().substring(0, 2));
+                    int minute = Integer.valueOf(btnSecondaryStartTime.getText().toString().substring(3, 5));
+                    DialogManager.showTimePickerDialog(getActivity(), "انتخاب زمان", hour, minute, new Runnable() {
+                        @Override
+                        public void run() {
+                            btnSecondaryStartTime.setText(DialogManager.timeResult);
+                        }
+                    });
+                } else {
+                    DialogManager.showTimePickerDialog(getActivity(), "انتخاب زمان", 2, 0, new Runnable() {
+                        @Override
+                        public void run() {
+                            btnSecondaryStartTime.setText(DialogManager.timeResult);
+                        }
+                    });
+                }
+            }
+        });
 
         initControls();
 
@@ -178,16 +200,6 @@ public class SettingsFragment extends MyFragment {
                                                     android.R.layout.simple_spinner_item, operatorList);
         operatorsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerOperators.setAdapter(operatorsAdapter);
-
-        ArrayAdapter<String> unitsAdapter;
-        ArrayList<String> trafficUnitList = new ArrayList<String>();
-        trafficUnitList.add("Mb");
-        trafficUnitList.add("Gb");
-
-        unitsAdapter = new ArrayAdapter<String>(App.context,
-                                                android.R.layout.simple_spinner_item, trafficUnitList);
-        unitsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerTrafficUnit.setAdapter(unitsAdapter);
     }
 
     private void saveActivePackageSettings() {
@@ -211,18 +223,16 @@ public class SettingsFragment extends MyFragment {
         String title = txtPackageTitle.getText().toString();
 
 
-
     }
 
     private void freezePackageInformation() {
         txtPackageTitle.setEnabled(false);
         spinnerOperators.setEnabled(false);
-        spinnerTrafficUnit.setEnabled(false);
         txtPackageValidPeriod.setEnabled(false);
         txtPackagePrice.setEnabled(false);
         txtPrimaryTraffic.setEnabled(false);
         txtSecondaryTraffic.setEnabled(false);
-        // txtSecondaryStartTime.setEnabled(false);
-        //txtSecondaryEndTime.setEnabled(false);
+        btnSecondaryStartTime.setEnabled(false);
+        btnSecondaryEndTime.setEnabled(false);
     }
 }
