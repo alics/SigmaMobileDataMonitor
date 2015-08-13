@@ -1,27 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:id="@+id/layoutReport"
-              xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="horizontal"
-              android:padding="5dp">
+<LinearLayout
+    android:id="@+id/layoutReport"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5dp">
 
     <TextView
         android:id="@+id/txtTraffic"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
+        android:layout_weight="3"
+        android:gravity="right|center"
         android:text="100MB"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/gray"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"/>
 
     <widgets.MyTextView
         android:id="@+id/txtDate"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
+        android:layout_weight="3"
+        android:gravity="left|center"
         android:text="1394/05/03"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/gray"/>

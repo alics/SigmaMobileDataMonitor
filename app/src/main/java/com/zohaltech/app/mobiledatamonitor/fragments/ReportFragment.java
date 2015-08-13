@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zohaltech.app.mobiledatamonitor.R;
@@ -16,6 +17,7 @@ import com.zohaltech.app.mobiledatamonitor.adapters.ReportAdapter;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
 import com.zohaltech.app.mobiledatamonitor.classes.DataUsageService;
 import com.zohaltech.app.mobiledatamonitor.classes.Helper;
+import com.zohaltech.app.mobiledatamonitor.classes.TrafficDisplay;
 import com.zohaltech.app.mobiledatamonitor.dal.DailyTrafficHistories;
 import com.zohaltech.app.mobiledatamonitor.entities.TrafficMonitor;
 
@@ -27,6 +29,7 @@ import widgets.MyToast;
 public class ReportFragment extends MyFragment {
 
     ListView lstTraffics;
+    TextView txtTotalTraffic;
     ArrayList<TrafficMonitor> trafficMonitors = new ArrayList<>();
     ReportAdapter adapter;
 
@@ -41,36 +44,42 @@ public class ReportFragment extends MyFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
+        return inflater.inflate(R.layout.fragment_report, container, false);
+    }
 
-        View rootView = inflater.inflate(R.layout.fragment_report, container, false);
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        lstTraffics = (ListView) rootView.findViewById(R.id.lstTraffics);
+        lstTraffics = (ListView) view.findViewById(R.id.lstTraffics);
+        txtTotalTraffic = (TextView) view.findViewById(R.id.txtTotalTraffic);
 
+        //trafficMonitors = DailyTrafficHistories.getMonthlyTraffic();
+        //long bytes = App.preferences.getLong(DataUsageService.DAILY_USAGE_BYTES, 0);
+        //trafficMonitors.add(0, new TrafficMonitor(bytes, Helper.getCurrentDate()));
+        //adapter = new ReportAdapter(trafficMonitors);
+        //lstTraffics.setAdapter(adapter);
+
+        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((MainActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         trafficMonitors = DailyTrafficHistories.getMonthlyTraffic();
         long bytes = App.preferences.getLong(DataUsageService.DAILY_USAGE_BYTES, 0);
         trafficMonitors.add(0, new TrafficMonitor(bytes, Helper.getCurrentDate()));
         adapter = new ReportAdapter(trafficMonitors);
         lstTraffics.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
-        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((MainActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-        return rootView;
+        long sum = 0;
+        for(TrafficMonitor trafficMonitor: trafficMonitors){
+            sum+=trafficMonitor.getTotalTraffic();
+        }
+        txtTotalTraffic.setText(TrafficDisplay.getUsedTraffic(sum));
     }
-
-    //@Override
-    //public void onResume() {
-    //    super.onResume();
-    //    App.handler.postDelayed(new Runnable() {
-    //        @Override
-    //        public void run() {
-    //            ArrayList<TrafficMonitor> trafficMonitors = DailyTrafficHistories.getMonthlyTraffic();
-    //            ReportAdapter adapter = new ReportAdapter(trafficMonitors);
-    //            trafficMonitors.add(0, new TrafficMonitor(App.preferences.getLong(DataUsageService.DAILY_USAGE_BYTES, 0), Helper.getCurrentDate()));
-    //            lstTraffics.setAdapter(adapter);
-    //        }
-    //    }, 50);
-    //}
 
     @Override
     public void onDetach() {
@@ -81,7 +90,6 @@ public class ReportFragment extends MyFragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        //inflater.inflate(R.menu.menu_dashboard, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -91,13 +99,6 @@ public class ReportFragment extends MyFragment {
         if (id == android.R.id.home) {
             close();
         }
-        //else if (id == R.id.action_settings) {
-        //    trafficMonitors.clear();
-        //    trafficMonitors.addAll(DailyTrafficHistories.getMonthlyTraffic());
-        //    long bytes = ((MainActivity)getActivity()).dailyUsage;
-        //    trafficMonitors.add(0, new TrafficMonitor(bytes, Helper.getCurrentDate()));
-        //    adapter.notifyDataSetChanged();
-        //}
         return super.onOptionsItemSelected(item);
     }
 

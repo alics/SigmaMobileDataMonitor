@@ -22,7 +22,6 @@ public class TrafficUsageFragment extends Fragment {
 
     ArcProgress progressPrimaryUsage;
     ArcProgress progressSecondaryUsage;
-    //private BroadcastReceiver broadcastReceiver;
 
     long   usedPrimaryTraffic;
     long   totalPrimaryTraffic;
@@ -31,17 +30,6 @@ public class TrafficUsageFragment extends Fragment {
     long   usedSecondaryTraffic;
     long   totalSecondaryTraffic;
     String strSecondaryTraffic;
-
-    //@Override
-    //public void onCreate(Bundle savedInstanceState) {
-    //    super.onCreate(savedInstanceState);
-    //    broadcastReceiver = new BroadcastReceiver() {
-    //        @Override
-    //        public void onReceive(Context context, Intent intent) {
-    //            updateUI(intent.getLongExtra(DataUsageService.DAILY_USAGE_BYTES, 0));
-    //        }
-    //    };
-    //}
 
     @Nullable
     @Override
@@ -64,23 +52,11 @@ public class TrafficUsageFragment extends Fragment {
         txtSecondaryCaption.setLayoutParams(new LinearLayout.LayoutParams(size2, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
-    //@Override
-    //public void onStart() {
-    //    super.onStart();
-    //    LocalBroadcastManager.getInstance(getActivity()).registerReceiver(broadcastReceiver, new IntentFilter(DataUsageService.DAILY_USAGE_ACTION));
-    //}
-
     @Override
     public void onResume() {
         super.onResume();
         updateUI();
     }
-
-    //@Override
-    //public void onStop() {
-    //    super.onStop();
-    //    LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(broadcastReceiver);
-    //}
 
     public void updateUI() {
         PackageStatus status = PackageStatus.getCurrentStatus();
@@ -92,8 +68,8 @@ public class TrafficUsageFragment extends Fragment {
             totalSecondaryTraffic = status.getSecondaryTraffic();
             strPrimaryTraffic = TrafficDisplay.getArcTraffic(usedPrimaryTraffic, totalPrimaryTraffic);
             strSecondaryTraffic = TrafficDisplay.getArcTraffic(usedSecondaryTraffic, totalSecondaryTraffic);
-            //progressPrimaryUsage.setProgress(0, strPrimaryTraffic);
-            //progressSecondaryUsage.setProgress(0, strSecondaryTraffic);
+            progressPrimaryUsage.setProgress(0, strPrimaryTraffic);
+            progressSecondaryUsage.setProgress(0, strSecondaryTraffic);
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
