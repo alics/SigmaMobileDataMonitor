@@ -1,13 +1,15 @@
 package widgets;
 
 import android.content.Context;
-import android.util.AttributeSet;
+import android.graphics.Typeface;
 import android.support.v7.widget.AppCompatTextView;
+import android.util.AttributeSet;
 
 import com.zohaltech.app.mobiledatamonitor.classes.App;
 
 
 public class MyTextView extends AppCompatTextView {
+
     public MyTextView(Context context) {
         super(context);
         initialize();
@@ -37,6 +39,14 @@ public class MyTextView extends AppCompatTextView {
     }
 
     private void setFont() {
-        setTypeface(App.persianFont);
+        //if (getTypeface() != null) {
+        //    if (getTypeface().getStyle() == Typeface.BOLD) {
+        //        setTypeface(App.persianFontBold);
+        //    } else {
+        //        setTypeface(App.persianFont);
+        //    }
+        //} else {
+            setTypeface(App.persianFont);
+        //}
     }
 }

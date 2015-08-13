@@ -56,6 +56,16 @@ public class PackageFragment extends Fragment {
 
         lstPeriods = (AnimatedExpandableListView) view.findViewById(R.id.lstPeriods);
 
+        int operatorId = getArguments().getInt(POSITION);
+
+        ArrayList<Integer> operatorPeriodList = DataPackages.selectOperatorPeriods(operatorId);
+        for (int i = 0; i < operatorPeriodList.size(); i++) {
+            int period = operatorPeriodList.get(i);
+            periods.add(period + " روزه");
+            ArrayList<DataPackage> packageList = DataPackages.selectPackagesByOperatorAndPeriod(operatorId, period);
+            dataPackages.put(periods.get(i), packageList);
+        }
+        lstPeriods.setAdapter(packageAdapter);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
             lstPeriods.setIndicatorBounds(App.screenWidth - GetPixelFromDpi(35), App.screenWidth - GetPixelFromDpi(5));
@@ -93,22 +103,20 @@ public class PackageFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        int operatorId = getArguments().getInt(POSITION);
-
-        ArrayList<Integer> operatorPeriodList = DataPackages.selectOperatorPeriods(operatorId);
-        for (int i = 0; i < operatorPeriodList.size(); i++) {
-            int period = operatorPeriodList.get(i);
-            periods.add(period + " روزه");
-            ArrayList<DataPackage> packageList = DataPackages.selectPackagesByOperatorAndPeriod(operatorId, period);
-            dataPackages.put(periods.get(i), packageList);
-        }
-        lstPeriods.setAdapter(packageAdapter);
         packageAdapter.notifyDataSetChanged();
     }
 
+    //@Override
+    //public void onPause() {
+    //    super.onPause();
+    //    periods.clear();
+    //    dataPackages.clear();
+    //    packageAdapter.notifyDataSetChanged();
+    //}
+
     @Override
-    public void onPause() {
-        super.onPause();
+    public void onDetach() {
+        super.onDetach();
         periods.clear();
         dataPackages.clear();
         packageAdapter.notifyDataSetChanged();

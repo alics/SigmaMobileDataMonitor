@@ -54,10 +54,10 @@ public class PackagesFragment extends MyFragment {
 
             @Override
             public void onPageSelected(int position) {
-                ((TextView) ((ViewGroup) tabOperators.getChildAt(0)).getChildAt(0)).setTextColor(Color.GRAY);
-                ((TextView) ((ViewGroup) tabOperators.getChildAt(0)).getChildAt(1)).setTextColor(Color.GRAY);
-                ((TextView) ((ViewGroup) tabOperators.getChildAt(0)).getChildAt(2)).setTextColor(Color.GRAY);
-                ((TextView) ((ViewGroup) tabOperators.getChildAt(0)).getChildAt(position)).setTextColor(Color.BLACK);
+                ((TextView) ((ViewGroup) tabOperators.getChildAt(0)).getChildAt(0)).setTextColor(getResources().getColor(R.color.lighter_gray));
+                ((TextView) ((ViewGroup) tabOperators.getChildAt(0)).getChildAt(1)).setTextColor(getResources().getColor(R.color.lighter_gray));
+                ((TextView) ((ViewGroup) tabOperators.getChildAt(0)).getChildAt(2)).setTextColor(getResources().getColor(R.color.lighter_gray));
+                ((TextView) ((ViewGroup) tabOperators.getChildAt(0)).getChildAt(position)).setTextColor(Color.WHITE);
             }
 
             @Override
@@ -134,10 +134,8 @@ public class PackagesFragment extends MyFragment {
             //        TextView textView = (TextView) tabViewChild;
             textView.setWidth(App.screenWidth / 3);
             textView.setTypeface(App.persianFont);
-            textView.setTextColor(Color.GRAY);
+            textView.setTextColor(getResources().getColor(R.color.lighter_gray));
             textView.setTextSize(14);
         }
-        //}
-        //}
     }
 }

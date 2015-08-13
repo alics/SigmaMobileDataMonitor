@@ -24,6 +24,7 @@
             android:layout_alignParentTop="true"
             android:layout_margin="10dp"
             android:text="بسته فعال"
+            android:textStyle="bold"
             android:textAppearance="?android:attr/textAppearanceMedium"/>
 
         <widgets.MyTextView
