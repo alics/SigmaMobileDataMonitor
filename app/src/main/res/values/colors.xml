@@ -16,7 +16,8 @@
     <color name="darker_blue">#003048</color>
     <color name="label_color">#008fd5</color>
     <color name="disabled">#888888</color>
-     <color name="black">#000000</color>
+    <color name="black">#000000</color>
+
     <color name="light_gray">#bbbbbb</color>
     <color name="lighter_gray">#ffebebeb</color>
     <color name="orange">#ffff943e</color>

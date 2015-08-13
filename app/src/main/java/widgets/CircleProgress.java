@@ -19,12 +19,12 @@ public class CircleProgress extends ImageView {
     private static final int START_ANGLE = 90;
     private static final int SWEEP_ANGLE = 360;
     Context context;
-    private Paint  arcBackgroundPaint;
-    private Paint  arcForegroundPaint;
-    private Paint  textPaintValue;
-    private Paint  textPaintCaption;
-    private String value;
-    private String caption;
+    private Paint arcBackgroundPaint;
+    private Paint arcForegroundPaint;
+    private Paint textPaintValue;
+    private Paint textPaintCaption;
+    private String value   = "";
+    private String caption = "";
 
     public CircleProgress(Context context) {
         super(context);
@@ -46,7 +46,7 @@ public class CircleProgress extends ImageView {
 
     public void setProgress(String value, String caption) {
         this.value = value;
-        this.caption=caption;
+        this.caption = caption;
         postInvalidate();
     }
 
