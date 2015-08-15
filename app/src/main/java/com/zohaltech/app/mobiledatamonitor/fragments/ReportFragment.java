@@ -1,5 +1,9 @@
 package com.zohaltech.app.mobiledatamonitor.fragments;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -32,6 +36,7 @@ public class ReportFragment extends MyFragment {
     TextView txtTotalTraffic;
     ArrayList<TrafficMonitor> trafficMonitors = new ArrayList<>();
     ReportAdapter adapter;
+    private BroadcastReceiver broadcastReceiver;
 
     public ReportFragment() {
     }
@@ -39,6 +44,13 @@ public class ReportFragment extends MyFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                long todayUsage = intent.getLongExtra(DataUsageService.DAILY_USAGE_BYTES, 0);
+                updateUI(todayUsage);
+            }
+        };
     }
 
     @Override
@@ -54,26 +66,44 @@ public class ReportFragment extends MyFragment {
         lstTraffics = (ListView) view.findViewById(R.id.lstTraffics);
         txtTotalTraffic = (TextView) view.findViewById(R.id.txtTotalTraffic);
 
-        //trafficMonitors = DailyTrafficHistories.getMonthlyTraffic();
-        //long bytes = App.preferences.getLong(DataUsageService.DAILY_USAGE_BYTES, 0);
-        //trafficMonitors.add(0, new TrafficMonitor(bytes, Helper.getCurrentDate()));
-        //adapter = new ReportAdapter(trafficMonitors);
-        //lstTraffics.setAdapter(adapter);
+        trafficMonitors = DailyTrafficHistories.getMonthlyTraffic();
+        long bytes = App.preferences.getLong(DataUsageService.DAILY_USAGE_BYTES, 0);
+        trafficMonitors.add(0, new TrafficMonitor(bytes, Helper.getCurrentDate()));
+        adapter = new ReportAdapter(trafficMonitors);
+        lstTraffics.setAdapter(adapter);
+
+        populateSummery();
 
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        getActivity().registerReceiver(broadcastReceiver, new IntentFilter(DataUsageService.DAILY_USAGE_ACTION));
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        getActivity().unregisterReceiver(broadcastReceiver);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
-        trafficMonitors = DailyTrafficHistories.getMonthlyTraffic();
-        long bytes = App.preferences.getLong(DataUsageService.DAILY_USAGE_BYTES, 0);
-        trafficMonitors.add(0, new TrafficMonitor(bytes, Helper.getCurrentDate()));
-        adapter = new ReportAdapter(trafficMonitors);
-        lstTraffics.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        //trafficMonitors = DailyTrafficHistories.getMonthlyTraffic();
+        //long bytes = App.preferences.getLong(DataUsageService.DAILY_USAGE_BYTES, 0);
+        //trafficMonitors.add(0, new TrafficMonitor(bytes, Helper.getCurrentDate()));
+        //adapter = new ReportAdapter(trafficMonitors);
+        //lstTraffics.setAdapter(adapter);
+        //adapter.notifyDataSetChanged();
+        //
+        //populateSummery();
+    }
 
+    private void populateSummery() {
         long sum = 0;
         for(TrafficMonitor trafficMonitor: trafficMonitors){
             sum+=trafficMonitor.getTotalTraffic();
@@ -81,12 +111,18 @@ public class ReportFragment extends MyFragment {
         txtTotalTraffic.setText(TrafficDisplay.getUsedTraffic(sum));
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        adapter = null;
-        lstTraffics.setAdapter(null);
+    private void updateUI(long todayUsage) {
+        trafficMonitors.get(0).setTotalTraffic(todayUsage);
+        populateSummery();
+        adapter.notifyDataSetChanged();
     }
+
+    //@Override
+    //public void onDetach() {
+    //    super.onDetach();
+    //    adapter = null;
+    //    lstTraffics.setAdapter(null);
+    //}
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

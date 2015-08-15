@@ -24,18 +24,6 @@ import widgets.CircleProgress;
 public class DaysRemainFragment extends Fragment {
 
     CircleProgress progressDayRemain;
-    //private BroadcastReceiver broadcastReceiver;
-
-    //@Override
-    //public void onCreate(Bundle savedInstanceState) {
-    //    super.onCreate(savedInstanceState);
-    //    broadcastReceiver = new BroadcastReceiver() {
-    //        @Override
-    //        public void onReceive(Context context, Intent intent) {
-    //            updateUI(intent.getLongExtra(DataUsageService.DAYS_REMAIN, 0));
-    //        }
-    //    };
-    //}
 
     @Nullable
     @Override
@@ -51,18 +39,6 @@ public class DaysRemainFragment extends Fragment {
         progressDayRemain.setLayoutParams(new LinearLayout.LayoutParams(size, size));
         updateUI();
     }
-
-    //@Override
-    //public void onStart() {
-    //    super.onStart();
-    //    LocalBroadcastManager.getInstance(getActivity()).registerReceiver(broadcastReceiver, new IntentFilter(DataUsageService.DAILY_USAGE_ACTION));
-    //}
-    //
-    //@Override
-    //public void onStop() {
-    //    super.onStop();
-    //    LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(broadcastReceiver);
-    //}
 
     public void updateUI() {
         App.handler.post(new Runnable() {
