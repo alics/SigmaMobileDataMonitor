@@ -29,8 +29,6 @@ public class DataUsageService extends Service {
     private static       int     usageLogInterval      = 0;
     private static ScheduledExecutorService executorService;
 
-    private LocalBroadcastManager localBroadcastManager;
-
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
@@ -54,19 +52,20 @@ public class DataUsageService extends Service {
 
                 //App.preferences.edit().putLong(TOTAL_USAGE_BYTES, App.preferences.getLong(TOTAL_USAGE_BYTES, 0) + receivedBytes + sentBytes).commit();
 
-                final long oneMinuteUsedBytes = App.preferences.getLong(ONE_MINUTE_USED_BYTES, 0) + receivedBytes + sentBytes;
-                App.preferences.edit().putLong(ONE_MINUTE_USED_BYTES, oneMinuteUsedBytes).commit();
+            }
 
-                usageLogInterval++;
-                if (usageLogInterval == USAGE_LOG_INTERVAL) {
-                    new Thread(new Runnable() {
-                        public void run() {
-                            App.preferences.edit().putLong(ONE_MINUTE_USED_BYTES, 0).commit();
-                            UsageLogs.insert(new UsageLog(oneMinuteUsedBytes));
-                        }
-                    }).start();
-                    usageLogInterval = 0;
-                }
+            final long oneMinuteUsedBytes = App.preferences.getLong(ONE_MINUTE_USED_BYTES, 0) + receivedBytes + sentBytes;
+            App.preferences.edit().putLong(ONE_MINUTE_USED_BYTES, oneMinuteUsedBytes).commit();
+
+            usageLogInterval++;
+            if (usageLogInterval == USAGE_LOG_INTERVAL) {
+                new Thread(new Runnable() {
+                    public void run() {
+                        App.preferences.edit().putLong(ONE_MINUTE_USED_BYTES, 0).commit();
+                        UsageLogs.insert(new UsageLog(oneMinuteUsedBytes));
+                    }
+                }).start();
+                usageLogInterval = 0;
             }
 
             String currentDate = Helper.getCurrentDate();
@@ -120,7 +119,6 @@ public class DataUsageService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        localBroadcastManager = LocalBroadcastManager.getInstance(this);
         if (executorService == null) {
             executorService = Executors.newSingleThreadScheduledExecutor();
         }
