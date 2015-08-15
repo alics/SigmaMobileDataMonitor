@@ -2,8 +2,6 @@ package com.zohaltech.app.mobiledatamonitor.classes;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.graphics.Path;
-import android.text.Layout;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -13,7 +11,6 @@ import android.widget.TextView;
 import com.rey.material.app.TimePickerDialog;
 import com.zohaltech.app.mobiledatamonitor.R;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 public final class DialogManager {

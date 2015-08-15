@@ -11,8 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zohaltech.app.mobiledatamonitor.R;
-import com.zohaltech.app.mobiledatamonitor.classes.App;
-import com.zohaltech.app.mobiledatamonitor.classes.DataUsageService;
 import com.zohaltech.app.mobiledatamonitor.fragments.AboutUsFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.DashboardFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.GlobalSettingsFragment;
@@ -29,7 +27,7 @@ public class MainActivity extends EnhancedActivity {
 
     public AnimType animType = AnimType.OPEN;
     MyFragment fragment = null;
-    Toolbar  toolbar;
+    Toolbar  mainToolbar;
     TextView txtTitle;
     boolean notified = false;
 
@@ -38,18 +36,18 @@ public class MainActivity extends EnhancedActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mainToolbar = (Toolbar) findViewById(R.id.mainToolbar);
 
-        toolbar.setTitle("");
+        mainToolbar.setTitle("");
 
         txtTitle = new MyTextView(this);
         txtTitle.setTextAppearance(this, android.R.style.TextAppearance_Medium);
         txtTitle.setTextColor(Color.WHITE);
         txtTitle.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT));
         txtTitle.setGravity(Gravity.CENTER);
-        toolbar.addView(txtTitle);
+        mainToolbar.addView(txtTitle);
 
-        setSupportActionBar(toolbar);
+        setSupportActionBar(mainToolbar);
         //getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         displayView(EnumFragment.DASHBOARD);

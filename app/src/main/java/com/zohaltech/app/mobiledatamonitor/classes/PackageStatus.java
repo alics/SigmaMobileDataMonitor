@@ -55,7 +55,7 @@ public final class PackageStatus {
     public static RemainingTimeObject getLeftDays() {
         PackageHistory history = PackageHistories.getActivePackage();
         if (history == null)
-            return null;
+            return new RemainingTimeObject("روز", 0);
 
         DataPackage dataPackage = DataPackages.selectPackageById(history.getDataPackageId());
         Date packageActivationDate = Helper.getDateTime(history.getStartDateTime());
@@ -65,9 +65,9 @@ public final class PackageStatus {
 
         if (leftDays == 0) {
             int leftHours = (int) ((currentDateTime.getTime() - packageActivationDate.getTime()) / (1000 * 60 * 60));
-            return new RemainingTimeObject(RemainingTimeObject.TimeType.HOUR, leftHours);
+            return new RemainingTimeObject("ساعت", leftHours);
         }
-        return new RemainingTimeObject(RemainingTimeObject.TimeType.DAY, leftDays);
+        return new RemainingTimeObject("روز", leftDays);
     }
 
     public static ArrayList<AlarmObject> getCurrentAlarms() {

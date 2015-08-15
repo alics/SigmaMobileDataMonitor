@@ -42,12 +42,21 @@
             android:scaleType="centerInside"/>
 
         <widgets.MyTextView
-            android:id="@+id/txtSecondaryCaption"
+            android:id="@+id/txtSecondary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="حجم شبانه"
             android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/white"/>
+
+        <widgets.MyTextView
+            android:id="@+id/txtSecondaryCaption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="02:00 تا 14:00"
+            android:textSize="10sp"
             android:textColor="@color/white"/>
 
     </LinearLayout>
