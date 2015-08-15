@@ -6,6 +6,7 @@ public class AlarmObject {
     public enum AlarmType {
         REMINDED_DAYS_ALARM,
         REMINDED_TRAFFIC_ALARM,
+        FINISH_VALIDATION_DATE_ALARM,
         FINISH_TRAFFIC_ALARM,
         FINISH_SECONDARY_TRAFFIC_ALARM
     }

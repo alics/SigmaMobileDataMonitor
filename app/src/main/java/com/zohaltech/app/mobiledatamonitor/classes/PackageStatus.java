@@ -7,6 +7,7 @@ import com.zohaltech.app.mobiledatamonitor.dal.UsageLogs;
 import com.zohaltech.app.mobiledatamonitor.entities.DataPackage;
 import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public final class PackageStatus {
@@ -69,88 +70,80 @@ public final class PackageStatus {
         return new RemainingTimeObject(RemainingTimeObject.TimeType.DAY, leftDays);
     }
 
-    //    public ArrayList<AlarmObject> getCurrentAlarms(){
-    //
-    //        PackageHistory history = PackageHistories.getActivePackage();
-    //
-    //        if (history == null) {
-    //            status.setPrimaryTraffic(0);
-    //            status.setUsedPrimaryTraffic(0);
-    //            status.setSecondaryTraffic(0);
-    //            status.setUsedSecondaryTraffic(0);
-    //            status.setSecondaryCaption(null);
-    //
-    //            return status;
-    //        }
-    //
-    //        DataPackage dataPackage = DataPackages.selectPackageById(history.getDataPackageId());
-    //
-    //        if (dataPackage != null) {
-    //            String currentAlarms = "";
-    //            status.hasActivePackage = true;
-    //            status.setPrimaryTraffic(dataPackage.getPrimaryTraffic());
-    //            status.setUsedPrimaryTraffic(UsageLogs.getUsedPrimaryTrafficOfPackage(dataPackage, history));
-    //
-    //            if (status.getUsedPrimaryTraffic() >= dataPackage.getPrimaryTraffic()) {
-    //                currentAlarms += "اعتبار حجمی بسته به پایان رسید.";
-    //                PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.TRAFFIC_FINISHED);
-    //                Helper.setMobileDataEnabled(false);
-    //            }
-    //
-    //            if (dataPackage.getSecondaryTraffic() != null && dataPackage.getSecondaryTraffic() != 0) {
-    //                status.setSecondaryTraffic(dataPackage.getSecondaryTraffic());
-    //                status.setUsedSecondaryTraffic(UsageLogs.getUsedSecondaryTrafficOfPackage(dataPackage, history));
-    //
-    //                if (status.getUsedSecondaryTraffic() >= dataPackage.getSecondaryTraffic()) {
-    //                    currentAlarms += " حجم شبانه بسته به پایان رسید.";
-    //                }
-    //            }
-    //
-    //            Date packageActivationDate = Helper.getDateTime(history.getStartDateTime());
-    //            Date currentDateTime = Helper.getDate(Helper.getCurrentDateTime());
-    //            int diffDays = (int) ((currentDateTime.getTime() - packageActivationDate.getTime()) / (1000 * 60 * 60 * 24));
-    //
-    //            int leftDays = dataPackage.getPeriod() - diffDays;
-    //            status.setPeriod(dataPackage.getPeriod());
-    //            status.setLeftDays(leftDays);
-    //
-    //            if (leftDays <= 0) {
-    //                currentAlarms += "مهلت اعتبار بسته به پایان رسید";
-    //                PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.PERIOD_FINISHED);
-    //                Helper.setMobileDataEnabled(false);
-    //            }
-    //
-    //            if (SettingsHandler.getAlarmType() == SettingsHandler.AlarmType.LeftDay.ordinal()) {
-    //                int leftDayAlarm = SettingsHandler.getLeftDaysAlarm();
-    //                if (leftDayAlarm >= diffDays && diffDays > 0)
-    //                    currentAlarms += "روز باقیمانده به اتمام بسته " + diffDays;
-    //            } else if (SettingsHandler.getAlarmType() == SettingsHandler.AlarmType.RemindedBytes.ordinal()) {
-    //                long remindedByteAlarm = SettingsHandler.getRemindedByteAlarm();
-    //                long reminded = status.getPrimaryTraffic() - status.getUsedPrimaryTraffic();
-    //                if (reminded <= remindedByteAlarm) {
-    //                    currentAlarms += "," + "حجم رو به اتمام است";
-    //                }
-    //            } else if (SettingsHandler.getAlarmType() == SettingsHandler.AlarmType.Both.ordinal()) {
-    //                int leftDayAlarm = SettingsHandler.getLeftDaysAlarm();
-    //                if (leftDayAlarm >= diffDays && diffDays > 0)
-    //                    currentAlarms += "," + "روز باقیمانده به اتمام بسته " + diffDays;
-    //
-    //                long remindedByteAlarm = SettingsHandler.getRemindedByteAlarm() * 1024 * 1024;
-    //                long reminded = status.getPrimaryTraffic() - status.getUsedPrimaryTraffic();
-    //                if (reminded <= remindedByteAlarm) {
-    //                    currentAlarms += "," + "حجم رو به اتمام است";
-    //                }
-    //            }
-    //            status.setCurrentAlarms(currentAlarms);
-    //
-    //
-    //    }
+    public ArrayList<AlarmObject> getCurrentAlarms() {
 
-    //    public static int getLeftDays(){
-    //
-    //        return 1;
-    //
-    //    }
+        PackageHistory history = PackageHistories.getActivePackage();
+        ArrayList<AlarmObject> alarmObjects = new ArrayList<>();
+
+        if (history == null) {
+            return alarmObjects;
+        }
+
+        DataPackage dataPackage = DataPackages.selectPackageById(history.getDataPackageId());
+        long usedPrimaryTraffic = UsageLogs.getUsedPrimaryTrafficOfPackage(dataPackage, history);
+
+        if (usedPrimaryTraffic >= dataPackage.getPrimaryTraffic()) {
+            String msg = "اعتبار حجمی بسته به پایان رسید.";
+            alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.FINISH_TRAFFIC_ALARM, msg));
+            PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.TRAFFIC_FINISHED);
+            Helper.setMobileDataEnabled(false);
+        }
+
+        if (dataPackage.getSecondaryTraffic() != null && dataPackage.getSecondaryTraffic() != 0) {
+            long usedSecondaryTraffic = UsageLogs.getUsedSecondaryTrafficOfPackage(dataPackage, history);
+
+            if (usedSecondaryTraffic >= dataPackage.getSecondaryTraffic()) {
+                String msg = " حجم شبانه بسته به پایان رسید.";
+                alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.FINISH_SECONDARY_TRAFFIC_ALARM, msg));
+            }
+        }
+
+        Date packageActivationDate = Helper.getDateTime(history.getStartDateTime());
+        Date currentDateTime = Helper.getDate(Helper.getCurrentDateTime());
+        int diffDays = (int) ((currentDateTime.getTime() - packageActivationDate.getTime()) / (1000 * 60 * 60 * 24));
+
+        int leftDays = dataPackage.getPeriod() - diffDays;
+
+        if (leftDays <= 0) {
+            String msg = "مهلت اعتبار بسته به پایان رسید";
+            alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.FINISH_VALIDATION_DATE_ALARM, msg));
+
+            PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.PERIOD_FINISHED);
+            Helper.setMobileDataEnabled(false);
+        }
+
+        if (SettingsHandler.getAlarmType() == SettingsHandler.AlarmType.LeftDay.ordinal()) {
+            int leftDayAlarm = SettingsHandler.getLeftDaysAlarm();
+            if (leftDayAlarm >= diffDays && diffDays > 0) {
+                String msg = "روز باقیمانده به اتمام بسته " + diffDays;
+                alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.REMINDED_DAYS_ALARM, msg));
+            }
+
+        } else if (SettingsHandler.getAlarmType() == SettingsHandler.AlarmType.RemindedBytes.ordinal()) {
+            long remindedByteAlarm = SettingsHandler.getRemindedByteAlarm();
+            long reminded = dataPackage.getPrimaryTraffic() - usedPrimaryTraffic;
+            if (reminded <= remindedByteAlarm) {
+                String msg = "حجم رو به اتمام است";
+                alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.REMINDED_TRAFFIC_ALARM, msg));
+            }
+        } else if (SettingsHandler.getAlarmType() == SettingsHandler.AlarmType.Both.ordinal()) {
+            int leftDayAlarm = SettingsHandler.getLeftDaysAlarm();
+            if (leftDayAlarm >= diffDays && diffDays > 0) {
+                String msg = "روز باقیمانده به اتمام بسته " + diffDays;
+                alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.REMINDED_DAYS_ALARM, msg));
+            }
+
+            long remindedByteAlarm = SettingsHandler.getRemindedByteAlarm() * 1024 * 1024;
+            long reminded = dataPackage.getPrimaryTraffic() - usedPrimaryTraffic;
+            if (reminded <= remindedByteAlarm) {
+                String msg = "حجم رو به اتمام است";
+                alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.REMINDED_TRAFFIC_ALARM, msg));
+            }
+        }
+        return alarmObjects;
+
+
+    }
 
 
     public long getPrimaryTraffic() {
