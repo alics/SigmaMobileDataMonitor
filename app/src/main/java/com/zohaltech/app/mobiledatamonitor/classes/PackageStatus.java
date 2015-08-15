@@ -64,7 +64,7 @@ public final class PackageStatus {
         int leftDays = dataPackage.getPeriod() - diffDays;
 
         if (leftDays == 0) {
-            int leftHours = (int) ((currentDateTime.getTime() - packageActivationDate.getTime()) / (1000 * 60 * 60));
+            int leftHours = (int) ((currentDateTime.getTime() - packageActivationDate.getTime()) / (1000 * 60 * 60))-dataPackage.getPeriod()*24;
             return new RemainingTimeObject("ساعت", leftHours);
         }
         return new RemainingTimeObject("روز", leftDays);
