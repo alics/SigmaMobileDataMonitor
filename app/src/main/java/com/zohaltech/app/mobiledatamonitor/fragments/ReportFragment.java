@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.activities.MainActivity;
@@ -21,14 +20,13 @@ import com.zohaltech.app.mobiledatamonitor.adapters.ReportAdapter;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
 import com.zohaltech.app.mobiledatamonitor.classes.DataUsageService;
 import com.zohaltech.app.mobiledatamonitor.classes.Helper;
-import com.zohaltech.app.mobiledatamonitor.classes.TrafficDisplay;
+import com.zohaltech.app.mobiledatamonitor.classes.TrafficUnitsUtil;
 import com.zohaltech.app.mobiledatamonitor.dal.DailyTrafficHistories;
 import com.zohaltech.app.mobiledatamonitor.entities.TrafficMonitor;
 
 import java.util.ArrayList;
 
 import widgets.MyFragment;
-import widgets.MyToast;
 
 public class ReportFragment extends MyFragment {
 
@@ -105,10 +103,10 @@ public class ReportFragment extends MyFragment {
 
     private void populateSummery() {
         long sum = 0;
-        for(TrafficMonitor trafficMonitor: trafficMonitors){
-            sum+=trafficMonitor.getTotalTraffic();
+        for (TrafficMonitor trafficMonitor : trafficMonitors) {
+            sum += trafficMonitor.getTotalTraffic();
         }
-        txtTotalTraffic.setText(TrafficDisplay.getUsedTraffic(sum));
+        txtTotalTraffic.setText(TrafficUnitsUtil.getUsedTraffic(sum));
     }
 
     private void updateUI(long todayUsage) {

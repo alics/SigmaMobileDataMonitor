@@ -5,17 +5,18 @@ public class DailyTrafficHistory {
 
     private Integer id;
     private Long traffic;
-    private String beginningDateTime;
-    private String endingDateTime;
 
-    public DailyTrafficHistory(Long traffic, String beginningDateTime, String endingDateTime) {
+
+
+    private String logDate;
+
+    public DailyTrafficHistory(Long traffic, String logDate) {
         setTraffic(traffic);
-        setBeginningDateTime(beginningDateTime);
-        setEndingDateTime(endingDateTime);
+        setLogDate(logDate);
     }
 
-    public DailyTrafficHistory(Integer id, Long traffic, String beginningDateTime, String endingDateTime) {
-        this(traffic, beginningDateTime, endingDateTime);
+    public DailyTrafficHistory(Integer id, Long traffic, String logDate) {
+        this(traffic,logDate);
         this.id = id;
     }
 
@@ -35,20 +36,11 @@ public class DailyTrafficHistory {
         this.traffic = traffic;
     }
 
-
-    public String getBeginningDateTime() {
-        return beginningDateTime;
+    public String getLogDate() {
+        return logDate;
     }
 
-    public void setBeginningDateTime(String beginningDateTime) {
-        this.beginningDateTime = beginningDateTime;
-    }
-
-    public String getEndingDateTime() {
-        return endingDateTime;
-    }
-
-    public void setEndingDateTime(String endingDateTime) {
-        this.endingDateTime = endingDateTime;
+    public void setLogDate(String logDate) {
+        this.logDate = logDate;
     }
 }

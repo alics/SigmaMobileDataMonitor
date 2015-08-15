@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
 import com.zohaltech.app.mobiledatamonitor.classes.PackageStatus;
-import com.zohaltech.app.mobiledatamonitor.classes.TrafficDisplay;
+import com.zohaltech.app.mobiledatamonitor.classes.TrafficUnitsUtil;
 
 import widgets.ArcProgress;
 
@@ -66,8 +66,8 @@ public class TrafficUsageFragment extends Fragment {
             totalPrimaryTraffic = status.getPrimaryTraffic();
             usedSecondaryTraffic = status.getUsedSecondaryTraffic();
             totalSecondaryTraffic = status.getSecondaryTraffic();
-            strPrimaryTraffic = TrafficDisplay.getArcTraffic(usedPrimaryTraffic, totalPrimaryTraffic);
-            strSecondaryTraffic = TrafficDisplay.getArcTraffic(usedSecondaryTraffic, totalSecondaryTraffic);
+            strPrimaryTraffic = TrafficUnitsUtil.getArcTraffic(usedPrimaryTraffic, totalPrimaryTraffic);
+            strSecondaryTraffic = TrafficUnitsUtil.getArcTraffic(usedSecondaryTraffic, totalSecondaryTraffic);
             progressPrimaryUsage.setProgress(0, strPrimaryTraffic);
             progressSecondaryUsage.setProgress(0, strSecondaryTraffic);
         }

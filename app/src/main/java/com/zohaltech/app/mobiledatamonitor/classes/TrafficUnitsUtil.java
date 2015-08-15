@@ -1,14 +1,14 @@
 package com.zohaltech.app.mobiledatamonitor.classes;
 
-public class TrafficDisplay {
+public class TrafficUnitsUtil {
 
     private String value;
     private String postfix;
 
-    public TrafficDisplay() {
+    public TrafficUnitsUtil() {
     }
 
-    public TrafficDisplay(String value, String postfix) {
+    public TrafficUnitsUtil(String value, String postfix) {
         this.value = value;
         this.postfix = postfix;
     }
@@ -39,8 +39,8 @@ public class TrafficDisplay {
         return getCorrectTrafficText((float) usedBytes / (1024 * 1024)) + "/" + getCorrectTrafficText((float) totalBytes / (1024 * 1024)) + " MB";
     }
 
-    public static TrafficDisplay getTodayTraffic(long bytes) {
-        TrafficDisplay result = new TrafficDisplay();
+    public static TrafficUnitsUtil getTodayTraffic(long bytes) {
+        TrafficUnitsUtil result = new TrafficUnitsUtil();
         if (bytes < (1024 * 1024)) {
             result.setValue(getCorrectTrafficText((float) bytes / 1024));
             result.setPostfix("KB");
@@ -52,6 +52,10 @@ public class TrafficDisplay {
             result.setPostfix("GB");
         }
         return result;
+    }
+
+    public static Long MbToByte(int mb) {
+        return (long) (mb * 1024 * 1024);
     }
 
     private static String getCorrectTrafficText(float value) {

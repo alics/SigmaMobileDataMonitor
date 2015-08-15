@@ -11,7 +11,7 @@ import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
 import com.zohaltech.app.mobiledatamonitor.classes.Helper;
 import com.zohaltech.app.mobiledatamonitor.classes.SolarCalendar;
-import com.zohaltech.app.mobiledatamonitor.classes.TrafficDisplay;
+import com.zohaltech.app.mobiledatamonitor.classes.TrafficUnitsUtil;
 import com.zohaltech.app.mobiledatamonitor.entities.TrafficMonitor;
 
 import java.util.ArrayList;
@@ -59,7 +59,7 @@ public class ReportAdapter extends ArrayAdapter<TrafficMonitor> {
             }
             String date = item.getDate().equals(Helper.getCurrentDate()) ? "امروز" : SolarCalendar.getShamsiDate(Helper.getDate(item.getDate()));
             txtDate.setText(date);
-            txtTraffic.setText(TrafficDisplay.getUsedTraffic(item.getTotalTraffic()));
+            txtTraffic.setText(TrafficUnitsUtil.getUsedTraffic(item.getTotalTraffic()));
         }
     }
 }

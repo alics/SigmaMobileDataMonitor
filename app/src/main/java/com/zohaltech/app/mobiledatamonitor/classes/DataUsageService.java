@@ -100,11 +100,11 @@ public class DataUsageService extends Service {
                 iconId = App.context.getResources().getIdentifier("wmb" + sumReceivedSent, "drawable", getPackageName());
             }
 
-            String dailyUsage = TrafficDisplay.getUsedTraffic(App.preferences.getLong(DAILY_USAGE_BYTES, 0));
+            String dailyUsage = TrafficUnitsUtil.getUsedTraffic(App.preferences.getLong(DAILY_USAGE_BYTES, 0));
             //String totalUsage = TrafficDisplay.getUsedTraffic(App.preferences.getLong(TOTAL_USAGE_BYTES, 0));
 
             //startForeground(1, NotificationHandler.getDataUsageNotification(DataUsageService.this, iconId, String.format("Down: %s, Up: %s", TrafficDisplay.getTransferRate(receivedBytes), TrafficDisplay.getTransferRate(sentBytes)), "Daily : " + dailyUsage, "Total : " + totalUsage));
-            startForeground(1, NotificationHandler.getDataUsageNotification(DataUsageService.this, iconId, String.format("Down: %s, Up: %s", TrafficDisplay.getTransferRate(receivedBytes), TrafficDisplay.getTransferRate(sentBytes)), "Today : " + dailyUsage));
+            startForeground(1, NotificationHandler.getDataUsageNotification(DataUsageService.this, iconId, String.format("Down: %s, Up: %s", TrafficUnitsUtil.getTransferRate(receivedBytes), TrafficUnitsUtil.getTransferRate(sentBytes)), "Today : " + dailyUsage));
 
             //NotificationHandler.displayNotification(App.context, iconId, String.format("Down: %s, Up: %s", Helper.getTransferRate(receivedBytes), Helper.getTransferRate(sentBytes))
             //        , "Total: " + totalUsage, "65% used");
