@@ -17,19 +17,17 @@ import java.util.concurrent.TimeUnit;
 
 public class DataUsageService extends Service {
 
-    public static final  String DAILY_USAGE_BYTES     = "DAILY_USAGE_BYTES";
-    public static final  String DAILY_USAGE_ACTION    = "DAILY_USAGE_ACTION";
-    private static final String LAST_RECEIVED_BYTES   = "LAST_RECEIVED_BYTES";
-    private static final String LAST_SENT_BYTES       = "LAST_SENT_BYTES";
-    private static final String DAILY_USAGE_DATE      = "DAILY_USAGE_DATE";
+    public static final  String  DAILY_USAGE_BYTES     = "DAILY_USAGE_BYTES";
+    public static final  String  DAILY_USAGE_ACTION    = "com.zohaltech.app.mobiledatamonitor.today_usage";
+    private static final String  LAST_RECEIVED_BYTES   = "LAST_RECEIVED_BYTES";
+    private static final String  LAST_SENT_BYTES       = "LAST_SENT_BYTES";
+    private static final String  DAILY_USAGE_DATE      = "DAILY_USAGE_DATE";
     //private static final String TOTAL_USAGE_BYTES     = "TOTAL_USAGE_BYTES";
-    private static final String ONE_MINUTE_USED_BYTES = "ONE_MINUTE_USED_BYTES";
-    private static final int    USAGE_LOG_INTERVAL    = 60;
-    private static boolean firstTime        = true;
-    private static int     usageLogInterval = 0;
+    private static final String  ONE_MINUTE_USED_BYTES = "ONE_MINUTE_USED_BYTES";
+    private static final int     USAGE_LOG_INTERVAL    = 60;
+    private static       boolean firstTime             = true;
+    private static       int     usageLogInterval      = 0;
     private static ScheduledExecutorService executorService;
-
-    private LocalBroadcastManager localBroadcastManager;
 
     private Runnable runnable = new Runnable() {
         @Override
@@ -54,19 +52,20 @@ public class DataUsageService extends Service {
 
                 //App.preferences.edit().putLong(TOTAL_USAGE_BYTES, App.preferences.getLong(TOTAL_USAGE_BYTES, 0) + receivedBytes + sentBytes).commit();
 
-                final long oneMinuteUsedBytes = App.preferences.getLong(ONE_MINUTE_USED_BYTES, 0) + receivedBytes + sentBytes;
-                App.preferences.edit().putLong(ONE_MINUTE_USED_BYTES, oneMinuteUsedBytes).commit();
+            }
 
-                usageLogInterval++;
-                if (usageLogInterval == USAGE_LOG_INTERVAL) {
-                    new Thread(new Runnable() {
-                        public void run() {
-                            App.preferences.edit().putLong(ONE_MINUTE_USED_BYTES, 0).commit();
-                            UsageLogs.insert(new UsageLog(oneMinuteUsedBytes));
-                        }
-                    }).start();
-                    usageLogInterval = 0;
-                }
+            final long oneMinuteUsedBytes = App.preferences.getLong(ONE_MINUTE_USED_BYTES, 0) + receivedBytes + sentBytes;
+            App.preferences.edit().putLong(ONE_MINUTE_USED_BYTES, oneMinuteUsedBytes).commit();
+
+            usageLogInterval++;
+            if (usageLogInterval == USAGE_LOG_INTERVAL) {
+                new Thread(new Runnable() {
+                    public void run() {
+                        App.preferences.edit().putLong(ONE_MINUTE_USED_BYTES, 0).commit();
+                        UsageLogs.insert(new UsageLog(oneMinuteUsedBytes));
+                    }
+                }).start();
+                usageLogInterval = 0;
             }
 
             String currentDate = Helper.getCurrentDate();
@@ -113,18 +112,17 @@ public class DataUsageService extends Service {
 
             Intent intent = new Intent(DAILY_USAGE_ACTION);
             intent.putExtra(DAILY_USAGE_BYTES, App.preferences.getLong(DAILY_USAGE_BYTES, 0));
-            localBroadcastManager.sendBroadcast(intent);
+            DataUsageService.this.sendBroadcast(intent);
         }
     };
 
     @Override
     public void onCreate() {
         super.onCreate();
-        localBroadcastManager = LocalBroadcastManager.getInstance(this);
-        //if (executorService == null) {
-        //    executorService = Executors.newSingleThreadScheduledExecutor();
-        //}
-        //executorService.scheduleAtFixedRate(runnable, 0L, 1000L, TimeUnit.MILLISECONDS);
+        if (executorService == null) {
+            executorService = Executors.newSingleThreadScheduledExecutor();
+        }
+        executorService.scheduleAtFixedRate(runnable, 0L, 1000L, TimeUnit.MILLISECONDS);
     }
 
     @Override
@@ -143,10 +141,6 @@ public class DataUsageService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         //return super.onStartCommand(intent, flags, startId);
-        if (executorService == null) {
-            executorService = Executors.newSingleThreadScheduledExecutor();
-        }
-        executorService.scheduleAtFixedRate(runnable, 0L, 1000L, TimeUnit.MILLISECONDS);
         return START_STICKY;
     }
 }
