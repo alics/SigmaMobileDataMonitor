@@ -106,21 +106,21 @@
 
             </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="end"
-            android:orientation="horizontal">
-
-            <widgets.MyCheckBox
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="2dp"
-                android:layout_marginRight="2dp"
-                android:checked="false"
-                android:text="درباره ما"/>
+                android:gravity="end"
+                android:orientation="horizontal">
 
-        </LinearLayout>
+                <widgets.MyCheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginRight="2dp"
+                    android:checked="false"
+                    android:text="درباره ما"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
