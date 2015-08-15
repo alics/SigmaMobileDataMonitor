@@ -32,8 +32,8 @@ public class DataPackages {
                                       Price + " INTEGER  NOT NULL ," +
                                       PrimaryTraffic + " BIGINT  NOT NULL ," +
                                       SecondaryTraffic + " BIGINT   ," +
-                                      SecondaryTrafficStartTime + " CHAR(8)   ," +
-                                      SecondaryTrafficEndTime + " CHAR(8)   ," +
+                                      SecondaryTrafficStartTime + " CHAR(5)   ," +
+                                      SecondaryTrafficEndTime + " CHAR(5)   ," +
                                       UssdCode + " VARCHAR(50)   ," +
                                       Custom + " BOOLEAN   )";
 
