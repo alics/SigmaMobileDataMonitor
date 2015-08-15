@@ -74,8 +74,7 @@ public class ExpandablePackageAdapter extends AnimatedExpandableListView.Animate
                                                     public void run() {
                                                         PackageHistory history = PackageHistories.getActivePackage();
                                                         if (history == null) {
-                                                            //PackageHistories.terminateAll();
-                                                            PackageHistories.insert(new PackageHistory(dataPackage.getId(), Helper.getCurrentDateTime(), null, null, null, true, false));
+                                                            PackageHistories.insert(new PackageHistory(dataPackage.getId(), Helper.getCurrentDateTime(), null, null, null, PackageHistory.StatusEnum.ACTIVE.ordinal()));
                                                             MyToast.show("بسته فعال شد", Toast.LENGTH_SHORT);
 
                                                         } else {
@@ -85,15 +84,15 @@ public class ExpandablePackageAdapter extends AnimatedExpandableListView.Animate
                                                                         @Override
                                                                         public void run() {
                                                                             PackageHistories.deletedReservedPackages();
-                                                                            PackageHistories.terminateAll();
-                                                                            PackageHistories.insert(new PackageHistory(dataPackage.getId(), Helper.getCurrentDateTime(), null, null, null, true, false));
+                                                                            PackageHistories.terminateAll(PackageHistory.StatusEnum.CANCELED);
+                                                                            PackageHistories.insert(new PackageHistory(dataPackage.getId(), Helper.getCurrentDateTime(), null, null, null, PackageHistory.StatusEnum.ACTIVE.ordinal()));
                                                                             MyToast.show("بسته از ابتدا محاسبه و فعال شد", Toast.LENGTH_SHORT);
                                                                         }
 
                                                                     }, new Runnable() {
                                                                         public void run() {
                                                                             PackageHistories.deletedReservedPackages();
-                                                                            PackageHistories.insert(new PackageHistory(dataPackage.getId(), Helper.getCurrentDateTime(), null, null, null, false, true));
+                                                                            PackageHistories.insert(new PackageHistory(dataPackage.getId(), null, null, null, null,PackageHistory.StatusEnum.RESERVED.ordinal()));
                                                                             MyToast.show("بسته رزور شد", Toast.LENGTH_SHORT);
                                                                         }
                                                                     });
