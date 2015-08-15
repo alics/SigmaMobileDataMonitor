@@ -40,18 +40,13 @@ public class HistoryAdapter extends ArrayAdapter<PackageHistory> {
         public void fill(final ArrayAdapter<PackageHistory> adapter, final PackageHistory item, final int position) {
             DataPackage dataPackage = DataPackages.selectPackageById(item.getDataPackageId());
             txtPackageDesc.setText(dataPackage.getTitle());
-
             String activationDate = item.getStartDateTime() != null && !item.getStartDateTime().isEmpty() ?
                                     SolarCalendar.getShamsiDateTime(Helper.getDateTime(item.getStartDateTime())).substring(0, 16) : "بسته رزرو شده است و با پایان بسته فعلی فعال خواهد شد.";
-
             txtActivateDate.setText(activationDate);
-
             String expDate = item.getEndDateTime() != null && !item.getEndDateTime().isEmpty() ?
                              SolarCalendar.getShamsiDateTime(Helper.getDateTime(item.getEndDateTime())).substring(0, 16) : "---";
             txtExpDate.setText(expDate);
-
             String status = "";
-
             if (item.getStatus() == PackageHistory.StatusEnum.ACTIVE.ordinal())
                 status = "فعال";
             else if (item.getStatus() == PackageHistory.StatusEnum.RESERVED.ordinal())
@@ -62,7 +57,6 @@ public class HistoryAdapter extends ArrayAdapter<PackageHistory> {
                 status = "تاریخ اعتبار بسته به پایان رسیده است.";
             else if (item.getStatus() == PackageHistory.StatusEnum.TRAFFIC_FINISHED.ordinal())
                 status = "حجم بسته به پایان رسیده است";
-
             txtStatus.setText(status);
         }
     }

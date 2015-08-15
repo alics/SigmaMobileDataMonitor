@@ -103,6 +103,29 @@ public class SettingsFragment extends MyFragment {
             }
         });
 
+        btnSecondaryEndTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (btnSecondaryEndTime.getText().length() > 0) {
+                    int hour = Integer.valueOf(btnSecondaryEndTime.getText().toString().substring(0, 2));
+                    int minute = Integer.valueOf(btnSecondaryEndTime.getText().toString().substring(3, 5));
+                    DialogManager.showTimePickerDialog(getActivity(), "انتخاب زمان", hour, minute, new Runnable() {
+                        @Override
+                        public void run() {
+                            btnSecondaryEndTime.setText(DialogManager.timeResult);
+                        }
+                    });
+                } else {
+                    DialogManager.showTimePickerDialog(getActivity(), "انتخاب زمان", 2, 0, new Runnable() {
+                        @Override
+                        public void run() {
+                            btnSecondaryEndTime.setText(DialogManager.timeResult);
+                        }
+                    });
+                }
+            }
+        });
+
         initControls();
 
         initMode = getArguments().getString(INIT_MODE_KEY);
@@ -236,4 +259,19 @@ public class SettingsFragment extends MyFragment {
         btnSecondaryStartTime.setEnabled(false);
         btnSecondaryEndTime.setEnabled(false);
     }
+
+
+//    private DataPackage getDataPackageInstanceFromControllers(){
+//        int operatorId = spinnerOperators.getSelectedItemPosition() + 1;
+//        String title = txtPackageTitle.getText().toString();
+//        int period=Integer.valueOf(txtPackageValidPeriod.getText().toString());
+//        int price=0;
+//      //  long primaryTraffic=
+//
+//
+//
+//      //  DataPackage dataPackage=new DataPackage
+//
+//    }
+
 }
