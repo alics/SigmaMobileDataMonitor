@@ -229,7 +229,7 @@
 
 
                 <widgets.MyEditText
-                    android:id="@+id/editTextAlarmTriggerVolume"
+                    android:id="@+id/editTextTrafficAlarm"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
@@ -237,7 +237,7 @@
 
 
                 <widgets.MySwitch
-                    android:id="@+id/switchEnableVolumeAlarm"
+                    android:id="@+id/switchTrafficAlarm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="2dp"
@@ -266,7 +266,7 @@
                         android:text="روز"/>
 
                     <widgets.MyEditText
-                        android:id="@+id/editTextAlarmDaysToExpDate"
+                        android:id="@+id/editTextLeftDaysAlarm"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -276,7 +276,7 @@
 
 
                     <widgets.MySwitch
-                        android:id="@+id/switchEnableAlarmDaysToExpDate"
+                        android:id="@+id/switchLeftDaysAlarm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="2dp"

@@ -18,6 +18,7 @@ import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.activities.MainActivity;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
 import com.zohaltech.app.mobiledatamonitor.classes.DialogManager;
+import com.zohaltech.app.mobiledatamonitor.classes.SettingsHandler;
 import com.zohaltech.app.mobiledatamonitor.classes.TrafficUnitsUtil;
 import com.zohaltech.app.mobiledatamonitor.classes.Validator;
 import com.zohaltech.app.mobiledatamonitor.dal.DataPackages;
@@ -42,10 +43,10 @@ public class SettingsFragment extends MyFragment {
     EditText     editTextSecondaryTraffic;
     Button       btnSecondaryStartTime;
     Button       btnSecondaryEndTime;
-    EditText     editTextAlarmTriggerVolume;
-    SwitchCompat switchEnableVolumeAlarm;
-    EditText     editTextAlarmDaysToExpDate;
-    SwitchCompat switchEnableAlarmDaysToExpDate;
+    EditText     editTextTrafficAlarm;
+    SwitchCompat switchTrafficAlarm;
+    EditText     editTextLeftDaysAlarm;
+    SwitchCompat switchLeftDaysAlarm;
     SwitchCompat switchAutoMobileDataOff;
     DataPackage  dataPackage;
     String       initMode;
@@ -77,10 +78,10 @@ public class SettingsFragment extends MyFragment {
         editTextSecondaryTraffic = (EditText) rootView.findViewById(R.id.editTextSecondaryTraffic);
         btnSecondaryStartTime = (Button) rootView.findViewById(R.id.btnSecondaryStartTime);
         btnSecondaryEndTime = (Button) rootView.findViewById(R.id.btnSecondaryEndTime);
-        editTextAlarmTriggerVolume = (EditText) rootView.findViewById(R.id.editTextAlarmTriggerVolume);
-        switchEnableVolumeAlarm = (SwitchCompat) rootView.findViewById(R.id.switchEnableVolumeAlarm);
-        editTextAlarmDaysToExpDate = (EditText) rootView.findViewById(R.id.editTextAlarmDaysToExpDate);
-        switchEnableAlarmDaysToExpDate = (SwitchCompat) rootView.findViewById(R.id.switchEnableAlarmDaysToExpDate);
+        editTextTrafficAlarm = (EditText) rootView.findViewById(R.id.editTextTrafficAlarm);
+        switchTrafficAlarm = (SwitchCompat) rootView.findViewById(R.id.switchTrafficAlarm);
+        editTextLeftDaysAlarm = (EditText) rootView.findViewById(R.id.editTextLeftDaysAlarm);
+        switchLeftDaysAlarm = (SwitchCompat) rootView.findViewById(R.id.switchLeftDaysAlarm);
         switchAutoMobileDataOff = (SwitchCompat) rootView.findViewById(R.id.switchAutoMobileDataOff);
 
 
@@ -231,14 +232,62 @@ public class SettingsFragment extends MyFragment {
     }
 
     private void saveActivePackageSettings() {
+        Boolean trafficAlarm = switchTrafficAlarm.isChecked();
+        Boolean leftDaysAlarm = switchLeftDaysAlarm.isChecked();
 
+        if (trafficAlarm && leftDaysAlarm) {
+            if (Validator.validateEditText(editTextLeftDaysAlarm, "اخطار روز باقیمانده"))
+                return;
+            if (Validator.validateEditText(editTextTrafficAlarm, "اخطار حجمی"))
+                return;
+
+            SettingsHandler.setAlarmType(SettingsHandler.AlarmType.Both.ordinal());
+            SettingsHandler.setLeftDaysAlarm(Integer.valueOf(editTextLeftDaysAlarm.getText().toString()));
+            SettingsHandler.setRemindedByteAlarm(Integer.valueOf(editTextTrafficAlarm.getText().toString()));
+        } else if (trafficAlarm) {
+            if (Validator.validateEditText(editTextTrafficAlarm, "اخطار حجمی"))
+                return;
+            SettingsHandler.setAlarmType(SettingsHandler.AlarmType.RemindedBytes.ordinal());
+            SettingsHandler.setRemindedByteAlarm(Integer.valueOf(editTextTrafficAlarm.getText().toString()));
+        } else if (leftDaysAlarm) {
+            SettingsHandler.setAlarmType(SettingsHandler.AlarmType.LeftDay.ordinal());
+            SettingsHandler.setLeftDaysAlarm(Integer.valueOf(editTextLeftDaysAlarm.getText().toString()));
+        }
     }
 
     private void saveReservedPackageSettings() {
+        Boolean trafficAlarm = switchTrafficAlarm.isChecked();
+        Boolean leftDaysAlarm = switchLeftDaysAlarm.isChecked();
 
+        if (trafficAlarm && leftDaysAlarm) {
+            if (Validator.validateEditText(editTextLeftDaysAlarm, "اخطار روز باقیمانده"))
+                return;
+            if (Validator.validateEditText(editTextTrafficAlarm, "اخطار حجمی"))
+                return;
+
+            SettingsHandler.setAlarmTypeRes(SettingsHandler.AlarmType.Both.ordinal());
+            SettingsHandler.setLeftDaysAlarmRes(Integer.valueOf(editTextLeftDaysAlarm.getText().toString()));
+            SettingsHandler.setRemindedByteAlarmRes(Integer.valueOf(editTextTrafficAlarm.getText().toString()));
+        } else if (trafficAlarm) {
+            if (Validator.validateEditText(editTextTrafficAlarm, "اخطار حجمی"))
+                return;
+            SettingsHandler.setAlarmTypeRes(SettingsHandler.AlarmType.RemindedBytes.ordinal());
+            SettingsHandler.setRemindedByteAlarmRes(Integer.valueOf(editTextTrafficAlarm.getText().toString()));
+        } else if (leftDaysAlarm) {
+            SettingsHandler.setAlarmTypeRes(SettingsHandler.AlarmType.LeftDay.ordinal());
+            SettingsHandler.setLeftDaysAlarmRes(Integer.valueOf(editTextLeftDaysAlarm.getText().toString()));
+        }
     }
 
     private void loadActivePackageSettings() {
+        int alarmType=SettingsHandler.getAlarmType();
+       if(alarmType==SettingsHandler.AlarmType.Both.ordinal()){
+           switchLeftDaysAlarm.setChecked(true);
+
+           switchTrafficAlarm.setChecked(true);
+         //  editTextTrafficAlarm.setText(SettingsHandler.get);
+
+       }
 
     }
 
@@ -280,16 +329,16 @@ public class SettingsFragment extends MyFragment {
         int price = 0;
         long primaryTraffic = TrafficUnitsUtil.MbToByte(Integer.valueOf(editTextPrimaryTraffic.getText().toString()));
 
-        long result=DataPackages.insert(new DataPackage(operatorId,
-                                            title,
-                                            period,
-                                            price,
-                                            primaryTraffic,
-                                            secondaryTraffic,
-                                            secondaryTrafficStartTime,
-                                            secondaryTrafficEndTime,
-                                            null,
-                                            true));
+        long result = DataPackages.insert(new DataPackage(operatorId,
+                                                          title,
+                                                          period,
+                                                          price,
+                                                          primaryTraffic,
+                                                          secondaryTraffic,
+                                                          secondaryTrafficStartTime,
+                                                          secondaryTrafficEndTime,
+                                                          null,
+                                                          true));
     }
 
     private void freezePackageInformation() {
