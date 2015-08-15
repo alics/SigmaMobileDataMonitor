@@ -52,7 +52,6 @@ public class PackageHistories {
                                                                        cursor.getString(cursor.getColumnIndex(SecondaryTrafficEndDateTime)),
                                                                        cursor.getString(cursor.getColumnIndex(SimSerial)),
                                                                        cursor.getInt(cursor.getColumnIndex(Status)));
-
                     packageList.add(packageHistory);
                 } while (cursor.moveToNext());
             }

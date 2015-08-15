@@ -18,6 +18,7 @@ import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.activities.MainActivity;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
 import com.zohaltech.app.mobiledatamonitor.classes.DialogManager;
+import com.zohaltech.app.mobiledatamonitor.classes.TrafficUnitsUtil;
 import com.zohaltech.app.mobiledatamonitor.classes.Validator;
 import com.zohaltech.app.mobiledatamonitor.dal.DataPackages;
 import com.zohaltech.app.mobiledatamonitor.dal.MobileOperators;
@@ -246,7 +247,7 @@ public class SettingsFragment extends MyFragment {
     }
 
     private void addCustomPackage() {
-        Long secondaryTraffic;
+        long secondaryTraffic = 0;
         String secondaryTrafficStartTime = null;
         String secondaryTrafficEndTime = null;
 
@@ -260,6 +261,7 @@ public class SettingsFragment extends MyFragment {
             return;
 
         if (editTextSecondaryTraffic.getText().toString().trim().length() > 0) {
+            secondaryTraffic = TrafficUnitsUtil.MbToByte(Integer.valueOf(editTextSecondaryTraffic.getText().toString()));
             if (btnSecondaryStartTime.getText().toString().trim().length() == 0) {
                 MyToast.show("لطفا " + "بازه مصرف شبانه" + " را وارد کنید", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
                 return;
@@ -270,17 +272,24 @@ public class SettingsFragment extends MyFragment {
                 return;
             } else
                 secondaryTrafficEndTime = btnSecondaryEndTime.getText().toString();
-
         }
 
         int operatorId = spinnerOperators.getSelectedItemPosition() + 1;
         String title = editTextPackageTitle.getText().toString();
         int period = Integer.valueOf(editTextPackageValidPeriod.getText().toString());
         int price = 0;
+        long primaryTraffic = TrafficUnitsUtil.MbToByte(Integer.valueOf(editTextPrimaryTraffic.getText().toString()));
 
-        //   DataPackage dataPackage = new DataPackage()
-
-
+        long result=DataPackages.insert(new DataPackage(operatorId,
+                                            title,
+                                            period,
+                                            price,
+                                            primaryTraffic,
+                                            secondaryTraffic,
+                                            secondaryTrafficStartTime,
+                                            secondaryTrafficEndTime,
+                                            null,
+                                            true));
     }
 
     private void freezePackageInformation() {
@@ -293,6 +302,4 @@ public class SettingsFragment extends MyFragment {
         btnSecondaryStartTime.setEnabled(false);
         btnSecondaryEndTime.setEnabled(false);
     }
-
-
 }

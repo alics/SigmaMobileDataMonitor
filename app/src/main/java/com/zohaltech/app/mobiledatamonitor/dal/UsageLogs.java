@@ -66,7 +66,7 @@ public class UsageLogs {
         String strCurrentDate = strCurrentDateTime.substring(0, 10);
 
         if (strCurrentDate.compareTo(maxDateStr) > 0) {
-            integrateSumUsedTrafficUsagePerHourInDate(maxDateStr);
+            integrateSumUsedTrafficPerDay(maxDateStr);
         }
         if (usageLog.getTrafficBytes() != 0) {
             ContentValues values = new ContentValues();
@@ -118,7 +118,7 @@ public class UsageLogs {
         return maxLogDate;
     }
 
-    public static void integrateSumUsedTrafficUsagePerHourInDate(String date) {
+    public static void integrateSumUsedTrafficPerDay(String date) {
         DataAccess da = new DataAccess();
         SQLiteDatabase db = da.getReadableDB();
         Cursor cursor = null;
