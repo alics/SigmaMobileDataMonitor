@@ -1,19 +1,26 @@
 package com.zohaltech.app.mobiledatamonitor.fragments;
 
 import android.os.Bundle;
+import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.activities.MainActivity;
+import com.zohaltech.app.mobiledatamonitor.classes.SettingsHandler;
 
 import widgets.MyFragment;
 
 public class GlobalSettingsFragment extends MyFragment {
+
+    SwitchCompat switchShowNotification;
+    SwitchCompat switchShowNotificationWhenDataIsOn;
+    SwitchCompat switchShowNotificationInLockScreen;
 
     public GlobalSettingsFragment() {
     }
@@ -29,6 +36,34 @@ public class GlobalSettingsFragment extends MyFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         View rootView = inflater.inflate(R.layout.fragment_global_settings, container, false);
+
+        switchShowNotification = (SwitchCompat) rootView.findViewById(R.id.switchShowNotification);
+        switchShowNotificationWhenDataIsOn = (SwitchCompat) rootView.findViewById(R.id.switchShowNotificationWhenDataIsOn);
+        switchShowNotificationInLockScreen = (SwitchCompat) rootView.findViewById(R.id.switchShowNotificationInLockScreen);
+
+
+        switchShowNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SettingsHandler.setShowNotification(isChecked);
+            }
+        });
+
+        switchShowNotificationWhenDataIsOn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SettingsHandler.setShowNotificationWhenDataIsOn(isChecked);
+            }
+        });
+
+        switchShowNotificationInLockScreen.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SettingsHandler.setShowNotificationInLockScreen(isChecked);
+            }
+        });
+
+        initControls();
 
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -50,7 +85,6 @@ public class GlobalSettingsFragment extends MyFragment {
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     public void onBackPressed() {
         close();
@@ -60,5 +94,11 @@ public class GlobalSettingsFragment extends MyFragment {
         MainActivity parent = ((MainActivity) getActivity());
         parent.animType = MainActivity.AnimType.CLOSE;
         parent.displayView(MainActivity.EnumFragment.DASHBOARD);
+    }
+
+    private void initControls() {
+        switchShowNotification.setChecked(SettingsHandler.isShowNotification());
+        switchShowNotificationWhenDataIsOn.setChecked(SettingsHandler.isShowNotificationWhenDataIsOn());
+        switchShowNotificationInLockScreen.setChecked(SettingsHandler.isShowNotificationInLockScreen());
     }
 }
