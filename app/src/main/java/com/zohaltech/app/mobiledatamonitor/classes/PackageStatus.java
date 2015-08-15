@@ -70,7 +70,7 @@ public final class PackageStatus {
         return new RemainingTimeObject(RemainingTimeObject.TimeType.DAY, leftDays);
     }
 
-    public ArrayList<AlarmObject> getCurrentAlarms() {
+    public static ArrayList<AlarmObject> getCurrentAlarms() {
 
         PackageHistory history = PackageHistories.getActivePackage();
         ArrayList<AlarmObject> alarmObjects = new ArrayList<>();
@@ -141,8 +141,6 @@ public final class PackageStatus {
             }
         }
         return alarmObjects;
-
-
     }
 
 
