@@ -104,8 +104,7 @@ public class PackageHistories {
 
     public static PackageHistory getActivePackage() {
         String whereClause = " WHERE " + Status + " = " + PackageHistory.StatusEnum.ACTIVE.ordinal();
-        ArrayList<PackageHistory> packageHistories = new ArrayList<>();
-        packageHistories = select(whereClause, null);
+        ArrayList<PackageHistory> packageHistories =  select(whereClause, null);
         int count = packageHistories.size();
 
         return (count == 0) ? null : packageHistories.get(count - 1);
@@ -113,8 +112,7 @@ public class PackageHistories {
 
     public static PackageHistory getReservedPackage() {
         String whereClause = " WHERE " + Status + " = " + PackageHistory.StatusEnum.RESERVED.ordinal();
-        ArrayList<PackageHistory> packageHistories = new ArrayList<>();
-        packageHistories = select(whereClause, null);
+        ArrayList<PackageHistory> packageHistories = select(whereClause, null);
         int count = packageHistories.size();
 
         return (count == 0) ? null : packageHistories.get(count - 1);
@@ -122,8 +120,7 @@ public class PackageHistories {
 
     public static PackageHistory getPackageById(int id) {
         String whereClause = " WHERE " + Id + " = " + id;
-        ArrayList<PackageHistory> packageHistories = new ArrayList<>();
-        packageHistories = select(whereClause, null);
+        ArrayList<PackageHistory> packageHistories = select(whereClause, null);
         int count = packageHistories.size();
 
         return (count == 0) ? null : packageHistories.get(count - 1);
