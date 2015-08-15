@@ -60,7 +60,6 @@ public class UsageLogs {
     }
 
     public static long insert(UsageLog usageLog) {
-        ContentValues values = new ContentValues();
         String maxDateTimeStr = getMaxDateTime();
         String maxDateStr = maxDateTimeStr == null ? "" : maxDateTimeStr.substring(0, 10);
         String strCurrentDateTime = Helper.getCurrentDateTime();
@@ -69,12 +68,15 @@ public class UsageLogs {
         if (strCurrentDate.compareTo(maxDateStr) > 0) {
             integrateSumUsedTrafficUsagePerHourInDate(maxDateStr);
         }
+        if (usageLog.getTrafficBytes() != 0) {
+            ContentValues values = new ContentValues();
+            values.put(TrafficBytes, usageLog.getTrafficBytes());
+            values.put(LogDateTime, strCurrentDateTime);
 
-        values.put(TrafficBytes, usageLog.getTrafficBytes());
-        values.put(LogDateTime, strCurrentDateTime);
-
-        DataAccess da = new DataAccess();
-        return da.insert(TableName, values);
+            DataAccess da = new DataAccess();
+            return da.insert(TableName, values);
+        }
+        return 0;
     }
 
     public static long update(UsageLog usageLog) {
@@ -121,21 +123,14 @@ public class UsageLogs {
         SQLiteDatabase db = da.getReadableDB();
         Cursor cursor = null;
         try {
-            String query = "SELECT SUBSTR(LogDateTime,11,3) hourPeriod,SUBSTR(LogDateTime,1,10) datePeriod,SUM(TrafficBytes) SumTraffic FROM UsageLogs " +
-                           "WHERE  SUBSTR(LogDateTime,1,10)='" + date + "' GROUP BY  SUBSTR(LogDateTime,1,10), SUBSTR(LogDateTime,11,3) ;";
+            String query = "SELECT SUM(TrafficBytes) SumTraffic FROM "+TableName+
+                           " WHERE  SUBSTR(LogDateTime,1,10)='" + date + "';";
             cursor = db.rawQuery(query, null);
+
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     long sum = cursor.getLong(cursor.getColumnIndex("SumTraffic"));
-                    String datePeriod = cursor.getString(cursor.getColumnIndex("datePeriod"));
-                    String hour = cursor.getString(cursor.getColumnIndex("hourPeriod"));
-                    String beginningDateTime = datePeriod + " " + hour + ":00:00";
-                    int endingHour = Integer.parseInt(hour.substring(1)) + 1;
-                    String endingDateTime = datePeriod + " " + endingHour + ":00:00";
-
-                    DailyTrafficHistory history = new DailyTrafficHistory(sum,
-                                                                          beginningDateTime,
-                                                                          endingDateTime);
+                    DailyTrafficHistory history = new DailyTrafficHistory(sum, date);
                     DailyTrafficHistories.insert(history);
                 } while (cursor.moveToNext());
             }
@@ -147,32 +142,6 @@ public class UsageLogs {
             if (db != null && db.isOpen())
                 db.close();
         }
-    }
-
-    public static long getCurrentDateSumTraffic() {
-        long sumTraffic = 0;
-        String strCurrentDateTime = Helper.getCurrentDateTime();
-        String strCurrentDate = strCurrentDateTime.substring(0, 10);
-        DataAccess da = new DataAccess();
-        SQLiteDatabase db = da.getReadableDB();
-        Cursor cursor = null;
-        try {
-            String query = "SELECT SUM(TrafficBytes) SumTraffic  FROM  " + TableName + " WHERE SUBSTR(LogDateTime,0,11) = '" + strCurrentDate + "'";
-            cursor = db.rawQuery(query, null);
-            if (cursor != null && cursor.moveToFirst()) {
-                do {
-                    sumTraffic = cursor.getLong(cursor.getColumnIndex("SumTraffic"));
-                } while (cursor.moveToNext());
-            }
-        } catch (MyRuntimeException e) {
-            e.printStackTrace();
-        } finally {
-            if (cursor != null && !cursor.isClosed())
-                cursor.close();
-            if (db != null && db.isOpen())
-                db.close();
-        }
-        return sumTraffic;
     }
 
     public static long getUsedPrimaryTrafficOfPackage(DataPackage dataPackage, PackageHistory history) {

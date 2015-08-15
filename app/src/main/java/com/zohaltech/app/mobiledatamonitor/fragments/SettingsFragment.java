@@ -12,11 +12,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.activities.MainActivity;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
 import com.zohaltech.app.mobiledatamonitor.classes.DialogManager;
+import com.zohaltech.app.mobiledatamonitor.classes.Validator;
 import com.zohaltech.app.mobiledatamonitor.dal.DataPackages;
 import com.zohaltech.app.mobiledatamonitor.dal.MobileOperators;
 import com.zohaltech.app.mobiledatamonitor.dal.PackageHistories;
@@ -27,20 +29,21 @@ import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
 import java.util.ArrayList;
 
 import widgets.MyFragment;
+import widgets.MyToast;
 
 public class SettingsFragment extends MyFragment {
 
-    EditText     txtPackageTitle;
+    EditText     editTextPackageTitle;
     Spinner      spinnerOperators;
-    EditText     txtPackageValidPeriod;
-    EditText     txtPackagePrice;
-    EditText     txtPrimaryTraffic;
-    EditText     txtSecondaryTraffic;
+    EditText     editTextPackageValidPeriod;
+    EditText     editTextPackagePrice;
+    EditText     editTextPrimaryTraffic;
+    EditText     editTextSecondaryTraffic;
     Button       btnSecondaryStartTime;
     Button       btnSecondaryEndTime;
-    EditText     txtAlarmTriggerVolume;
+    EditText     editTextAlarmTriggerVolume;
     SwitchCompat switchEnableVolumeAlarm;
-    EditText     txtAlarmDaysToExpDate;
+    EditText     editTextAlarmDaysToExpDate;
     SwitchCompat switchEnableAlarmDaysToExpDate;
     SwitchCompat switchAutoMobileDataOff;
     DataPackage  dataPackage;
@@ -65,17 +68,17 @@ public class SettingsFragment extends MyFragment {
         setHasOptionsMenu(true);
         View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
 
-        txtPackageTitle = (EditText) rootView.findViewById(R.id.txtPackageTitle);
+        editTextPackageTitle = (EditText) rootView.findViewById(R.id.editTextPackageTitle);
         spinnerOperators = (Spinner) rootView.findViewById(R.id.spinnerOperators);
-        txtPackageValidPeriod = (EditText) rootView.findViewById(R.id.txtPackageValidPeriod);
-        txtPackagePrice = (EditText) rootView.findViewById(R.id.txtPackagePrice);
-        txtPrimaryTraffic = (EditText) rootView.findViewById(R.id.txtPrimaryTraffic);
-        txtSecondaryTraffic = (EditText) rootView.findViewById(R.id.txtSecondaryTraffic);
+        editTextPackageValidPeriod = (EditText) rootView.findViewById(R.id.editTextPackageValidPeriod);
+        editTextPackagePrice = (EditText) rootView.findViewById(R.id.editTextPackagePrice);
+        editTextPrimaryTraffic = (EditText) rootView.findViewById(R.id.editTextPrimaryTraffic);
+        editTextSecondaryTraffic = (EditText) rootView.findViewById(R.id.editTextSecondaryTraffic);
         btnSecondaryStartTime = (Button) rootView.findViewById(R.id.btnSecondaryStartTime);
         btnSecondaryEndTime = (Button) rootView.findViewById(R.id.btnSecondaryEndTime);
-        txtAlarmTriggerVolume = (EditText) rootView.findViewById(R.id.txtAlarmTriggerVolume);
+        editTextAlarmTriggerVolume = (EditText) rootView.findViewById(R.id.editTextAlarmTriggerVolume);
         switchEnableVolumeAlarm = (SwitchCompat) rootView.findViewById(R.id.switchEnableVolumeAlarm);
-        txtAlarmDaysToExpDate = (EditText) rootView.findViewById(R.id.txtAlarmDaysToExpDate);
+        editTextAlarmDaysToExpDate = (EditText) rootView.findViewById(R.id.editTextAlarmDaysToExpDate);
         switchEnableAlarmDaysToExpDate = (SwitchCompat) rootView.findViewById(R.id.switchEnableAlarmDaysToExpDate);
         switchAutoMobileDataOff = (SwitchCompat) rootView.findViewById(R.id.switchAutoMobileDataOff);
 
@@ -135,12 +138,12 @@ public class SettingsFragment extends MyFragment {
             dataPackage = DataPackages.selectPackageById(Integer.valueOf(packageId));
 
             if (dataPackage != null) {
-                txtPackageTitle.setText(dataPackage.getTitle());
+                editTextPackageTitle.setText(dataPackage.getTitle());
                 spinnerOperators.setSelection(dataPackage.getOperatorId());
-                txtPackageValidPeriod.setText(String.valueOf(dataPackage.getPeriod()));
-                txtPackagePrice.setText(String.valueOf(dataPackage.getPrice()));
-                txtPrimaryTraffic.setText(String.valueOf(dataPackage.getPrimaryTraffic()));
-                txtSecondaryTraffic.setText(String.valueOf(dataPackage.getSecondaryTraffic()));
+                editTextPackageValidPeriod.setText(String.valueOf(dataPackage.getPeriod()));
+                editTextPackagePrice.setText(String.valueOf(dataPackage.getPrice()));
+                editTextPrimaryTraffic.setText(String.valueOf(dataPackage.getPrimaryTraffic()));
+                editTextSecondaryTraffic.setText(String.valueOf(dataPackage.getSecondaryTraffic()));
                 btnSecondaryStartTime.setText(dataPackage.getSecondaryTrafficStartTime());
                 btnSecondaryEndTime.setText(dataPackage.getSecondaryTrafficEndTime());
 
@@ -243,35 +246,53 @@ public class SettingsFragment extends MyFragment {
     }
 
     private void addCustomPackage() {
+        Long secondaryTraffic;
+        String secondaryTrafficStartTime = null;
+        String secondaryTrafficEndTime = null;
+
+        if (Validator.validateEditText(editTextPackageTitle, "عنوان بسته"))
+            return;
+        if (Validator.validateEditText(editTextPrimaryTraffic, "حجم ترافیک اولیه"))
+            return;
+        if (Validator.validateEditText(editTextPackageValidPeriod, "مدت اعتبار"))
+            return;
+        if (Validator.validateEditText(editTextPackageTitle, "عنوان بسته"))
+            return;
+
+        if (editTextSecondaryTraffic.getText().toString().trim().length() > 0) {
+            if (btnSecondaryStartTime.getText().toString().trim().length() == 0) {
+                MyToast.show("لطفا " + "بازه مصرف شبانه" + " را وارد کنید", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
+                return;
+            } else
+                secondaryTrafficStartTime = btnSecondaryStartTime.getText().toString();
+            if (btnSecondaryStartTime.getText().toString().trim().length() == 0) {
+                MyToast.show("لطفا " + "بازه مصرف شبانه" + " را وارد کنید", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
+                return;
+            } else
+                secondaryTrafficEndTime = btnSecondaryEndTime.getText().toString();
+
+        }
+
         int operatorId = spinnerOperators.getSelectedItemPosition() + 1;
-        String title = txtPackageTitle.getText().toString();
+        String title = editTextPackageTitle.getText().toString();
+        int period = Integer.valueOf(editTextPackageValidPeriod.getText().toString());
+        int price = 0;
+
+        //   DataPackage dataPackage = new DataPackage()
 
 
     }
 
     private void freezePackageInformation() {
-        txtPackageTitle.setEnabled(false);
+        editTextPackageTitle.setEnabled(false);
         spinnerOperators.setEnabled(false);
-        txtPackageValidPeriod.setEnabled(false);
-        txtPackagePrice.setEnabled(false);
-        txtPrimaryTraffic.setEnabled(false);
-        txtSecondaryTraffic.setEnabled(false);
+        editTextPackageValidPeriod.setEnabled(false);
+        editTextPackagePrice.setEnabled(false);
+        editTextPrimaryTraffic.setEnabled(false);
+        editTextSecondaryTraffic.setEnabled(false);
         btnSecondaryStartTime.setEnabled(false);
         btnSecondaryEndTime.setEnabled(false);
     }
 
-
-//    private DataPackage getDataPackageInstanceFromControllers(){
-//        int operatorId = spinnerOperators.getSelectedItemPosition() + 1;
-//        String title = txtPackageTitle.getText().toString();
-//        int period=Integer.valueOf(txtPackageValidPeriod.getText().toString());
-//        int price=0;
-//      //  long primaryTraffic=
-//
-//
-//
-//      //  DataPackage dataPackage=new DataPackage
-//
-//    }
 
 }

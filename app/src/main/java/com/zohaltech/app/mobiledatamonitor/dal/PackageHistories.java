@@ -112,7 +112,7 @@ public class PackageHistories {
     }
 
     public static PackageHistory getReservedPackage() {
-        String whereClause = " WHERE " + Status + " = " +  PackageHistory.StatusEnum.RESERVED.ordinal();
+        String whereClause = " WHERE " + Status + " = " + PackageHistory.StatusEnum.RESERVED.ordinal();
         ArrayList<PackageHistory> packageHistories = new ArrayList<>();
         packageHistories = select(whereClause, null);
         int count = packageHistories.size();
@@ -129,7 +129,7 @@ public class PackageHistories {
         return (count == 0) ? null : packageHistories.get(count - 1);
     }
 
-    public static void terminateDataPackage(PackageHistory packageHistory,PackageHistory.StatusEnum terminationStatus) {
+    public static void terminateDataPackage(PackageHistory packageHistory, PackageHistory.StatusEnum terminationStatus) {
         packageHistory.setStatus(terminationStatus.ordinal());
         packageHistory.setEndDateTime(Helper.getCurrentDateTime());
 
@@ -154,16 +154,15 @@ public class PackageHistories {
     }
 
     public static void deletedReservedPackages() {
-        ArrayList<PackageHistory> histories = select("Where " + Status + " = "+ PackageHistory.StatusEnum.RESERVED.ordinal(), null);
+        ArrayList<PackageHistory> histories = select("Where " + Status + " = " + PackageHistory.StatusEnum.RESERVED.ordinal(), null);
         for (int i = 0; i < histories.size(); i++) {
             delete(histories.get(i));
         }
     }
 
-    public static void finishPackageProcess(PackageHistory history,PackageHistory.StatusEnum terminationStatus) {
-        terminateDataPackage(history,terminationStatus);
+    public static void finishPackageProcess(PackageHistory history, PackageHistory.StatusEnum terminationStatus) {
+        terminateDataPackage(history, terminationStatus);
         String yesterdayDateStr = SolarCalendar.getPastDateString(-1);
-        UsageLogs.integrateSumUsedTrafficUsagePerHourInDate(yesterdayDateStr);
         UsageLogs.deleteLogs(yesterdayDateStr);
         PackageHistory reservedPackage = getReservedPackage();
         if (reservedPackage != null) {

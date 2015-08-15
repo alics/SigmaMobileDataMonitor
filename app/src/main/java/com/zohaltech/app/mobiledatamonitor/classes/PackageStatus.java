@@ -96,6 +96,10 @@ public final class PackageStatus {
         return status;
     }
 
+    public void updateStatus(){
+
+    }
+
 
     public Boolean getHasActivePackage() {
         return hasActivePackage;

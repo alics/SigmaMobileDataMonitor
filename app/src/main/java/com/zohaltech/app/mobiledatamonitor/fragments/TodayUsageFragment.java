@@ -16,7 +16,7 @@ import android.widget.LinearLayout;
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
 import com.zohaltech.app.mobiledatamonitor.classes.DataUsageService;
-import com.zohaltech.app.mobiledatamonitor.classes.TrafficDisplay;
+import com.zohaltech.app.mobiledatamonitor.classes.TrafficUnitsUtil;
 
 import widgets.CircleProgress;
 
@@ -69,7 +69,7 @@ public class TodayUsageFragment extends Fragment {
             @Override
             public void run() {
                 //TrafficDisplay trafficDisplay = TrafficDisplay.getTodayTraffic(App.preferences.getLong(DataUsageService.DAILY_USAGE_BYTES, 0));
-                TrafficDisplay trafficDisplay = TrafficDisplay.getTodayTraffic(bytes);
+                TrafficUnitsUtil trafficDisplay = TrafficUnitsUtil.getTodayTraffic(bytes);
                 progressTodayUsage.setProgress(trafficDisplay.getValue(), trafficDisplay.getPostfix());
             }
         });

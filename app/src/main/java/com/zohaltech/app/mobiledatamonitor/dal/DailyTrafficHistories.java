@@ -17,14 +17,12 @@ public class DailyTrafficHistories {
     static final String TableName         = "DailyTrafficHistories";
     static final String Id                = "Id";
     static final String Traffic           = "Traffic";
-    static final String BeginningDateTime = "BeginningDateTime";
-    static final String EndingDateTime    = "EndingDateTime";
+    static final String LogDate = "LogDate";
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
                                       Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                                       Traffic + " BIGINT  NOT NULL," +
-                                      BeginningDateTime + " CHAR(19)  NOT NULL, " +
-                                      EndingDateTime + " CHAR(19)  NOT NULL );";
+                                      LogDate + " CHAR(10)  NOT NULL );";
     static final String DropTable   = "Drop Table If Exists " + TableName;
 
     public static ArrayList<DailyTrafficHistory> select() {
@@ -35,8 +33,7 @@ public class DailyTrafficHistories {
         ContentValues values = new ContentValues();
 
         values.put(Traffic, trafficHistory.getTraffic());
-        values.put(BeginningDateTime, trafficHistory.getBeginningDateTime());
-        values.put(EndingDateTime, trafficHistory.getEndingDateTime());
+        values.put(LogDate, trafficHistory.getLogDate());
 
         DataAccess da = new DataAccess();
         return da.insert(TableName, values);
@@ -46,8 +43,7 @@ public class DailyTrafficHistories {
         ContentValues values = new ContentValues();
 
         values.put(Traffic, trafficHistory.getTraffic());
-        values.put(BeginningDateTime, trafficHistory.getBeginningDateTime());
-        values.put(EndingDateTime, trafficHistory.getEndingDateTime());
+        values.put(LogDate, trafficHistory.getLogDate());
 
         DataAccess da = new DataAccess();
         return da.update(TableName, values, Id + " =? ", new String[]{String.valueOf(trafficHistory.getId())});
@@ -71,8 +67,7 @@ public class DailyTrafficHistories {
                 do {
                     DailyTrafficHistory history = new DailyTrafficHistory(cursor.getInt(cursor.getColumnIndex(Id)),
                                                                           cursor.getLong(cursor.getColumnIndex(Traffic)),
-                                                                          cursor.getString(cursor.getColumnIndex(BeginningDateTime)),
-                                                                          cursor.getString(cursor.getColumnIndex(EndingDateTime)));
+                                                                          cursor.getString(cursor.getColumnIndex(LogDate)));
                     histories.add(history);
                 } while (cursor.moveToNext());
             }
@@ -95,12 +90,12 @@ public class DailyTrafficHistories {
         Cursor cursor = null;
 
         try {
-            String query = "SELECT  SUM(Traffic) total,SUBSTR(BeginningDateTime,0,11) date FROM (" +
-                           "SELECT  *  FROM DailyTrafficHistories " +
-                           "ORDER BY Id DESC) t " +
-                           "GROUP BY SUBSTR(BeginningDateTime,0,11) " +
-                           "ORDER BY date DESC " +
-                           "LIMIT 30";
+            String query = "SELECT  SUM("+Traffic+") total,SUBSTR("+LogDate+",0,11) date FROM (" +
+                           "SELECT  *  FROM "+TableName+
+                           " ORDER BY "+Id+" DESC) t " +
+                           " GROUP BY SUBSTR("+LogDate+",0,11) " +
+                           " ORDER BY date DESC " +
+                           " LIMIT 30";
 
             cursor = db.rawQuery(query, null);
             if (cursor != null && cursor.moveToFirst()) {
