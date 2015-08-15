@@ -3,25 +3,20 @@ package com.zohaltech.app.mobiledatamonitor.classes;
 
 public class RemainingTimeObject {
 
-    public enum TimeType {
-        DAY,
-        HOUR
-    }
-
-    TimeType timeType;
+    String timeDesc;
     int    remained;
 
-    public RemainingTimeObject(TimeType timeType, int remained) {
-        setTimeType(timeType);
+    public RemainingTimeObject(String timeDesc, int remained) {
+        setTimeDesc(timeDesc);
         setRemained(remained);
     }
 
-    public TimeType getTimeType() {
-        return timeType;
+    public String getTimeDesc() {
+        return timeDesc;
     }
 
-    public void setTimeType(TimeType timeType) {
-        this.timeType = timeType;
+    public void setTimeDesc(String timeDesc) {
+        this.timeDesc = timeDesc;
     }
 
     public int getRemained() {

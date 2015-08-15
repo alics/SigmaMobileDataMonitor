@@ -22,6 +22,8 @@ public class TrafficUsageFragment extends Fragment {
 
     ArcProgress progressPrimaryUsage;
     ArcProgress progressSecondaryUsage;
+    TextView txtSecondary;
+    TextView txtSecondaryCaption;
 
     long   usedPrimaryTraffic;
     long   totalPrimaryTraffic;
@@ -44,11 +46,13 @@ public class TrafficUsageFragment extends Fragment {
         int size2 = (App.screenWidth) / 4;
         progressPrimaryUsage = (ArcProgress) view.findViewById(R.id.progressPrimaryUsage);
         progressSecondaryUsage = (ArcProgress) view.findViewById(R.id.progressSecondaryUsage);
-        TextView txtSecondaryCaption = (TextView) view.findViewById(R.id.txtSecondaryCaption);
+        txtSecondary = (TextView) view.findViewById(R.id.txtSecondary);
+        txtSecondaryCaption = (TextView) view.findViewById(R.id.txtSecondaryCaption);
 
         progressPrimaryUsage.setLayoutParams(new LinearLayout.LayoutParams(size1, size1));
         progressSecondaryUsage.setLayoutParams(new LinearLayout.LayoutParams(size2, size2));
 
+        txtSecondary.setLayoutParams(new LinearLayout.LayoutParams(size2, ViewGroup.LayoutParams.WRAP_CONTENT));
         txtSecondaryCaption.setLayoutParams(new LinearLayout.LayoutParams(size2, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
@@ -61,16 +65,16 @@ public class TrafficUsageFragment extends Fragment {
     public void updateUI() {
         PackageStatus status = PackageStatus.getCurrentStatus();
 
-        if (status.getHasActivePackage()) {
-            usedPrimaryTraffic = status.getUsedPrimaryTraffic();
-            totalPrimaryTraffic = status.getPrimaryTraffic();
-            usedSecondaryTraffic = status.getUsedSecondaryTraffic();
-            totalSecondaryTraffic = status.getSecondaryTraffic();
-            strPrimaryTraffic = TrafficUnitsUtil.getArcTraffic(usedPrimaryTraffic, totalPrimaryTraffic);
-            strSecondaryTraffic = TrafficUnitsUtil.getArcTraffic(usedSecondaryTraffic, totalSecondaryTraffic);
-            progressPrimaryUsage.setProgress(0, strPrimaryTraffic);
-            progressSecondaryUsage.setProgress(0, strSecondaryTraffic);
-        }
+        usedPrimaryTraffic = status.getUsedPrimaryTraffic();
+        totalPrimaryTraffic = status.getPrimaryTraffic();
+        usedSecondaryTraffic = status.getUsedSecondaryTraffic();
+        totalSecondaryTraffic = status.getSecondaryTraffic();
+        strPrimaryTraffic = TrafficUnitsUtil.getArcTraffic(usedPrimaryTraffic, totalPrimaryTraffic);
+        strSecondaryTraffic = TrafficUnitsUtil.getArcTraffic(usedSecondaryTraffic, totalSecondaryTraffic);
+        progressPrimaryUsage.setProgress(0, strPrimaryTraffic);
+        progressSecondaryUsage.setProgress(0, strSecondaryTraffic);
+
+        txtSecondaryCaption.setText(status.getSecondaryCaption());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             new PrimaryProgressTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
