@@ -28,12 +28,6 @@ public class PackageFragment extends Fragment {
     HashMap<String, List<DataPackage>> dataPackages;
     ExpandablePackageAdapter           packageAdapter;
 
-    //todo
-    ///////////////////////////////////////////
-    public PackageFragment() {
-    }
-    ///////////////////////////////////////////
-
     public static PackageFragment newInstance(int position) {
         Bundle args = new Bundle();
         args.putInt(POSITION, position);
@@ -58,7 +52,7 @@ public class PackageFragment extends Fragment {
 
         periods = new ArrayList<>();
         dataPackages = new HashMap<>();
-        packageAdapter = new ExpandablePackageAdapter(App.currentActivity, periods, dataPackages);
+        packageAdapter = new ExpandablePackageAdapter(getActivity(), periods, dataPackages);
 
         ArrayList<Integer> operatorPeriodList = DataPackages.selectOperatorPeriods(operatorId);
         for (int i = 0; i < operatorPeriodList.size(); i++) {
@@ -108,14 +102,6 @@ public class PackageFragment extends Fragment {
 
         packageAdapter.notifyDataSetChanged();
     }
-
-    //@Override
-    //public void onPause() {
-    //    super.onPause();
-    //    periods.clear();
-    //    dataPackages.clear();
-    //    packageAdapter.notifyDataSetChanged();
-    //}
 
     @Override
     public void onDetach() {

@@ -1,5 +1,6 @@
 package com.zohaltech.app.mobiledatamonitor.classes;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -55,11 +56,11 @@ public final class Helper {
         return date;
     }
 
-    public static void runUssd(String code) {
+    public static void runUssd(Activity activity, String code) {
         code = String.format("%s%s", code.substring(0, code.length() - 1), Uri.encode("#"));
         Intent callIntent = new Intent(Intent.ACTION_CALL);
         callIntent.setData(Uri.parse("tel:" + code));
-        App.currentActivity.startActivity(callIntent);
+        activity.startActivity(callIntent);
     }
 
     public static boolean getConnectivityStatus() {

@@ -1,37 +1,37 @@
 package com.zohaltech.app.mobiledatamonitor.adapters;
 
-import android.content.Context;
+import android.app.Activity;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.zohaltech.app.mobiledatamonitor.R;
-import com.zohaltech.app.mobiledatamonitor.classes.App;
+import com.zohaltech.app.mobiledatamonitor.activities.MainActivity;
 import com.zohaltech.app.mobiledatamonitor.classes.DialogManager;
 import com.zohaltech.app.mobiledatamonitor.classes.Helper;
 import com.zohaltech.app.mobiledatamonitor.dal.DataPackages;
 import com.zohaltech.app.mobiledatamonitor.dal.PackageHistories;
 import com.zohaltech.app.mobiledatamonitor.entities.DataPackage;
 import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
+import com.zohaltech.app.mobiledatamonitor.fragments.SettingsFragment;
 
 import java.util.HashMap;
 import java.util.List;
 
 import widgets.AnimatedExpandableListView;
-import widgets.MyToast;
 
 public class ExpandablePackageAdapter extends AnimatedExpandableListView.AnimatedExpandableListAdapter {
 
-    private Context                            context;
+    private Activity                           activity;
     private List<String>                       periods; // header titles
     // child data in format of header title, child title
     private HashMap<String, List<DataPackage>> dataPackages;
 
-    public ExpandablePackageAdapter(Context context, List<String> periods, HashMap<String, List<DataPackage>> dataPackages) {
-        this.context = context;
+    public ExpandablePackageAdapter(Activity activity, List<String> periods, HashMap<String, List<DataPackage>> dataPackages) {
+        this.activity = activity;
         this.periods = periods;
         this.dataPackages = dataPackages;
     }
@@ -51,7 +51,7 @@ public class ExpandablePackageAdapter extends AnimatedExpandableListView.Animate
         final DataPackage dataPackage = getChild(groupPosition, childPosition);
 
         if (convertView == null) {
-            LayoutInflater inflater = LayoutInflater.from(context);
+            LayoutInflater inflater = LayoutInflater.from(activity);
             convertView = inflater.inflate(R.layout.package_item, null);
         }
 
@@ -63,37 +63,54 @@ public class ExpandablePackageAdapter extends AnimatedExpandableListView.Animate
                         new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                DialogManager.showConfirmationDialog(App.currentActivity, "خرید بسته", "آیا مایل به خرید بسته هستید؟", "بله", "خیر", null, new Runnable() {
+                                DialogManager.showConfirmationDialog(activity, "خرید بسته", "آیا مایل به خرید بسته هستید؟", "بله", "خیر", null, new Runnable() {
                                     @Override
                                     public void run() {
-                                        Helper.runUssd(dataPackage.getUssdCode());
+                                        Helper.runUssd(activity, dataPackage.getUssdCode());
 
-                                        DialogManager.showConfirmationDialog(App.currentActivity, "فعالسازی بسته", "آیا مایل به فعالسازی بسته " + dataPackage.getDescription() + " هستید؟",
+                                        DialogManager.showConfirmationDialog(activity, "فعالسازی بسته", "آیا مایل به فعالسازی بسته " + dataPackage.getDescription() + " هستید؟",
                                                                              "بله", "خیر", null, new Runnable() {
                                                     @Override
                                                     public void run() {
-                                                        PackageHistory history = PackageHistories.getActivePackage();
+                                                        final PackageHistory history = PackageHistories.getActivePackage();
                                                         if (history == null) {
                                                             PackageHistories.insert(new PackageHistory(dataPackage.getId(), Helper.getCurrentDateTime(), null, null, null, PackageHistory.StatusEnum.ACTIVE.ordinal()));
-                                                            MyToast.show("بسته فعال شد", Toast.LENGTH_SHORT);
+                                                            MainActivity parent = ((MainActivity) activity);
+                                                            parent.animType = MainActivity.AnimType.OPEN;
+                                                            Bundle bundle = new Bundle();
+                                                            bundle.putString(SettingsFragment.INIT_MODE_KEY, SettingsFragment.MODE_SETTING_ACTIVE);
+                                                            bundle.putString(SettingsFragment.PACKAGE_ID_KEY, dataPackage.getId() + "");
+                                                            parent.displayView(MainActivity.EnumFragment.SETTINGS, bundle);
 
                                                         } else {
                                                             DataPackage activePackage = DataPackages.selectPackageById(history.getDataPackageId());
-                                                            DialogManager.showChoiceDialog(App.currentActivity, "رزرو بسته", "هم اکنون یک بسته فعال " + activePackage.getDescription() + " وجود دارد،آیا بسته" + dataPackage.getDescription() + "به عنوان رزرو در نظر گرفته شود یا از ابتدا محاسبه گردد؟",
+                                                            DialogManager.showChoiceDialog(activity, "رزرو بسته", "هم اکنون یک بسته فعال " + activePackage.getTitle() + " وجود دارد،آیا بسته" + dataPackage.getDescription() + "به عنوان رزرو در نظر گرفته شود یا از ابتدا محاسبه گردد؟",
                                                                                            "از ابتدا محاسبه گردد", "رزرو شود", null, new Runnable() {
                                                                         @Override
                                                                         public void run() {
                                                                             PackageHistories.deletedReservedPackages();
                                                                             PackageHistories.terminateAll(PackageHistory.StatusEnum.CANCELED);
                                                                             PackageHistories.insert(new PackageHistory(dataPackage.getId(), Helper.getCurrentDateTime(), null, null, null, PackageHistory.StatusEnum.ACTIVE.ordinal()));
-                                                                            MyToast.show("بسته از ابتدا محاسبه و فعال شد", Toast.LENGTH_SHORT);
+
+                                                                            MainActivity parent = ((MainActivity) activity);
+                                                                            parent.animType = MainActivity.AnimType.OPEN;
+                                                                            Bundle bundle = new Bundle();
+                                                                            bundle.putString(SettingsFragment.INIT_MODE_KEY, SettingsFragment.MODE_SETTING_ACTIVE);
+                                                                            bundle.putString(SettingsFragment.PACKAGE_ID_KEY, dataPackage.getId() + "");
+                                                                            parent.displayView(MainActivity.EnumFragment.SETTINGS, bundle);
                                                                         }
 
                                                                     }, new Runnable() {
                                                                         public void run() {
                                                                             PackageHistories.deletedReservedPackages();
-                                                                            PackageHistories.insert(new PackageHistory(dataPackage.getId(), null, null, null, null,PackageHistory.StatusEnum.RESERVED.ordinal()));
-                                                                            MyToast.show("بسته رزور شد", Toast.LENGTH_SHORT);
+                                                                            PackageHistories.insert(new PackageHistory(dataPackage.getId(), null, null, null, null, PackageHistory.StatusEnum.RESERVED.ordinal()));
+
+                                                                            MainActivity parent = ((MainActivity) activity);
+                                                                            parent.animType = MainActivity.AnimType.OPEN;
+                                                                            Bundle bundle = new Bundle();
+                                                                            bundle.putString(SettingsFragment.INIT_MODE_KEY, SettingsFragment.MODE_SETTING_RESERVED);
+                                                                            bundle.putString(SettingsFragment.PACKAGE_ID_KEY,dataPackage.getId() + "");
+                                                                            parent.displayView(MainActivity.EnumFragment.SETTINGS, bundle);
                                                                         }
                                                                     });
                                                         }
@@ -120,7 +137,7 @@ public class ExpandablePackageAdapter extends AnimatedExpandableListView.Animate
     //    final String childText = (String) getChild(groupPosition, childPosition);
     //
     //    if (convertView == null) {
-    //        LayoutInflater infalInflater = (LayoutInflater) this.context
+    //        LayoutInflater infalInflater = (LayoutInflater) this.activity
     //                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     //        convertView = infalInflater.inflate(R.layout.package_item, null);
     //    }
@@ -156,7 +173,7 @@ public class ExpandablePackageAdapter extends AnimatedExpandableListView.Animate
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         String headerTitle = (String) getGroup(groupPosition);
         if (convertView == null) {
-            LayoutInflater inflater = LayoutInflater.from(context);
+            LayoutInflater inflater = LayoutInflater.from(activity);
             convertView = inflater.inflate(R.layout.period_item, null);
         }
 

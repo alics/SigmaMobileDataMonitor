@@ -121,7 +121,7 @@ public class SettingsFragment extends MyFragment {
                         }
                     });
                 } else {
-                    DialogManager.showTimePickerDialog(getActivity(), "انتخاب زمان", 2, 0, new Runnable() {
+                    DialogManager.showTimePickerDialog(getActivity(), "انتخاب زمان", 7, 0, new Runnable() {
                         @Override
                         public void run() {
                             btnSecondaryEndTime.setText(DialogManager.timeResult);
@@ -144,8 +144,8 @@ public class SettingsFragment extends MyFragment {
                 spinnerOperators.setSelection(dataPackage.getOperatorId());
                 editTextPackageValidPeriod.setText(String.valueOf(dataPackage.getPeriod()));
                 editTextPackagePrice.setText(String.valueOf(dataPackage.getPrice()));
-                editTextPrimaryTraffic.setText(String.valueOf(dataPackage.getPrimaryTraffic()));
-                editTextSecondaryTraffic.setText(String.valueOf(dataPackage.getSecondaryTraffic()));
+                editTextPrimaryTraffic.setText(TrafficUnitsUtil.ByteToMb(dataPackage.getPrimaryTraffic()) + "");
+                editTextSecondaryTraffic.setText(TrafficUnitsUtil.ByteToMb(dataPackage.getSecondaryTraffic()) + "");
                 btnSecondaryStartTime.setText(dataPackage.getSecondaryTrafficStartTime());
                 btnSecondaryEndTime.setText(dataPackage.getSecondaryTrafficEndTime());
 
@@ -201,7 +201,7 @@ public class SettingsFragment extends MyFragment {
                 saveReservedPackageSettings();
                 break;
             case MODE_INSERT_CUSTOM:
-                DialogManager.showConfirmationDialog(App.currentActivity, "فعالسازی بسته سفارشی", "با تأیید بسته سفارشی اطلاعات مربوط به بسته های فعال و رزرو شده از بین می رود، آیا انجام شود/؟",
+                DialogManager.showConfirmationDialog(getActivity(), "فعالسازی بسته سفارشی", "با تأیید بسته سفارشی اطلاعات مربوط به بسته های فعال و رزرو شده از بین می رود، آیا انجام شود/؟",
                                                      "بله", "خیر", null, new Runnable() {
                             @Override
                             public void run() {
@@ -224,13 +224,10 @@ public class SettingsFragment extends MyFragment {
         for (int i = 0; i < operators.size(); i++) {
             operatorList.add(operators.get(i).getName());
         }
-
         operatorsAdapter = new ArrayAdapter<String>(App.context,
                                                     android.R.layout.simple_spinner_item, operatorList);
         operatorsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerOperators.setAdapter(operatorsAdapter);
-
-
     }
 
     private void saveActivePackageSettings() {
@@ -351,16 +348,16 @@ public class SettingsFragment extends MyFragment {
         int price = 0;
         long primaryTraffic = TrafficUnitsUtil.MbToByte(Integer.valueOf(editTextPrimaryTraffic.getText().toString()));
 
-        long result = DataPackages.insert(new DataPackage(operatorId,
-                                                          title,
-                                                          period,
-                                                          price,
-                                                          primaryTraffic,
-                                                          secondaryTraffic,
-                                                          secondaryTrafficStartTime,
-                                                          secondaryTrafficEndTime,
-                                                          null,
-                                                          true));
+        DataPackages.insert(new DataPackage(operatorId,
+                                            title,
+                                            period,
+                                            price,
+                                            primaryTraffic,
+                                            secondaryTraffic,
+                                            secondaryTrafficStartTime,
+                                            secondaryTrafficEndTime,
+                                            null,
+                                            true));
     }
 
     private void freezePackageInformation() {
