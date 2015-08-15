@@ -1,7 +1,6 @@
 package com.zohaltech.app.mobiledatamonitor.fragments;
 
 import android.os.Bundle;
-import android.support.v7.internal.widget.ListViewCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,7 +21,7 @@ import widgets.MyFragment;
 
 public class HistoryFragment extends MyFragment {
 
-    ListView            lstPackagesHistories;
+    ListView                  lstPackagesHistories;
     ArrayList<PackageHistory> packageHistories;
     HistoryAdapter            adapter;
 

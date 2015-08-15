@@ -10,39 +10,33 @@ import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
 import java.util.Date;
 
 public final class PackageStatus {
-    Boolean hasActivePackage;
-    long    dailyTraffic;
-    long    primaryTraffic;
-    long    usedPrimaryTraffic;
-    long    secondaryTraffic;
-    long    usedSecondaryTraffic;
-    String  secondaryCaption;
-    int     period;
-    int     leftDays;
-    String  currentAlarms;
-
+    long   primaryTraffic;
+    long   usedPrimaryTraffic;
+    long   secondaryTraffic;
+    long   usedSecondaryTraffic;
+    String secondaryCaption;
 
     public static PackageStatus getCurrentStatus() {
         PackageStatus status = new PackageStatus();
         PackageHistory history = PackageHistories.getActivePackage();
 
-        status.dailyTraffic = SettingsHandler.getDailyTraffic();
-
         if (history == null) {
-            status.hasActivePackage = false;
+            status.setPrimaryTraffic(0);
+            status.setUsedPrimaryTraffic(0);
+            status.setSecondaryTraffic(0);
+            status.setUsedSecondaryTraffic(0);
+            status.setSecondaryCaption(null);
+
             return status;
         }
 
         DataPackage dataPackage = DataPackages.selectPackageById(history.getDataPackageId());
 
         if (dataPackage != null) {
-            String currentAlarms = "";
-            status.hasActivePackage = true;
             status.setPrimaryTraffic(dataPackage.getPrimaryTraffic());
             status.setUsedPrimaryTraffic(UsageLogs.getUsedPrimaryTrafficOfPackage(dataPackage, history));
 
             if (status.getUsedPrimaryTraffic() >= dataPackage.getPrimaryTraffic()) {
-                currentAlarms += "اعتبار حجمی بسته به پایان رسید.";
                 PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.TRAFFIC_FINISHED);
                 Helper.setMobileDataEnabled(false);
             }
@@ -50,72 +44,114 @@ public final class PackageStatus {
             if (dataPackage.getSecondaryTraffic() != null && dataPackage.getSecondaryTraffic() != 0) {
                 status.setSecondaryTraffic(dataPackage.getSecondaryTraffic());
                 status.setUsedSecondaryTraffic(UsageLogs.getUsedSecondaryTrafficOfPackage(dataPackage, history));
-
-                if (status.getUsedSecondaryTraffic() >= dataPackage.getSecondaryTraffic()) {
-                    currentAlarms += " حجم شبانه بسته به پایان رسید.";
-                }
+                String caption = dataPackage.getSecondaryTrafficStartTime() + " تا " + dataPackage.getSecondaryTrafficEndTime();
+                status.setSecondaryCaption(caption);
             }
-
-            Date packageActivationDate = Helper.getDateTime(history.getStartDateTime());
-            Date currentDateTime = Helper.getDate(Helper.getCurrentDateTime());
-            int diffDays = (int) ((currentDateTime.getTime() - packageActivationDate.getTime()) / (1000 * 60 * 60 * 24));
-
-            int leftDays = dataPackage.getPeriod() - diffDays;
-            status.setPeriod(dataPackage.getPeriod());
-            status.setLeftDays(leftDays);
-
-            if (leftDays <= 0) {
-                currentAlarms += "مهلت اعتبار بسته به پایان رسید";
-                PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.PERIOD_FINISHED);
-                Helper.setMobileDataEnabled(false);
-            }
-
-            if (SettingsHandler.getAlarmType() == SettingsHandler.AlarmType.LeftDay.ordinal()) {
-                int leftDayAlarm = SettingsHandler.getLeftDaysAlarm();
-                if (leftDayAlarm >= diffDays && diffDays > 0)
-                    currentAlarms += "روز باقیمانده به اتمام بسته " + diffDays;
-            } else if (SettingsHandler.getAlarmType() == SettingsHandler.AlarmType.RemindedBytes.ordinal()) {
-                long remindedByteAlarm = SettingsHandler.getRemindedByteAlarm();
-                long reminded = status.getPrimaryTraffic() - status.getUsedPrimaryTraffic();
-                if (reminded <= remindedByteAlarm) {
-                    currentAlarms += "," + "حجم رو به اتمام است";
-                }
-            } else if (SettingsHandler.getAlarmType() == SettingsHandler.AlarmType.Both.ordinal()) {
-                int leftDayAlarm = SettingsHandler.getLeftDaysAlarm();
-                if (leftDayAlarm >= diffDays && diffDays > 0)
-                    currentAlarms += "," + "روز باقیمانده به اتمام بسته " + diffDays;
-
-                long remindedByteAlarm = SettingsHandler.getRemindedByteAlarm() * 1024 * 1024;
-                long reminded = status.getPrimaryTraffic() - status.getUsedPrimaryTraffic();
-                if (reminded <= remindedByteAlarm) {
-                    currentAlarms += "," + "حجم رو به اتمام است";
-                }
-            }
-            status.setCurrentAlarms(currentAlarms);
         }
         return status;
     }
 
-    public void updateStatus(){
+    public static RemainingTimeObject getLeftDays() {
+        PackageHistory history = PackageHistories.getActivePackage();
+        if (history == null)
+            return null;
 
+        DataPackage dataPackage = DataPackages.selectPackageById(history.getDataPackageId());
+        Date packageActivationDate = Helper.getDateTime(history.getStartDateTime());
+        Date currentDateTime = Helper.getDate(Helper.getCurrentDateTime());
+        int diffDays = (int) ((currentDateTime.getTime() - packageActivationDate.getTime()) / (1000 * 60 * 60 * 24));
+        int leftDays = dataPackage.getPeriod() - diffDays;
+
+        if (leftDays == 0) {
+            int leftHours = (int) ((currentDateTime.getTime() - packageActivationDate.getTime()) / (1000 * 60 * 60));
+            return new RemainingTimeObject(RemainingTimeObject.TimeType.HOUR, leftHours);
+        }
+        return new RemainingTimeObject(RemainingTimeObject.TimeType.DAY, leftDays);
     }
 
+    //    public ArrayList<AlarmObject> getCurrentAlarms(){
+    //
+    //        PackageHistory history = PackageHistories.getActivePackage();
+    //
+    //        if (history == null) {
+    //            status.setPrimaryTraffic(0);
+    //            status.setUsedPrimaryTraffic(0);
+    //            status.setSecondaryTraffic(0);
+    //            status.setUsedSecondaryTraffic(0);
+    //            status.setSecondaryCaption(null);
+    //
+    //            return status;
+    //        }
+    //
+    //        DataPackage dataPackage = DataPackages.selectPackageById(history.getDataPackageId());
+    //
+    //        if (dataPackage != null) {
+    //            String currentAlarms = "";
+    //            status.hasActivePackage = true;
+    //            status.setPrimaryTraffic(dataPackage.getPrimaryTraffic());
+    //            status.setUsedPrimaryTraffic(UsageLogs.getUsedPrimaryTrafficOfPackage(dataPackage, history));
+    //
+    //            if (status.getUsedPrimaryTraffic() >= dataPackage.getPrimaryTraffic()) {
+    //                currentAlarms += "اعتبار حجمی بسته به پایان رسید.";
+    //                PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.TRAFFIC_FINISHED);
+    //                Helper.setMobileDataEnabled(false);
+    //            }
+    //
+    //            if (dataPackage.getSecondaryTraffic() != null && dataPackage.getSecondaryTraffic() != 0) {
+    //                status.setSecondaryTraffic(dataPackage.getSecondaryTraffic());
+    //                status.setUsedSecondaryTraffic(UsageLogs.getUsedSecondaryTrafficOfPackage(dataPackage, history));
+    //
+    //                if (status.getUsedSecondaryTraffic() >= dataPackage.getSecondaryTraffic()) {
+    //                    currentAlarms += " حجم شبانه بسته به پایان رسید.";
+    //                }
+    //            }
+    //
+    //            Date packageActivationDate = Helper.getDateTime(history.getStartDateTime());
+    //            Date currentDateTime = Helper.getDate(Helper.getCurrentDateTime());
+    //            int diffDays = (int) ((currentDateTime.getTime() - packageActivationDate.getTime()) / (1000 * 60 * 60 * 24));
+    //
+    //            int leftDays = dataPackage.getPeriod() - diffDays;
+    //            status.setPeriod(dataPackage.getPeriod());
+    //            status.setLeftDays(leftDays);
+    //
+    //            if (leftDays <= 0) {
+    //                currentAlarms += "مهلت اعتبار بسته به پایان رسید";
+    //                PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.PERIOD_FINISHED);
+    //                Helper.setMobileDataEnabled(false);
+    //            }
+    //
+    //            if (SettingsHandler.getAlarmType() == SettingsHandler.AlarmType.LeftDay.ordinal()) {
+    //                int leftDayAlarm = SettingsHandler.getLeftDaysAlarm();
+    //                if (leftDayAlarm >= diffDays && diffDays > 0)
+    //                    currentAlarms += "روز باقیمانده به اتمام بسته " + diffDays;
+    //            } else if (SettingsHandler.getAlarmType() == SettingsHandler.AlarmType.RemindedBytes.ordinal()) {
+    //                long remindedByteAlarm = SettingsHandler.getRemindedByteAlarm();
+    //                long reminded = status.getPrimaryTraffic() - status.getUsedPrimaryTraffic();
+    //                if (reminded <= remindedByteAlarm) {
+    //                    currentAlarms += "," + "حجم رو به اتمام است";
+    //                }
+    //            } else if (SettingsHandler.getAlarmType() == SettingsHandler.AlarmType.Both.ordinal()) {
+    //                int leftDayAlarm = SettingsHandler.getLeftDaysAlarm();
+    //                if (leftDayAlarm >= diffDays && diffDays > 0)
+    //                    currentAlarms += "," + "روز باقیمانده به اتمام بسته " + diffDays;
+    //
+    //                long remindedByteAlarm = SettingsHandler.getRemindedByteAlarm() * 1024 * 1024;
+    //                long reminded = status.getPrimaryTraffic() - status.getUsedPrimaryTraffic();
+    //                if (reminded <= remindedByteAlarm) {
+    //                    currentAlarms += "," + "حجم رو به اتمام است";
+    //                }
+    //            }
+    //            status.setCurrentAlarms(currentAlarms);
+    //
+    //
+    //    }
 
-    public Boolean getHasActivePackage() {
-        return hasActivePackage;
-    }
+    //    public static int getLeftDays(){
+    //
+    //        return 1;
+    //
+    //    }
 
-    public void setHasActivePackage(Boolean hasActivePackage) {
-        this.hasActivePackage = hasActivePackage;
-    }
-
-    public long getDailyTraffic() {
-        return dailyTraffic;
-    }
-
-    public void setDailyTraffic(long dailyTraffic) {
-        this.dailyTraffic = dailyTraffic;
-    }
 
     public long getPrimaryTraffic() {
         return primaryTraffic;
@@ -156,29 +192,4 @@ public final class PackageStatus {
     public void setSecondaryCaption(String secondaryCaption) {
         this.secondaryCaption = secondaryCaption;
     }
-
-    public int getPeriod() {
-        return period;
-    }
-
-    public void setPeriod(int period) {
-        this.period = period;
-    }
-
-    public int getLeftDays() {
-        return leftDays;
-    }
-
-    public void setLeftDays(int leftDays) {
-        this.leftDays = leftDays;
-    }
-
-    public String getCurrentAlarms() {
-        return currentAlarms;
-    }
-
-    public void setCurrentAlarms(String currentAlarms) {
-        this.currentAlarms = currentAlarms;
-    }
-
 }
