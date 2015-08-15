@@ -107,7 +107,7 @@ public class MainActivity extends EnhancedActivity {
                 break;
             case GLOBAL_SETTINGS:
                 fragment = new GlobalSettingsFragment();
-                title = "تظیمات";
+                title = "تنظیمات";
                 break;
             case ABOUT_US:
                 fragment = new AboutUsFragment();

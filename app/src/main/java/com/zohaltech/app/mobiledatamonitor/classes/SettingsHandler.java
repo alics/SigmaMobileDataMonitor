@@ -4,16 +4,19 @@ public final class SettingsHandler {
 
     public enum AlarmType {RemindedBytes, LeftDay, Both}
 
-    private static final String PREF_IS_MONITORING_SERVICE_ON = "IS_MONITORING_SERVICE_ON";
-    private static final String PREF_DAILY_TRAFFIC            = "DAILY_TRAFFIC";
-    private static final String PREF_LAST_LOG_DATE            = "LAST_LOG_DATE";
-    private static final String PREF_DC_DATA_AFTER_TERMINATE  = "DC_DATA_AFTER_TERMINATE";
-    private static final String PREF_ALARM_TYPE               = "ALARM_TYPE";
-    private static final String PREF_REMINDED_BYTE_ALARM      = "REMINDED_BYTE_ALARM";
-    private static final String PREF_LEFT_DAYS_ALARM          = "LEFT_DAYS_ALARM";
-    private static final String PREF_ALARM_TYPE_RES           = "ALARM_TYPE_RES";
-    private static final String PREF_REMINDED_BYTE_ALARM_RES  = "REMINDED_BYTE_ALARM_RES";
-    private static final String PREF_LEFT_DAYS_ALARM_RES      = "LEFT_DAYS_ALARM_RES";
+    private static final String PREF_IS_MONITORING_SERVICE_ON          = "IS_MONITORING_SERVICE_ON";
+    private static final String PREF_DAILY_TRAFFIC                     = "DAILY_TRAFFIC";
+    private static final String PREF_LAST_LOG_DATE                     = "LAST_LOG_DATE";
+    private static final String PREF_DC_DATA_AFTER_TERMINATE           = "DC_DATA_AFTER_TERMINATE";
+    private static final String PREF_ALARM_TYPE                        = "ALARM_TYPE";
+    private static final String PREF_REMINDED_BYTE_ALARM               = "REMINDED_BYTE_ALARM";
+    private static final String PREF_LEFT_DAYS_ALARM                   = "LEFT_DAYS_ALARM";
+    private static final String PREF_ALARM_TYPE_RES                    = "ALARM_TYPE_RES";
+    private static final String PREF_REMINDED_BYTE_ALARM_RES           = "REMINDED_BYTE_ALARM_RES";
+    private static final String PREF_LEFT_DAYS_ALARM_RES               = "LEFT_DAYS_ALARM_RES";
+    private static final String PREF_SHOW_NOTIFICATION                 = "SHOW_NOTIFICATION ";
+    private static final String PREF_SHOW_NOTIFICATION_WHEN_DATA_IS_ON = "SHOW_NOTIFICATION_WHEN_DATA_IS_ON";
+    private static final String PREF_SHOW_NOTIFICATION_IN_LOCK_SCREEN  = "SHOW_NOTIFICATION_IN_LOCK_SCREEN ";
 
 
     public static boolean isMonitoringServiceActive() {
@@ -22,6 +25,31 @@ public final class SettingsHandler {
 
     public static void setMonitoringServiceActive(boolean active) {
         App.preferences.edit().putBoolean(PREF_IS_MONITORING_SERVICE_ON, active);
+    }
+
+
+    public static boolean isShowNotification() {
+        return App.preferences.getBoolean(PREF_SHOW_NOTIFICATION, true);
+    }
+
+    public static void setShowNotification(boolean active) {
+        App.preferences.edit().putBoolean(PREF_SHOW_NOTIFICATION, active);
+    }
+
+    public static boolean isShowNotificationWhenDataIsOn() {
+        return App.preferences.getBoolean(PREF_SHOW_NOTIFICATION_WHEN_DATA_IS_ON, true);
+    }
+
+    public static void setShowNotificationWhenDataIsOn(boolean active) {
+        App.preferences.edit().putBoolean(PREF_SHOW_NOTIFICATION_WHEN_DATA_IS_ON, active);
+    }
+
+    public static boolean isShowNotificationInLockScreen() {
+        return App.preferences.getBoolean(PREF_SHOW_NOTIFICATION_IN_LOCK_SCREEN, true);
+    }
+
+    public static void setShowNotificationInLockScreen(boolean active) {
+        App.preferences.edit().putBoolean(PREF_SHOW_NOTIFICATION_IN_LOCK_SCREEN, active);
     }
 
     public static boolean dcDataAfterTerminatePackage() {
