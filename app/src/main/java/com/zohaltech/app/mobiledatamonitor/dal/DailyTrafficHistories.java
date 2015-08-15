@@ -7,17 +7,16 @@ import android.database.sqlite.SQLiteDatabase;
 import com.zohaltech.app.mobiledatamonitor.classes.Helper;
 import com.zohaltech.app.mobiledatamonitor.classes.MyRuntimeException;
 import com.zohaltech.app.mobiledatamonitor.entities.DailyTrafficHistory;
-import com.zohaltech.app.mobiledatamonitor.entities.DataPackage;
 import com.zohaltech.app.mobiledatamonitor.entities.TrafficMonitor;
 
 import java.util.ArrayList;
 
 public class DailyTrafficHistories {
 
-    static final String TableName         = "DailyTrafficHistories";
-    static final String Id                = "Id";
-    static final String Traffic           = "Traffic";
-    static final String LogDate = "LogDate";
+    static final String TableName = "DailyTrafficHistories";
+    static final String Id        = "Id";
+    static final String Traffic   = "Traffic";
+    static final String LogDate   = "LogDate";
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
                                       Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
@@ -90,11 +89,11 @@ public class DailyTrafficHistories {
         Cursor cursor = null;
 
         try {
-            String query = "SELECT  SUM("+Traffic+") total,SUBSTR("+LogDate+",0,11) date FROM (" +
-                           "SELECT  *  FROM "+TableName+
-                           " ORDER BY "+Id+" DESC) t " +
-                           " GROUP BY SUBSTR("+LogDate+",0,11) " +
-                           " ORDER BY date DESC " +
+            String query = "SELECT  SUM(" + Traffic + ") total, SUBSTR(" + LogDate + ",0,11) date FROM (" +
+                           " SELECT  *  FROM " + TableName +
+                           " ORDER BY " + Id + " DESC) t" +
+                           " GROUP BY SUBSTR(" + LogDate + ", 0, 11)" +
+                           " ORDER BY date DESC" +
                            " LIMIT 30";
 
             cursor = db.rawQuery(query, null);
