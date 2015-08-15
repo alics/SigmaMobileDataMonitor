@@ -58,6 +58,10 @@ public class TrafficUnitsUtil {
         return (long) (mb * 1024 * 1024);
     }
 
+    public static float ByteToMb(long bytes){
+        return (float) bytes / (1024 * 1024);
+    }
+
     private static String getCorrectTrafficText(float value) {
         String result = Helper.round(value, 1).toString();
         if (result.endsWith(".0")) {

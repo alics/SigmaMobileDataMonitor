@@ -57,12 +57,12 @@ public final class SettingsHandler {
     }
 
 
-    public static int getRemindedByteAlarm() {
-        return App.preferences.getInt(PREF_REMINDED_BYTE_ALARM, 0);
+    public static Long getRemindedByteAlarm() {
+        return App.preferences.getLong(PREF_REMINDED_BYTE_ALARM, 0);
     }
 
-    public static void setRemindedByteAlarm(int threshold) {
-        App.preferences.edit().putInt(PREF_REMINDED_BYTE_ALARM, threshold);
+    public static void setRemindedByteAlarm(Long threshold) {
+        App.preferences.edit().putLong(PREF_REMINDED_BYTE_ALARM, threshold);
     }
 
     public static int getLeftDaysAlarm() {
@@ -81,17 +81,16 @@ public final class SettingsHandler {
         App.preferences.edit().putInt(PREF_ALARM_TYPE_RES, alarmType);
     }
 
-
     public static int getRemindedByteAlarmRes() {
         return App.preferences.getInt(PREF_REMINDED_BYTE_ALARM_RES, 0);
     }
 
-    public static void setRemindedByteAlarmRes(int threshold) {
-        App.preferences.edit().putInt(PREF_REMINDED_BYTE_ALARM_RES, threshold);
+    public static void setRemindedByteAlarmRes(Long threshold) {
+        App.preferences.edit().putLong(PREF_REMINDED_BYTE_ALARM_RES, threshold);
     }
 
-    public static int getLeftDaysAlarmRes() {
-        return App.preferences.getInt(PREF_LEFT_DAYS_ALARM_RES, 0);
+    public static Long getLeftDaysAlarmRes() {
+        return App.preferences.getLong(PREF_LEFT_DAYS_ALARM_RES, 0);
     }
 
     public static void setLeftDaysAlarmRes(int leftDaysAlarm) {

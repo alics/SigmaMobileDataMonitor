@@ -229,6 +229,8 @@ public class SettingsFragment extends MyFragment {
                                                     android.R.layout.simple_spinner_item, operatorList);
         operatorsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerOperators.setAdapter(operatorsAdapter);
+
+
     }
 
     private void saveActivePackageSettings() {
@@ -243,12 +245,14 @@ public class SettingsFragment extends MyFragment {
 
             SettingsHandler.setAlarmType(SettingsHandler.AlarmType.Both.ordinal());
             SettingsHandler.setLeftDaysAlarm(Integer.valueOf(editTextLeftDaysAlarm.getText().toString()));
-            SettingsHandler.setRemindedByteAlarm(Integer.valueOf(editTextTrafficAlarm.getText().toString()));
+            SettingsHandler.setRemindedByteAlarm(
+                    TrafficUnitsUtil.MbToByte(Integer.valueOf(editTextTrafficAlarm.getText().toString())));
         } else if (trafficAlarm) {
             if (Validator.validateEditText(editTextTrafficAlarm, "اخطار حجمی"))
                 return;
             SettingsHandler.setAlarmType(SettingsHandler.AlarmType.RemindedBytes.ordinal());
-            SettingsHandler.setRemindedByteAlarm(Integer.valueOf(editTextTrafficAlarm.getText().toString()));
+            SettingsHandler.setRemindedByteAlarm(
+                    TrafficUnitsUtil.MbToByte(Integer.valueOf(editTextTrafficAlarm.getText().toString())));
         } else if (leftDaysAlarm) {
             SettingsHandler.setAlarmType(SettingsHandler.AlarmType.LeftDay.ordinal());
             SettingsHandler.setLeftDaysAlarm(Integer.valueOf(editTextLeftDaysAlarm.getText().toString()));
@@ -267,12 +271,14 @@ public class SettingsFragment extends MyFragment {
 
             SettingsHandler.setAlarmTypeRes(SettingsHandler.AlarmType.Both.ordinal());
             SettingsHandler.setLeftDaysAlarmRes(Integer.valueOf(editTextLeftDaysAlarm.getText().toString()));
-            SettingsHandler.setRemindedByteAlarmRes(Integer.valueOf(editTextTrafficAlarm.getText().toString()));
+            SettingsHandler.setRemindedByteAlarmRes(
+                    TrafficUnitsUtil.MbToByte(Integer.valueOf(editTextTrafficAlarm.getText().toString())));
         } else if (trafficAlarm) {
             if (Validator.validateEditText(editTextTrafficAlarm, "اخطار حجمی"))
                 return;
             SettingsHandler.setAlarmTypeRes(SettingsHandler.AlarmType.RemindedBytes.ordinal());
-            SettingsHandler.setRemindedByteAlarmRes(Integer.valueOf(editTextTrafficAlarm.getText().toString()));
+            SettingsHandler.setRemindedByteAlarmRes(
+                    TrafficUnitsUtil.MbToByte(Integer.valueOf(editTextTrafficAlarm.getText().toString())));
         } else if (leftDaysAlarm) {
             SettingsHandler.setAlarmTypeRes(SettingsHandler.AlarmType.LeftDay.ordinal());
             SettingsHandler.setLeftDaysAlarmRes(Integer.valueOf(editTextLeftDaysAlarm.getText().toString()));
@@ -280,19 +286,35 @@ public class SettingsFragment extends MyFragment {
     }
 
     private void loadActivePackageSettings() {
-        int alarmType=SettingsHandler.getAlarmType();
-       if(alarmType==SettingsHandler.AlarmType.Both.ordinal()){
-           switchLeftDaysAlarm.setChecked(true);
-
-           switchTrafficAlarm.setChecked(true);
-         //  editTextTrafficAlarm.setText(SettingsHandler.get);
-
-       }
-
+        int alarmType = SettingsHandler.getAlarmType();
+        if (alarmType == SettingsHandler.AlarmType.Both.ordinal()) {
+            switchLeftDaysAlarm.setChecked(true);
+            editTextLeftDaysAlarm.setText(SettingsHandler.getLeftDaysAlarm() + "");
+            switchTrafficAlarm.setChecked(true);
+            editTextTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(SettingsHandler.getRemindedByteAlarm()) + "");
+        } else if (alarmType == SettingsHandler.AlarmType.LeftDay.ordinal()) {
+            switchLeftDaysAlarm.setChecked(true);
+            editTextLeftDaysAlarm.setText(SettingsHandler.getLeftDaysAlarm() + "");
+        } else if (alarmType == SettingsHandler.AlarmType.RemindedBytes.ordinal()) {
+            switchTrafficAlarm.setChecked(true);
+            editTextTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(SettingsHandler.getRemindedByteAlarm()) + "");
+        }
     }
 
     private void loadReservedPackageSettings() {
-
+        int alarmType = SettingsHandler.getAlarmTypeRes();
+        if (alarmType == SettingsHandler.AlarmType.Both.ordinal()) {
+            switchLeftDaysAlarm.setChecked(true);
+            editTextLeftDaysAlarm.setText(SettingsHandler.getLeftDaysAlarmRes() + "");
+            switchTrafficAlarm.setChecked(true);
+            editTextTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(SettingsHandler.getRemindedByteAlarmRes()) + "");
+        } else if (alarmType == SettingsHandler.AlarmType.LeftDay.ordinal()) {
+            switchLeftDaysAlarm.setChecked(true);
+            editTextLeftDaysAlarm.setText(SettingsHandler.getLeftDaysAlarmRes() + "");
+        } else if (alarmType == SettingsHandler.AlarmType.RemindedBytes.ordinal()) {
+            switchTrafficAlarm.setChecked(true);
+            editTextTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(SettingsHandler.getRemindedByteAlarmRes()) + "");
+        }
     }
 
     private void addCustomPackage() {
