@@ -45,9 +45,7 @@ public class PackageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        periods = new ArrayList<>();
-        dataPackages = new HashMap<>();
-        packageAdapter = new ExpandablePackageAdapter(App.currentActivity, periods, dataPackages);
+
     }
 
     @Override
@@ -57,6 +55,10 @@ public class PackageFragment extends Fragment {
         lstPeriods = (AnimatedExpandableListView) view.findViewById(R.id.lstPeriods);
 
         int operatorId = getArguments().getInt(POSITION);
+
+        periods = new ArrayList<>();
+        dataPackages = new HashMap<>();
+        packageAdapter = new ExpandablePackageAdapter(App.currentActivity, periods, dataPackages);
 
         ArrayList<Integer> operatorPeriodList = DataPackages.selectOperatorPeriods(operatorId);
         for (int i = 0; i < operatorPeriodList.size(); i++) {
@@ -103,6 +105,7 @@ public class PackageFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
         packageAdapter.notifyDataSetChanged();
     }
 

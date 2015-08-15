@@ -68,7 +68,7 @@ public class PackageHistories {
     }
 
     public static ArrayList<PackageHistory> select() {
-        return select("", null);
+        return select(" ORDER BY " + Id + " DESC", null);
     }
 
     public static long insert(PackageHistory packageHistory) {

@@ -18,7 +18,8 @@
             android:gravity="right"
             android:paddingBottom="5dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/gray"/>
+            android:textColor="@color/gray"
+            android:text="بسته آلفا+ 30 روزه + 3 گیگ هدیه شبانه kjh sdfkjlskdfj sdlfkjnsadkjsdhf sdkfjhsd fkjsdfh "/>
 
     </LinearLayout>
 
@@ -30,16 +31,19 @@
 
         <widgets.MyTextView
             android:id="@+id/txtActivateDate"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:paddingBottom="5dp"
-            android:textColor="@color/gray"/>
+            android:textColor="@color/gray"
+            android:text="1394yuuyghkjghiugj ghjgjdfasd sdf sdhf klsjdf lksdjfh slkdjfh sdlkfjh sdlkfj dflkj flkjsh dflksdfh lksjdh"
+            android:gravity="right"/>
 
         <widgets.MyTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="5dp"
-            android:text="تاریخ فعال سازی:"
+            android:text="تاریخ فعال سازی : "
             android:textColor="@color/gray"/>
 
     </LinearLayout>
@@ -53,16 +57,19 @@
 
         <widgets.MyTextView
             android:id="@+id/txtExpDate"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:paddingBottom="5dp"
-            android:textColor="@color/gray"/>
+            android:textColor="@color/gray"
+            android:text=" lskdjfhskdf lskdjfhsd flksdjfh slkdjfhsl kdjfhslkdjfhsldkjfhsldkfjhsdlfjh sd6lfkj65shd16lf k4jsd1hf 1dslkjf1351"
+            android:gravity="right"/>
 
         <widgets.MyTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="5dp"
-            android:text="تاریخ انقضا:"
+            android:text="تاریخ انقضا : "
             android:textColor="@color/gray"/>
 
     </LinearLayout>
@@ -75,16 +82,19 @@
 
         <widgets.MyTextView
             android:id="@+id/txtStatus"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:paddingBottom="5dp"
-            android:textColor="@color/gray"/>
+            android:textColor="@color/gray"
+            android:text=" o;sdj sld56 lkjdffasl dfjls dfj56;lask6djf4 6;asl4dk6fj 4;a6lsdk4fj6 4as;l6dkf4j6 a46;ls4dkfj5446"
+            android:gravity="right"/>
 
         <widgets.MyTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="5dp"
-            android:text="وضعیت بسته:"
+            android:text="وضعیت بسته : "
             android:textColor="@color/gray"/>
 
     </LinearLayout>

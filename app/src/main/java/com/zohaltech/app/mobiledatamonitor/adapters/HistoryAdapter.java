@@ -52,7 +52,7 @@ public class HistoryAdapter extends ArrayAdapter<PackageHistory> {
             else if (item.getStatus() == PackageHistory.StatusEnum.RESERVED.ordinal())
                 status = "رزرو شده";
             else if (item.getStatus() == PackageHistory.StatusEnum.CANCELED.ordinal())
-                status = "بسته لفو شده است.";
+                status = "لغو شده";
             else if (item.getStatus() == PackageHistory.StatusEnum.PERIOD_FINISHED.ordinal())
                 status = "تاریخ اعتبار بسته به پایان رسیده است.";
             else if (item.getStatus() == PackageHistory.StatusEnum.TRAFFIC_FINISHED.ordinal())
