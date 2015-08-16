@@ -18,15 +18,16 @@ import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.activities.MainActivity;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
 import com.zohaltech.app.mobiledatamonitor.classes.DialogManager;
-import com.zohaltech.app.mobiledatamonitor.classes.SettingsHandler;
 import com.zohaltech.app.mobiledatamonitor.classes.TrafficUnitsUtil;
 import com.zohaltech.app.mobiledatamonitor.classes.Validator;
 import com.zohaltech.app.mobiledatamonitor.dal.DataPackages;
 import com.zohaltech.app.mobiledatamonitor.dal.MobileOperators;
 import com.zohaltech.app.mobiledatamonitor.dal.PackageHistories;
+import com.zohaltech.app.mobiledatamonitor.dal.Settings;
 import com.zohaltech.app.mobiledatamonitor.entities.DataPackage;
 import com.zohaltech.app.mobiledatamonitor.entities.MobileOperator;
 import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
+import com.zohaltech.app.mobiledatamonitor.entities.Setting;
 
 import java.util.ArrayList;
 
@@ -50,6 +51,7 @@ public class PackageSettingsFragment extends MyFragment {
     SwitchCompat switchAutoMobileDataOff;
     DataPackage  dataPackage;
     String       initMode;
+    Setting      setting;
 
     public static final String INIT_MODE_KEY         = "INIT_MODE";
     public static final String MODE_INSERT_CUSTOM    = "INSERT_CUSTOM";
@@ -180,7 +182,6 @@ public class PackageSettingsFragment extends MyFragment {
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     public void onBackPressed() {
         close();
@@ -234,83 +235,82 @@ public class PackageSettingsFragment extends MyFragment {
         Boolean trafficAlarm = switchTrafficAlarm.isChecked();
         Boolean leftDaysAlarm = switchLeftDaysAlarm.isChecked();
 
+        setting = Settings.getCurrentSettings();
+
         if (trafficAlarm && leftDaysAlarm) {
             if (Validator.validateEditText(editTextLeftDaysAlarm, "اخطار روز باقیمانده"))
                 return;
             if (Validator.validateEditText(editTextTrafficAlarm, "اخطار حجمی"))
                 return;
-
-            SettingsHandler.setAlarmType(SettingsHandler.AlarmType.Both.ordinal());
-            SettingsHandler.setLeftDaysAlarm(Integer.valueOf(editTextLeftDaysAlarm.getText().toString()));
-            SettingsHandler.setRemindedByteAlarm(
-                    TrafficUnitsUtil.MbToByte(Integer.valueOf(editTextTrafficAlarm.getText().toString())));
+            setting.setAlarmType(Setting.AlarmType.BOTH.ordinal());
+            setting.setLeftDaysAlarm(Integer.valueOf(editTextLeftDaysAlarm.getText().toString()));
+            setting.setRemindedByteAlarm(TrafficUnitsUtil.MbToByte(Integer.valueOf(editTextTrafficAlarm.getText().toString())));
         } else if (trafficAlarm) {
             if (Validator.validateEditText(editTextTrafficAlarm, "اخطار حجمی"))
                 return;
-            SettingsHandler.setAlarmType(SettingsHandler.AlarmType.RemindedBytes.ordinal());
-            SettingsHandler.setRemindedByteAlarm(
-                    TrafficUnitsUtil.MbToByte(Integer.valueOf(editTextTrafficAlarm.getText().toString())));
+            setting.setAlarmType(Setting.AlarmType.REMINDED_BYTES.ordinal());
+            setting.setRemindedByteAlarm(TrafficUnitsUtil.MbToByte(Integer.valueOf(editTextTrafficAlarm.getText().toString())));
         } else if (leftDaysAlarm) {
-            SettingsHandler.setAlarmType(SettingsHandler.AlarmType.LeftDay.ordinal());
-            SettingsHandler.setLeftDaysAlarm(Integer.valueOf(editTextLeftDaysAlarm.getText().toString()));
+            setting.setAlarmType(Setting.AlarmType.LEFT_DAY.ordinal());
+            setting.setLeftDaysAlarm(Integer.valueOf(editTextLeftDaysAlarm.getText().toString()));
         }
+        Settings.update(setting);
     }
 
     private void saveReservedPackageSettings() {
         Boolean trafficAlarm = switchTrafficAlarm.isChecked();
         Boolean leftDaysAlarm = switchLeftDaysAlarm.isChecked();
 
+        setting = Settings.getCurrentSettings();
+
         if (trafficAlarm && leftDaysAlarm) {
             if (Validator.validateEditText(editTextLeftDaysAlarm, "اخطار روز باقیمانده"))
                 return;
             if (Validator.validateEditText(editTextTrafficAlarm, "اخطار حجمی"))
                 return;
-
-            SettingsHandler.setAlarmTypeRes(SettingsHandler.AlarmType.Both.ordinal());
-            SettingsHandler.setLeftDaysAlarmRes(Integer.valueOf(editTextLeftDaysAlarm.getText().toString()));
-            SettingsHandler.setRemindedByteAlarmRes(
-                    TrafficUnitsUtil.MbToByte(Integer.valueOf(editTextTrafficAlarm.getText().toString())));
+            setting.setAlarmTypeRes(Setting.AlarmType.BOTH.ordinal());
+            setting.setLeftDaysAlarmRes(Integer.valueOf(editTextLeftDaysAlarm.getText().toString()));
+            setting.setRemindedByteAlarmRes(TrafficUnitsUtil.MbToByte(Integer.valueOf(editTextTrafficAlarm.getText().toString())));
         } else if (trafficAlarm) {
             if (Validator.validateEditText(editTextTrafficAlarm, "اخطار حجمی"))
                 return;
-            SettingsHandler.setAlarmTypeRes(SettingsHandler.AlarmType.RemindedBytes.ordinal());
-            SettingsHandler.setRemindedByteAlarmRes(
-                    TrafficUnitsUtil.MbToByte(Integer.valueOf(editTextTrafficAlarm.getText().toString())));
+            setting.setAlarmType(Setting.AlarmType.REMINDED_BYTES.ordinal());
+            setting.setRemindedByteAlarm(TrafficUnitsUtil.MbToByte(Integer.valueOf(editTextTrafficAlarm.getText().toString())));
         } else if (leftDaysAlarm) {
-            SettingsHandler.setAlarmTypeRes(SettingsHandler.AlarmType.LeftDay.ordinal());
-            SettingsHandler.setLeftDaysAlarmRes(Integer.valueOf(editTextLeftDaysAlarm.getText().toString()));
+            setting.setAlarmTypeRes(Setting.AlarmType.LEFT_DAY.ordinal());
+            setting.setLeftDaysAlarmRes(Integer.valueOf(editTextLeftDaysAlarm.getText().toString()));
         }
     }
 
     private void loadActivePackageSettings() {
-        int alarmType = SettingsHandler.getAlarmType();
-        if (alarmType == SettingsHandler.AlarmType.Both.ordinal()) {
+        int alarmType = setting.getAlarmType();
+        if (alarmType == Setting.AlarmType.BOTH.ordinal()) {
             switchLeftDaysAlarm.setChecked(true);
-            editTextLeftDaysAlarm.setText(SettingsHandler.getLeftDaysAlarm() + "");
+            editTextLeftDaysAlarm.setText(setting.getLeftDaysAlarm() + "");
             switchTrafficAlarm.setChecked(true);
-            editTextTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(SettingsHandler.getRemindedByteAlarm()) + "");
-        } else if (alarmType == SettingsHandler.AlarmType.LeftDay.ordinal()) {
+            editTextTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(setting.getRemindedByteAlarm()) + "");
+        } else if (alarmType == Setting.AlarmType.LEFT_DAY.ordinal()) {
             switchLeftDaysAlarm.setChecked(true);
-            editTextLeftDaysAlarm.setText(SettingsHandler.getLeftDaysAlarm() + "");
-        } else if (alarmType == SettingsHandler.AlarmType.RemindedBytes.ordinal()) {
+            editTextLeftDaysAlarm.setText(setting.getLeftDaysAlarm() + "");
+        } else if (alarmType == Setting.AlarmType.REMINDED_BYTES.ordinal()) {
             switchTrafficAlarm.setChecked(true);
-            editTextTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(SettingsHandler.getRemindedByteAlarm()) + "");
+            editTextTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(setting.getRemindedByteAlarm()) + "");
         }
     }
 
     private void loadReservedPackageSettings() {
-        int alarmType = SettingsHandler.getAlarmTypeRes();
-        if (alarmType == SettingsHandler.AlarmType.Both.ordinal()) {
+        int alarmType = setting.getAlarmTypeRes();
+        if (alarmType == Setting.AlarmType.BOTH.ordinal()) {
             switchLeftDaysAlarm.setChecked(true);
-            editTextLeftDaysAlarm.setText(SettingsHandler.getLeftDaysAlarmRes() + "");
+            editTextLeftDaysAlarm.setText(setting.getLeftDaysAlarmRes() + "");
             switchTrafficAlarm.setChecked(true);
-            editTextTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(SettingsHandler.getRemindedByteAlarmRes()) + "");
-        } else if (alarmType == SettingsHandler.AlarmType.LeftDay.ordinal()) {
+            editTextTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(setting.getRemindedByteAlarmRes()) + "");
+        } else if (alarmType == Setting.AlarmType.LEFT_DAY.ordinal()) {
             switchLeftDaysAlarm.setChecked(true);
-            editTextLeftDaysAlarm.setText(SettingsHandler.getLeftDaysAlarmRes() + "");
-        } else if (alarmType == SettingsHandler.AlarmType.RemindedBytes.ordinal()) {
+            editTextLeftDaysAlarm.setText(setting.getLeftDaysAlarmRes() + "");
+        } else if (alarmType == Setting.AlarmType.REMINDED_BYTES.ordinal()) {
             switchTrafficAlarm.setChecked(true);
-            editTextTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(SettingsHandler.getRemindedByteAlarmRes()) + "");
+            editTextTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(setting.getRemindedByteAlarmRes()) + "");
         }
     }
 
