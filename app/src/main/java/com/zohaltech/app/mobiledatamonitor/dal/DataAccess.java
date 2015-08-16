@@ -15,7 +15,7 @@ import java.io.InputStreamReader;
 public class DataAccess extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME    = "ZT_DATA_MONITOR";
-    public static final int    DATABASE_VERSION = 22;
+    public static final int    DATABASE_VERSION = 23;
 
     public DataAccess() {
         super(App.context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -38,6 +38,13 @@ public class DataAccess extends SQLiteOpenHelper {
             usageLogValues.put(UsageLogs.TrafficBytes, 0);
             usageLogValues.put(UsageLogs.LogDateTime, Helper.getCurrentDateTime());
             database.insert(UsageLogs.TableName, null, usageLogValues);
+
+            ContentValues trafficHistoryValues = new ContentValues();
+            for (int i = 0; i < 29; i++) {
+                trafficHistoryValues.put(DailyTrafficHistories.LogDate, Helper.addDay(i - 29));
+                trafficHistoryValues.put(DailyTrafficHistories.Traffic, 0);
+                database.insert(DailyTrafficHistories.TableName, null, trafficHistoryValues);
+            }
 
         } catch (MyRuntimeException e) {
             e.printStackTrace();
