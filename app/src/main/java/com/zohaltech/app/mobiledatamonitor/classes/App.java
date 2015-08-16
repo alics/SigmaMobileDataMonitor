@@ -5,10 +5,13 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
+
+import java.util.Locale;
 
 public class App extends Application {
 
@@ -21,6 +24,7 @@ public class App extends Application {
     public static LayoutInflater    inflater;
     public static int               screenWidth;
     public static int               screenHeight;
+    public static Locale                locale;
 
     @Override
     public void onCreate() {
@@ -37,7 +41,27 @@ public class App extends Application {
 
         AlarmHandler.start(context);
 
+        setAppLocal();
+
         Intent service = new Intent(context, DataUsageService.class);
         context.startService(service);
+    }
+
+    public static void setAppLocal() {
+        locale = new Locale("en");
+        Locale.setDefault(locale);
+        Configuration config = context.getResources().getConfiguration();
+        config.locale = locale;
+        context.getResources().updateConfiguration(config, context.getResources().getDisplayMetrics());
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (locale != null) {
+            newConfig.locale = locale;
+            Locale.setDefault(locale);
+            getBaseContext().getResources().updateConfiguration(newConfig, getBaseContext().getResources().getDisplayMetrics());
+        }
     }
 }
