@@ -45,7 +45,7 @@ public class MainActivity extends EnhancedActivity {
         txtTitle.setTextColor(Color.WHITE);
         txtTitle.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT));
         txtTitle.setGravity(Gravity.CENTER);
-        mainToolbar.addView(txtTitle);
+        mainToolbar.addView(txtTitle,0);
 
         setSupportActionBar(mainToolbar);
         //getSupportActionBar().setDisplayShowHomeEnabled(true);

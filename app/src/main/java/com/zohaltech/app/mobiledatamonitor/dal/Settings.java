@@ -24,7 +24,7 @@ public class Settings {
     static final String LeftDaysAlarmRes             = "LeftDaysAlarmRes";
     static final String ShowNotification             = "ShowNotification";
     static final String ShowNotificationWhenDataIsOn = "ShowNotificationWhenDataIsOn";
-    static final String ShowNotificationInLockScreen = "ShowNotificationWhenDataIsOn";
+    static final String ShowNotificationInLockScreen = "ShowNotificationInLockScreen";
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
                                       Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
@@ -119,7 +119,7 @@ public class Settings {
         values.put(ShowNotificationInLockScreen, setting.getShowNotificationInLockScreen() ? 1 : 0);
 
         DataAccess da = new DataAccess();
-        return da.update(TableName, values, Id + " =? ", new String[]{String.valueOf(setting.getId())});
+        return da.update(TableName, values, Id + " = ? ", new String[]{String.valueOf(setting.getId())});
     }
 
     public static long delete(Setting setting) {
@@ -128,7 +128,7 @@ public class Settings {
     }
 
     public static Setting getCurrentSettings() {
-        ArrayList<Setting> settings = select(null, null);
+        ArrayList<Setting> settings = select("", null);
         int count = settings.size();
 
         return (count == 0) ? null : settings.get(count - 1);

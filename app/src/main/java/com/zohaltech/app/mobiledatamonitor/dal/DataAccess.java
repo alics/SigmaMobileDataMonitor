@@ -15,7 +15,7 @@ import java.io.InputStreamReader;
 public class DataAccess extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME    = "ZT_DATA_MONITOR";
-    public static final int    DATABASE_VERSION = 23;
+    public static final int    DATABASE_VERSION = 27;
 
     public DataAccess() {
         super(App.context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -29,6 +29,7 @@ public class DataAccess extends SQLiteOpenHelper {
             database.execSQL(UsageLogs.CreateTable);
             database.execSQL(DataPackages.CreateTable);
             database.execSQL(PackageHistories.CreateTable);
+            database.execSQL(Settings.CreateTable);
 
             insertDataFromAsset(database, MobileOperators.TableName, "data/operators.csv", ';');
             insertDataFromAsset(database, DataPackages.TableName, "data/packages.csv", ';');
@@ -46,6 +47,22 @@ public class DataAccess extends SQLiteOpenHelper {
                 database.insert(DailyTrafficHistories.TableName, null, trafficHistoryValues);
             }
 
+            // initial settings
+            ContentValues settingsValues = new ContentValues();
+            settingsValues.put(Settings.MonitoringServiceOn, 1);
+            settingsValues.put(Settings.DailyTraffic, 0);
+            settingsValues.put(Settings.DcDataAfterTerminate, 1);
+            settingsValues.put(Settings.AlarmType, 1);
+            settingsValues.put(Settings.RemindedByteAlarm, 20 * 1024 * 1024);
+            settingsValues.put(Settings.LeftDaysAlarm, 1);
+            settingsValues.put(Settings.AlarmTypeRes, 2);
+            settingsValues.put(Settings.RemindedByteAlarmRes, 20 * 1024 * 1024);
+            settingsValues.put(Settings.LeftDaysAlarmRes, 1);
+            settingsValues.put(Settings.ShowNotification, 1);
+            settingsValues.put(Settings.ShowNotificationWhenDataIsOn, 1);
+            settingsValues.put(Settings.ShowNotificationInLockScreen, 1);
+            database.insert(Settings.TableName, null, settingsValues);
+
         } catch (MyRuntimeException e) {
             e.printStackTrace();
         }
@@ -59,6 +76,7 @@ public class DataAccess extends SQLiteOpenHelper {
             database.execSQL(MobileOperators.DropTable);
             database.execSQL(UsageLogs.DropTable);
             database.execSQL(DailyTrafficHistories.DropTable);
+            database.execSQL(Settings.DropTable);
             onCreate(database);
         } catch (MyRuntimeException e) {
             e.printStackTrace();

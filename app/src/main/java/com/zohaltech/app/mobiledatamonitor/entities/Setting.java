@@ -5,20 +5,19 @@ public class Setting {
 
     public enum AlarmType {REMINDED_BYTES, LEFT_DAY, BOTH}
 
-    private Integer   id;
-    private Boolean   monitoringServiceOn;
-    private Long      dailyTraffic;
-    private Boolean   dcDataAfterTerminate;
-    private int alarmType;
-    private Long      remindedByteAlarm;
-    private Integer   leftDaysAlarm;
-    private int alarmTypeRes;
-    private Long      remindedByteAlarmRes;
-    private Integer   leftDaysAlarmRes;
-    private Boolean   showNotification;
-    private Boolean   showNotificationWhenDataIsOn;
-    private Boolean   showNotificationInLockScreen;
-
+    private Integer id;
+    private Boolean monitoringServiceOn;
+    private Long    dailyTraffic;
+    private Boolean dcDataAfterTerminate;
+    private int     alarmType;
+    private Long    remindedByteAlarm;
+    private Integer leftDaysAlarm;
+    private int     alarmTypeRes;
+    private Long    remindedByteAlarmRes;
+    private Integer leftDaysAlarmRes;
+    private Boolean showNotification;
+    private Boolean showNotificationWhenDataIsOn;
+    private Boolean showNotificationInLockScreen;
 
 
     public Setting(Boolean monitoringServiceOn, Long dailyTraffic, Boolean dcDataAfterTerminate,
@@ -32,7 +31,7 @@ public class Setting {
         setRemindedByteAlarm(remindedByteAlarm);
         setLeftDaysAlarm(leftDaysAlarm);
         setAlarmTypeRes(alarmTypeRes);
-        setRemindedByteAlarmRes(getRemindedByteAlarmRes());
+        setRemindedByteAlarmRes(remindedByteAlarmRes);
         setLeftDaysAlarmRes(leftDaysAlarmRes);
         setShowNotification(showNotification);
         setShowNotificationWhenDataIsOn(showNotificationWhenDataIsOn);

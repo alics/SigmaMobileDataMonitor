@@ -1,9 +1,6 @@
 package com.zohaltech.app.mobiledatamonitor.fragments;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,7 +12,8 @@ import android.widget.CompoundButton;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.activities.MainActivity;
-import com.zohaltech.app.mobiledatamonitor.classes.SettingsHandler;
+import com.zohaltech.app.mobiledatamonitor.dal.Settings;
+import com.zohaltech.app.mobiledatamonitor.entities.Setting;
 
 import widgets.MyFragment;
 
@@ -24,6 +22,7 @@ public class GlobalSettingsFragment extends MyFragment {
     SwitchCompat switchShowNotification;
     SwitchCompat switchShowNotificationWhenDataIsOn;
     SwitchCompat switchShowNotificationInLockScreen;
+    Setting      setting;
 
     public GlobalSettingsFragment() {
     }
@@ -41,6 +40,8 @@ public class GlobalSettingsFragment extends MyFragment {
         setHasOptionsMenu(true);
         View rootView = inflater.inflate(R.layout.fragment_global_settings, container, false);
 
+        setting = Settings.getCurrentSettings();
+
         switchShowNotification = (SwitchCompat) rootView.findViewById(R.id.switchShowNotification);
         switchShowNotificationWhenDataIsOn = (SwitchCompat) rootView.findViewById(R.id.switchShowNotificationWhenDataIsOn);
         switchShowNotificationInLockScreen = (SwitchCompat) rootView.findViewById(R.id.switchShowNotificationInLockScreen);
@@ -49,26 +50,24 @@ public class GlobalSettingsFragment extends MyFragment {
         switchShowNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                //SettingsHandler.setShowNotification(isChecked);
-                SharedPreferences preferences = getActivity().getSharedPreferences("SHOW_NOTIFICATION", Context.MODE_PRIVATE);
-                SharedPreferences.Editor edt = preferences.edit();
-                edt.putBoolean("SHOW_NOTIFICATION ", false);
-                edt.apply();
-                edt.commit();
+                setting.setShowNotification(isChecked);
+                Settings.update(setting);
             }
         });
 
         switchShowNotificationWhenDataIsOn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SettingsHandler.setShowNotificationWhenDataIsOn(isChecked);
+                setting.setShowNotificationWhenDataIsOn(isChecked);
+                Settings.update(setting);
             }
         });
 
         switchShowNotificationInLockScreen.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SettingsHandler.setShowNotificationInLockScreen(isChecked);
+                setting.setShowNotificationInLockScreen(isChecked);
+                Settings.update(setting);
             }
         });
 
@@ -106,29 +105,8 @@ public class GlobalSettingsFragment extends MyFragment {
     }
 
     private void initControls() {
-
-        Context hostActivity = getActivity();
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(hostActivity);
-         boolean s=prefs.getBoolean("SHOW_NOTIFICATION",true);
-        //switchShowNotification.setChecked(SettingsHandler.isShowNotification());
-        SharedPreferences preferences = getActivity().getSharedPreferences("SHOW_NOTIFICATION", Context.MODE_PRIVATE);
-        switchShowNotification.setChecked(preferences.getBoolean("SHOW_NOTIFICATION", true));
-        switchShowNotificationWhenDataIsOn.setChecked(SettingsHandler.isShowNotificationWhenDataIsOn());
-        switchShowNotificationInLockScreen.setChecked(SettingsHandler.isShowNotificationInLockScreen());
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Context hostActivity = getActivity();
-        //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(hostActivity);
-       // PreferenceManager.getDefaultSharedPreferences(hostActivity).registerOnSharedPreferenceChangeListener(this);
-
-    }
-
-    @Override
-    public void onPause() {
-      //  getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
-        super.onPause();
+        switchShowNotification.setChecked(setting.getShowNotification());
+        switchShowNotificationWhenDataIsOn.setChecked(setting.getShowNotificationWhenDataIsOn());
+        switchShowNotificationInLockScreen.setChecked(setting.getShowNotificationInLockScreen());
     }
 }
