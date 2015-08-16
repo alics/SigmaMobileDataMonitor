@@ -16,7 +16,7 @@ import com.zohaltech.app.mobiledatamonitor.dal.DataPackages;
 import com.zohaltech.app.mobiledatamonitor.dal.PackageHistories;
 import com.zohaltech.app.mobiledatamonitor.entities.DataPackage;
 import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
-import com.zohaltech.app.mobiledatamonitor.fragments.SettingsFragment;
+import com.zohaltech.app.mobiledatamonitor.fragments.PackageSettingsFragment;
 
 import java.util.HashMap;
 import java.util.List;
@@ -78,8 +78,8 @@ public class ExpandablePackageAdapter extends AnimatedExpandableListView.Animate
                                                             MainActivity parent = ((MainActivity) activity);
                                                             parent.animType = MainActivity.AnimType.OPEN;
                                                             Bundle bundle = new Bundle();
-                                                            bundle.putString(SettingsFragment.INIT_MODE_KEY, SettingsFragment.MODE_SETTING_ACTIVE);
-                                                            bundle.putString(SettingsFragment.PACKAGE_ID_KEY, dataPackage.getId() + "");
+                                                            bundle.putString(PackageSettingsFragment.INIT_MODE_KEY, PackageSettingsFragment.MODE_SETTING_ACTIVE);
+                                                            bundle.putString(PackageSettingsFragment.PACKAGE_ID_KEY, dataPackage.getId() + "");
                                                             parent.displayView(MainActivity.EnumFragment.SETTINGS, bundle);
 
                                                         } else {
@@ -95,8 +95,8 @@ public class ExpandablePackageAdapter extends AnimatedExpandableListView.Animate
                                                                             MainActivity parent = ((MainActivity) activity);
                                                                             parent.animType = MainActivity.AnimType.OPEN;
                                                                             Bundle bundle = new Bundle();
-                                                                            bundle.putString(SettingsFragment.INIT_MODE_KEY, SettingsFragment.MODE_SETTING_ACTIVE);
-                                                                            bundle.putString(SettingsFragment.PACKAGE_ID_KEY, dataPackage.getId() + "");
+                                                                            bundle.putString(PackageSettingsFragment.INIT_MODE_KEY, PackageSettingsFragment.MODE_SETTING_ACTIVE);
+                                                                            bundle.putString(PackageSettingsFragment.PACKAGE_ID_KEY, dataPackage.getId() + "");
                                                                             parent.displayView(MainActivity.EnumFragment.SETTINGS, bundle);
                                                                         }
 
@@ -108,8 +108,8 @@ public class ExpandablePackageAdapter extends AnimatedExpandableListView.Animate
                                                                             MainActivity parent = ((MainActivity) activity);
                                                                             parent.animType = MainActivity.AnimType.OPEN;
                                                                             Bundle bundle = new Bundle();
-                                                                            bundle.putString(SettingsFragment.INIT_MODE_KEY, SettingsFragment.MODE_SETTING_RESERVED);
-                                                                            bundle.putString(SettingsFragment.PACKAGE_ID_KEY,dataPackage.getId() + "");
+                                                                            bundle.putString(PackageSettingsFragment.INIT_MODE_KEY, PackageSettingsFragment.MODE_SETTING_RESERVED);
+                                                                            bundle.putString(PackageSettingsFragment.PACKAGE_ID_KEY,dataPackage.getId() + "");
                                                                             parent.displayView(MainActivity.EnumFragment.SETTINGS, bundle);
                                                                         }
                                                                     });

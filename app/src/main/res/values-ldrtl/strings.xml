@@ -1,0 +1,5 @@
+<resources>
+    <string name="down">دانلود: </string>
+    <string name="up">، آپلود: </string>
+    <string name="today">امروز: </string>
+</resources>

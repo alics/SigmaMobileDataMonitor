@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import widgets.MyFragment;
 import widgets.MyToast;
 
-public class SettingsFragment extends MyFragment {
+public class PackageSettingsFragment extends MyFragment {
 
     EditText     editTextPackageTitle;
     Spinner      spinnerOperators;
@@ -57,7 +57,7 @@ public class SettingsFragment extends MyFragment {
     public static final String MODE_SETTING_RESERVED = "SETTING_RESERVED";
     public static final String PACKAGE_ID_KEY        = "PackageId";
 
-    public SettingsFragment() {
+    public PackageSettingsFragment() {
     }
 
     @Override
@@ -68,7 +68,7 @@ public class SettingsFragment extends MyFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_package_settings, container, false);
 
         editTextPackageTitle = (EditText) rootView.findViewById(R.id.editTextPackageTitle);
         spinnerOperators = (Spinner) rootView.findViewById(R.id.spinnerOperators);

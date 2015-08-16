@@ -18,7 +18,7 @@ import com.zohaltech.app.mobiledatamonitor.fragments.HistoryFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.ManagementFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.PackagesFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.ReportFragment;
-import com.zohaltech.app.mobiledatamonitor.fragments.SettingsFragment;
+import com.zohaltech.app.mobiledatamonitor.fragments.PackageSettingsFragment;
 
 import widgets.MyFragment;
 import widgets.MyTextView;
@@ -37,7 +37,7 @@ public class MainActivity extends EnhancedActivity {
         setContentView(R.layout.activity_main);
 
         mainToolbar = (Toolbar) findViewById(R.id.mainToolbar);
-
+        mainToolbar.setNavigationIcon(R.drawable.ic_chevron_left_white_48dp);
         mainToolbar.setTitle("");
 
         txtTitle = new MyTextView(this);
@@ -102,8 +102,17 @@ public class MainActivity extends EnhancedActivity {
                 title = "مدیریت بسته";
                 break;
             case SETTINGS:
-                fragment = new SettingsFragment();
-                title = "مدیریت بسته";
+                fragment = new PackageSettingsFragment();
+                title = "تنظیمات بسته";
+                if (bundle != null){
+                    if (PackageSettingsFragment.MODE_SETTING_ACTIVE.equals(bundle.getString(PackageSettingsFragment.INIT_MODE_KEY))){
+                        title = "بسته فعال";
+                    } else if (PackageSettingsFragment.MODE_SETTING_RESERVED.equals(bundle.getString(PackageSettingsFragment.INIT_MODE_KEY))){
+                        title = "بسته رزرو";
+                    } else if (PackageSettingsFragment.MODE_INSERT_CUSTOM.equals(bundle.getString(PackageSettingsFragment.INIT_MODE_KEY))){
+                        title = "بسته سفارشی";
+                    }
+                }
                 break;
             case GLOBAL_SETTINGS:
                 fragment = new GlobalSettingsFragment();

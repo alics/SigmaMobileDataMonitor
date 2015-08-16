@@ -8,10 +8,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.TextView;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.activities.MainActivity;
+import com.zohaltech.app.mobiledatamonitor.classes.DialogManager;
 import com.zohaltech.app.mobiledatamonitor.dal.DataPackages;
 import com.zohaltech.app.mobiledatamonitor.dal.PackageHistories;
 import com.zohaltech.app.mobiledatamonitor.entities.DataPackage;
@@ -25,6 +27,7 @@ public class ManagementFragment extends MyFragment {
     FloatingActionButton fabActivePackageSettings;
     TextView             txtReservedPackageDescription;
     FloatingActionButton fabReservedPackageSettings;
+    FloatingActionButton fabCancelReservedPackage;
     FloatingActionButton fabAddPackage;
 
     DataPackage activePackage;
@@ -49,6 +52,7 @@ public class ManagementFragment extends MyFragment {
         txtActivePackageDescription = (TextView) rootView.findViewById(R.id.txtActivePackageDescription);
         fabActivePackageSettings = (FloatingActionButton) rootView.findViewById(R.id.fabActivePackageSettings);
         txtReservedPackageDescription = (TextView) rootView.findViewById(R.id.txtReservedPackageDescription);
+        fabCancelReservedPackage = (FloatingActionButton) rootView.findViewById(R.id.fabCancelReservedPackage);
         fabReservedPackageSettings = (FloatingActionButton) rootView.findViewById(R.id.fabReservedPackageSettings);
         fabAddPackage = (FloatingActionButton) rootView.findViewById(R.id.fabAddPackage);
 
@@ -58,7 +62,7 @@ public class ManagementFragment extends MyFragment {
                 MainActivity parent = ((MainActivity) getActivity());
                 parent.animType = MainActivity.AnimType.OPEN;
                 Bundle bundle = new Bundle();
-                bundle.putString(SettingsFragment.INIT_MODE_KEY, SettingsFragment.MODE_INSERT_CUSTOM);
+                bundle.putString(PackageSettingsFragment.INIT_MODE_KEY, PackageSettingsFragment.MODE_INSERT_CUSTOM);
                 parent.displayView(MainActivity.EnumFragment.SETTINGS, bundle);
             }
         });
@@ -69,9 +73,22 @@ public class ManagementFragment extends MyFragment {
                 MainActivity parent = ((MainActivity) getActivity());
                 parent.animType = MainActivity.AnimType.OPEN;
                 Bundle bundle = new Bundle();
-                bundle.putString(SettingsFragment.INIT_MODE_KEY, SettingsFragment.MODE_SETTING_ACTIVE);
-                bundle.putString(SettingsFragment.PACKAGE_ID_KEY, activePackage.getId() + "");
+                bundle.putString(PackageSettingsFragment.INIT_MODE_KEY, PackageSettingsFragment.MODE_SETTING_ACTIVE);
+                bundle.putString(PackageSettingsFragment.PACKAGE_ID_KEY, activePackage.getId() + "");
                 parent.displayView(MainActivity.EnumFragment.SETTINGS, bundle);
+            }
+        });
+
+        fabCancelReservedPackage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogManager.showConfirmationDialog(getActivity(), "حذف بسته رزرو", "بسته رزرو حذف شود؟", "بله", "خیر", null, new Runnable() {
+                    @Override
+                    public void run() {
+                        PackageHistories.deletedReservedPackages();
+                        disableReservePackage();
+                    }
+                });
             }
         });
 
@@ -81,15 +98,16 @@ public class ManagementFragment extends MyFragment {
                 MainActivity parent = ((MainActivity) getActivity());
                 parent.animType = MainActivity.AnimType.OPEN;
                 Bundle bundle = new Bundle();
-                bundle.putString(SettingsFragment.INIT_MODE_KEY, SettingsFragment.MODE_SETTING_RESERVED);
-                bundle.putString(SettingsFragment.PACKAGE_ID_KEY, reservedPackage.getId() + "");
+                bundle.putString(PackageSettingsFragment.INIT_MODE_KEY, PackageSettingsFragment.MODE_SETTING_RESERVED);
+                bundle.putString(PackageSettingsFragment.PACKAGE_ID_KEY, reservedPackage.getId() + "");
                 parent.displayView(MainActivity.EnumFragment.SETTINGS, bundle);
             }
         });
 
         if (activePackageHistory == null) {
-            txtActivePackageDescription.setText("بسته فعالی برای نمایش وجود ندارد.");
+            txtActivePackageDescription.setText("بسته فعالی ثبت نشده است.");
             fabActivePackageSettings.setEnabled(false);
+            setDisable(fabActivePackageSettings);
 
         } else {
             activePackage = DataPackages.selectPackageById(activePackageHistory.getDataPackageId());
@@ -98,8 +116,7 @@ public class ManagementFragment extends MyFragment {
         }
 
         if (reservedPackageHistory == null) {
-            txtReservedPackageDescription.setText("بسته رزرو شده ای برای نمایش وجود ندارد.");
-            fabReservedPackageSettings.setEnabled(false);
+            disableReservePackage();
 
         } else {
             reservedPackage = DataPackages.selectPackageById(reservedPackageHistory.getDataPackageId());
@@ -111,6 +128,21 @@ public class ManagementFragment extends MyFragment {
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         return rootView;
+    }
+
+    private void disableReservePackage() {
+        txtReservedPackageDescription.setText("بسته رزروی ثبت نشده است.");
+        fabCancelReservedPackage.setEnabled(false);
+        setDisable(fabCancelReservedPackage);
+        fabReservedPackageSettings.setEnabled(false);
+        setDisable(fabReservedPackageSettings);
+    }
+
+    private void setDisable(View view) {
+        AlphaAnimation alpha = new AlphaAnimation(0.3F, 0.3F);
+        alpha.setDuration(0);
+        alpha.setFillAfter(true);
+        view.startAnimation(alpha);
     }
 
     @Override
