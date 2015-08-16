@@ -13,8 +13,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -32,6 +34,14 @@ public final class Helper {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
         Date date = new Date();
         return dateFormat.format(date);
+    }
+
+    public static String addDay(int day) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, day);
+       return dateFormat.format(cal.getTime());
+
     }
 
     public static Date getDateTime(String dateTime) {
