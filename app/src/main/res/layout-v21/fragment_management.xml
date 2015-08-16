@@ -16,16 +16,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:gravity="right">
+            android:gravity="right"
+            android:orientation="horizontal">
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fabActivePackageSettings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:layout_margin="10dp"
-                android:src="@drawable/ic_edit_white"
-                android:layout_gravity="bottom"/>
+                android:src="@drawable/ic_edit_white"/>
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -40,17 +40,17 @@
                     android:layout_margin="10dp"
                     android:gravity="right"
                     android:text="بسته فعال"
-                    android:textColor="@color/primary"
                     android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/primary"
                     android:textStyle="bold"/>
 
                 <widgets.MyTextView
                     android:id="@+id/txtActivePackageDescription"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginBottom="10dp"
                     android:text="۳۰۰ مگابایت (۱۵۰ مگابایت + ۱۵۰ مگابایت (۲ بامداد تا ۲ ظهر)) ویژه مشترکین اعتباریویژه اعتباری"
                     android:textAppearance="?android:attr/textAppearanceSmall"/>
 
@@ -80,8 +80,8 @@
             android:layout_margin="10dp"
             android:gravity="right"
             android:text="بسته رزرو شده"
-            android:textColor="@color/primary"
             android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/primary"
             android:textStyle="bold"/>
 
         <widgets.MyTextView
@@ -140,8 +140,8 @@
             android:layout_margin="10dp"
             android:gravity="right"
             android:text="تعریف بسته سفارشی"
-            android:textColor="@color/primary"
             android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/primary"
             android:textStyle="bold"/>
 
     </LinearLayout>
