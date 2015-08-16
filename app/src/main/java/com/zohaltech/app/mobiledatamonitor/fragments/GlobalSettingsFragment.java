@@ -1,5 +1,6 @@
 package com.zohaltech.app.mobiledatamonitor.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.CompoundButton;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.activities.MainActivity;
+import com.zohaltech.app.mobiledatamonitor.classes.DataUsageService;
 import com.zohaltech.app.mobiledatamonitor.dal.Settings;
 import com.zohaltech.app.mobiledatamonitor.entities.Setting;
 
@@ -52,6 +54,7 @@ public class GlobalSettingsFragment extends MyFragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 setting.setShowNotification(isChecked);
                 Settings.update(setting);
+                restartService();
             }
         });
 
@@ -60,6 +63,7 @@ public class GlobalSettingsFragment extends MyFragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 setting.setShowNotificationWhenDataIsOn(isChecked);
                 Settings.update(setting);
+                restartService();
             }
         });
 
@@ -68,6 +72,7 @@ public class GlobalSettingsFragment extends MyFragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 setting.setShowNotificationInLockScreen(isChecked);
                 Settings.update(setting);
+                restartService();
             }
         });
 
@@ -77,6 +82,12 @@ public class GlobalSettingsFragment extends MyFragment {
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         return rootView;
+    }
+
+    private void restartService() {
+        Intent intent = new Intent(getActivity(), DataUsageService.class);
+        getActivity().stopService(intent);
+        getActivity().startService(intent);
     }
 
     @Override

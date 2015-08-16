@@ -3,8 +3,10 @@ package com.zohaltech.app.mobiledatamonitor.classes;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.util.Log;
 
 import com.zohaltech.app.mobiledatamonitor.R;
+import com.zohaltech.app.mobiledatamonitor.dal.Settings;
 import com.zohaltech.app.mobiledatamonitor.dal.UsageLogs;
 import com.zohaltech.app.mobiledatamonitor.entities.UsageLog;
 
@@ -103,7 +105,12 @@ public class DataUsageService extends Service {
 
             //NotificationManager notificationManager = (NotificationManager) App.context.getSystemService(Context.NOTIFICATION_SERVICE);
             //notificationManager.notify(1,NotificationHandler.getDataUsageNotification(DataUsageService.this, iconId, getString(R.string.down) + TrafficUnitsUtil.getTransferRate(receivedBytes) + getString(R.string.up) + TrafficUnitsUtil.getTransferRate(sentBytes), getString(R.string.today) + dailyUsage));
-            startForeground(1, NotificationHandler.getDataUsageNotification(DataUsageService.this, iconId, getString(R.string.down) + TrafficUnitsUtil.getTransferRate(receivedBytes) + getString(R.string.up) + TrafficUnitsUtil.getTransferRate(sentBytes), getString(R.string.today) + dailyUsage));
+
+            if (Settings.getCurrentSettings().getShowNotification()) {
+                startForeground(1, NotificationHandler.getDataUsageNotification(DataUsageService.this, iconId, getString(R.string.down) + TrafficUnitsUtil.getTransferRate(receivedBytes) + getString(R.string.up) + TrafficUnitsUtil.getTransferRate(sentBytes), getString(R.string.today) + dailyUsage));
+            } else {
+                NotificationHandler.cancelNotification(1);
+            }
 
             Intent intent = new Intent(DAILY_USAGE_ACTION);
             intent.putExtra(DAILY_USAGE_BYTES, App.preferences.getLong(DAILY_USAGE_BYTES, 0));
