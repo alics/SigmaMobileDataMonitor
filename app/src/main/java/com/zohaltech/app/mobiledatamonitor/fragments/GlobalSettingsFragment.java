@@ -1,6 +1,9 @@
 package com.zohaltech.app.mobiledatamonitor.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,8 +32,9 @@ public class GlobalSettingsFragment extends MyFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-    }
+        //addPreferencesFromResource(R.xml.);
 
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,7 +49,12 @@ public class GlobalSettingsFragment extends MyFragment {
         switchShowNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SettingsHandler.setShowNotification(isChecked);
+                //SettingsHandler.setShowNotification(isChecked);
+                SharedPreferences preferences = getActivity().getSharedPreferences("SHOW_NOTIFICATION", Context.MODE_PRIVATE);
+                SharedPreferences.Editor edt = preferences.edit();
+                edt.putBoolean("SHOW_NOTIFICATION ", false);
+                edt.apply();
+                edt.commit();
             }
         });
 
@@ -97,8 +106,29 @@ public class GlobalSettingsFragment extends MyFragment {
     }
 
     private void initControls() {
-        switchShowNotification.setChecked(SettingsHandler.isShowNotification());
+
+        Context hostActivity = getActivity();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(hostActivity);
+         boolean s=prefs.getBoolean("SHOW_NOTIFICATION",true);
+        //switchShowNotification.setChecked(SettingsHandler.isShowNotification());
+        SharedPreferences preferences = getActivity().getSharedPreferences("SHOW_NOTIFICATION", Context.MODE_PRIVATE);
+        switchShowNotification.setChecked(preferences.getBoolean("SHOW_NOTIFICATION", true));
         switchShowNotificationWhenDataIsOn.setChecked(SettingsHandler.isShowNotificationWhenDataIsOn());
         switchShowNotificationInLockScreen.setChecked(SettingsHandler.isShowNotificationInLockScreen());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Context hostActivity = getActivity();
+        //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(hostActivity);
+       // PreferenceManager.getDefaultSharedPreferences(hostActivity).registerOnSharedPreferenceChangeListener(this);
+
+    }
+
+    @Override
+    public void onPause() {
+      //  getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+        super.onPause();
     }
 }

@@ -14,7 +14,7 @@ public final class SettingsHandler {
     private static final String PREF_ALARM_TYPE_RES                    = "ALARM_TYPE_RES";
     private static final String PREF_REMINDED_BYTE_ALARM_RES           = "REMINDED_BYTE_ALARM_RES";
     private static final String PREF_LEFT_DAYS_ALARM_RES               = "LEFT_DAYS_ALARM_RES";
-    private static final String PREF_SHOW_NOTIFICATION                 = "SHOW_NOTIFICATION ";
+    private static final String PREF_SHOW_NOTIFICATION                 = "SHOW_NOTIFICATION";
     private static final String PREF_SHOW_NOTIFICATION_WHEN_DATA_IS_ON = "SHOW_NOTIFICATION_WHEN_DATA_IS_ON";
     private static final String PREF_SHOW_NOTIFICATION_IN_LOCK_SCREEN  = "SHOW_NOTIFICATION_IN_LOCK_SCREEN ";
 
@@ -24,7 +24,7 @@ public final class SettingsHandler {
     }
 
     public static void setMonitoringServiceActive(boolean active) {
-        App.preferences.edit().putBoolean(PREF_IS_MONITORING_SERVICE_ON, active);
+        App.preferences.edit().putBoolean(PREF_IS_MONITORING_SERVICE_ON, active).apply();
     }
 
 
@@ -33,7 +33,7 @@ public final class SettingsHandler {
     }
 
     public static void setShowNotification(boolean active) {
-        App.preferences.edit().putBoolean(PREF_SHOW_NOTIFICATION, active);
+        App.preferences.edit().putBoolean(PREF_SHOW_NOTIFICATION, active).apply();
     }
 
     public static boolean isShowNotificationWhenDataIsOn() {
@@ -41,7 +41,7 @@ public final class SettingsHandler {
     }
 
     public static void setShowNotificationWhenDataIsOn(boolean active) {
-        App.preferences.edit().putBoolean(PREF_SHOW_NOTIFICATION_WHEN_DATA_IS_ON, active);
+        App.preferences.edit().putBoolean(PREF_SHOW_NOTIFICATION_WHEN_DATA_IS_ON, active).apply();
     }
 
     public static boolean isShowNotificationInLockScreen() {
@@ -49,7 +49,7 @@ public final class SettingsHandler {
     }
 
     public static void setShowNotificationInLockScreen(boolean active) {
-        App.preferences.edit().putBoolean(PREF_SHOW_NOTIFICATION_IN_LOCK_SCREEN, active);
+        App.preferences.edit().putBoolean(PREF_SHOW_NOTIFICATION_IN_LOCK_SCREEN, active).apply();
     }
 
     public static boolean dcDataAfterTerminatePackage() {
@@ -57,7 +57,7 @@ public final class SettingsHandler {
     }
 
     public static void setDcDataAfterTerminatePackage(boolean active) {
-        App.preferences.edit().putBoolean(PREF_DC_DATA_AFTER_TERMINATE, active);
+        App.preferences.edit().putBoolean(PREF_DC_DATA_AFTER_TERMINATE, active).apply();
     }
 
     public static long getDailyTraffic() {
@@ -65,7 +65,7 @@ public final class SettingsHandler {
     }
 
     public static void setDailyTraffic(long traffic) {
-        App.preferences.edit().putLong(PREF_DAILY_TRAFFIC, traffic);
+        App.preferences.edit().putLong(PREF_DAILY_TRAFFIC, traffic).apply();
     }
 
     public static String getLastLogDate() {
@@ -73,7 +73,7 @@ public final class SettingsHandler {
     }
 
     public static void setLastLogDate() {
-        App.preferences.edit().putString(PREF_LAST_LOG_DATE, Helper.getCurrentDate());
+        App.preferences.edit().putString(PREF_LAST_LOG_DATE, Helper.getCurrentDate()).apply();
     }
 
     public static int getAlarmType() {
@@ -81,7 +81,7 @@ public final class SettingsHandler {
     }
 
     public static void setAlarmType(int alarmType) {
-        App.preferences.edit().putInt(PREF_ALARM_TYPE, alarmType);
+        App.preferences.edit().putInt(PREF_ALARM_TYPE, alarmType).apply();
     }
 
     public static Long getRemindedByteAlarm() {
@@ -89,7 +89,7 @@ public final class SettingsHandler {
     }
 
     public static void setRemindedByteAlarm(Long threshold) {
-        App.preferences.edit().putLong(PREF_REMINDED_BYTE_ALARM, threshold);
+        App.preferences.edit().putLong(PREF_REMINDED_BYTE_ALARM, threshold).apply();
     }
 
     public static int getLeftDaysAlarm() {
@@ -97,7 +97,7 @@ public final class SettingsHandler {
     }
 
     public static void setLeftDaysAlarm(int leftDaysAlarm) {
-        App.preferences.edit().putInt(PREF_LEFT_DAYS_ALARM, leftDaysAlarm);
+        App.preferences.edit().putInt(PREF_LEFT_DAYS_ALARM, leftDaysAlarm).apply();
     }
 
     public static int getAlarmTypeRes() {
@@ -105,7 +105,7 @@ public final class SettingsHandler {
     }
 
     public static void setAlarmTypeRes(int alarmType) {
-        App.preferences.edit().putInt(PREF_ALARM_TYPE_RES, alarmType);
+        App.preferences.edit().putInt(PREF_ALARM_TYPE_RES, alarmType).apply();
     }
 
     public static Long getRemindedByteAlarmRes() {
@@ -113,7 +113,7 @@ public final class SettingsHandler {
     }
 
     public static void setRemindedByteAlarmRes(Long threshold) {
-        App.preferences.edit().putLong(PREF_REMINDED_BYTE_ALARM_RES, threshold);
+        App.preferences.edit().putLong(PREF_REMINDED_BYTE_ALARM_RES, threshold).apply();
     }
 
     public static int getLeftDaysAlarmRes() {
@@ -121,6 +121,6 @@ public final class SettingsHandler {
     }
 
     public static void setLeftDaysAlarmRes(int leftDaysAlarm) {
-        App.preferences.edit().putInt(PREF_LEFT_DAYS_ALARM_RES, leftDaysAlarm);
+        App.preferences.edit().putInt(PREF_LEFT_DAYS_ALARM_RES, leftDaysAlarm).apply();
     }
 }

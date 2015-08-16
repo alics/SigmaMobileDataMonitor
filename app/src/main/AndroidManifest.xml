@@ -65,6 +65,9 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".activities.GlobalSettingsActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

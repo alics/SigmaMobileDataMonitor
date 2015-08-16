@@ -1,5 +1,6 @@
 package com.zohaltech.app.mobiledatamonitor.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.zohaltech.app.mobiledatamonitor.R;
+import com.zohaltech.app.mobiledatamonitor.activities.GlobalSettingsActivity;
 import com.zohaltech.app.mobiledatamonitor.activities.MainActivity;
 import com.zohaltech.app.mobiledatamonitor.adapters.UsagePagerAdapter;
 
@@ -139,9 +141,12 @@ public class DashboardFragment extends MyFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            MainActivity parent = ((MainActivity) getActivity());
-            parent.animType = MainActivity.AnimType.OPEN;
-            parent.displayView(MainActivity.EnumFragment.GLOBAL_SETTINGS);
+            Intent intent = new Intent(getActivity(), GlobalSettingsActivity.class);
+            startActivity(intent);
+            getActivity().overridePendingTransition(R.anim.slide_in_from_right,R.anim.slide_out_to_left);
+            //            MainActivity parent = ((MainActivity) getActivity());
+            //            parent.animType = MainActivity.AnimType.OPEN;
+            //            parent.displayView(MainActivity.EnumFragment.GLOBAL_SETTINGS);
         }
         return super.onOptionsItemSelected(item);
     }
