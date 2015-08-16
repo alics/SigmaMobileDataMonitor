@@ -158,7 +158,7 @@ public class PackageHistories {
 
     public static void finishPackageProcess(PackageHistory history, PackageHistory.StatusEnum terminationStatus) {
         terminateDataPackage(history, terminationStatus);
-        String yesterdayDateStr = SolarCalendar.getPastDateString(-1);
+        String yesterdayDateStr = Helper.addDay(-1);
         UsageLogs.deleteLogs(yesterdayDateStr);
         PackageHistory reservedPackage = getReservedPackage();
         if (reservedPackage != null) {

@@ -49,13 +49,6 @@ public class SolarCalendar {
         return dateString + " " + timeString;
     }
 
-    public static String getPastDateString(int pastDateNum) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, pastDateNum);
-        return getShamsiDate(cal.getTime());
-    }
-
     private void calcSolarCalendar(Date MiladiDate) {
 
         int ld;
