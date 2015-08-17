@@ -37,7 +37,7 @@ public class MainActivity extends EnhancedActivity {
         setContentView(R.layout.activity_main);
 
         mainToolbar = (Toolbar) findViewById(R.id.mainToolbar);
-        mainToolbar.setNavigationIcon(R.drawable.ic_chevron_left_white_48dp);
+        mainToolbar.setNavigationIcon(R.drawable.ic_back_white);
         mainToolbar.setTitle("");
 
         txtTitle = new MyTextView(this);

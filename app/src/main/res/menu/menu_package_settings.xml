@@ -4,10 +4,10 @@
       tools:context=".MainActivity">
 
     <item
-        android:id="@+id/action_settings"
-        android:icon="@drawable/ic_settings_white"
+        android:id="@+id/action_done"
+        android:icon="@drawable/ic_check_white"
         android:orderInCategory="100"
-        android:title="تنظیمات"
+        android:title="ذخیره تغییرات"
         app:showAsAction="always"/>
 
 </menu>

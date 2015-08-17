@@ -170,6 +170,7 @@ public class PackageSettingsFragment extends MyFragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_package_settings, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -178,6 +179,8 @@ public class PackageSettingsFragment extends MyFragment {
         int id = item.getItemId();
         if (id == android.R.id.home) {
             close();
+        } else if (id == R.id.action_done){
+            confirm();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -193,7 +196,7 @@ public class PackageSettingsFragment extends MyFragment {
         parent.displayView(MainActivity.EnumFragment.MANAGEMENT);
     }
 
-    private void confirmButtonProcess() {
+    private void confirm() {
         switch (initMode) {
             case MODE_SETTING_ACTIVE:
                 saveActivePackageSettings();
