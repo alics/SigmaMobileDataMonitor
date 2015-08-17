@@ -286,6 +286,7 @@ public class PackageSettingsFragment extends MyFragment {
     }
 
     private void loadActivePackageSettings() {
+        setting = Settings.getCurrentSettings();
         int alarmType = setting.getAlarmType();
         if (alarmType == Setting.AlarmType.BOTH.ordinal()) {
             switchLeftDaysAlarm.setChecked(true);
@@ -302,6 +303,7 @@ public class PackageSettingsFragment extends MyFragment {
     }
 
     private void loadReservedPackageSettings() {
+        setting = Settings.getCurrentSettings();
         int alarmType = setting.getAlarmTypeRes();
         if (alarmType == Setting.AlarmType.BOTH.ordinal()) {
             switchLeftDaysAlarm.setChecked(true);
