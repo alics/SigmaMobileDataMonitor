@@ -64,11 +64,6 @@ public class MainActivity extends EnhancedActivity {
     protected void onResume() {
         super.onResume();
 
-
-        //int timeType = android.provider.Settings.System.getInt(getContentResolver(), android.provider.Settings.System.AUTO_TIME, 1);
-        //android.provider.Settings.System.putInt(getContentResolver(), android.provider.Settings.System.AUTO_TIME, 1);
-        //android.provider.Settings.System.putInt(getContentResolver(), android.provider.Settings.System.AUTO_TIME, timeType);
-
         if (notified) {
             displayView(EnumFragment.DASHBOARD);
             notified = false;

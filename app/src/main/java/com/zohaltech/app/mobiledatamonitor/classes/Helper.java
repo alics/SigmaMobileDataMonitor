@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.Settings;
 import android.telephony.TelephonyManager;
 
 import java.lang.reflect.Field;
@@ -139,6 +140,10 @@ public final class Helper {
         BigDecimal bd = new BigDecimal(Float.toString(d));
         bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
         return bd;
+    }
+
+    public  static String getAndroidId(){
+      return Settings.Secure.getString(App.context.getContentResolver(), Settings.Secure.ANDROID_ID);
     }
 
     public enum Operator {
