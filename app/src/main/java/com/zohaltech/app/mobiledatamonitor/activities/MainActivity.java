@@ -1,20 +1,20 @@
 package com.zohaltech.app.mobiledatamonitor.activities;
 
-import android.app.AlarmManager;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.zohaltech.app.mobiledatamonitor.BuildConfig;
 import com.zohaltech.app.mobiledatamonitor.R;
+import com.zohaltech.app.mobiledatamonitor.classes.AppLicensingManager;
 import com.zohaltech.app.mobiledatamonitor.classes.Helper;
+import com.zohaltech.app.mobiledatamonitor.classes.LicenseStatus;
 import com.zohaltech.app.mobiledatamonitor.fragments.AboutUsFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.DashboardFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.GlobalSettingsFragment;
@@ -23,8 +23,6 @@ import com.zohaltech.app.mobiledatamonitor.fragments.ManagementFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.PackagesFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.ReportFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.PackageSettingsFragment;
-
-import java.util.Calendar;
 
 import widgets.MyFragment;
 import widgets.MyTextView;
@@ -39,6 +37,18 @@ public class MainActivity extends EnhancedActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        AppLicensingManager.setValidCurrentDate();
+
+        String h=Helper.getAndroidId();
+
+        LicenseStatus status=new LicenseStatus(""+BuildConfig.VERSION_CODE,
+                                               Helper.getAndroidId(),
+                                               AppLicensingManager.currentDate,
+                                               1,
+                                               1);
+       AppLicensingManager.initializeLicenseFile(status);
+        AppLicensingManager.getLicenceFile();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);

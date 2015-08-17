@@ -2,19 +2,21 @@ package com.zohaltech.app.mobiledatamonitor.classes;
 
 
 public class LicenseStatus {
-    String appVersion;
-    String androidId;
-    String installDate;
-    String status;
-    int    checkFlag;
+    private String appVersion;
+    private String androidId;
+    private String installDate;
+    private int status;
+    private int    checkFlag;
 
-    public LicenseStatus(String appVersion, String androidId, String installDate, String status, int checkFlag) {
+    public LicenseStatus(String appVersion, String androidId, String installDate, int status, int checkFlag) {
         setAppVersion(appVersion);
         setAndroidId(androidId);
         setInstallDate(installDate);
         setStatus(status);
         setCheckFlag(checkFlag);
     }
+
+    public LicenseStatus(){}
 
     public String getAppVersion() {
         return appVersion;
@@ -48,11 +50,11 @@ public class LicenseStatus {
         this.checkFlag = checkFlag;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 }
