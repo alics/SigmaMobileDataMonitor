@@ -1,16 +1,20 @@
 package com.zohaltech.app.mobiledatamonitor.activities;
 
+import android.app.AlarmManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zohaltech.app.mobiledatamonitor.R;
+import com.zohaltech.app.mobiledatamonitor.classes.Helper;
 import com.zohaltech.app.mobiledatamonitor.fragments.AboutUsFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.DashboardFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.GlobalSettingsFragment;
@@ -19,6 +23,8 @@ import com.zohaltech.app.mobiledatamonitor.fragments.ManagementFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.PackagesFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.ReportFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.PackageSettingsFragment;
+
+import java.util.Calendar;
 
 import widgets.MyFragment;
 import widgets.MyTextView;
@@ -33,6 +39,7 @@ public class MainActivity extends EnhancedActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -56,6 +63,12 @@ public class MainActivity extends EnhancedActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+
+        //int timeType = android.provider.Settings.System.getInt(getContentResolver(), android.provider.Settings.System.AUTO_TIME, 1);
+        //android.provider.Settings.System.putInt(getContentResolver(), android.provider.Settings.System.AUTO_TIME, 1);
+        //android.provider.Settings.System.putInt(getContentResolver(), android.provider.Settings.System.AUTO_TIME, timeType);
+
         if (notified) {
             displayView(EnumFragment.DASHBOARD);
             notified = false;
