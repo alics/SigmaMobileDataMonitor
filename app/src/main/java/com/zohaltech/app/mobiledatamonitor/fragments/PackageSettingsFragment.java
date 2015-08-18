@@ -44,7 +44,8 @@ public class PackageSettingsFragment extends MyFragment {
     public static final String MODE_INSERT_CUSTOM    = "INSERT_CUSTOM";
     public static final String MODE_SETTING_ACTIVE   = "SETTING_ACTIVE";
     public static final String MODE_SETTING_RESERVED = "SETTING_RESERVED";
-    public static final String PACKAGE_ID_KEY        = "PackageId";
+    public static final String PACKAGE_ID_KEY        = "PACKAGE_ID";
+
     EditText         edtPackageTitle;
     TextView         txtPackageTitle;
     AppCompatSpinner spinnerOperators;
@@ -63,6 +64,7 @@ public class PackageSettingsFragment extends MyFragment {
     SwitchCompat     switchTrafficAlarm;
     EditText         edtLeftDaysAlarm;
     SwitchCompat     switchLeftDaysAlarm;
+    SwitchCompat     switchFinishPackageAlarm;
     SwitchCompat     switchAutoMobileDataOff;
     DataPackage      dataPackage;
     String           initMode;
@@ -99,6 +101,7 @@ public class PackageSettingsFragment extends MyFragment {
         switchTrafficAlarm = (SwitchCompat) rootView.findViewById(R.id.switchTrafficAlarm);
         edtLeftDaysAlarm = (EditText) rootView.findViewById(R.id.edtLeftDaysAlarm);
         switchLeftDaysAlarm = (SwitchCompat) rootView.findViewById(R.id.switchLeftDaysAlarm);
+        switchFinishPackageAlarm = (SwitchCompat) rootView.findViewById(R.id.switchFinishPackageAlarm);
         switchAutoMobileDataOff = (SwitchCompat) rootView.findViewById(R.id.switchAutoMobileDataOff);
 
 
