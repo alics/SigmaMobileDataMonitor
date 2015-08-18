@@ -9,23 +9,23 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.zohaltech.app.mobiledatamonitor.BuildConfig;
 import com.zohaltech.app.mobiledatamonitor.R;
-import com.zohaltech.app.mobiledatamonitor.classes.AppLicensingManager;
+import com.zohaltech.app.mobiledatamonitor.classes.App;
 import com.zohaltech.app.mobiledatamonitor.classes.Helper;
-import com.zohaltech.app.mobiledatamonitor.classes.LicenseStatus;
 import com.zohaltech.app.mobiledatamonitor.fragments.AboutUsFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.DashboardFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.GlobalSettingsFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.HistoryFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.ManagementFragment;
+import com.zohaltech.app.mobiledatamonitor.fragments.PackageSettingsFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.PackagesFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.ReportFragment;
-import com.zohaltech.app.mobiledatamonitor.fragments.PackageSettingsFragment;
 
 import widgets.MyFragment;
 import widgets.MyTextView;
+import widgets.MyToast;
 
 public class MainActivity extends EnhancedActivity {
 
@@ -38,17 +38,42 @@ public class MainActivity extends EnhancedActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        AppLicensingManager.setValidCurrentDate();
+        MyToast.show(Helper.getCurrentDate(), Toast.LENGTH_LONG);
+        android.provider.Settings.System.putInt(App.context.getContentResolver(), android.provider.Settings.System.AUTO_TIME, 1);
+        App.handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                MyToast.show(Helper.getCurrentDate(), Toast.LENGTH_LONG);
+                android.provider.Settings.System.putInt(App.context.getContentResolver(), android.provider.Settings.System.AUTO_TIME, 0);
+            }
+        }, 3000);
 
-        String h=Helper.getAndroidId();
 
-        LicenseStatus status=new LicenseStatus(""+BuildConfig.VERSION_CODE,
-                                               Helper.getAndroidId(),
-                                               AppLicensingManager.currentDate,
-                                               1,
-                                               1);
-       AppLicensingManager.initializeLicenseFile(status);
-        AppLicensingManager.getLicenceFile();
+        // LicenseManager licenseManager=new LicenseManager();
+        // licenseManager.initializeLicenseFile();
+
+        //        LicenseModifier.setValidCurrentDate();
+        //
+        //        String h = Helper.getDeviceId();
+        //
+        //        LicenseStatus status1 = new LicenseStatus("" + BuildConfig.VERSION_CODE,
+        //                                                 Helper.getDeviceId(),
+        //                                                 LicenseModifier.currentDate,
+        //                                                 1,
+        //                                                  1,
+        //                                                  1);
+        //        LicenseModifier.initializeLicenseFile(status1);
+        //        LicenseModifier.getLicenceFile();
+        //
+        //        LicenseStatus status2 = new LicenseStatus("" + BuildConfig.VERSION_CODE,
+        //                                                  Helper.getDeviceId(),
+        //                                                  LicenseModifier.currentDate,
+        //                                                  2,
+        //                                                  2,
+        //                                                  2);
+        //
+        //        LicenseModifier.updateLicenseFile(status2);
+        //        LicenseModifier.getLicenceFile();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -62,7 +87,7 @@ public class MainActivity extends EnhancedActivity {
         txtTitle.setTextColor(Color.WHITE);
         txtTitle.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT));
         txtTitle.setGravity(Gravity.CENTER);
-        mainToolbar.addView(txtTitle,0);
+        mainToolbar.addView(txtTitle, 0);
 
         setSupportActionBar(mainToolbar);
         //getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -122,12 +147,12 @@ public class MainActivity extends EnhancedActivity {
             case SETTINGS:
                 fragment = new PackageSettingsFragment();
                 title = "تنظیمات بسته";
-                if (bundle != null){
-                    if (PackageSettingsFragment.MODE_SETTING_ACTIVE.equals(bundle.getString(PackageSettingsFragment.INIT_MODE_KEY))){
+                if (bundle != null) {
+                    if (PackageSettingsFragment.MODE_SETTING_ACTIVE.equals(bundle.getString(PackageSettingsFragment.INIT_MODE_KEY))) {
                         title = "بسته فعال";
-                    } else if (PackageSettingsFragment.MODE_SETTING_RESERVED.equals(bundle.getString(PackageSettingsFragment.INIT_MODE_KEY))){
+                    } else if (PackageSettingsFragment.MODE_SETTING_RESERVED.equals(bundle.getString(PackageSettingsFragment.INIT_MODE_KEY))) {
                         title = "بسته رزرو";
-                    } else if (PackageSettingsFragment.MODE_INSERT_CUSTOM.equals(bundle.getString(PackageSettingsFragment.INIT_MODE_KEY))){
+                    } else if (PackageSettingsFragment.MODE_INSERT_CUSTOM.equals(bundle.getString(PackageSettingsFragment.INIT_MODE_KEY))) {
                         title = "بسته سفارشی";
                     }
                 }

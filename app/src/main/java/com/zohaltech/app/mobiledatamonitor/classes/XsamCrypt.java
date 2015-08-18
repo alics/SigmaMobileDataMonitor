@@ -1,6 +1,3 @@
-/*
- * 
- */
 package com.zohaltech.app.mobiledatamonitor.classes;
 
 import java.security.NoSuchAlgorithmException;
@@ -10,24 +7,19 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-//https://github.com/serpro/Android-PHP-Encrypt-Decrypt
 public class XsamCrypt {
 
     static char[] HEX_CHARS = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 
-    //private String iv = "fedcba9876543210";//Dummy iv (CHANGE IT!)
-    private String iv = "f77995466a906864";
     private IvParameterSpec ivspec;
     private SecretKeySpec   keyspec;
     private Cipher          cipher;
 
-    //private String SecretKey = "0123456789abcdef";//Dummy secretKey (CHANGE IT!)
-    private String SecretKey = "a052108fcc1c4fc5";
 
     public XsamCrypt() {
-        ivspec = new IvParameterSpec(iv.getBytes());
+        ivspec = new IvParameterSpec(ConstantParams.IV.getBytes());
 
-        keyspec = new SecretKeySpec(SecretKey.getBytes(), "AES");
+        keyspec = new SecretKeySpec(ConstantParams.SECRET_KEY.getBytes(), "AES");
 
         try {
             cipher = Cipher.getInstance("AES/CBC/NoPadding");

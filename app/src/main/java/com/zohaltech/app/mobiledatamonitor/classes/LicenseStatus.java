@@ -3,20 +3,21 @@ package com.zohaltech.app.mobiledatamonitor.classes;
 
 public class LicenseStatus {
     private String appVersion;
-    private String androidId;
+    private String deviceId;
     private String installDate;
-    private int status;
-    private int    checkFlag;
+    private int    status;
+    private int    checkCount;
 
-    public LicenseStatus(String appVersion, String androidId, String installDate, int status, int checkFlag) {
+    public LicenseStatus(String appVersion, String deviceId, String installDate, int status, int checkCount) {
         setAppVersion(appVersion);
-        setAndroidId(androidId);
+        setDeviceId(deviceId);
         setInstallDate(installDate);
         setStatus(status);
-        setCheckFlag(checkFlag);
+        setCheckCount(checkCount);
     }
 
-    public LicenseStatus(){}
+    public LicenseStatus() {
+    }
 
     public String getAppVersion() {
         return appVersion;
@@ -26,12 +27,12 @@ public class LicenseStatus {
         this.appVersion = appVersion;
     }
 
-    public String getAndroidId() {
-        return androidId;
+    public String getDeviceId() {
+        return deviceId;
     }
 
-    public void setAndroidId(String androidId) {
-        this.androidId = androidId;
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
     }
 
     public String getInstallDate() {
@@ -42,19 +43,19 @@ public class LicenseStatus {
         this.installDate = installDate;
     }
 
-    public int getCheckFlag() {
-        return checkFlag;
-    }
-
-    public void setCheckFlag(int checkFlag) {
-        this.checkFlag = checkFlag;
-    }
-
     public int getStatus() {
         return status;
     }
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public int getCheckCount() {
+        return checkCount;
+    }
+
+    public void setCheckCount(int checkCount) {
+        this.checkCount = checkCount;
     }
 }

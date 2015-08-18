@@ -1,7 +1,5 @@
 package com.zohaltech.app.mobiledatamonitor.classes;
 
-import android.provider.Settings;
-
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
@@ -15,23 +13,21 @@ public class WebserviceHandler {
     private static final String OPERATION_PURCHASE       = "PurchaseMobileDataMonitorApp";
     private static final String WSDL_TARGET_NAMESPACE    = "http://tempuri.org/";
     private static final String SOAP_ADDRESS             = "http://zohaltech.com/ValidateAppUsers.asmx?wsdl";
-    private static final String USER_NAME                = "zohaltech-cs";
-    private static final String PASSWORD                 = "zoha@ltech8113";
 
-    private static String androidId;
+    private static String deviceId;
     private static String operatorName;
 
     static {
-        androidId = Settings.Secure.getString(App.context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        deviceId = Helper.getDeviceId();
         operatorName = Helper.getOperator().toString();
     }
 
     public static String verify() {
         if (ConnectionManager.getNetworkStatus() == ConnectionManager.NetworkStatus.Connected) {
             SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_VERIFICATION);
-            request.addProperty("username", USER_NAME);
-            request.addProperty("password", PASSWORD);
-            request.addProperty("androidId", androidId);
+            request.addProperty("username", ConstantParams.USER_NAME);
+            request.addProperty("password", ConstantParams.PASSWORD);
+            request.addProperty("deviceId", deviceId);
             request.addProperty("operatorName", operatorName);
 
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
@@ -54,9 +50,9 @@ public class WebserviceHandler {
     public static String purchase() {
         if (ConnectionManager.getNetworkStatus() == ConnectionManager.NetworkStatus.Connected) {
             SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_PURCHASE);
-            request.addProperty("username", USER_NAME);
-            request.addProperty("password", PASSWORD);
-            request.addProperty("androidId", androidId);
+            request.addProperty("username", ConstantParams.USER_NAME);
+            request.addProperty("password", ConstantParams.PASSWORD);
+            request.addProperty("deviceId", deviceId);
 
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
                     SoapEnvelope.VER11);
@@ -74,7 +70,6 @@ public class WebserviceHandler {
             }
             return response.toString();
         }
-
         return null;
     }
 }
