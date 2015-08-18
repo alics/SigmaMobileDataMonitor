@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zohaltech.app.mobiledatamonitor.R;
+import com.zohaltech.app.mobiledatamonitor.classes.App;
 import com.zohaltech.app.mobiledatamonitor.classes.Helper;
 import com.zohaltech.app.mobiledatamonitor.fragments.AboutUsFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.DashboardFragment;
@@ -37,6 +38,7 @@ public class MainActivity extends EnhancedActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -52,6 +54,7 @@ public class MainActivity extends EnhancedActivity {
         mainToolbar.addView(txtTitle, 0);
 
         setSupportActionBar(mainToolbar);
+        //getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         displayView(EnumFragment.DASHBOARD);
     }

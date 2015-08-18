@@ -60,6 +60,6 @@ public class AboutUsFragment extends MyFragment {
     private void close() {
         MainActivity parent = ((MainActivity) getActivity());
         parent.animType = MainActivity.AnimType.CLOSE;
-        parent.displayView(MainActivity.EnumFragment.DASHBOARD);
+        parent.displayView(MainActivity.EnumFragment.GLOBAL_SETTINGS);
     }
 }

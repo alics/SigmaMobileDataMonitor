@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 
 import com.zohaltech.app.mobiledatamonitor.R;
@@ -24,6 +25,7 @@ public class GlobalSettingsFragment extends MyFragment {
     SwitchCompat switchShowNotification;
     SwitchCompat switchShowNotificationWhenDataIsOn;
     SwitchCompat switchShowNotificationInLockScreen;
+    Button       btnAboutUs;
     Setting      setting;
 
     public GlobalSettingsFragment() {
@@ -44,6 +46,7 @@ public class GlobalSettingsFragment extends MyFragment {
 
         setting = Settings.getCurrentSettings();
 
+        btnAboutUs = (Button) rootView.findViewById(R.id.btnAboutUs);
         switchShowNotification = (SwitchCompat) rootView.findViewById(R.id.switchShowNotification);
         switchShowNotificationWhenDataIsOn = (SwitchCompat) rootView.findViewById(R.id.switchShowNotificationWhenDataIsOn);
         switchShowNotificationInLockScreen = (SwitchCompat) rootView.findViewById(R.id.switchShowNotificationInLockScreen);
@@ -73,6 +76,15 @@ public class GlobalSettingsFragment extends MyFragment {
                 setting.setShowNotificationInLockScreen(isChecked);
                 Settings.update(setting);
                 restartService();
+            }
+        });
+
+        btnAboutUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity parent = ((MainActivity) getActivity());
+                parent.animType = MainActivity.AnimType.OPEN;
+                parent.displayView(MainActivity.EnumFragment.ABOUT_US);
             }
         });
 
