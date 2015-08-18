@@ -10,7 +10,6 @@ import android.os.Build;
 import android.telephony.TelephonyManager;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -40,7 +39,7 @@ public final class Helper {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, day);
-       return dateFormat.format(cal.getTime());
+        return dateFormat.format(cal.getTime());
 
     }
 
@@ -79,7 +78,7 @@ public final class Helper {
         return activeNetwork != null && (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE);
     }
 
-    public static void setMobileDataEnabled(boolean enabled)  {
+    public static void setMobileDataEnabled(boolean enabled) {
         try {
             if (Build.VERSION.SDK_INT == Build.VERSION_CODES.FROYO) {
                 Method dataConnSwitchMethod;
@@ -139,6 +138,11 @@ public final class Helper {
         BigDecimal bd = new BigDecimal(Float.toString(d));
         bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
         return bd;
+    }
+
+    public static String getDeviceId() {
+        TelephonyManager telephonyManager = (TelephonyManager) App.context.getSystemService(Context.TELEPHONY_SERVICE);
+        return telephonyManager.getDeviceId();
     }
 
     public enum Operator {
