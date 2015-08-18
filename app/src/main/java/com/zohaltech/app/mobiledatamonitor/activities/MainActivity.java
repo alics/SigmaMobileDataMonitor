@@ -60,18 +60,6 @@ public class MainActivity extends EnhancedActivity {
     protected void onResume() {
         super.onResume();
 
-        //MyToast.show(Helper.getCurrentDate(), Toast.LENGTH_SHORT);
-        //final int timeType = android.provider.Settings.System.getInt(getContentResolver(), android.provider.Settings.System.AUTO_TIME, 1);
-        //android.provider.Settings.System.putInt(getContentResolver(), android.provider.Settings.System.AUTO_TIME, 1);
-        //
-        ////App.handler.postDelayed(new Runnable() {
-        ////    @Override
-        ////    public void run() {
-        //MyToast.show(Helper.getCurrentDate(), Toast.LENGTH_SHORT);
-        //android.provider.Settings.System.putInt(getContentResolver(), android.provider.Settings.System.AUTO_TIME, timeType);
-        ////    }
-        ////}, 3000);
-
         if (notified) {
             displayView(EnumFragment.DASHBOARD);
             notified = false;

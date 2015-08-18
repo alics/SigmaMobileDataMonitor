@@ -12,12 +12,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.activities.MainActivity;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
 import com.zohaltech.app.mobiledatamonitor.classes.DialogManager;
+import com.zohaltech.app.mobiledatamonitor.classes.Helper;
+import com.zohaltech.app.mobiledatamonitor.classes.SolarCalendar;
 import com.zohaltech.app.mobiledatamonitor.classes.TrafficUnitsUtil;
 import com.zohaltech.app.mobiledatamonitor.classes.Validator;
 import com.zohaltech.app.mobiledatamonitor.dal.DataPackages;
@@ -30,6 +33,7 @@ import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
 import com.zohaltech.app.mobiledatamonitor.entities.Setting;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import widgets.MyFragment;
 import widgets.MyToast;
@@ -41,16 +45,23 @@ public class PackageSettingsFragment extends MyFragment {
     public static final String MODE_SETTING_ACTIVE   = "SETTING_ACTIVE";
     public static final String MODE_SETTING_RESERVED = "SETTING_RESERVED";
     public static final String PACKAGE_ID_KEY        = "PackageId";
-    EditText         editTextPackageTitle;
+    EditText         edtPackageTitle;
+    TextView         txtPackageTitle;
     AppCompatSpinner spinnerOperators;
-    EditText         editTextPackageValidPeriod;
-    EditText         editTextPrimaryTraffic;
-    EditText         editTextSecondaryTraffic;
+    TextView         txtOperator;
+    EditText         edtPackageValidPeriod;
+    TextView         txtPackageValidPeriod;
+    EditText         edtPrimaryTraffic;
+    TextView         txtPrimaryTraffic;
+    EditText         edtSecondaryTraffic;
+    TextView         txtSecondaryTraffic;
     Button           btnSecondaryStartTime;
+    TextView         txtSecondaryStartTime;
     Button           btnSecondaryEndTime;
-    EditText         editTextTrafficAlarm;
+    TextView         txtSecondaryEndTime;
+    EditText         edtTrafficAlarm;
     SwitchCompat     switchTrafficAlarm;
-    EditText         editTextLeftDaysAlarm;
+    EditText         edtLeftDaysAlarm;
     SwitchCompat     switchLeftDaysAlarm;
     SwitchCompat     switchAutoMobileDataOff;
     DataPackage      dataPackage;
@@ -70,16 +81,23 @@ public class PackageSettingsFragment extends MyFragment {
         setHasOptionsMenu(true);
         View rootView = inflater.inflate(R.layout.fragment_package_settings, container, false);
 
-        editTextPackageTitle = (EditText) rootView.findViewById(R.id.editTextPackageTitle);
+        edtPackageTitle = (EditText) rootView.findViewById(R.id.edtPackageTitle);
+        txtPackageTitle = (TextView) rootView.findViewById(R.id.txtPackageTitle);
         spinnerOperators = (AppCompatSpinner) rootView.findViewById(R.id.spinnerOperators);
-        editTextPackageValidPeriod = (EditText) rootView.findViewById(R.id.editTextPackageValidPeriod);
-        editTextPrimaryTraffic = (EditText) rootView.findViewById(R.id.editTextPrimaryTraffic);
-        editTextSecondaryTraffic = (EditText) rootView.findViewById(R.id.editTextSecondaryTraffic);
+        txtOperator = (TextView) rootView.findViewById(R.id.txtOperator);
+        edtPackageValidPeriod = (EditText) rootView.findViewById(R.id.edtPackageValidPeriod);
+        txtPackageValidPeriod = (TextView) rootView.findViewById(R.id.txtPackageValidPeriod);
+        edtPrimaryTraffic = (EditText) rootView.findViewById(R.id.edtPrimaryTraffic);
+        txtPrimaryTraffic = (TextView) rootView.findViewById(R.id.txtPrimaryTraffic);
+        edtSecondaryTraffic = (EditText) rootView.findViewById(R.id.edtSecondaryTraffic);
+        txtSecondaryTraffic = (TextView) rootView.findViewById(R.id.txtSecondaryTraffic);
         btnSecondaryStartTime = (Button) rootView.findViewById(R.id.btnSecondaryStartTime);
+        txtSecondaryStartTime = (TextView) rootView.findViewById(R.id.txtSecondaryStartTime);
         btnSecondaryEndTime = (Button) rootView.findViewById(R.id.btnSecondaryEndTime);
-        editTextTrafficAlarm = (EditText) rootView.findViewById(R.id.editTextTrafficAlarm);
+        txtSecondaryEndTime = (TextView) rootView.findViewById(R.id.txtSecondaryEndTime);
+        edtTrafficAlarm = (EditText) rootView.findViewById(R.id.edtTrafficAlarm);
         switchTrafficAlarm = (SwitchCompat) rootView.findViewById(R.id.switchTrafficAlarm);
-        editTextLeftDaysAlarm = (EditText) rootView.findViewById(R.id.editTextLeftDaysAlarm);
+        edtLeftDaysAlarm = (EditText) rootView.findViewById(R.id.edtLeftDaysAlarm);
         switchLeftDaysAlarm = (SwitchCompat) rootView.findViewById(R.id.switchLeftDaysAlarm);
         switchAutoMobileDataOff = (SwitchCompat) rootView.findViewById(R.id.switchAutoMobileDataOff);
 
@@ -133,26 +151,42 @@ public class PackageSettingsFragment extends MyFragment {
         initControls();
 
         initMode = getArguments().getString(INIT_MODE_KEY);
-        String packageId = getArguments().getString(PACKAGE_ID_KEY);
 
-        if (packageId != null) {
+        assert initMode != null;
+        if (initMode.equals(MODE_INSERT_CUSTOM)) {
+            edtPackageTitle.setText("بسته سفارشی");
+            int operatorIndex = Helper.getOperator().ordinal();
+            if (operatorIndex < 3) {
+                spinnerOperators.setSelection(operatorIndex);
+            } else {
+                spinnerOperators.setSelection(0);
+            }
+            edtPackageValidPeriod.setText("10");
+            edtPrimaryTraffic.setText("1024");
+            edtSecondaryTraffic.setText("1024");
+            btnSecondaryStartTime.setText("02:00");
+            btnSecondaryEndTime.setText("07:00");
+            edtTrafficAlarm.setText("900");
+            edtLeftDaysAlarm.setText("2");
+            setEditMode(true);
+        } else {
+            String packageId = getArguments().getString(PACKAGE_ID_KEY);
             dataPackage = DataPackages.selectPackageById(Integer.valueOf(packageId));
 
             if (dataPackage != null) {
-                editTextPackageTitle.setText(dataPackage.getTitle());
-                spinnerOperators.setSelection(dataPackage.getOperatorId());
-                editTextPackageValidPeriod.setText(String.valueOf(dataPackage.getPeriod()));
-                editTextPrimaryTraffic.setText(TrafficUnitsUtil.ByteToMb(dataPackage.getPrimaryTraffic()) + "");
-                editTextSecondaryTraffic.setText(TrafficUnitsUtil.ByteToMb(dataPackage.getSecondaryTraffic()) + "");
-                btnSecondaryStartTime.setText(dataPackage.getSecondaryTrafficStartTime());
-                btnSecondaryEndTime.setText(dataPackage.getSecondaryTrafficEndTime());
+                txtPackageTitle.setText(dataPackage.getTitle());
+                txtOperator.setText(MobileOperators.getOperatorById(dataPackage.getOperatorId()).getName());
+                txtPackageValidPeriod.setText(String.valueOf(dataPackage.getPeriod()));
+                txtPrimaryTraffic.setText(TrafficUnitsUtil.ByteToMb(dataPackage.getPrimaryTraffic()) + "");
+                txtSecondaryTraffic.setText(TrafficUnitsUtil.ByteToMb(dataPackage.getSecondaryTraffic()) + "");
+                txtSecondaryStartTime.setText(dataPackage.getSecondaryTrafficStartTime());
+                txtSecondaryEndTime.setText(dataPackage.getSecondaryTrafficEndTime());
 
+                setEditMode(false);
                 if (initMode.equals(MODE_SETTING_ACTIVE)) {
-                    freezePackageInformation();
                     loadActivePackageSettings();
 
                 } else if (initMode.equals(MODE_SETTING_RESERVED)) {
-                    freezePackageInformation();
                     loadReservedPackageSettings();
                 }
             }
@@ -236,21 +270,21 @@ public class PackageSettingsFragment extends MyFragment {
         setting = Settings.getCurrentSettings();
 
         if (trafficAlarm && leftDaysAlarm) {
-            if (Validator.validateEditText(editTextLeftDaysAlarm, "اخطار روز باقیمانده"))
+            if (Validator.validateEditText(edtLeftDaysAlarm, "اخطار روز باقیمانده"))
                 return;
-            if (Validator.validateEditText(editTextTrafficAlarm, "اخطار حجمی"))
+            if (Validator.validateEditText(edtTrafficAlarm, "اخطار حجمی"))
                 return;
             setting.setAlarmType(Setting.AlarmType.BOTH.ordinal());
-            setting.setLeftDaysAlarm(Integer.valueOf(editTextLeftDaysAlarm.getText().toString()));
-            setting.setRemindedByteAlarm(TrafficUnitsUtil.MbToByte(Integer.valueOf(editTextTrafficAlarm.getText().toString())));
+            setting.setLeftDaysAlarm(Integer.valueOf(edtLeftDaysAlarm.getText().toString()));
+            setting.setRemindedByteAlarm(TrafficUnitsUtil.MbToByte(Integer.valueOf(edtTrafficAlarm.getText().toString())));
         } else if (trafficAlarm) {
-            if (Validator.validateEditText(editTextTrafficAlarm, "اخطار حجمی"))
+            if (Validator.validateEditText(edtTrafficAlarm, "اخطار حجمی"))
                 return;
             setting.setAlarmType(Setting.AlarmType.REMINDED_BYTES.ordinal());
-            setting.setRemindedByteAlarm(TrafficUnitsUtil.MbToByte(Integer.valueOf(editTextTrafficAlarm.getText().toString())));
+            setting.setRemindedByteAlarm(TrafficUnitsUtil.MbToByte(Integer.valueOf(edtTrafficAlarm.getText().toString())));
         } else if (leftDaysAlarm) {
             setting.setAlarmType(Setting.AlarmType.LEFT_DAY.ordinal());
-            setting.setLeftDaysAlarm(Integer.valueOf(editTextLeftDaysAlarm.getText().toString()));
+            setting.setLeftDaysAlarm(Integer.valueOf(edtLeftDaysAlarm.getText().toString()));
         }
         Settings.update(setting);
     }
@@ -262,21 +296,21 @@ public class PackageSettingsFragment extends MyFragment {
         setting = Settings.getCurrentSettings();
 
         if (trafficAlarm && leftDaysAlarm) {
-            if (Validator.validateEditText(editTextLeftDaysAlarm, "اخطار روز باقیمانده"))
+            if (Validator.validateEditText(edtLeftDaysAlarm, "اخطار روز باقیمانده"))
                 return;
-            if (Validator.validateEditText(editTextTrafficAlarm, "اخطار حجمی"))
+            if (Validator.validateEditText(edtTrafficAlarm, "اخطار حجمی"))
                 return;
             setting.setAlarmTypeRes(Setting.AlarmType.BOTH.ordinal());
-            setting.setLeftDaysAlarmRes(Integer.valueOf(editTextLeftDaysAlarm.getText().toString()));
-            setting.setRemindedByteAlarmRes(TrafficUnitsUtil.MbToByte(Integer.valueOf(editTextTrafficAlarm.getText().toString())));
+            setting.setLeftDaysAlarmRes(Integer.valueOf(edtLeftDaysAlarm.getText().toString()));
+            setting.setRemindedByteAlarmRes(TrafficUnitsUtil.MbToByte(Integer.valueOf(edtTrafficAlarm.getText().toString())));
         } else if (trafficAlarm) {
-            if (Validator.validateEditText(editTextTrafficAlarm, "اخطار حجمی"))
+            if (Validator.validateEditText(edtTrafficAlarm, "اخطار حجمی"))
                 return;
             setting.setAlarmType(Setting.AlarmType.REMINDED_BYTES.ordinal());
-            setting.setRemindedByteAlarm(TrafficUnitsUtil.MbToByte(Integer.valueOf(editTextTrafficAlarm.getText().toString())));
+            setting.setRemindedByteAlarm(TrafficUnitsUtil.MbToByte(Integer.valueOf(edtTrafficAlarm.getText().toString())));
         } else if (leftDaysAlarm) {
             setting.setAlarmTypeRes(Setting.AlarmType.LEFT_DAY.ordinal());
-            setting.setLeftDaysAlarmRes(Integer.valueOf(editTextLeftDaysAlarm.getText().toString()));
+            setting.setLeftDaysAlarmRes(Integer.valueOf(edtLeftDaysAlarm.getText().toString()));
         }
     }
 
@@ -285,15 +319,15 @@ public class PackageSettingsFragment extends MyFragment {
         int alarmType = setting.getAlarmType();
         if (alarmType == Setting.AlarmType.BOTH.ordinal()) {
             switchLeftDaysAlarm.setChecked(true);
-            editTextLeftDaysAlarm.setText(setting.getLeftDaysAlarm() + "");
+            edtLeftDaysAlarm.setText(setting.getLeftDaysAlarm() + "");
             switchTrafficAlarm.setChecked(true);
-            editTextTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(setting.getRemindedByteAlarm()) + "");
+            edtTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(setting.getRemindedByteAlarm()) + "");
         } else if (alarmType == Setting.AlarmType.LEFT_DAY.ordinal()) {
             switchLeftDaysAlarm.setChecked(true);
-            editTextLeftDaysAlarm.setText(setting.getLeftDaysAlarm() + "");
+            edtLeftDaysAlarm.setText(setting.getLeftDaysAlarm() + "");
         } else if (alarmType == Setting.AlarmType.REMINDED_BYTES.ordinal()) {
             switchTrafficAlarm.setChecked(true);
-            editTextTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(setting.getRemindedByteAlarm()) + "");
+            edtTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(setting.getRemindedByteAlarm()) + "");
         }
     }
 
@@ -302,15 +336,15 @@ public class PackageSettingsFragment extends MyFragment {
         int alarmType = setting.getAlarmTypeRes();
         if (alarmType == Setting.AlarmType.BOTH.ordinal()) {
             switchLeftDaysAlarm.setChecked(true);
-            editTextLeftDaysAlarm.setText(setting.getLeftDaysAlarmRes() + "");
+            edtLeftDaysAlarm.setText(setting.getLeftDaysAlarmRes() + "");
             switchTrafficAlarm.setChecked(true);
-            editTextTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(setting.getRemindedByteAlarmRes()) + "");
+            edtTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(setting.getRemindedByteAlarmRes()) + "");
         } else if (alarmType == Setting.AlarmType.LEFT_DAY.ordinal()) {
             switchLeftDaysAlarm.setChecked(true);
-            editTextLeftDaysAlarm.setText(setting.getLeftDaysAlarmRes() + "");
+            edtLeftDaysAlarm.setText(setting.getLeftDaysAlarmRes() + "");
         } else if (alarmType == Setting.AlarmType.REMINDED_BYTES.ordinal()) {
             switchTrafficAlarm.setChecked(true);
-            editTextTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(setting.getRemindedByteAlarmRes()) + "");
+            edtTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(setting.getRemindedByteAlarmRes()) + "");
         }
     }
 
@@ -319,17 +353,17 @@ public class PackageSettingsFragment extends MyFragment {
         String secondaryTrafficStartTime = null;
         String secondaryTrafficEndTime = null;
 
-        if (Validator.validateEditText(editTextPackageTitle, "عنوان بسته"))
+        if (Validator.validateEditText(edtPackageTitle, "عنوان بسته"))
             return;
-        if (Validator.validateEditText(editTextPrimaryTraffic, "حجم ترافیک اولیه"))
+        if (Validator.validateEditText(edtPrimaryTraffic, "حجم شبانه روزی"))
             return;
-        if (Validator.validateEditText(editTextPackageValidPeriod, "مدت اعتبار"))
+        if (Validator.validateEditText(edtPackageValidPeriod, "مدت اعتبار"))
             return;
-        if (Validator.validateEditText(editTextPackageTitle, "عنوان بسته"))
+        if (Validator.validateEditText(edtPackageTitle, "عنوان بسته"))
             return;
 
-        if (editTextSecondaryTraffic.getText().toString().trim().length() > 0) {
-            secondaryTraffic = TrafficUnitsUtil.MbToByte(Integer.valueOf(editTextSecondaryTraffic.getText().toString()));
+        if (edtSecondaryTraffic.getText().toString().trim().length() > 0) {
+            secondaryTraffic = TrafficUnitsUtil.MbToByte(Integer.valueOf(edtSecondaryTraffic.getText().toString()));
             if (btnSecondaryStartTime.getText().toString().trim().length() == 0) {
                 MyToast.show("لطفا " + "بازه مصرف شبانه" + " را وارد کنید", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
                 return;
@@ -343,10 +377,10 @@ public class PackageSettingsFragment extends MyFragment {
         }
 
         int operatorId = spinnerOperators.getSelectedItemPosition() + 1;
-        String title = editTextPackageTitle.getText().toString();
-        int period = Integer.valueOf(editTextPackageValidPeriod.getText().toString());
+        String title = edtPackageTitle.getText().toString();
+        int period = Integer.valueOf(edtPackageValidPeriod.getText().toString());
         int price = 0;
-        long primaryTraffic = TrafficUnitsUtil.MbToByte(Integer.valueOf(editTextPrimaryTraffic.getText().toString()));
+        long primaryTraffic = TrafficUnitsUtil.MbToByte(Integer.valueOf(edtPrimaryTraffic.getText().toString()));
 
         DataPackages.insert(new DataPackage(operatorId,
                                             title,
@@ -360,13 +394,37 @@ public class PackageSettingsFragment extends MyFragment {
                                             true));
     }
 
-    private void freezePackageInformation() {
-        editTextPackageTitle.setEnabled(false);
-        spinnerOperators.setEnabled(false);
-        editTextPackageValidPeriod.setEnabled(false);
-        editTextPrimaryTraffic.setEnabled(false);
-        editTextSecondaryTraffic.setEnabled(false);
-        btnSecondaryStartTime.setEnabled(false);
-        btnSecondaryEndTime.setEnabled(false);
+    private void setEditMode(boolean isEditMode) {
+        if (isEditMode) {
+            edtPackageTitle.setVisibility(View.VISIBLE);
+            spinnerOperators.setVisibility(View.VISIBLE);
+            edtPackageValidPeriod.setVisibility(View.VISIBLE);
+            edtPrimaryTraffic.setVisibility(View.VISIBLE);
+            edtSecondaryTraffic.setVisibility(View.VISIBLE);
+            btnSecondaryStartTime.setVisibility(View.VISIBLE);
+            btnSecondaryEndTime.setVisibility(View.VISIBLE);
+            txtPackageTitle.setVisibility(View.GONE);
+            txtOperator.setVisibility(View.GONE);
+            txtPackageValidPeriod.setVisibility(View.GONE);
+            txtPrimaryTraffic.setVisibility(View.GONE);
+            txtSecondaryTraffic.setVisibility(View.GONE);
+            txtSecondaryStartTime.setVisibility(View.GONE);
+            txtSecondaryEndTime.setVisibility(View.GONE);
+        } else {
+            edtPackageTitle.setVisibility(View.GONE);
+            spinnerOperators.setVisibility(View.GONE);
+            edtPackageValidPeriod.setVisibility(View.GONE);
+            edtPrimaryTraffic.setVisibility(View.GONE);
+            edtSecondaryTraffic.setVisibility(View.GONE);
+            btnSecondaryStartTime.setVisibility(View.GONE);
+            btnSecondaryEndTime.setVisibility(View.GONE);
+            txtPackageTitle.setVisibility(View.VISIBLE);
+            txtOperator.setVisibility(View.VISIBLE);
+            txtPackageValidPeriod.setVisibility(View.VISIBLE);
+            txtPrimaryTraffic.setVisibility(View.VISIBLE);
+            txtSecondaryTraffic.setVisibility(View.VISIBLE);
+            txtSecondaryStartTime.setVisibility(View.VISIBLE);
+            txtSecondaryEndTime.setVisibility(View.VISIBLE);
+        }
     }
 }

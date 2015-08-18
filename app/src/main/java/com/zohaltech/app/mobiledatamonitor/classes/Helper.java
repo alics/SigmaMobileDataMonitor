@@ -147,8 +147,8 @@ public final class Helper {
 
     public enum Operator {
         MCI,
-        RIGHTELL,
         IRANCELL,
+        RIGHTELL,
         NO_SIM
     }
 
