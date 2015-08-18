@@ -39,7 +39,7 @@
 
             <widgets.MyButton
                 android:id="@+id/negativeButton"
-                style="@style/MyButton"
+                style="@style/DialogButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="انصراف"
@@ -48,7 +48,7 @@
 
             <widgets.MyButton
                 android:id="@+id/positiveButton"
-                style="@style/MyButton"
+                style="@style/DialogButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="تایید"

@@ -1,17 +1,15 @@
 package com.zohaltech.app.mobiledatamonitor.activities;
 
-import android.app.AlarmManager;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.classes.Helper;
@@ -20,14 +18,13 @@ import com.zohaltech.app.mobiledatamonitor.fragments.DashboardFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.GlobalSettingsFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.HistoryFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.ManagementFragment;
+import com.zohaltech.app.mobiledatamonitor.fragments.PackageSettingsFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.PackagesFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.ReportFragment;
-import com.zohaltech.app.mobiledatamonitor.fragments.PackageSettingsFragment;
-
-import java.util.Calendar;
 
 import widgets.MyFragment;
 import widgets.MyTextView;
+import widgets.MyToast;
 
 public class MainActivity extends EnhancedActivity {
 
@@ -52,10 +49,9 @@ public class MainActivity extends EnhancedActivity {
         txtTitle.setTextColor(Color.WHITE);
         txtTitle.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT));
         txtTitle.setGravity(Gravity.CENTER);
-        mainToolbar.addView(txtTitle,0);
+        mainToolbar.addView(txtTitle, 0);
 
         setSupportActionBar(mainToolbar);
-        //getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         displayView(EnumFragment.DASHBOARD);
     }
@@ -64,10 +60,17 @@ public class MainActivity extends EnhancedActivity {
     protected void onResume() {
         super.onResume();
 
-
-        //int timeType = android.provider.Settings.System.getInt(getContentResolver(), android.provider.Settings.System.AUTO_TIME, 1);
+        //MyToast.show(Helper.getCurrentDate(), Toast.LENGTH_SHORT);
+        //final int timeType = android.provider.Settings.System.getInt(getContentResolver(), android.provider.Settings.System.AUTO_TIME, 1);
         //android.provider.Settings.System.putInt(getContentResolver(), android.provider.Settings.System.AUTO_TIME, 1);
+        //
+        ////App.handler.postDelayed(new Runnable() {
+        ////    @Override
+        ////    public void run() {
+        //MyToast.show(Helper.getCurrentDate(), Toast.LENGTH_SHORT);
         //android.provider.Settings.System.putInt(getContentResolver(), android.provider.Settings.System.AUTO_TIME, timeType);
+        ////    }
+        ////}, 3000);
 
         if (notified) {
             displayView(EnumFragment.DASHBOARD);
@@ -117,12 +120,12 @@ public class MainActivity extends EnhancedActivity {
             case SETTINGS:
                 fragment = new PackageSettingsFragment();
                 title = "تنظیمات بسته";
-                if (bundle != null){
-                    if (PackageSettingsFragment.MODE_SETTING_ACTIVE.equals(bundle.getString(PackageSettingsFragment.INIT_MODE_KEY))){
+                if (bundle != null) {
+                    if (PackageSettingsFragment.MODE_SETTING_ACTIVE.equals(bundle.getString(PackageSettingsFragment.INIT_MODE_KEY))) {
                         title = "بسته فعال";
-                    } else if (PackageSettingsFragment.MODE_SETTING_RESERVED.equals(bundle.getString(PackageSettingsFragment.INIT_MODE_KEY))){
+                    } else if (PackageSettingsFragment.MODE_SETTING_RESERVED.equals(bundle.getString(PackageSettingsFragment.INIT_MODE_KEY))) {
                         title = "بسته رزرو";
-                    } else if (PackageSettingsFragment.MODE_INSERT_CUSTOM.equals(bundle.getString(PackageSettingsFragment.INIT_MODE_KEY))){
+                    } else if (PackageSettingsFragment.MODE_INSERT_CUSTOM.equals(bundle.getString(PackageSettingsFragment.INIT_MODE_KEY))) {
                         title = "بسته سفارشی";
                     }
                 }

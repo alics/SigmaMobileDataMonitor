@@ -1,6 +1,7 @@
 package com.zohaltech.app.mobiledatamonitor.fragments;
 
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -11,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.zohaltech.app.mobiledatamonitor.R;
@@ -36,28 +36,26 @@ import widgets.MyToast;
 
 public class PackageSettingsFragment extends MyFragment {
 
-    EditText     editTextPackageTitle;
-    Spinner      spinnerOperators;
-    EditText     editTextPackageValidPeriod;
-    EditText     editTextPackagePrice;
-    EditText     editTextPrimaryTraffic;
-    EditText     editTextSecondaryTraffic;
-    Button       btnSecondaryStartTime;
-    Button       btnSecondaryEndTime;
-    EditText     editTextTrafficAlarm;
-    SwitchCompat switchTrafficAlarm;
-    EditText     editTextLeftDaysAlarm;
-    SwitchCompat switchLeftDaysAlarm;
-    SwitchCompat switchAutoMobileDataOff;
-    DataPackage  dataPackage;
-    String       initMode;
-    Setting      setting;
-
     public static final String INIT_MODE_KEY         = "INIT_MODE";
     public static final String MODE_INSERT_CUSTOM    = "INSERT_CUSTOM";
     public static final String MODE_SETTING_ACTIVE   = "SETTING_ACTIVE";
     public static final String MODE_SETTING_RESERVED = "SETTING_RESERVED";
     public static final String PACKAGE_ID_KEY        = "PackageId";
+    EditText         editTextPackageTitle;
+    AppCompatSpinner spinnerOperators;
+    EditText         editTextPackageValidPeriod;
+    EditText         editTextPrimaryTraffic;
+    EditText         editTextSecondaryTraffic;
+    Button           btnSecondaryStartTime;
+    Button           btnSecondaryEndTime;
+    EditText         editTextTrafficAlarm;
+    SwitchCompat     switchTrafficAlarm;
+    EditText         editTextLeftDaysAlarm;
+    SwitchCompat     switchLeftDaysAlarm;
+    SwitchCompat     switchAutoMobileDataOff;
+    DataPackage      dataPackage;
+    String           initMode;
+    Setting          setting;
 
     public PackageSettingsFragment() {
     }
@@ -73,9 +71,8 @@ public class PackageSettingsFragment extends MyFragment {
         View rootView = inflater.inflate(R.layout.fragment_package_settings, container, false);
 
         editTextPackageTitle = (EditText) rootView.findViewById(R.id.editTextPackageTitle);
-        spinnerOperators = (Spinner) rootView.findViewById(R.id.spinnerOperators);
+        spinnerOperators = (AppCompatSpinner) rootView.findViewById(R.id.spinnerOperators);
         editTextPackageValidPeriod = (EditText) rootView.findViewById(R.id.editTextPackageValidPeriod);
-        editTextPackagePrice = (EditText) rootView.findViewById(R.id.editTextPackagePrice);
         editTextPrimaryTraffic = (EditText) rootView.findViewById(R.id.editTextPrimaryTraffic);
         editTextSecondaryTraffic = (EditText) rootView.findViewById(R.id.editTextSecondaryTraffic);
         btnSecondaryStartTime = (Button) rootView.findViewById(R.id.btnSecondaryStartTime);
@@ -145,7 +142,6 @@ public class PackageSettingsFragment extends MyFragment {
                 editTextPackageTitle.setText(dataPackage.getTitle());
                 spinnerOperators.setSelection(dataPackage.getOperatorId());
                 editTextPackageValidPeriod.setText(String.valueOf(dataPackage.getPeriod()));
-                editTextPackagePrice.setText(String.valueOf(dataPackage.getPrice()));
                 editTextPrimaryTraffic.setText(TrafficUnitsUtil.ByteToMb(dataPackage.getPrimaryTraffic()) + "");
                 editTextSecondaryTraffic.setText(TrafficUnitsUtil.ByteToMb(dataPackage.getSecondaryTraffic()) + "");
                 btnSecondaryStartTime.setText(dataPackage.getSecondaryTrafficStartTime());
@@ -179,7 +175,7 @@ public class PackageSettingsFragment extends MyFragment {
         int id = item.getItemId();
         if (id == android.R.id.home) {
             close();
-        } else if (id == R.id.action_done){
+        } else if (id == R.id.action_done) {
             confirm();
         }
         return super.onOptionsItemSelected(item);
@@ -228,9 +224,8 @@ public class PackageSettingsFragment extends MyFragment {
         for (int i = 0; i < operators.size(); i++) {
             operatorList.add(operators.get(i).getName());
         }
-        operatorsAdapter = new ArrayAdapter<String>(App.context,
-                                                    android.R.layout.simple_spinner_item, operatorList);
-        operatorsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        operatorsAdapter = new ArrayAdapter<>(App.context, R.layout.spinner_current_item, operatorList);
+        operatorsAdapter.setDropDownViewResource(R.layout.spinner_item);
         spinnerOperators.setAdapter(operatorsAdapter);
     }
 
@@ -369,7 +364,6 @@ public class PackageSettingsFragment extends MyFragment {
         editTextPackageTitle.setEnabled(false);
         spinnerOperators.setEnabled(false);
         editTextPackageValidPeriod.setEnabled(false);
-        editTextPackagePrice.setEnabled(false);
         editTextPrimaryTraffic.setEnabled(false);
         editTextSecondaryTraffic.setEnabled(false);
         btnSecondaryStartTime.setEnabled(false);

@@ -19,8 +19,4 @@
     <color name="disabled">#888888</color>
     <color name="black">#000000</color>
 
-    <color name="light_gray">#bbbbbb</color>
-    <color name="lighter_gray">#ffebebeb</color>
-    <color name="orange">#ffff943e</color>
-    <color name="gray_blue">#26404d</color>
 </resources>
