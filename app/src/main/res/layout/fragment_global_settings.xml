@@ -36,7 +36,7 @@
                     android:layout_marginEnd="2dp"
                     android:layout_marginRight="2dp"
                     android:checked="false"
-                    android:text="نمایش Notification"/>
+                    android:text="نمایش نوار وضعیت"/>
 
             </LinearLayout>
 
@@ -53,7 +53,7 @@
                     android:layout_marginEnd="2dp"
                     android:layout_marginRight="2dp"
                     android:checked="false"
-                    android:text="نمایش Notification وقتی که دیتا روشن باشد."/>
+                    android:text="نمایش نوار وضعیت وقتی که دیتا روشن باشد"/>
 
             </LinearLayout>
 
@@ -70,7 +70,7 @@
                     android:layout_marginEnd="2dp"
                     android:layout_marginRight="2dp"
                     android:checked="false"
-                    android:text="نمایش Notification در Lock Screen"/>
+                    android:text="نمایش نوار وضعیت در Lock Screen"/>
 
             </LinearLayout>
 

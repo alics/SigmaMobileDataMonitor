@@ -61,28 +61,28 @@ public class UsageLogs {
     }
 
     public static long insert(UsageLog usageLog) {
-        String maxDateTimeStr = getMaxDateTime();
-        String maxDateStr = maxDateTimeStr == null ? "" : maxDateTimeStr.substring(0, 10);
-        String strCurrentDateTime = Helper.getCurrentDateTime();
-        String strCurrentDate = strCurrentDateTime.substring(0, 10);
-        Log.i("sdj",maxDateTimeStr);
-        Log.i("sdj",maxDateStr);
-        Log.i("sdj",strCurrentDateTime);
-        Log.i("sdj",strCurrentDate);
+        String maxUsageLogDate = getMaxDateTime().substring(0, 10);
+        String currentDateTime = Helper.getCurrentDateTime();
+        String currentDate = Helper.getCurrentDate();
+        Log.i("sdj maxUsageLogDate",maxUsageLogDate);
+        Log.i("sdj currentDateTime",currentDateTime);
+        Log.i("sdj currentDate",currentDate);
 
-        if (strCurrentDate.compareTo(maxDateStr) > 0) {
+        if (Helper.addDay(-1).equals(DailyTrafficHistories.getMaxDate()) == false && currentDate.compareTo(maxUsageLogDate) > 0) {
             Log.i("sdj","integrated");
-            integrateSumUsedTrafficPerDay(maxDateStr);
+            integrateSumUsedTrafficPerDay(Helper.addDay(-1));
         }
+
         if (usageLog.getTrafficBytes() != 0) {
-            Log.i("Log","inserted");
             ContentValues values = new ContentValues();
             values.put(TrafficBytes, usageLog.getTrafficBytes());
-            values.put(LogDateTime, strCurrentDateTime);
+            values.put(LogDateTime, currentDateTime);
 
+            Log.i("sdj", "usage log inserted " + usageLog.getTrafficBytes());
             DataAccess da = new DataAccess();
             return da.insert(TableName, values);
         }
+
         return 0;
     }
 
@@ -130,8 +130,8 @@ public class UsageLogs {
         SQLiteDatabase db = da.getReadableDB();
         Cursor cursor = null;
         try {
-            String query = "SELECT SUM(TrafficBytes) SumTraffic FROM "+TableName+
-                           " WHERE  SUBSTR(LogDateTime,1,10)='" + date + "';";
+            String query = "SELECT SUM(TrafficBytes) SumTraffic FROM " + TableName +
+                           " WHERE SUBSTR(LogDateTime,1,10) = '" + date + "';";
             cursor = db.rawQuery(query, null);
 
             if (cursor != null && cursor.moveToFirst()) {

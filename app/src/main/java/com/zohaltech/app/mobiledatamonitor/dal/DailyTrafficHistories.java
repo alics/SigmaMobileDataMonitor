@@ -81,6 +81,30 @@ public class DailyTrafficHistories {
         return histories;
     }
 
+    public static String getMaxDate() {
+        String maxLogDate = null;
+        DataAccess da = new DataAccess();
+        SQLiteDatabase db = da.getReadableDB();
+        Cursor cursor = null;
+        try {
+            String query = "SELECT MAX(" + LogDate + ") MaxLogDate FROM " + TableName;
+            cursor = db.rawQuery(query, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    maxLogDate = cursor.getString(cursor.getColumnIndex("MaxLogDate"));
+                } while (cursor.moveToNext());
+            }
+        } catch (MyRuntimeException e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null && !cursor.isClosed())
+                cursor.close();
+            if (db != null && db.isOpen())
+                db.close();
+        }
+        return maxLogDate;
+    }
+
     public static ArrayList<TrafficMonitor> getMonthlyTraffic() {
         ArrayList<TrafficMonitor> trafficMonitors = new ArrayList<>();
         String currentDate = Helper.getCurrentDate();

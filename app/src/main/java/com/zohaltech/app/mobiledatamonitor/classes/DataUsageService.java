@@ -106,6 +106,7 @@ public class DataUsageService extends Service {
             //NotificationManager notificationManager = (NotificationManager) App.context.getSystemService(Context.NOTIFICATION_SERVICE);
             //notificationManager.notify(1,NotificationHandler.getDataUsageNotification(DataUsageService.this, iconId, getString(R.string.down) + TrafficUnitsUtil.getTransferRate(receivedBytes) + getString(R.string.up) + TrafficUnitsUtil.getTransferRate(sentBytes), getString(R.string.today) + dailyUsage));
 
+
             if (Settings.getCurrentSettings().getShowNotification()) {
                 startForeground(1, NotificationHandler.getDataUsageNotification(DataUsageService.this, iconId, getString(R.string.down) + TrafficUnitsUtil.getTransferRate(receivedBytes) + getString(R.string.up) + TrafficUnitsUtil.getTransferRate(sentBytes), getString(R.string.today) + dailyUsage));
             } else {
