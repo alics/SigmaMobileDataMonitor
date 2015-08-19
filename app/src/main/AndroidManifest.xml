@@ -73,7 +73,7 @@
             android:name=".activities.PackagesActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activities.ReportsActivity"
+            android:name=".activities.ReportActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.PackageSettingsActivity"

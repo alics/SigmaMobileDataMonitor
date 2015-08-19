@@ -1,11 +1,12 @@
 package com.zohaltech.app.mobiledatamonitor.activities;
 
 
-import android.os.Bundle;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.SwitchCompat;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -66,7 +67,8 @@ public class PackageSettingsActivity extends EnhancedActivity {
 
 
     @Override
-     void onCreated() {
+    void onCreated() {
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         setContentView(R.layout.activity_package_settings);
 
         edtPackageTitle = (EditText) findViewById(R.id.edtPackageTitle);
@@ -139,7 +141,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
 
         initControls();
 
-        initMode =  getIntent().getStringExtra(INIT_MODE_KEY);
+        initMode = getIntent().getStringExtra(INIT_MODE_KEY);
 
         assert initMode != null;
         if (initMode.equals(MODE_INSERT_CUSTOM)) {
@@ -160,8 +162,8 @@ public class PackageSettingsActivity extends EnhancedActivity {
             setEditMode(true);
         } else {
 
-            String packageId = getIntent().getStringExtra(PACKAGE_ID_KEY);
-            dataPackage = DataPackages.selectPackageById(Integer.valueOf(packageId));
+            int packageId = getIntent().getIntExtra(PACKAGE_ID_KEY, 0);
+            dataPackage = DataPackages.selectPackageById(packageId);
 
             if (dataPackage != null) {
                 txtPackageTitle.setText(dataPackage.getTitle());
@@ -184,26 +186,34 @@ public class PackageSettingsActivity extends EnhancedActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_package_settings, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
             onBackPressed();
+        } else if (id == R.id.action_done) {
+            confirm();
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     void onToolbarCreated() {
-        String title="";
+        String title = "";
         switch (getIntent().getStringExtra(INIT_MODE_KEY)) {
             case MODE_SETTING_ACTIVE:
-                title="بسته فعال";
+                title = "بسته فعال";
                 break;
             case MODE_SETTING_RESERVED:
-                title="بسته رزرو";
+                title = "بسته رزرو";
                 break;
             case MODE_INSERT_CUSTOM:
-                title="بسته سفارشی";
+                title = "بسته سفارشی";
                 break;
         }
         txtToolbarTitle.setText(title);

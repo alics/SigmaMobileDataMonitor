@@ -2,6 +2,7 @@ package com.zohaltech.app.mobiledatamonitor.activities;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -19,19 +20,25 @@ public abstract class EnhancedActivity extends AppCompatActivity {
     Toolbar  toolbar;
     TextView txtToolbarTitle;
 
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected final void onCreate(Bundle savedInstanceState) {
         overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
         super.onCreate(savedInstanceState);
+
+        Thread.setDefaultUncaughtExceptionHandler(new MyUncaughtExceptionHandler(this));
+        App.currentActivity = this;
 
         onCreated();
         onInitialized();
         onToolbarCreated();
     }
 
-    private void onInitialized() {
-        Thread.setDefaultUncaughtExceptionHandler(new MyUncaughtExceptionHandler(this));
-        App.currentActivity = this;
+    @Override
+    public final void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onCreate(savedInstanceState, persistentState);
+    }
 
+    private void onInitialized() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_back_white);
         toolbar.setTitle("");

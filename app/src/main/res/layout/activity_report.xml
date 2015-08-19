@@ -6,7 +6,6 @@
               android:background="@color/white"
               android:orientation="vertical">
 
-
     <LinearLayout
         android:id="@+id/container_toolbar"
         android:layout_width="match_parent"
@@ -18,7 +17,6 @@
             layout="@layout/toolbar"/>
 
     </LinearLayout>
-
 
     <ListView
         android:id="@+id/lstTraffics"
@@ -44,7 +42,7 @@
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:gravity="right|center"
-            android:text="100MB"
+            android:text="0MB"
             android:textAppearance="?android:attr/textAppearanceMedium"/>
 
         <LinearLayout

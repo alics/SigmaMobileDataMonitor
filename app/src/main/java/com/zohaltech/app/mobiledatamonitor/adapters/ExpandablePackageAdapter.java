@@ -1,22 +1,22 @@
 package com.zohaltech.app.mobiledatamonitor.adapters;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Typeface;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zohaltech.app.mobiledatamonitor.R;
-import com.zohaltech.app.mobiledatamonitor.activities.MainActivity;
+import com.zohaltech.app.mobiledatamonitor.activities.PackageSettingsActivity;
+import com.zohaltech.app.mobiledatamonitor.classes.App;
 import com.zohaltech.app.mobiledatamonitor.classes.DialogManager;
 import com.zohaltech.app.mobiledatamonitor.classes.Helper;
 import com.zohaltech.app.mobiledatamonitor.dal.DataPackages;
 import com.zohaltech.app.mobiledatamonitor.dal.PackageHistories;
 import com.zohaltech.app.mobiledatamonitor.entities.DataPackage;
 import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
-import com.zohaltech.app.mobiledatamonitor.fragments.PackageSettingsFragment;
 
 import java.util.HashMap;
 import java.util.List;
@@ -75,12 +75,10 @@ public class ExpandablePackageAdapter extends AnimatedExpandableListView.Animate
                                                         final PackageHistory history = PackageHistories.getActivePackage();
                                                         if (history == null) {
                                                             PackageHistories.insert(new PackageHistory(dataPackage.getId(), Helper.getCurrentDateTime(), null, null, null, PackageHistory.StatusEnum.ACTIVE.ordinal()));
-                                                            MainActivity parent = ((MainActivity) activity);
-                                                            parent.animType = MainActivity.AnimType.OPEN;
-                                                            Bundle bundle = new Bundle();
-                                                            bundle.putString(PackageSettingsFragment.INIT_MODE_KEY, PackageSettingsFragment.MODE_SETTING_ACTIVE);
-                                                            bundle.putString(PackageSettingsFragment.PACKAGE_ID_KEY, dataPackage.getId() + "");
-                                                            parent.displayView(MainActivity.EnumFragment.PACKAGE_SETTINGS, bundle);
+                                                            Intent intent = new Intent(App.currentActivity, PackageSettingsActivity.class);
+                                                            intent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_SETTING_ACTIVE);
+                                                            intent.putExtra(PackageSettingsActivity.PACKAGE_ID_KEY, dataPackage.getId());
+                                                            App.currentActivity.startActivity(intent);
 
                                                         } else {
                                                             DataPackage activePackage = DataPackages.selectPackageById(history.getDataPackageId());
@@ -91,26 +89,20 @@ public class ExpandablePackageAdapter extends AnimatedExpandableListView.Animate
                                                                             PackageHistories.deletedReservedPackages();
                                                                             PackageHistories.terminateAll(PackageHistory.StatusEnum.CANCELED);
                                                                             PackageHistories.insert(new PackageHistory(dataPackage.getId(), Helper.getCurrentDateTime(), null, null, null, PackageHistory.StatusEnum.ACTIVE.ordinal()));
-
-                                                                            MainActivity parent = ((MainActivity) activity);
-                                                                            parent.animType = MainActivity.AnimType.OPEN;
-                                                                            Bundle bundle = new Bundle();
-                                                                            bundle.putString(PackageSettingsFragment.INIT_MODE_KEY, PackageSettingsFragment.MODE_SETTING_ACTIVE);
-                                                                            bundle.putString(PackageSettingsFragment.PACKAGE_ID_KEY, dataPackage.getId() + "");
-                                                                            parent.displayView(MainActivity.EnumFragment.PACKAGE_SETTINGS, bundle);
+                                                                            Intent intent = new Intent(App.currentActivity, PackageSettingsActivity.class);
+                                                                            intent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_SETTING_ACTIVE);
+                                                                            intent.putExtra(PackageSettingsActivity.PACKAGE_ID_KEY, dataPackage.getId());
+                                                                            App.currentActivity.startActivity(intent);
                                                                         }
 
                                                                     }, new Runnable() {
                                                                         public void run() {
                                                                             PackageHistories.deletedReservedPackages();
                                                                             PackageHistories.insert(new PackageHistory(dataPackage.getId(), null, null, null, null, PackageHistory.StatusEnum.RESERVED.ordinal()));
-
-                                                                            MainActivity parent = ((MainActivity) activity);
-                                                                            parent.animType = MainActivity.AnimType.OPEN;
-                                                                            Bundle bundle = new Bundle();
-                                                                            bundle.putString(PackageSettingsFragment.INIT_MODE_KEY, PackageSettingsFragment.MODE_SETTING_RESERVED);
-                                                                            bundle.putString(PackageSettingsFragment.PACKAGE_ID_KEY,dataPackage.getId() + "");
-                                                                            parent.displayView(MainActivity.EnumFragment.PACKAGE_SETTINGS, bundle);
+                                                                            Intent intent = new Intent(App.currentActivity, PackageSettingsActivity.class);
+                                                                            intent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_SETTING_RESERVED);
+                                                                            intent.putExtra(PackageSettingsActivity.PACKAGE_ID_KEY, dataPackage.getId());
+                                                                            App.currentActivity.startActivity(intent);
                                                                         }
                                                                     });
                                                         }
