@@ -9,11 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.zohaltech.app.mobiledatamonitor.R;
-import com.zohaltech.app.mobiledatamonitor.classes.App;
-import com.zohaltech.app.mobiledatamonitor.classes.Helper;
 import com.zohaltech.app.mobiledatamonitor.fragments.AboutUsFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.DashboardFragment;
 import com.zohaltech.app.mobiledatamonitor.fragments.GlobalSettingsFragment;
@@ -25,7 +22,6 @@ import com.zohaltech.app.mobiledatamonitor.fragments.ReportFragment;
 
 import widgets.MyFragment;
 import widgets.MyTextView;
-import widgets.MyToast;
 
 public class MainActivity extends EnhancedActivity {
 

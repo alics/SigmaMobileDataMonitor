@@ -139,9 +139,6 @@ public class DashboardFragment extends MyFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            //            Intent intent = new Intent(getActivity(), GlobalSettingsActivity.class);
-            //            startActivity(intent);
-            //            getActivity().overridePendingTransition(R.anim.slide_in_from_right,R.anim.slide_out_to_left);
             MainActivity parent = ((MainActivity) getActivity());
             parent.animType = MainActivity.AnimType.OPEN;
             parent.displayView(MainActivity.EnumFragment.GLOBAL_SETTINGS);

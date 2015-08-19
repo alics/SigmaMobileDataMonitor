@@ -20,7 +20,6 @@ import com.zohaltech.app.mobiledatamonitor.activities.MainActivity;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
 import com.zohaltech.app.mobiledatamonitor.classes.DialogManager;
 import com.zohaltech.app.mobiledatamonitor.classes.Helper;
-import com.zohaltech.app.mobiledatamonitor.classes.SolarCalendar;
 import com.zohaltech.app.mobiledatamonitor.classes.TrafficUnitsUtil;
 import com.zohaltech.app.mobiledatamonitor.classes.Validator;
 import com.zohaltech.app.mobiledatamonitor.dal.DataPackages;
@@ -33,7 +32,6 @@ import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
 import com.zohaltech.app.mobiledatamonitor.entities.Setting;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import widgets.MyFragment;
 import widgets.MyToast;
@@ -67,6 +65,7 @@ public class PackageSettingsFragment extends MyFragment {
     SwitchCompat     switchFinishPackageAlarm;
     SwitchCompat     switchAutoMobileDataOff;
     DataPackage      dataPackage;
+    DataPackage      customPackage;
     String           initMode;
     Setting          setting;
 
@@ -238,17 +237,7 @@ public class PackageSettingsFragment extends MyFragment {
                 saveReservedPackageSettings();
                 break;
             case MODE_INSERT_CUSTOM:
-                DialogManager.showConfirmationDialog(getActivity(), "فعالسازی بسته سفارشی", "با تأیید بسته سفارشی اطلاعات مربوط به بسته های فعال و رزرو شده از بین می رود، آیا انجام شود/؟",
-                                                     "بله", "خیر", null, new Runnable() {
-                            @Override
-                            public void run() {
-                                addCustomPackage();
-                                saveReservedPackageSettings();
-                                PackageHistories.terminateAll(PackageHistory.StatusEnum.CANCELED);
-                                PackageHistories.deletedReservedPackages();
-                            }
-                        });
-
+                addCustomPackage();
                 break;
         }
     }
@@ -352,6 +341,7 @@ public class PackageSettingsFragment extends MyFragment {
     }
 
     private void addCustomPackage() {
+        customPackage = new DataPackage();
         long secondaryTraffic = 0;
         String secondaryTrafficStartTime = null;
         String secondaryTrafficEndTime = null;
@@ -367,34 +357,46 @@ public class PackageSettingsFragment extends MyFragment {
 
         if (edtSecondaryTraffic.getText().toString().trim().length() > 0) {
             secondaryTraffic = TrafficUnitsUtil.MbToByte(Integer.valueOf(edtSecondaryTraffic.getText().toString()));
+            customPackage.setSecondaryTraffic(secondaryTraffic);
             if (btnSecondaryStartTime.getText().toString().trim().length() == 0) {
                 MyToast.show("لطفا " + "بازه مصرف شبانه" + " را وارد کنید", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
                 return;
-            } else
+            } else {
                 secondaryTrafficStartTime = btnSecondaryStartTime.getText().toString();
+                customPackage.setSecondaryTrafficStartTime(secondaryTrafficStartTime);
+            }
             if (btnSecondaryStartTime.getText().toString().trim().length() == 0) {
                 MyToast.show("لطفا " + "بازه مصرف شبانه" + " را وارد کنید", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
                 return;
-            } else
+            } else {
                 secondaryTrafficEndTime = btnSecondaryEndTime.getText().toString();
+                customPackage.setSecondaryTrafficStartTime(secondaryTrafficEndTime);
+            }
         }
 
         int operatorId = spinnerOperators.getSelectedItemPosition() + 1;
+        customPackage.setOperatorId(operatorId);
         String title = edtPackageTitle.getText().toString();
+        customPackage.setTitle(title);
         int period = Integer.valueOf(edtPackageValidPeriod.getText().toString());
-        int price = 0;
+        customPackage.setPeriod(period);
+        customPackage.setPrice(0);
         long primaryTraffic = TrafficUnitsUtil.MbToByte(Integer.valueOf(edtPrimaryTraffic.getText().toString()));
+        customPackage.setPrimaryTraffic(primaryTraffic);
+        customPackage.setUssdCode(null);
+        customPackage.setCustom(true);
 
-        DataPackages.insert(new DataPackage(operatorId,
-                                            title,
-                                            period,
-                                            price,
-                                            primaryTraffic,
-                                            secondaryTraffic,
-                                            secondaryTrafficStartTime,
-                                            secondaryTrafficEndTime,
-                                            null,
-                                            true));
+        DialogManager.showConfirmationDialog(getActivity(), "فعالسازی بسته سفارشی", "با تأیید بسته سفارشی اطلاعات مربوط به بسته های فعال و رزرو شده از بین می رود، آیا انجام شود/؟",
+                                             "بله", "خیر", null, new Runnable() {
+                    @Override
+                    public void run() {
+                        DataPackages.insert(customPackage);
+                        saveReservedPackageSettings();
+                        PackageHistories.terminateAll(PackageHistory.StatusEnum.CANCELED);
+                        PackageHistories.deletedReservedPackages();
+                    }
+                });
+
     }
 
     private void setEditMode(boolean isEditMode) {

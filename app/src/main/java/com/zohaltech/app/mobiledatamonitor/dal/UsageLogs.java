@@ -3,6 +3,7 @@ package com.zohaltech.app.mobiledatamonitor.dal;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.zohaltech.app.mobiledatamonitor.classes.Helper;
 import com.zohaltech.app.mobiledatamonitor.classes.MyRuntimeException;
@@ -64,11 +65,17 @@ public class UsageLogs {
         String maxDateStr = maxDateTimeStr == null ? "" : maxDateTimeStr.substring(0, 10);
         String strCurrentDateTime = Helper.getCurrentDateTime();
         String strCurrentDate = strCurrentDateTime.substring(0, 10);
+        Log.i("sdj",maxDateTimeStr);
+        Log.i("sdj",maxDateStr);
+        Log.i("sdj",strCurrentDateTime);
+        Log.i("sdj",strCurrentDate);
 
         if (strCurrentDate.compareTo(maxDateStr) > 0) {
+            Log.i("sdj","integrated");
             integrateSumUsedTrafficPerDay(maxDateStr);
         }
         if (usageLog.getTrafficBytes() != 0) {
+            Log.i("Log","inserted");
             ContentValues values = new ContentValues();
             values.put(TrafficBytes, usageLog.getTrafficBytes());
             values.put(LogDateTime, strCurrentDateTime);

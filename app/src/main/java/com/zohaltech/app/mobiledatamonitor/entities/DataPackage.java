@@ -4,14 +4,14 @@ public class DataPackage {
 
     Integer id;
     Integer operatorId;
-    String title;
+    String  title;
     Integer period;
     Integer price;
-    Long primaryTraffic;
-    Long secondaryTraffic;
-    String secondaryTrafficStartTime;
-    String secondaryTrafficEndTime;
-    String ussdCode;
+    Long    primaryTraffic;
+    Long    secondaryTraffic;
+    String  secondaryTrafficStartTime;
+    String  secondaryTrafficEndTime;
+    String  ussdCode;
     Boolean custom;
 
     public DataPackage(Integer operatorId, String title, Integer period, Integer price, Long primaryTraffic, Long secondaryTraffic,
@@ -32,6 +32,9 @@ public class DataPackage {
                        String secondaryTrafficEndTime, String secondaryTrafficStartTime, String ussdCode, Boolean custom) {
         this(operatorId, title, period, price, primaryTraffic, secondaryTraffic, secondaryTrafficStartTime, secondaryTrafficEndTime, ussdCode, custom);
         this.id = id;
+    }
+
+    public DataPackage() {
     }
 
     public Integer getId() {

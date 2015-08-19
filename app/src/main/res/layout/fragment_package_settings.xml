@@ -365,7 +365,7 @@
                             android:gravity="center"
                             android:inputType="number"
                             android:maxLength="3"
-                            android:text="350"/>
+                            android:text="2"/>
 
                         <widgets.MySwitch
                             android:id="@+id/switchLeftDaysAlarm"
