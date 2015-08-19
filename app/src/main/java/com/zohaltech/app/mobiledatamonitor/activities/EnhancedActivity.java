@@ -19,21 +19,19 @@ public abstract class EnhancedActivity extends AppCompatActivity {
     Toolbar  toolbar;
     TextView txtToolbarTitle;
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
         super.onCreate(savedInstanceState);
+
+        onCreated();
+        onInitialized();
+        onToolbarCreated();
+    }
+
+    private void onInitialized() {
         Thread.setDefaultUncaughtExceptionHandler(new MyUncaughtExceptionHandler(this));
         App.currentActivity = this;
-    }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        initialize();
-    }
-
-    private void initialize() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_back_white);
         toolbar.setTitle("");
@@ -46,8 +44,6 @@ public abstract class EnhancedActivity extends AppCompatActivity {
         toolbar.addView(txtToolbarTitle, 0);
 
         setSupportActionBar(toolbar);
-
-        onToolbarCreated();
     }
 
     @Override
@@ -56,5 +52,6 @@ public abstract class EnhancedActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
     }
 
+    abstract void onCreated();
     abstract void onToolbarCreated();
 }

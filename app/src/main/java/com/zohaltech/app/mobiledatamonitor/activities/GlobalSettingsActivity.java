@@ -29,8 +29,7 @@ public class GlobalSettingsActivity extends EnhancedActivity {
     Setting      setting;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    void onCreated() {
         setContentView(R.layout.activity_global_settings);
         setting = Settings.getCurrentSettings();
 
