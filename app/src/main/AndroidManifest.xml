@@ -67,8 +67,8 @@
             android:name=".activities.GlobalSettingsActivity"
             android:screenOrientation="portrait"/>
         <activity
-        android:name=".activities.AboutUsActivity"
-        android:screenOrientation="portrait"/>
+            android:name=".activities.AboutUsActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.PackagesActivity"
             android:screenOrientation="portrait"/>
