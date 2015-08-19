@@ -104,7 +104,7 @@ public class MainActivity extends EnhancedActivity {
                 fragment = new ManagementFragment();
                 title = "مدیریت بسته";
                 break;
-            case SETTINGS:
+            case PACKAGE_SETTINGS:
                 fragment = new PackageSettingsFragment();
                 title = "تنظیمات بسته";
                 if (bundle != null) {
@@ -156,7 +156,7 @@ public class MainActivity extends EnhancedActivity {
         PACKAGES,
         HISTORY,
         MANAGEMENT,
-        SETTINGS,
+        PACKAGE_SETTINGS,
         GLOBAL_SETTINGS,
         ABOUT_US
     }

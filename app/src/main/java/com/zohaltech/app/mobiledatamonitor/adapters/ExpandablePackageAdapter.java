@@ -80,7 +80,7 @@ public class ExpandablePackageAdapter extends AnimatedExpandableListView.Animate
                                                             Bundle bundle = new Bundle();
                                                             bundle.putString(PackageSettingsFragment.INIT_MODE_KEY, PackageSettingsFragment.MODE_SETTING_ACTIVE);
                                                             bundle.putString(PackageSettingsFragment.PACKAGE_ID_KEY, dataPackage.getId() + "");
-                                                            parent.displayView(MainActivity.EnumFragment.SETTINGS, bundle);
+                                                            parent.displayView(MainActivity.EnumFragment.PACKAGE_SETTINGS, bundle);
 
                                                         } else {
                                                             DataPackage activePackage = DataPackages.selectPackageById(history.getDataPackageId());
@@ -97,7 +97,7 @@ public class ExpandablePackageAdapter extends AnimatedExpandableListView.Animate
                                                                             Bundle bundle = new Bundle();
                                                                             bundle.putString(PackageSettingsFragment.INIT_MODE_KEY, PackageSettingsFragment.MODE_SETTING_ACTIVE);
                                                                             bundle.putString(PackageSettingsFragment.PACKAGE_ID_KEY, dataPackage.getId() + "");
-                                                                            parent.displayView(MainActivity.EnumFragment.SETTINGS, bundle);
+                                                                            parent.displayView(MainActivity.EnumFragment.PACKAGE_SETTINGS, bundle);
                                                                         }
 
                                                                     }, new Runnable() {
@@ -110,7 +110,7 @@ public class ExpandablePackageAdapter extends AnimatedExpandableListView.Animate
                                                                             Bundle bundle = new Bundle();
                                                                             bundle.putString(PackageSettingsFragment.INIT_MODE_KEY, PackageSettingsFragment.MODE_SETTING_RESERVED);
                                                                             bundle.putString(PackageSettingsFragment.PACKAGE_ID_KEY,dataPackage.getId() + "");
-                                                                            parent.displayView(MainActivity.EnumFragment.SETTINGS, bundle);
+                                                                            parent.displayView(MainActivity.EnumFragment.PACKAGE_SETTINGS, bundle);
                                                                         }
                                                                     });
                                                         }

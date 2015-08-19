@@ -58,7 +58,7 @@ public class ReportAdapter extends ArrayAdapter<TrafficMonitor> {
             else{
                 layoutReport.setBackgroundResource(R.color.white);
             }
-            String date = item.getDate().equals(Helper.getCurrentDate()) ? "امروز" : SolarCalendar.getShamsiDate(Helper.getDate(item.getDate()));
+            String date = item.getDate().equals(Helper.getCurrentDate()) ? "امروز        " : SolarCalendar.getShamsiDate(Helper.getDate(item.getDate()));
             txtDate.setText(date);
             txtTraffic.setText(TrafficUnitsUtil.getUsedTraffic(item.getTotalTraffic()));
         }
