@@ -35,7 +35,7 @@ public class PackagesFragment extends MyFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
-        View rootView = inflater.inflate(R.layout.fragment_packages, container, false);
+        View rootView = inflater.inflate(R.layout.activity_packages, container, false);
 
         // Initialize the ViewPager and set an adapter
         pagerPackages = (ViewPager) rootView.findViewById(R.id.pagerPackages);

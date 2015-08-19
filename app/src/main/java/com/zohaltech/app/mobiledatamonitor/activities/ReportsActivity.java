@@ -4,7 +4,6 @@ package com.zohaltech.app.mobiledatamonitor.activities;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -30,8 +29,7 @@ public class ReportsActivity extends EnhancedActivity {
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    void onCreated() {
         setContentView(R.layout.activity_report);
 
         broadcastReceiver = new BroadcastReceiver() {

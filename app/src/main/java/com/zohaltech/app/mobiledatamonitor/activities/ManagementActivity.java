@@ -31,8 +31,7 @@ public class ManagementActivity extends EnhancedActivity {
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+     void onCreated() {
         setContentView(R.layout.activity_management);
 
         PackageHistory activePackageHistory = PackageHistories.getActivePackage();
@@ -120,7 +119,7 @@ public class ManagementActivity extends EnhancedActivity {
 
     @Override
     void onToolbarCreated() {
-        txtToolbarTitle.setText("گزارش روزانه");
+        txtToolbarTitle.setText("مدیریت بسته");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

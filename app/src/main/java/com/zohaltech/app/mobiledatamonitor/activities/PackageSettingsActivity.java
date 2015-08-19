@@ -66,8 +66,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+     void onCreated() {
         setContentView(R.layout.activity_package_settings);
 
         edtPackageTitle = (EditText) findViewById(R.id.edtPackageTitle);
@@ -195,7 +194,19 @@ public class PackageSettingsActivity extends EnhancedActivity {
 
     @Override
     void onToolbarCreated() {
-        txtToolbarTitle.setText("گزارش روزانه");
+        String title="";
+        switch (getIntent().getStringExtra(INIT_MODE_KEY)) {
+            case MODE_SETTING_ACTIVE:
+                title="بسته فعال";
+                break;
+            case MODE_SETTING_RESERVED:
+                title="بسته رزرو";
+                break;
+            case MODE_INSERT_CUSTOM:
+                title="بسته سفارشی";
+                break;
+        }
+        txtToolbarTitle.setText(title);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
