@@ -16,6 +16,7 @@ import java.util.Locale;
 public class App extends Application {
 
     public static Context           context;
+    public static Activity currentActivity;
     public static SharedPreferences preferences;
     public static Typeface          englishFont;
     public static Typeface          persianFont;

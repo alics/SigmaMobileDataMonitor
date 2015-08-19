@@ -154,7 +154,8 @@ public class ManagementFragment extends MyFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            close();
+            //onBackPressed();
+            getActivity().onBackPressed();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -162,12 +163,12 @@ public class ManagementFragment extends MyFragment {
 
     @Override
     public void onBackPressed() {
-        close();
+        //close();
     }
 
-    private void close() {
-        MainActivity parent = ((MainActivity) getActivity());
-        parent.animType = MainActivity.AnimType.CLOSE;
-        parent.displayView(MainActivity.EnumFragment.DASHBOARD);
-    }
+    //private void close() {
+    //    MainActivity parent = ((MainActivity) getActivity());
+    //    parent.animType = MainActivity.AnimType.CLOSE;
+    //    parent.displayView(MainActivity.EnumFragment.DASHBOARD);
+    //}
 }

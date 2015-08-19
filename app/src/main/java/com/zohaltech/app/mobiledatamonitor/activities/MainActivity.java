@@ -52,7 +52,7 @@ public class MainActivity extends EnhancedActivity {
         setSupportActionBar(mainToolbar);
         //getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        displayView(EnumFragment.DASHBOARD);
+            displayView(EnumFragment.DASHBOARD);
     }
 
     @Override
@@ -71,17 +71,17 @@ public class MainActivity extends EnhancedActivity {
         notified = intent.getBooleanExtra("NOTIFIED", false);
     }
 
-    @Override
-    public void onBackPressed() {
-        fragment.onBackPressed();
-    }
+    //@Override
+    //public void onBackPressed() {
+    //    fragment.onBackPressed();
+    //}
 
     public void displayView(EnumFragment input) {
         this.displayView(input, null);
     }
 
     public void displayView(EnumFragment input, Bundle bundle) {
-        //fragment = null;
+        fragment = null;
         String title = getString(R.string.app_name);
         switch (input) {
             case DASHBOARD:
@@ -136,18 +136,24 @@ public class MainActivity extends EnhancedActivity {
         if (fragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            if (animType == AnimType.OPEN) {
+            //if (animType == AnimType.OPEN) {
                 fragmentTransaction.setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
-            } else {
-                fragmentTransaction.setCustomAnimations(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
-            }
+            //} else {
+            //    fragmentTransaction.setCustomAnimations(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
+            //}
             fragmentTransaction.replace(R.id.container_body, fragment);
+            fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
 
             // set the toolbar title
             //toolbar.setTitle(title);
             txtTitle.setText(title);
         }
+    }
+
+    @Override
+    void onToolbarCreated() {
+
     }
 
     public enum EnumFragment {
