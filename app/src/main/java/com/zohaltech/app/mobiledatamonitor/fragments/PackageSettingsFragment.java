@@ -80,7 +80,7 @@ public class PackageSettingsFragment extends MyFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        View rootView = inflater.inflate(R.layout.fragment_package_settings, container, false);
+        View rootView = inflater.inflate(R.layout.activity_package_settings, container, false);
 
         edtPackageTitle = (EditText) rootView.findViewById(R.id.edtPackageTitle);
         txtPackageTitle = (TextView) rootView.findViewById(R.id.txtPackageTitle);
@@ -346,13 +346,13 @@ public class PackageSettingsFragment extends MyFragment {
         String secondaryTrafficStartTime = null;
         String secondaryTrafficEndTime = null;
 
-        if (Validator.validateEditText(edtPackageTitle, "عنوان بسته"))
+        if (!Validator.validateEditText(edtPackageTitle, "عنوان بسته"))
             return;
-        if (Validator.validateEditText(edtPrimaryTraffic, "حجم شبانه روزی"))
+        if (!Validator.validateEditText(edtPrimaryTraffic, "حجم شبانه روزی"))
             return;
-        if (Validator.validateEditText(edtPackageValidPeriod, "مدت اعتبار"))
+        if (!Validator.validateEditText(edtPackageValidPeriod, "مدت اعتبار"))
             return;
-        if (Validator.validateEditText(edtPackageTitle, "عنوان بسته"))
+        if (!Validator.validateEditText(edtPackageTitle, "عنوان بسته"))
             return;
 
         if (edtSecondaryTraffic.getText().toString().trim().length() > 0) {

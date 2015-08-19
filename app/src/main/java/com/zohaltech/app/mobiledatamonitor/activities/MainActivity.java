@@ -24,7 +24,6 @@ import widgets.MyFragment;
 import widgets.MyTextView;
 
 public class MainActivity extends EnhancedActivity {
-
     public AnimType animType = AnimType.OPEN;
     MyFragment fragment = null;
     Toolbar  mainToolbar;
@@ -33,8 +32,6 @@ public class MainActivity extends EnhancedActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -52,7 +49,7 @@ public class MainActivity extends EnhancedActivity {
         setSupportActionBar(mainToolbar);
         //getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-            displayView(EnumFragment.DASHBOARD);
+        displayView(EnumFragment.DASHBOARD);
     }
 
     @Override
@@ -137,7 +134,7 @@ public class MainActivity extends EnhancedActivity {
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             //if (animType == AnimType.OPEN) {
-                fragmentTransaction.setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
+            fragmentTransaction.setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
             //} else {
             //    fragmentTransaction.setCustomAnimations(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
             //}

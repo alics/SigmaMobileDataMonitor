@@ -54,7 +54,7 @@ public class ReportFragment extends MyFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        return inflater.inflate(R.layout.fragment_report, container, false);
+        return inflater.inflate(R.layout.activity_report, container, false);
     }
 
     @Override

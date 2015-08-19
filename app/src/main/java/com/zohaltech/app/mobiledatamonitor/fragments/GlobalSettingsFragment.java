@@ -42,7 +42,7 @@ public class GlobalSettingsFragment extends MyFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        View rootView = inflater.inflate(R.layout.fragment_global_settings, container, false);
+        View rootView = inflater.inflate(R.layout.activity_global_settings, container, false);
 
         setting = Settings.getCurrentSettings();
 

@@ -11,7 +11,10 @@ public class LicenseManager {
 
     public enum Status {TESTING_TIME, REGISTERED, EXPIRED}
 
-    public void initializeLicenseFile(LicenseStatus status) {
+    public LicenseManager() {
+    }
+
+    public static void initializeLicenseFile(LicenseStatus status) {
         LicenseModifier.initializeLicenseFile(status);
     }
 
@@ -19,7 +22,8 @@ public class LicenseManager {
         LicenseStatus status = LicenseModifier.getLicenceFile();
         if (status == null)
             return false;
-
+        if (status.getStatus() == Status.REGISTERED.ordinal())
+            return true;
         if (!status.getDeviceId().equals(Helper.getDeviceId())) {
             status.setStatus(Status.EXPIRED.ordinal());
             LicenseModifier.updateLicenseFile(status);
@@ -83,10 +87,12 @@ public class LicenseManager {
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }
+                Boolean result = true;
                 File file = new File(dir.getPath(), ConstantParams.FILE_NAME);
-                Boolean result = file.createNewFile();
+                if (!file.exists())
+                    result = file.createNewFile();
                 if (result) {
-                    FileWriter writer = new FileWriter(file, true);
+                    FileWriter writer = new FileWriter(file, false);
 
                     XsamCrypt xsamCrypt = new XsamCrypt();
                     String textFileStr = createLicenseFileText(licenseStatus);
