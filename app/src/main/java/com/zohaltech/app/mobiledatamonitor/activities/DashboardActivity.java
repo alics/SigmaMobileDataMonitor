@@ -31,8 +31,7 @@ public class DashboardActivity extends EnhancedActivity {
     long startTime;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    void onCreated() {
 
         setContentView(R.layout.fragment_dashboard);
 
@@ -101,6 +100,14 @@ public class DashboardActivity extends EnhancedActivity {
     }
 
     @Override
+    void onToolbarCreated() {
+        txtToolbarTitle.setText(getString(R.string.app_name));
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setDisplayShowHomeEnabled(false);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_dashboard, menu);
         return super.onCreateOptionsMenu(menu);
@@ -125,13 +132,5 @@ public class DashboardActivity extends EnhancedActivity {
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    void onToolbarCreated() {
-        txtToolbarTitle.setText(getString(R.string.app_name));
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        getSupportActionBar().setDisplayShowHomeEnabled(false);
     }
 }

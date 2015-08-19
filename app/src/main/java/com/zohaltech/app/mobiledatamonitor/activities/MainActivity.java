@@ -31,8 +31,7 @@ public class MainActivity extends EnhancedActivity {
     boolean notified = false;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    void onCreated() {
         setContentView(R.layout.activity_main);
 
         mainToolbar = (Toolbar) findViewById(R.id.mainToolbar);

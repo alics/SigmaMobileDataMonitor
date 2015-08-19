@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
 import com.zohaltech.app.mobiledatamonitor.R;
+import com.zohaltech.app.mobiledatamonitor.activities.DashboardActivity;
 import com.zohaltech.app.mobiledatamonitor.activities.MainActivity;
 
 public class NotificationHandler {
@@ -52,8 +53,10 @@ public class NotificationHandler {
                         .setAutoCancel(false);
 
         // Creates an explicit intent for an Activity in your app
-        Intent resultIntent = new Intent(context, MainActivity.class);
-        resultIntent.putExtra("NOTIFIED", true);
+        Intent resultIntent = new Intent(context, DashboardActivity.class);
+        //todo
+        //resultIntent.putExtra("NOTIFIED", true);
+
         resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         //// The stack builder object will contain an artificial back stack for the

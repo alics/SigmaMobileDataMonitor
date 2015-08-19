@@ -27,8 +27,7 @@ public class HistoryActivity extends EnhancedActivity {
     HistoryAdapter            adapter;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    void onCreated() {
         setContentView(R.layout.fragment_history);
         lstPackagesHistories = (ListView) findViewById(R.id.lstPackagesHistories);
         packageHistories = PackageHistories.select();
