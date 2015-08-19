@@ -110,9 +110,8 @@ public class DashboardActivity extends EnhancedActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            //MainActivity parent = ((MainActivity) getActivity());
-            //parent.animType = MainActivity.AnimType.OPEN;
-            //parent.displayView(MainActivity.EnumFragment.GLOBAL_SETTINGS);
+            Intent intent = new Intent(App.currentActivity, GlobalSettingsActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
