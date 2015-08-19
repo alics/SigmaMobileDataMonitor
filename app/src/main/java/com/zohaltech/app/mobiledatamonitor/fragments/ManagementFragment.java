@@ -44,7 +44,7 @@ public class ManagementFragment extends MyFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        View rootView = inflater.inflate(R.layout.fragment_management, container, false);
+        View rootView = inflater.inflate(R.layout.activity_management, container, false);
 
         PackageHistory activePackageHistory = PackageHistories.getActivePackage();
         PackageHistory reservedPackageHistory = PackageHistories.getReservedPackage();
