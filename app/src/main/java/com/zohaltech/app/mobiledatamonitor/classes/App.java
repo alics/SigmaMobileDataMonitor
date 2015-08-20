@@ -52,7 +52,7 @@ public class App extends Application {
 
         setAppLocal();
 
-        Intent service = new Intent(context, ZTDataService.class);
+        Intent service = new Intent(context, ZtDataService.class);
         context.startService(service);
     }
 

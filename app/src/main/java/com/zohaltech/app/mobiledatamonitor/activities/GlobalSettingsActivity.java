@@ -9,7 +9,7 @@ import android.widget.CompoundButton;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
-import com.zohaltech.app.mobiledatamonitor.classes.ZTDataService;
+import com.zohaltech.app.mobiledatamonitor.classes.ZtDataService;
 import com.zohaltech.app.mobiledatamonitor.dal.Settings;
 import com.zohaltech.app.mobiledatamonitor.entities.Setting;
 
@@ -88,7 +88,7 @@ public class GlobalSettingsActivity extends EnhancedActivity {
     }
 
     private void restartService() {
-        Intent intent = new Intent(App.currentActivity, ZTDataService.class);
+        Intent intent = new Intent(App.currentActivity, ZtDataService.class);
         stopService(intent);
         startService(intent);
     }
