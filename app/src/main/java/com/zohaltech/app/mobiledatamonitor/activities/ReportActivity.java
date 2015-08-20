@@ -47,8 +47,6 @@ public class ReportActivity extends EnhancedActivity {
         long bytes = App.preferences.getLong(DataUsageService.DAILY_USAGE_BYTES, 0);
         trafficMonitors.add(0, new TrafficMonitor(bytes, Helper.getCurrentDate()));
 
-        registerReceiver(broadcastReceiver, new IntentFilter(DataUsageService.DAILY_USAGE_ACTION));
-
         adapter = new ReportAdapter(trafficMonitors);
         lstTraffics.setAdapter(adapter);
         populateSummery();
@@ -85,11 +83,22 @@ public class ReportActivity extends EnhancedActivity {
         adapter.notifyDataSetChanged();
     }
 
+    //@Override
+    //protected void onResume() {
+    //    super.onResume();
+    //    registerReceiver(broadcastReceiver, new IntentFilter(DataUsageService.DAILY_USAGE_ACTION));
+    //}
+    //
+    //@Override
+    //protected void onPause() {
+    //    super.onPause();
+    //    unregisterReceiver(broadcastReceiver);
+    //}
 
     @Override
     public void onStart() {
         super.onStart();
-        //registerReceiver(broadcastReceiver, new IntentFilter(DataUsageService.DAILY_USAGE_ACTION));
+        registerReceiver(broadcastReceiver, new IntentFilter(DataUsageService.DAILY_USAGE_ACTION));
     }
 
     @Override
@@ -97,7 +106,6 @@ public class ReportActivity extends EnhancedActivity {
         super.onStop();
         unregisterReceiver(broadcastReceiver);
     }
-
 }
 
 

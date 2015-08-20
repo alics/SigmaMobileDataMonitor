@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical">
 
     <LinearLayout
@@ -29,20 +30,20 @@
             android:gravity="right"
             android:orientation="horizontal">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="bottom"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
                 <android.support.design.widget.FloatingActionButton
                     android:id="@+id/fabActivePackageSettings"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:src="@drawable/ic_edit_white"/>
 
-            </LinearLayout>
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -90,25 +91,30 @@
             android:gravity="right"
             android:orientation="horizontal">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="bottom"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
                 <android.support.design.widget.FloatingActionButton
                     android:id="@+id/fabCancelReservedPackage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_above="@+id/fabReservedPackageSettings"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    app:backgroundTint="@color/accent"
                     android:src="@drawable/ic_delete_white"/>
 
                 <android.support.design.widget.FloatingActionButton
                     android:id="@+id/fabReservedPackageSettings"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:src="@drawable/ic_edit_white"/>
 
-            </LinearLayout>
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
