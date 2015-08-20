@@ -8,7 +8,7 @@ public class ApplicationAlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, Intent intent) {
-        if (intent.getAction().equals(DataUsageService.APPLICATION_ALARM_ACTION)) {
+        if (intent.getAction().equals(ZTDataService.APPLICATION_ALARM_ACTION)) {
 
             //ArrayList<AlarmObject> objects = PackageStatus.getCurrentAlarms();
             //Intent intent1 = new Intent(context, ApplicationMessageActivity.class);

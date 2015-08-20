@@ -52,7 +52,7 @@
         </receiver>
 
         <service
-            android:name=".classes.DataUsageService"
+            android:name=".classes.ZTDataService"
             android:enabled="true"
             android:exported="false"
             android:process=":data_usage"

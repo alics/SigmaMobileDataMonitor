@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
-import com.zohaltech.app.mobiledatamonitor.classes.DataUsageService;
+import com.zohaltech.app.mobiledatamonitor.classes.ZTDataService;
 import com.zohaltech.app.mobiledatamonitor.classes.TrafficUnitsUtil;
 
 import widgets.CircleProgress;
@@ -30,7 +30,7 @@ public class TodayUsageFragment extends Fragment {
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                long todayUsage = intent.getLongExtra(DataUsageService.TODAY_USAGE_BYTES, 0);
+                long todayUsage = intent.getLongExtra(ZTDataService.TODAY_USAGE_BYTES, 0);
                 updateUI(todayUsage);
             }
         };
@@ -48,13 +48,13 @@ public class TodayUsageFragment extends Fragment {
         int size = (App.screenWidth) / 2;
         progressTodayUsage = (CircleProgress) view.findViewById(R.id.progressTodayUsage);
         progressTodayUsage.setLayoutParams(new LinearLayout.LayoutParams(size, size));
-        updateUI(App.preferences.getLong(DataUsageService.TODAY_USAGE_BYTES, 0));
+        updateUI(App.preferences.getLong(ZTDataService.TODAY_USAGE_BYTES, 0));
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        getActivity().registerReceiver(broadcastReceiver, new IntentFilter(DataUsageService.TODAY_USAGE_ACTION));
+        getActivity().registerReceiver(broadcastReceiver, new IntentFilter(ZTDataService.TODAY_USAGE_ACTION));
     }
 
     @Override
