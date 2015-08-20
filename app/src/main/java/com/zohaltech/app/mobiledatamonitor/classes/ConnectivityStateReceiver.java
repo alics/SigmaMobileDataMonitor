@@ -11,7 +11,7 @@ public class ConnectivityStateReceiver extends BroadcastReceiver {
 
         AlarmHandler.start(context);
 
-        Intent service = new Intent(context, ZTDataService.class);
+        Intent service = new Intent(context, DataUsageService.class);
         context.startService(service);
     }
 }

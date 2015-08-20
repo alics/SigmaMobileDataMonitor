@@ -19,7 +19,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
     public void onReceive(Context context, Intent arg1) {
         //Log.i("SimpleWakefulReceiver", "Starting service @ " + SystemClock.elapsedRealtime());
 
-        Intent service = new Intent(context, ZTDataService.class);
+        Intent service = new Intent(context, DataUsageService.class);
         startWakefulService(context, service);
     }
 }

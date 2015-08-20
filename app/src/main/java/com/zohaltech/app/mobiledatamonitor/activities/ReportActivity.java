@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.adapters.ReportAdapter;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
-import com.zohaltech.app.mobiledatamonitor.classes.ZTDataService;
+import com.zohaltech.app.mobiledatamonitor.classes.DataUsageService;
 import com.zohaltech.app.mobiledatamonitor.classes.Helper;
 import com.zohaltech.app.mobiledatamonitor.classes.TrafficUnitsUtil;
 import com.zohaltech.app.mobiledatamonitor.dal.DailyTrafficHistories;
@@ -35,7 +35,7 @@ public class ReportActivity extends EnhancedActivity {
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                long todayUsage = intent.getLongExtra(ZTDataService.TODAY_USAGE_BYTES, 0);
+                long todayUsage = intent.getLongExtra(DataUsageService.TODAY_USAGE_BYTES, 0);
                 updateUI(todayUsage);
             }
         };
@@ -44,7 +44,7 @@ public class ReportActivity extends EnhancedActivity {
         txtTotalTraffic = (TextView) findViewById(R.id.txtTotalTraffic);
 
         trafficMonitors = DailyTrafficHistories.getMonthlyTraffic();
-        long bytes = App.preferences.getLong(ZTDataService.TODAY_USAGE_BYTES, 0);
+        long bytes = App.preferences.getLong(DataUsageService.TODAY_USAGE_BYTES, 0);
         trafficMonitors.add(0, new TrafficMonitor(bytes, Helper.getCurrentDate()));
 
         adapter = new ReportAdapter(trafficMonitors);
@@ -98,7 +98,7 @@ public class ReportActivity extends EnhancedActivity {
     @Override
     public void onStart() {
         super.onStart();
-        registerReceiver(broadcastReceiver, new IntentFilter(ZTDataService.TODAY_USAGE_ACTION));
+        registerReceiver(broadcastReceiver, new IntentFilter(DataUsageService.TODAY_USAGE_ACTION));
     }
 
     @Override
