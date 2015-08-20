@@ -311,7 +311,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
             return;
 
         if (switchLeftDaysAlarm.isChecked() &&
-            Integer.valueOf(edtLeftDaysAlarm.getText().toString()) >=
+            Integer.valueOf(edtTrafficAlarm.getText().toString()) >=
             Integer.valueOf(edtPackageValidPeriod.getText().toString())){
             MyToast.show("اخطار روز باقیماده باید از مدت اعتبار بسته کمتر باشد", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
             return;
