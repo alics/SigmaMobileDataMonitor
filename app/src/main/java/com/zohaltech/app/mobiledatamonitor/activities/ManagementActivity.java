@@ -27,7 +27,6 @@ public class ManagementActivity extends EnhancedActivity {
     DataPackage activePackage;
     DataPackage reservedPackage;
 
-
     @Override
     void onCreated() {
         setContentView(R.layout.activity_management);
