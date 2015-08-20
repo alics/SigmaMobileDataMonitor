@@ -43,9 +43,16 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
             </intent-filter>
         </receiver>
+        <receiver
+            android:name=".classes.ApplicationAlarmReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.zohaltech.app.mobiledatamonitor.APPLICATION_ALARM_ACTION"/>
+            </intent-filter>
+        </receiver>
 
         <service
-            android:name=".classes.DataUsageService"
+            android:name=".classes.ZTDataService"
             android:enabled="true"
             android:exported="false"
             android:process=":data_usage"
@@ -81,5 +88,9 @@
         <activity
             android:name=".activities.ManagementActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activities.ApplicationMessageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.Dialog"/>
     </application>
 </manifest>

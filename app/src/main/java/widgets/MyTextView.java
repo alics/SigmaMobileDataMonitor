@@ -12,14 +12,21 @@ public class MyTextView extends AppCompatTextView {
 
     public MyTextView(Context context) {
         super(context);
+        initialize();
     }
 
     public MyTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        initialize();
     }
 
     public MyTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        initialize();
+    }
+
+    private void initialize() {
+        setLineSpacing(1f, 1.2f);
     }
 
     @Override

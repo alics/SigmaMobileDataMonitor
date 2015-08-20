@@ -1,5 +1,7 @@
 package com.zohaltech.app.mobiledatamonitor.activities;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
@@ -11,6 +13,8 @@ import android.widget.Toast;
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.adapters.UsagePagerAdapter;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
+import com.zohaltech.app.mobiledatamonitor.classes.DialogManager;
+import com.zohaltech.app.mobiledatamonitor.classes.LicenseManager;
 
 import widgets.MyToast;
 import widgets.MyViewPagerIndicator;
@@ -23,6 +27,7 @@ public class DashboardActivity extends EnhancedActivity {
     Button               btnPurchasePackage;
     Button               btnUsageReport;
     Button               btnPackagesHistory;
+    Dialog               paymentDialog;
 
     UsagePagerAdapter usagePagerAdapter;
 
@@ -103,6 +108,45 @@ public class DashboardActivity extends EnhancedActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setDisplayShowHomeEnabled(false);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (LicenseManager.validateLicense() == false) {
+            if (paymentDialog == null) {
+                paymentDialog = DialogManager.getPopupDialog(App.currentActivity,
+                                                             "خرید نسخه کامل",
+                                                             "مدت استفاده آزمایشی از برنامه به پایان رسیده است، آیا مایل به خریداری نسخه کامل هستید؟",
+                                                             "خوشم اومد، میخرم",
+                                                             "شاید بعدا!",
+                                                             null,
+                                                             new Runnable() {
+                                                                 @Override
+                                                                 public void run() {
+                                                                     MyToast.show("خرید بازار", Toast.LENGTH_SHORT);
+                                                                     //// TODO: 2015/08/20
+                                                                     //go to bazar payment
+                                                                     //get result in onActivityResult
+                                                                     //if result is ok --> update license , call webservice for purchase
+                                                                     //else if result is not ok --> finish activity
+                                                                 }
+                                                             },
+                                                             new Runnable() {
+                                                                 @Override
+                                                                 public void run() {
+                                                                     finish();
+                                                                 }
+                                                             });
+            }
+            paymentDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    finish();
+                }
+            });
+            paymentDialog.show();
+        }
     }
 
     @Override

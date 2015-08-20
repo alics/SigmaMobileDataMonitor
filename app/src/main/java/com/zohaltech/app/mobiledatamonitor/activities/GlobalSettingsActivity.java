@@ -1,24 +1,17 @@
 package com.zohaltech.app.mobiledatamonitor.activities;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.ListView;
 
 import com.zohaltech.app.mobiledatamonitor.R;
-import com.zohaltech.app.mobiledatamonitor.adapters.HistoryAdapter;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
-import com.zohaltech.app.mobiledatamonitor.classes.DataUsageService;
-import com.zohaltech.app.mobiledatamonitor.dal.PackageHistories;
+import com.zohaltech.app.mobiledatamonitor.classes.ZTDataService;
 import com.zohaltech.app.mobiledatamonitor.dal.Settings;
-import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
 import com.zohaltech.app.mobiledatamonitor.entities.Setting;
-
-import java.util.ArrayList;
 
 public class GlobalSettingsActivity extends EnhancedActivity {
 
@@ -95,7 +88,7 @@ public class GlobalSettingsActivity extends EnhancedActivity {
     }
 
     private void restartService() {
-        Intent intent = new Intent(App.currentActivity, DataUsageService.class);
+        Intent intent = new Intent(App.currentActivity, ZTDataService.class);
         stopService(intent);
         startService(intent);
     }

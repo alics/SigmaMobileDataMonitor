@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
-import com.zohaltech.app.mobiledatamonitor.classes.DataUsageService;
+import com.zohaltech.app.mobiledatamonitor.classes.ZTDataService;
 import com.zohaltech.app.mobiledatamonitor.classes.PackageStatus;
 import com.zohaltech.app.mobiledatamonitor.classes.RemainingTimeObject;
 
@@ -31,7 +31,7 @@ public class DaysRemainFragment extends Fragment {
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                long todayUsage = intent.getLongExtra(DataUsageService.DAILY_USAGE_BYTES, 0);
+                long todayUsage = intent.getLongExtra(ZTDataService.TODAY_USAGE_BYTES, 0);
                 updateUI();
             }
         };
@@ -55,7 +55,7 @@ public class DaysRemainFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        getActivity().registerReceiver(broadcastReceiver, new IntentFilter(DataUsageService.DAILY_USAGE_ACTION));
+        getActivity().registerReceiver(broadcastReceiver, new IntentFilter(ZTDataService.TODAY_USAGE_ACTION));
     }
 
     @Override
