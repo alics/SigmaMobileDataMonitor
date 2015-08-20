@@ -79,6 +79,14 @@ public class LicenseManager {
         LicenseModifier.updateLicenseFile(status);
     }
 
+    public static LicenseStatus getExistingLicense() {
+        return LicenseModifier.getLicenceFile();
+    }
+
+    public static void updateLicense(LicenseStatus status){
+        LicenseModifier.updateLicenseFile(status);
+    }
+
 
     private static class LicenseModifier {
         private static void initializeLicenseFile(LicenseStatus licenseStatus) {

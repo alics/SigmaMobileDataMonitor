@@ -4,9 +4,12 @@ import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.zohaltech.app.mobiledatamonitor.BuildConfig;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
 import com.zohaltech.app.mobiledatamonitor.classes.CsvReader;
 import com.zohaltech.app.mobiledatamonitor.classes.Helper;
+import com.zohaltech.app.mobiledatamonitor.classes.LicenseManager;
+import com.zohaltech.app.mobiledatamonitor.classes.LicenseStatus;
 import com.zohaltech.app.mobiledatamonitor.classes.MyRuntimeException;
 
 import java.io.InputStreamReader;
@@ -63,6 +66,17 @@ public class DataAccess extends SQLiteOpenHelper {
             settingsValues.put(Settings.ShowNotificationInLockScreen, 1);
             database.insert(Settings.TableName, null, settingsValues);
 
+            LicenseStatus status = LicenseManager.getExistingLicense();
+            if (status == null) {
+                LicenseManager.initializeLicenseFile(new LicenseStatus(BuildConfig.VERSION_CODE + "",
+                                                                       Helper.getDeviceId(),
+                                                                       Helper.getCurrentDate(),
+                                                                       LicenseManager.Status.TESTING_TIME.ordinal(),
+                                                                       1));
+            } else {
+                status.setStatus(LicenseManager.Status.EXPIRED.ordinal());
+                LicenseManager.updateLicense(status);
+            }
         } catch (MyRuntimeException e) {
             e.printStackTrace();
         }
@@ -152,4 +166,6 @@ public class DataAccess extends SQLiteOpenHelper {
             e.printStackTrace();
         }
     }
+
+
 }
