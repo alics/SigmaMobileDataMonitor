@@ -52,7 +52,6 @@ public class PackagesActivity extends EnhancedActivity {
         });
 
         changeTabsFont();
-
         selectTabByOperator();
     }
 
