@@ -3,12 +3,15 @@ package com.zohaltech.app.mobiledatamonitor.activities;
 
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.SwitchCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,15 +59,15 @@ public class PackageSettingsActivity extends EnhancedActivity {
     TextView         txtSecondaryEndTime;
     EditText         edtTrafficAlarm;
     SwitchCompat     switchTrafficAlarm;
+    TextView         txtTrafficAlarm;
     EditText         edtLeftDaysAlarm;
+    TextView         txtLeftDaysAlarm;
     SwitchCompat     switchLeftDaysAlarm;
-    SwitchCompat     switchFinishPackageAlarm;
     SwitchCompat     switchAutoMobileDataOff;
     DataPackage      dataPackage;
     DataPackage      customPackage;
     String           initMode;
     Setting          setting;
-
 
     @Override
     void onCreated() {
@@ -87,58 +90,13 @@ public class PackageSettingsActivity extends EnhancedActivity {
         txtSecondaryEndTime = (TextView) findViewById(R.id.txtSecondaryEndTime);
         edtTrafficAlarm = (EditText) findViewById(R.id.edtTrafficAlarm);
         switchTrafficAlarm = (SwitchCompat) findViewById(R.id.switchTrafficAlarm);
+        txtTrafficAlarm = (TextView) findViewById(R.id.txtTrafficAlarm);
         edtLeftDaysAlarm = (EditText) findViewById(R.id.edtLeftDaysAlarm);
+        txtLeftDaysAlarm = (TextView) findViewById(R.id.txtLeftDaysAlarm);
         switchLeftDaysAlarm = (SwitchCompat) findViewById(R.id.switchLeftDaysAlarm);
-        switchFinishPackageAlarm = (SwitchCompat) findViewById(R.id.switchFinishPackageAlarm);
         switchAutoMobileDataOff = (SwitchCompat) findViewById(R.id.switchAutoMobileDataOff);
 
-
-        btnSecondaryStartTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (btnSecondaryStartTime.getText().length() > 0) {
-                    int hour = Integer.valueOf(btnSecondaryStartTime.getText().toString().substring(0, 2));
-                    int minute = Integer.valueOf(btnSecondaryStartTime.getText().toString().substring(3, 5));
-                    DialogManager.showTimePickerDialog(App.currentActivity, "انتخاب زمان", hour, minute, new Runnable() {
-                        @Override
-                        public void run() {
-                            btnSecondaryStartTime.setText(DialogManager.timeResult);
-                        }
-                    });
-                } else {
-                    DialogManager.showTimePickerDialog(App.currentActivity, "انتخاب زمان", 2, 0, new Runnable() {
-                        @Override
-                        public void run() {
-                            btnSecondaryStartTime.setText(DialogManager.timeResult);
-                        }
-                    });
-                }
-            }
-        });
-
-        btnSecondaryEndTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (btnSecondaryEndTime.getText().length() > 0) {
-                    int hour = Integer.valueOf(btnSecondaryEndTime.getText().toString().substring(0, 2));
-                    int minute = Integer.valueOf(btnSecondaryEndTime.getText().toString().substring(3, 5));
-                    DialogManager.showTimePickerDialog(App.currentActivity, "انتخاب زمان", hour, minute, new Runnable() {
-                        @Override
-                        public void run() {
-                            btnSecondaryEndTime.setText(DialogManager.timeResult);
-                        }
-                    });
-                } else {
-                    DialogManager.showTimePickerDialog(App.currentActivity, "انتخاب زمان", 7, 0, new Runnable() {
-                        @Override
-                        public void run() {
-                            btnSecondaryEndTime.setText(DialogManager.timeResult);
-                        }
-                    });
-                }
-            }
-        });
-
+        implementListeners();
         initControls();
 
         initMode = getIntent().getStringExtra(INIT_MODE_KEY);
@@ -159,6 +117,9 @@ public class PackageSettingsActivity extends EnhancedActivity {
             btnSecondaryEndTime.setText("07:00");
             edtTrafficAlarm.setText("900");
             edtLeftDaysAlarm.setText("2");
+            switchTrafficAlarm.setChecked(true);
+            switchLeftDaysAlarm.setChecked(true);
+            switchAutoMobileDataOff.setChecked(true);
             setEditMode(true);
         } else {
 
@@ -349,6 +310,20 @@ public class PackageSettingsActivity extends EnhancedActivity {
         if (!Validator.validateEditText(edtPackageTitle, "عنوان بسته"))
             return;
 
+        if (switchLeftDaysAlarm.isChecked() &&
+            Integer.valueOf(edtLeftDaysAlarm.getText().toString()) >=
+            Integer.valueOf(edtPackageValidPeriod.getText().toString())){
+            MyToast.show("اخطار روز باقیماده باید از مدت اعتبار بسته کمتر باشد", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
+            return;
+        }
+
+        if (switchTrafficAlarm.isChecked() &&
+            Integer.valueOf(edtLeftDaysAlarm.getText().toString()) >=
+            Integer.valueOf(edtTrafficAlarm.getText().toString())){
+            MyToast.show("اخطار حجم باقیمانده باید از حجم شبانه روزی کمتر باشد", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
+            return;
+        }
+
         if (edtSecondaryTraffic.getText().toString().trim().length() > 0) {
             secondaryTraffic = TrafficUnitsUtil.MbToByte(Integer.valueOf(edtSecondaryTraffic.getText().toString()));
             customPackage.setSecondaryTraffic(secondaryTraffic);
@@ -425,5 +400,126 @@ public class PackageSettingsActivity extends EnhancedActivity {
             txtSecondaryStartTime.setVisibility(View.VISIBLE);
             txtSecondaryEndTime.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void implementListeners() {
+        btnSecondaryStartTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (btnSecondaryStartTime.getText().length() > 0) {
+                    int hour = Integer.valueOf(btnSecondaryStartTime.getText().toString().substring(0, 2));
+                    int minute = Integer.valueOf(btnSecondaryStartTime.getText().toString().substring(3, 5));
+                    DialogManager.showTimePickerDialog(App.currentActivity, "انتخاب زمان", hour, minute, new Runnable() {
+                        @Override
+                        public void run() {
+                            btnSecondaryStartTime.setText(DialogManager.timeResult);
+                        }
+                    });
+                } else {
+                    DialogManager.showTimePickerDialog(App.currentActivity, "انتخاب زمان", 2, 0, new Runnable() {
+                        @Override
+                        public void run() {
+                            btnSecondaryStartTime.setText(DialogManager.timeResult);
+                        }
+                    });
+                }
+            }
+        });
+
+        btnSecondaryEndTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (btnSecondaryEndTime.getText().length() > 0) {
+                    int hour = Integer.valueOf(btnSecondaryEndTime.getText().toString().substring(0, 2));
+                    int minute = Integer.valueOf(btnSecondaryEndTime.getText().toString().substring(3, 5));
+                    DialogManager.showTimePickerDialog(App.currentActivity, "انتخاب زمان", hour, minute, new Runnable() {
+                        @Override
+                        public void run() {
+                            btnSecondaryEndTime.setText(DialogManager.timeResult);
+                        }
+                    });
+                } else {
+                    DialogManager.showTimePickerDialog(App.currentActivity, "انتخاب زمان", 7, 0, new Runnable() {
+                        @Override
+                        public void run() {
+                            btnSecondaryEndTime.setText(DialogManager.timeResult);
+                        }
+                    });
+                }
+            }
+        });
+
+        edtPrimaryTraffic.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() != 0 && !s.toString().equals("0")) {
+                    long limitationValue = Long.valueOf(s.toString()) * 9 / 10;
+                    edtTrafficAlarm.setText(limitationValue + "");
+                }
+            }
+        });
+
+        edtSecondaryTraffic.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() == 0 || s.toString().equals("0")) {
+                    btnSecondaryStartTime.setText(null);
+                    btnSecondaryStartTime.setEnabled(false);
+
+                    btnSecondaryEndTime.setText(null);
+                    btnSecondaryEndTime.setEnabled(false);
+                } else {
+                    btnSecondaryStartTime.setText("02:00");
+                    btnSecondaryStartTime.setEnabled(true);
+
+                    btnSecondaryEndTime.setText("07:00");
+                    btnSecondaryEndTime.setEnabled(true);
+                }
+            }
+        });
+
+        switchTrafficAlarm.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    edtTrafficAlarm.setVisibility(View.VISIBLE);
+                    txtTrafficAlarm.setVisibility(View.VISIBLE);
+                } else {
+                    edtTrafficAlarm.setVisibility(View.INVISIBLE);
+                    txtTrafficAlarm.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
+        switchLeftDaysAlarm.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    edtLeftDaysAlarm.setVisibility(View.VISIBLE);
+                    txtLeftDaysAlarm.setVisibility(View.VISIBLE);
+                } else {
+                    edtLeftDaysAlarm.setVisibility(View.INVISIBLE);
+                    txtLeftDaysAlarm.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
     }
 }
