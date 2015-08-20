@@ -4,6 +4,7 @@ package com.zohaltech.app.mobiledatamonitor.activities;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -19,14 +20,13 @@ import com.zohaltech.app.mobiledatamonitor.entities.TrafficMonitor;
 
 import java.util.ArrayList;
 
-public class ReportsActivity extends EnhancedActivity {
+public class ReportActivity extends EnhancedActivity {
 
     ListView lstTraffics;
     TextView txtTotalTraffic;
     ArrayList<TrafficMonitor> trafficMonitors = new ArrayList<>();
     ReportAdapter adapter;
     private BroadcastReceiver broadcastReceiver;
-
 
     @Override
     void onCreated() {
@@ -37,18 +37,21 @@ public class ReportsActivity extends EnhancedActivity {
             public void onReceive(Context context, Intent intent) {
                 long todayUsage = intent.getLongExtra(DataUsageService.DAILY_USAGE_BYTES, 0);
                 updateUI(todayUsage);
-
-                lstTraffics = (ListView) findViewById(R.id.lstTraffics);
-                txtTotalTraffic = (TextView) findViewById(R.id.txtTotalTraffic);
-
-                trafficMonitors = DailyTrafficHistories.getMonthlyTraffic();
-                long bytes = App.preferences.getLong(DataUsageService.DAILY_USAGE_BYTES, 0);
-                trafficMonitors.add(0, new TrafficMonitor(bytes, Helper.getCurrentDate()));
-                adapter = new ReportAdapter(trafficMonitors);
-                lstTraffics.setAdapter(adapter);
-                populateSummery();
             }
         };
+
+        lstTraffics = (ListView) findViewById(R.id.lstTraffics);
+        txtTotalTraffic = (TextView) findViewById(R.id.txtTotalTraffic);
+
+        trafficMonitors = DailyTrafficHistories.getMonthlyTraffic();
+        long bytes = App.preferences.getLong(DataUsageService.DAILY_USAGE_BYTES, 0);
+        trafficMonitors.add(0, new TrafficMonitor(bytes, Helper.getCurrentDate()));
+
+        registerReceiver(broadcastReceiver, new IntentFilter(DataUsageService.DAILY_USAGE_ACTION));
+
+        adapter = new ReportAdapter(trafficMonitors);
+        lstTraffics.setAdapter(adapter);
+        populateSummery();
     }
 
     @Override
@@ -62,7 +65,7 @@ public class ReportsActivity extends EnhancedActivity {
 
     @Override
     void onToolbarCreated() {
-        txtToolbarTitle.setText("گزارش روزانه");
+        txtToolbarTitle.setText("گزارش مصرف");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -81,6 +84,20 @@ public class ReportsActivity extends EnhancedActivity {
         populateSummery();
         adapter.notifyDataSetChanged();
     }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //registerReceiver(broadcastReceiver, new IntentFilter(DataUsageService.DAILY_USAGE_ACTION));
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        unregisterReceiver(broadcastReceiver);
+    }
+
 }
 
 

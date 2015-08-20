@@ -2,7 +2,6 @@ package com.zohaltech.app.mobiledatamonitor.activities;
 
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +15,6 @@ import com.zohaltech.app.mobiledatamonitor.dal.DataPackages;
 import com.zohaltech.app.mobiledatamonitor.dal.PackageHistories;
 import com.zohaltech.app.mobiledatamonitor.entities.DataPackage;
 import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
-import com.zohaltech.app.mobiledatamonitor.fragments.PackageSettingsFragment;
 
 public class ManagementActivity extends EnhancedActivity {
     TextView             txtActivePackageDescription;
@@ -31,7 +29,7 @@ public class ManagementActivity extends EnhancedActivity {
 
 
     @Override
-     void onCreated() {
+    void onCreated() {
         setContentView(R.layout.activity_management);
 
         PackageHistory activePackageHistory = PackageHistories.getActivePackage();
@@ -48,7 +46,7 @@ public class ManagementActivity extends EnhancedActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(App.currentActivity, PackageSettingsActivity.class);
-                intent.putExtra(PackageSettingsFragment.INIT_MODE_KEY, PackageSettingsFragment.MODE_INSERT_CUSTOM);
+                intent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_INSERT_CUSTOM);
                 startActivity(intent);
             }
         });
@@ -58,8 +56,8 @@ public class ManagementActivity extends EnhancedActivity {
             public void onClick(View view) {
 
                 Intent intent = new Intent(App.currentActivity, PackageSettingsActivity.class);
-                intent.putExtra(PackageSettingsFragment.INIT_MODE_KEY, PackageSettingsFragment.MODE_SETTING_ACTIVE);
-                intent.putExtra(PackageSettingsFragment.PACKAGE_ID_KEY, activePackage.getId());
+                intent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_SETTING_ACTIVE);
+                intent.putExtra(PackageSettingsActivity.PACKAGE_ID_KEY, activePackage.getId());
                 startActivity(intent);
             }
         });
@@ -81,8 +79,8 @@ public class ManagementActivity extends EnhancedActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(App.currentActivity, PackageSettingsActivity.class);
-                intent.putExtra(PackageSettingsFragment.INIT_MODE_KEY, PackageSettingsFragment.MODE_SETTING_RESERVED);
-                intent.putExtra(PackageSettingsFragment.PACKAGE_ID_KEY, reservedPackage.getId());
+                intent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_SETTING_RESERVED);
+                intent.putExtra(PackageSettingsActivity.PACKAGE_ID_KEY, reservedPackage.getId());
                 startActivity(intent);
             }
         });

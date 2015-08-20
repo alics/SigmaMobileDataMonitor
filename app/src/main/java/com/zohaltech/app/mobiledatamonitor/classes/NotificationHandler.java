@@ -9,7 +9,6 @@ import android.support.v4.app.NotificationCompat;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.activities.DashboardActivity;
-import com.zohaltech.app.mobiledatamonitor.activities.MainActivity;
 
 public class NotificationHandler {
 
@@ -51,6 +50,7 @@ public class NotificationHandler {
                         .setVisibility(NotificationCompat.VISIBILITY_PUBLIC) //visible in lock screen
                         .setColor(App.context.getResources().getColor(R.color.primary))
                         .setAutoCancel(false);
+
 
         // Creates an explicit intent for an Activity in your app
         Intent resultIntent = new Intent(context, DashboardActivity.class);

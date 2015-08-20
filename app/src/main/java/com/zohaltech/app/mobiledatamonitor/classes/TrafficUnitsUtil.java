@@ -54,12 +54,12 @@ public class TrafficUnitsUtil {
         return result;
     }
 
-    public static Long MbToByte(int mb) {
-        return (long) (mb * 1024 * 1024);
+    public static long MbToByte(int mb) {
+        return mb * 1024 * 1024;
     }
 
-    public static float ByteToMb(long bytes){
-        return (float) bytes / (1024 * 1024);
+    public static long ByteToMb(long bytes){
+        return bytes / (1024 * 1024);
     }
 
     private static String getCorrectTrafficText(float value) {

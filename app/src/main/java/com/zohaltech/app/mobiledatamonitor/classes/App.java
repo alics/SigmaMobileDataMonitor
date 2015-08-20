@@ -16,7 +16,7 @@ import java.util.Locale;
 public class App extends Application {
 
     public static Context           context;
-    public static Activity currentActivity;
+    public static Activity          currentActivity;
     public static SharedPreferences preferences;
     public static Typeface          englishFont;
     public static Typeface          persianFont;
@@ -25,7 +25,15 @@ public class App extends Application {
     public static LayoutInflater    inflater;
     public static int               screenWidth;
     public static int               screenHeight;
-    public static Locale                locale;
+    public static Locale            locale;
+
+    public static void setAppLocal() {
+        locale = new Locale("en");
+        Locale.setDefault(locale);
+        Configuration config = context.getResources().getConfiguration();
+        config.locale = locale;
+        context.getResources().updateConfiguration(config, context.getResources().getDisplayMetrics());
+    }
 
     @Override
     public void onCreate() {
@@ -48,21 +56,12 @@ public class App extends Application {
         context.startService(service);
     }
 
-    public static void setAppLocal() {
-        locale = new Locale("en");
-        Locale.setDefault(locale);
-        Configuration config = context.getResources().getConfiguration();
-        config.locale = locale;
-        context.getResources().updateConfiguration(config, context.getResources().getDisplayMetrics());
-    }
-
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        if (locale != null) {
-            newConfig.locale = locale;
-            Locale.setDefault(locale);
-            getBaseContext().getResources().updateConfiguration(newConfig, getBaseContext().getResources().getDisplayMetrics());
-        }
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
     }
 }

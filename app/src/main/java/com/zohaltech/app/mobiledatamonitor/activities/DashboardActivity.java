@@ -1,8 +1,6 @@
 package com.zohaltech.app.mobiledatamonitor.activities;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,7 +31,7 @@ public class DashboardActivity extends EnhancedActivity {
     @Override
     void onCreated() {
 
-        setContentView(R.layout.fragment_dashboard);
+        setContentView(R.layout.activity_dashboard);
 
         startTime = System.currentTimeMillis() - 5000;
 
@@ -65,24 +63,24 @@ public class DashboardActivity extends EnhancedActivity {
         btnPackageManagement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent myIntent = new Intent(App.currentActivity, PackageManagementActivity.class);
-                //startActivity(myIntent);
+                Intent myIntent = new Intent(App.currentActivity, ManagementActivity.class);
+                startActivity(myIntent);
             }
         });
 
         btnPurchasePackage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent intent = new Intent(App.currentActivity, PackagesActivity.class);
-                //startActivity(intent);
+                Intent intent = new Intent(App.currentActivity, PackagesActivity.class);
+                startActivity(intent);
             }
         });
 
         btnUsageReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent intent = new Intent(App.currentActivity, ReportActivity.class);
-                //startActivity(intent);
+                Intent intent = new Intent(App.currentActivity, ReportActivity.class);
+                startActivity(intent);
             }
         });
 
