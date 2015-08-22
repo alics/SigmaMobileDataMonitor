@@ -1,16 +1,25 @@
 package com.zohaltech.app.mobiledatamonitor.activities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.adapters.PackagePagerAdapter;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
+import com.zohaltech.app.mobiledatamonitor.classes.DialogManager;
 import com.zohaltech.app.mobiledatamonitor.classes.Helper;
+import com.zohaltech.app.mobiledatamonitor.dal.DataPackages;
+import com.zohaltech.app.mobiledatamonitor.dal.PackageHistories;
+import com.zohaltech.app.mobiledatamonitor.entities.DataPackage;
+import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
+
+import widgets.MyToast;
 
 public class PackagesActivity extends EnhancedActivity {
 
@@ -39,10 +48,10 @@ public class PackagesActivity extends EnhancedActivity {
 
             @Override
             public void onPageSelected(int position) {
-                ((TextView) ((ViewGroup) tabOperators.getChildAt(0)).getChildAt(0)).setTextColor(getResources().getColor(R.color.gray_lighter));
-                ((TextView) ((ViewGroup) tabOperators.getChildAt(0)).getChildAt(1)).setTextColor(getResources().getColor(R.color.gray_lighter));
-                ((TextView) ((ViewGroup) tabOperators.getChildAt(0)).getChildAt(2)).setTextColor(getResources().getColor(R.color.gray_lighter));
-                ((TextView) ((ViewGroup) tabOperators.getChildAt(0)).getChildAt(position)).setTextColor(Color.WHITE);
+                ((TextView) ((ViewGroup) tabOperators.getChildAt(0)).getChildAt(0)).setTextColor(getResources().getColor(R.color.divider));
+                ((TextView) ((ViewGroup) tabOperators.getChildAt(0)).getChildAt(1)).setTextColor(getResources().getColor(R.color.divider));
+                ((TextView) ((ViewGroup) tabOperators.getChildAt(0)).getChildAt(2)).setTextColor(getResources().getColor(R.color.divider));
+                ((TextView) ((ViewGroup) tabOperators.getChildAt(0)).getChildAt(position)).setTextColor(getResources().getColor(R.color.white));
             }
 
             @Override
@@ -94,8 +103,16 @@ public class PackagesActivity extends EnhancedActivity {
             //        TextView textView = (TextView) tabViewChild;
             textView.setWidth(App.screenWidth / 3);
             textView.setTypeface(App.persianFont);
-            textView.setTextColor(getResources().getColor(R.color.gray_lighter));
+            textView.setTextColor(getResources().getColor(R.color.divider));
             textView.setTextSize(14);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 123){
+            MyToast.show("ussd finished",Toast.LENGTH_SHORT);
         }
     }
 }

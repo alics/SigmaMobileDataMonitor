@@ -45,7 +45,7 @@ public abstract class EnhancedActivity extends AppCompatActivity {
 
         txtToolbarTitle = new MyTextView(this);
         txtToolbarTitle.setTextAppearance(this, android.R.style.TextAppearance_Medium);
-        txtToolbarTitle.setTextColor(Color.WHITE);
+        txtToolbarTitle.setTextColor(getResources().getColor(R.color.white));
         txtToolbarTitle.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT));
         txtToolbarTitle.setGravity(Gravity.CENTER);
         toolbar.addView(txtToolbarTitle, 0);

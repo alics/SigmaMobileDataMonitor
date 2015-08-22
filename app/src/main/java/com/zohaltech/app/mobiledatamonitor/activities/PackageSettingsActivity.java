@@ -138,7 +138,6 @@ public class PackageSettingsActivity extends EnhancedActivity {
                 setEditMode(false);
                 if (initMode.equals(MODE_SETTING_ACTIVE)) {
                     loadActivePackageSettings();
-
                 } else if (initMode.equals(MODE_SETTING_RESERVED)) {
                     loadReservedPackageSettings();
                 }

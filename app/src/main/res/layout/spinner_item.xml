@@ -9,5 +9,5 @@
     android:gravity="center"
     android:padding="5dp"
     android:singleLine="true"
-    android:textColor="@color/gray_dark"
+    android:textColor="@color/primary_text"
     />

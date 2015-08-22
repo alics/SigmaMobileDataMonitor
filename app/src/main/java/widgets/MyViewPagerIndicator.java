@@ -13,8 +13,8 @@ import com.zohaltech.app.mobiledatamonitor.classes.App;
 public class MyViewPagerIndicator extends ImageView {
     //private static final int CIRCLE_RADIUS       = 20;
     //private static final int CIRCLE_SPACE        = 20;
-    private static final int CIRCLE_STROKE_COLOR = Color.GRAY;
-    private static final int CIRCLE_FILL_COLOR   = Color.LTGRAY;
+    //private static final int CIRCLE_STROKE_COLOR = Color.GRAY;
+    //private static final int CIRCLE_FILL_COLOR   = Color.LTGRAY;
     private Paint fillPaint;
     private Paint strokePaint;
     private int   count;

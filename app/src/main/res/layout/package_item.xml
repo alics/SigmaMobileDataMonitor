@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/layoutPackage"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:gravity="right|center">
+              android:gravity="right|center"
+              android:background="?attr/selectableItemBackground">
 
     <widgets.MyTextView
         android:id="@+id/txtPackage"
