@@ -46,7 +46,7 @@ public class TutorialPagerAdapter extends PagerAdapter {
         TextView txtTutorialDesc = (TextView) itemView.findViewById(R.id.txtTutorialDesc);
         ImageView imageTutorialImage= (ImageView) itemView.findViewById(R.id.imageTutorialImage);
 
-        txtTutorialDesc.setText(items[position]);
+        //txtTutorialDesc.setText(items[position]);
         imageTutorialImage.setImageResource(flag[position]);
 
         container.addView(itemView);

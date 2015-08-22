@@ -4,6 +4,7 @@ package com.zohaltech.app.mobiledatamonitor.activities;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 
+import com.xgc1986.parallaxPagerTransformer.ParallaxPagerTransformer;
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.adapters.TutorialPagerAdapter;
 
@@ -20,11 +21,11 @@ public class TutorialActivity extends EnhancedActivity {
         // Locate the ViewPager in viewpager_main.xml
         viewPager = (ViewPager) findViewById(R.id.pagerTutorial);
         // Pass results to ViewPagerAdapter Class
+        viewPager.setPageTransformer(true, new ParallaxPagerTransformer(R.id.txtTutorialDesc));
         adapter = new TutorialPagerAdapter(TutorialActivity.this, items, flag);
         // Binds the Adapter to the ViewPager
         viewPager.setAdapter(adapter);
 
-     //   viewPager.setPageTransformer(true, new ParallexTransfer(R.id.txtTotalTraffic, R.id.imageTutorialImage));
 
     }
 
