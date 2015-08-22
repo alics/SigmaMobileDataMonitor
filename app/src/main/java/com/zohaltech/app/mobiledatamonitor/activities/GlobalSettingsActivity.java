@@ -19,6 +19,7 @@ public class GlobalSettingsActivity extends EnhancedActivity {
     SwitchCompat switchShowNotificationWhenDataIsOn;
     SwitchCompat switchShowNotificationInLockScreen;
     Button       btnAboutUs;
+    Button       btnTutorials;
     Setting      setting;
 
     @Override
@@ -27,6 +28,7 @@ public class GlobalSettingsActivity extends EnhancedActivity {
         setting = Settings.getCurrentSettings();
 
         btnAboutUs = (Button) findViewById(R.id.btnAboutUs);
+        btnTutorials=(Button) findViewById(R.id.btnTutorials);
         switchShowNotification = (SwitchCompat) findViewById(R.id.switchShowNotification);
         switchShowNotificationWhenDataIsOn = (SwitchCompat) findViewById(R.id.switchShowNotificationWhenDataIsOn);
         switchShowNotificationInLockScreen = (SwitchCompat) findViewById(R.id.switchShowNotificationInLockScreen);
@@ -63,6 +65,13 @@ public class GlobalSettingsActivity extends EnhancedActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(App.currentActivity, AboutUsActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnTutorials.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(App.currentActivity, TutorialActivity.class);
                 startActivity(intent);
             }
         });

@@ -111,6 +111,14 @@
                     android:layout_marginEnd="2dp"
                     android:layout_marginRight="2dp"
                     android:text="درباره ما"/>
+
+                <widgets.MyButton
+                    android:id="@+id/btnTutorials"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginRight="2dp"
+                    android:text="راهنمای برنامه"/>
             </LinearLayout>
 
             <LinearLayout
