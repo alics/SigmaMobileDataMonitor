@@ -89,6 +89,9 @@
             android:name=".activities.ManagementActivity"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".activities.TutorialActivity"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".activities.ApplicationMessageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.Dialog"/>
