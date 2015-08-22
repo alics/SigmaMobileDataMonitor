@@ -1,27 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-    <ImageView
-        android:id="@+id/imageTutorialImage"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
 
     <widgets.MyTextView
-        android:id="@+id/txtTutorialDesc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="به موبایل دیتا مونیتو خوش آمدید"
-        android:textColor="@color/primary_text"
+        android:id="@+id/txtTutorial"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
         android:gravity="center"
-        android:background="@color/white"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="67dp"/>
+        android:text="به موبایل دیتا مونیتو خوش آمدید"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/primary_text"/>
 
+        <ImageView
+            android:id="@+id/imgTutorial"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"/>
 
-</RelativeLayout>
+        <widgets.Slide
+            android:id="@+id/slide"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"/>
+
+</LinearLayout>

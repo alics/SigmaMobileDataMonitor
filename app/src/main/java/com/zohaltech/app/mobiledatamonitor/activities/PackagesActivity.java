@@ -1,12 +1,10 @@
 package com.zohaltech.app.mobiledatamonitor.activities;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.zohaltech.app.mobiledatamonitor.R;
@@ -18,8 +16,6 @@ import com.zohaltech.app.mobiledatamonitor.dal.DataPackages;
 import com.zohaltech.app.mobiledatamonitor.dal.PackageHistories;
 import com.zohaltech.app.mobiledatamonitor.entities.DataPackage;
 import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
-
-import widgets.MyToast;
 
 public class PackagesActivity extends EnhancedActivity {
 
@@ -111,8 +107,50 @@ public class PackagesActivity extends EnhancedActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 123){
-            MyToast.show("ussd finished",Toast.LENGTH_SHORT);
+        //MyToast.show("ussd finished",Toast.LENGTH_SHORT);
+        //final int dataPackageId = data.getIntExtra("DATA_PACKAGE_ID", 0);
+        if (requestCode != 0) {
+            final DataPackage dataPackage = DataPackages.selectPackageById(requestCode);
+            DialogManager.showConfirmationDialog(App.currentActivity, "فعالسازی بسته", "آیا مایل به فعالسازی بسته " + dataPackage.getDescription() + " هستید؟",
+                                                 "بله", "خیر", null, new Runnable() {
+                        @Override
+                        public void run() {
+                            final PackageHistory history = PackageHistories.getActivePackage();
+                            if (history == null) {
+                                PackageHistories.insert(new PackageHistory(dataPackage.getId(), Helper.getCurrentDateTime(), null, null, null, PackageHistory.StatusEnum.ACTIVE.ordinal()));
+                                Intent intent = new Intent(App.currentActivity, PackageSettingsActivity.class);
+                                intent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_SETTING_ACTIVE);
+                                intent.putExtra(PackageSettingsActivity.PACKAGE_ID_KEY, dataPackage.getId());
+                                App.currentActivity.startActivity(intent);
+
+                            } else {
+                                DataPackage activePackage = DataPackages.selectPackageById(history.getDataPackageId());
+                                DialogManager.showChoiceDialog(App.currentActivity, "رزرو بسته", "هم اکنون یک بسته فعال " + activePackage.getTitle() + " وجود دارد،آیا بسته" + dataPackage.getDescription() + "به عنوان رزرو در نظر گرفته شود یا از ابتدا محاسبه گردد؟",
+                                                               "از ابتدا محاسبه گردد", "رزرو شود", null, new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                PackageHistories.deletedReservedPackages();
+                                                PackageHistories.terminateAll(PackageHistory.StatusEnum.CANCELED);
+                                                PackageHistories.insert(new PackageHistory(dataPackage.getId(), Helper.getCurrentDateTime(), null, null, null, PackageHistory.StatusEnum.ACTIVE.ordinal()));
+                                                Intent intent = new Intent(App.currentActivity, PackageSettingsActivity.class);
+                                                intent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_SETTING_ACTIVE);
+                                                intent.putExtra(PackageSettingsActivity.PACKAGE_ID_KEY, dataPackage.getId());
+                                                App.currentActivity.startActivity(intent);
+                                            }
+
+                                        }, new Runnable() {
+                                            public void run() {
+                                                PackageHistories.deletedReservedPackages();
+                                                PackageHistories.insert(new PackageHistory(dataPackage.getId(), null, null, null, null, PackageHistory.StatusEnum.RESERVED.ordinal()));
+                                                Intent intent = new Intent(App.currentActivity, PackageSettingsActivity.class);
+                                                intent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_SETTING_RESERVED);
+                                                intent.putExtra(PackageSettingsActivity.PACKAGE_ID_KEY, dataPackage.getId());
+                                                App.currentActivity.startActivity(intent);
+                                            }
+                                        });
+                            }
+                        }
+                    });
         }
     }
 }

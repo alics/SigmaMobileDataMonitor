@@ -3,7 +3,6 @@ package com.zohaltech.app.mobiledatamonitor.adapters;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,18 +13,20 @@ import android.widget.TextView;
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
 
+import widgets.Slide;
+
 public class TutorialPagerAdapter extends PagerAdapter {
 
     Context        context;
-    String[]       items;
-    int[]          flag;
+    String[]       texts;
+    int[]          images;
     LayoutInflater inflater;
 
 
-    public TutorialPagerAdapter(Context context, String[] items, int[] flag) {
+    public TutorialPagerAdapter(Context context, String[] texts, int[] images) {
         this.context = context;
-        this.items = items;
-        this.flag = flag;
+        this.texts = texts;
+        this.images = images;
     }
 
     @Override
@@ -43,11 +44,21 @@ public class TutorialPagerAdapter extends PagerAdapter {
         View itemView = App.inflater.inflate(R.layout.pager_tutorial_item, container, false);
 
         // Declare Variables
-        TextView txtTutorialDesc = (TextView) itemView.findViewById(R.id.txtTutorialDesc);
-        ImageView imageTutorialImage= (ImageView) itemView.findViewById(R.id.imageTutorialImage);
+        TextView txtTutorial = (TextView) itemView.findViewById(R.id.txtTutorial);
+        ImageView imgTutorial = (ImageView) itemView.findViewById(R.id.imgTutorial);
+        Slide slide = (Slide) itemView.findViewById(R.id.slide);
+        slide.setTextColor(context.getResources().getColor(R.color.secondary_text));
+        slide.setBackgroundColor("#ffffff");
 
-        //txtTutorialDesc.setText(items[position]);
-        imageTutorialImage.setImageResource(flag[position]);
+        if (position == 0) {
+            slide.setVisibility(View.VISIBLE);
+        } else {
+            slide.setVisibility(View.GONE);
+        }
+
+        txtTutorial.setText(texts[position]);
+        imgTutorial.setImageResource(images[position]);
+
 
         container.addView(itemView);
 

@@ -1,8 +1,6 @@
 package com.zohaltech.app.mobiledatamonitor.entities;
 
-import java.io.Serializable;
-
-public class DataPackage implements Serializable {
+public class DataPackage {
 
     Integer id;
     Integer operatorId;

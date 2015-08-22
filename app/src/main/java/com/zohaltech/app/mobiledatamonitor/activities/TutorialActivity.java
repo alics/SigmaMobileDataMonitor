@@ -8,11 +8,14 @@ import com.xgc1986.parallaxPagerTransformer.ParallaxPagerTransformer;
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.adapters.TutorialPagerAdapter;
 
+import widgets.Slide;
+
 public class TutorialActivity extends EnhancedActivity {
     ViewPager    viewPager;
     PagerAdapter adapter;
-    String[]     items=new String[]{"چه دافی", "چه کوونی"};
-    int[]        flag =new int[]{R.drawable.ic_one, R.drawable.ic_two};
+    String[] texts  = new String[]{"به موبایل دیتا مونیتور خوش آمدید",
+                                   "با این برنامه به راحتی بسته های اینترنتی را خریداری و فعال کنید و کنترل مصرف دیتا را به دست بگیرید"};
+    int[]    images = new int[]{R.drawable.ic_one, R.drawable.ic_two};
 
     @Override
     void onCreated() {
@@ -20,13 +23,16 @@ public class TutorialActivity extends EnhancedActivity {
 
         // Locate the ViewPager in viewpager_main.xml
         viewPager = (ViewPager) findViewById(R.id.pagerTutorial);
+        viewPager.setPageMargin(0);
         // Pass results to ViewPagerAdapter Class
-        viewPager.setPageTransformer(true, new ParallaxPagerTransformer(R.id.txtTutorialDesc));
-        adapter = new TutorialPagerAdapter(TutorialActivity.this, items, flag);
+        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+        ParallaxPagerTransformer transformer = new ParallaxPagerTransformer(R.id.imgTutorial);
+        transformer.setSpeed(-0.8F);
+        viewPager.setPageTransformer(true, transformer);
+        //}
+        adapter = new TutorialPagerAdapter(TutorialActivity.this, texts, images);
         // Binds the Adapter to the ViewPager
         viewPager.setAdapter(adapter);
-
-
     }
 
     @Override

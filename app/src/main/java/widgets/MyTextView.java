@@ -26,7 +26,7 @@ public class MyTextView extends AppCompatTextView {
     }
 
     private void initialize() {
-        setLineSpacing(1f, 1.2f);
+        //setLineSpacing(1f, 1.2f);
     }
 
     @Override

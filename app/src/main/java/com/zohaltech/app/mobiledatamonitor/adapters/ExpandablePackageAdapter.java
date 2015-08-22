@@ -3,6 +3,8 @@ package com.zohaltech.app.mobiledatamonitor.adapters;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,12 +28,12 @@ import widgets.AnimatedExpandableListView;
 
 public class ExpandablePackageAdapter extends AnimatedExpandableListView.AnimatedExpandableListAdapter {
 
-    private Activity                           activity;
+    private FragmentActivity                  activity;
     private List<String>                       periods; // header titles
     // child data in format of header title, child title
     private HashMap<String, List<DataPackage>> dataPackages;
 
-    public ExpandablePackageAdapter(Activity activity, List<String> periods, HashMap<String, List<DataPackage>> dataPackages) {
+    public ExpandablePackageAdapter(FragmentActivity activity, List<String> periods, HashMap<String, List<DataPackage>> dataPackages) {
         this.activity = activity;
         this.periods = periods;
         this.dataPackages = dataPackages;
