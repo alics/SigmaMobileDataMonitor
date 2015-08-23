@@ -46,6 +46,7 @@ public class ManagementActivity extends EnhancedActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(App.currentActivity, PackageSettingsActivity.class);
                 intent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_INSERT_CUSTOM);
+                intent.putExtra(PackageSettingsActivity.FORM_MODE_KEY, PackageSettingsActivity.FORM_MODE_NEW);
                 startActivity(intent);
             }
         });
@@ -57,6 +58,7 @@ public class ManagementActivity extends EnhancedActivity {
                 Intent intent = new Intent(App.currentActivity, PackageSettingsActivity.class);
                 intent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_SETTING_ACTIVE);
                 intent.putExtra(PackageSettingsActivity.PACKAGE_ID_KEY, activePackage.getId());
+                intent.putExtra(PackageSettingsActivity.FORM_MODE_KEY, PackageSettingsActivity.FORM_MODE_EDIT);
                 startActivity(intent);
             }
         });
@@ -80,6 +82,7 @@ public class ManagementActivity extends EnhancedActivity {
                 Intent intent = new Intent(App.currentActivity, PackageSettingsActivity.class);
                 intent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_SETTING_RESERVED);
                 intent.putExtra(PackageSettingsActivity.PACKAGE_ID_KEY, reservedPackage.getId());
+                intent.putExtra(PackageSettingsActivity.FORM_MODE_KEY, PackageSettingsActivity.FORM_MODE_EDIT);
                 startActivity(intent);
             }
         });

@@ -121,6 +121,7 @@ public class PackagesActivity extends EnhancedActivity {
                                 Intent intent = new Intent(App.currentActivity, PackageSettingsActivity.class);
                                 intent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_SETTING_ACTIVE);
                                 intent.putExtra(PackageSettingsActivity.PACKAGE_ID_KEY, dataPackage.getId());
+                                intent.putExtra(PackageSettingsActivity.FORM_MODE_KEY, PackageSettingsActivity.FORM_MODE_NEW);
                                 App.currentActivity.startActivity(intent);
 
                             } else {
@@ -135,6 +136,7 @@ public class PackagesActivity extends EnhancedActivity {
                                                 Intent intent = new Intent(App.currentActivity, PackageSettingsActivity.class);
                                                 intent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_SETTING_ACTIVE);
                                                 intent.putExtra(PackageSettingsActivity.PACKAGE_ID_KEY, dataPackage.getId());
+                                                intent.putExtra(PackageSettingsActivity.FORM_MODE_KEY, PackageSettingsActivity.FORM_MODE_NEW);
                                                 App.currentActivity.startActivity(intent);
                                             }
 
@@ -145,6 +147,7 @@ public class PackagesActivity extends EnhancedActivity {
                                                 Intent intent = new Intent(App.currentActivity, PackageSettingsActivity.class);
                                                 intent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_SETTING_RESERVED);
                                                 intent.putExtra(PackageSettingsActivity.PACKAGE_ID_KEY, dataPackage.getId());
+                                                intent.putExtra(PackageSettingsActivity.FORM_MODE_KEY, PackageSettingsActivity.FORM_MODE_NEW);
                                                 App.currentActivity.startActivity(intent);
                                             }
                                         });

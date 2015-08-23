@@ -15,6 +15,7 @@ import com.zohaltech.app.mobiledatamonitor.adapters.UsagePagerAdapter;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
 import com.zohaltech.app.mobiledatamonitor.classes.DialogManager;
 import com.zohaltech.app.mobiledatamonitor.classes.LicenseManager;
+import com.zohaltech.app.mobiledatamonitor.dal.DataAccess;
 
 import widgets.MyToast;
 import widgets.MyViewPagerIndicator;
@@ -35,6 +36,10 @@ public class DashboardActivity extends EnhancedActivity {
 
     @Override
     void onCreated() {
+
+        DataAccess da = new DataAccess();
+        da.getReadableDB();
+        da.close();
 
         setContentView(R.layout.activity_dashboard);
 
@@ -113,7 +118,7 @@ public class DashboardActivity extends EnhancedActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (LicenseManager.validateLicense() == false) {
+        if (LicenseManager.getLicenseStatus() == false) {
             if (paymentDialog == null) {
                 paymentDialog = DialogManager.getPopupDialog(App.currentActivity,
                                                              "خرید نسخه کامل",

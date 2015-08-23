@@ -14,7 +14,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-
 public class ZtDataService extends Service {
 
     public static final  String  TODAY_USAGE_BYTES        = "TODAY_USAGE_BYTES";
@@ -23,7 +22,6 @@ public class ZtDataService extends Service {
     private static final String  LAST_RECEIVED_BYTES      = "LAST_RECEIVED_BYTES";
     private static final String  LAST_SENT_BYTES          = "LAST_SENT_BYTES";
     private static final String  TODAY_USAGE_DATE         = "TODAY_USAGE_DATE";
-    //private static final String TOTAL_USAGE_BYTES     = "TOTAL_USAGE_BYTES";
     private static final String  ONE_MINUTE_USED_BYTES    = "ONE_MINUTE_USED_BYTES";
     private static final int     USAGE_LOG_INTERVAL       = 60;
     private static       boolean firstTime                = true;
@@ -50,9 +48,6 @@ public class ZtDataService extends Service {
                 sentBytes = currentSentBytes - App.preferences.getLong(LAST_SENT_BYTES, 0);
                 App.preferences.edit().putLong(LAST_RECEIVED_BYTES, currentReceivedBytes).commit();
                 App.preferences.edit().putLong(LAST_SENT_BYTES, currentSentBytes).commit();
-
-                //App.preferences.edit().putLong(TOTAL_USAGE_BYTES, App.preferences.getLong(TOTAL_USAGE_BYTES, 0) + receivedBytes + sentBytes).commit();
-
             }
 
             final long oneMinuteUsedBytes = App.preferences.getLong(ONE_MINUTE_USED_BYTES, 0) + receivedBytes + sentBytes;
@@ -80,11 +75,6 @@ public class ZtDataService extends Service {
             }
             App.preferences.edit().putString(TODAY_USAGE_DATE, currentDate).commit();
 
-            //Random r = new Random();
-            //int Low = 10;
-            //int High = 1024 * 30;
-            //int sumReceivedSent = r.nextInt(High - Low) + Low;
-
             int iconId = R.drawable.wkb000;
             long sumReceivedSent = (receivedBytes + sentBytes) / 1024;
 
@@ -104,11 +94,6 @@ public class ZtDataService extends Service {
             }
 
             String todayUsage = TrafficUnitsUtil.getUsedTraffic(App.preferences.getLong(TODAY_USAGE_BYTES, 0));
-            //String totalUsage = TrafficDisplay.getUsedTraffic(App.preferences.getLong(TOTAL_USAGE_BYTES, 0));
-
-            //NotificationManager notificationManager = (NotificationManager) App.context.getSystemService(Context.NOTIFICATION_SERVICE);
-            //notificationManager.notify(1,NotificationHandler.getDataUsageNotification(DataUsageService.this, iconId, getString(R.string.down) + TrafficUnitsUtil.getTransferRate(receivedBytes) + getString(R.string.up) + TrafficUnitsUtil.getTransferRate(sentBytes), getString(R.string.today) + todayUsage));
-
 
             if (Settings.getCurrentSettings().getShowNotification()) {
                 startForeground(1, NotificationHandler.getDataUsageNotification(ZtDataService.this, iconId, getString(R.string.down) + TrafficUnitsUtil.getTransferRate(receivedBytes) + getString(R.string.up) + TrafficUnitsUtil.getTransferRate(sentBytes), getString(R.string.today) + todayUsage));
@@ -146,23 +131,6 @@ public class ZtDataService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        //return super.onStartCommand(intent, flags, startId);
         return START_STICKY;
     }
-
-    //private class ApplicationAlarmReceiver extends BroadcastReceiver {
-    //
-    //    @Override
-    //    public void onReceive(Context context, Intent intent) {
-    //        if (intent.getAction().equals(ZTDataService.APPLICATION_ALARM_ACTION)) {
-    //            ArrayList<AlarmObject> objects = PackageStatus.getCurrentAlarms();
-    //            DialogManager.showConfirmationDialog(ZTDataService.this, "x", "y", "z", "t", null, new Runnable() {
-    //                @Override
-    //                public void run() {
-    //                    MyToast.show("OK", Toast.LENGTH_SHORT);
-    //                }
-    //            });
-    //        }
-    //    }
-    //}
 }

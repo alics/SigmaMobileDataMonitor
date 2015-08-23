@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.zohaltech.app.mobiledatamonitor.classes.Helper;
+import com.zohaltech.app.mobiledatamonitor.classes.LicenseManager;
 import com.zohaltech.app.mobiledatamonitor.classes.MyRuntimeException;
 import com.zohaltech.app.mobiledatamonitor.entities.DailyTrafficHistory;
 import com.zohaltech.app.mobiledatamonitor.entities.DataPackage;
@@ -126,6 +127,7 @@ public class UsageLogs {
     }
 
     public static void integrateSumUsedTrafficPerDay(String date) {
+        LicenseManager.validateLicense();
         DataAccess da = new DataAccess();
         SQLiteDatabase db = da.getReadableDB();
         Cursor cursor = null;

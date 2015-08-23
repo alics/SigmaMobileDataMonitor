@@ -1,10 +1,7 @@
 package com.zohaltech.app.mobiledatamonitor.adapters;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +9,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zohaltech.app.mobiledatamonitor.R;
-import com.zohaltech.app.mobiledatamonitor.activities.PackageSettingsActivity;
-import com.zohaltech.app.mobiledatamonitor.classes.App;
 import com.zohaltech.app.mobiledatamonitor.classes.DialogManager;
 import com.zohaltech.app.mobiledatamonitor.classes.Helper;
-import com.zohaltech.app.mobiledatamonitor.dal.DataPackages;
-import com.zohaltech.app.mobiledatamonitor.dal.PackageHistories;
 import com.zohaltech.app.mobiledatamonitor.entities.DataPackage;
-import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +20,7 @@ import widgets.AnimatedExpandableListView;
 
 public class ExpandablePackageAdapter extends AnimatedExpandableListView.AnimatedExpandableListAdapter {
 
-    private FragmentActivity                  activity;
+    private FragmentActivity                   activity;
     private List<String>                       periods; // header titles
     // child data in format of header title, child title
     private HashMap<String, List<DataPackage>> dataPackages;

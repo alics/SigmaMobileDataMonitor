@@ -42,6 +42,9 @@ public class PackageSettingsActivity extends EnhancedActivity {
     public static final String MODE_SETTING_ACTIVE   = "SETTING_ACTIVE";
     public static final String MODE_SETTING_RESERVED = "SETTING_RESERVED";
     public static final String PACKAGE_ID_KEY        = "PACKAGE_ID";
+    public static final String FORM_MODE_KEY         = "FORM_MODE";
+    public static final String FORM_MODE_NEW         = "FORM_MODE_NEW";
+    public static final String FORM_MODE_EDIT        = "FORM_MODE_EDIT";
 
     EditText         edtPackageTitle;
     TextView         txtPackageTitle;
@@ -68,6 +71,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
     DataPackage      customPackage;
     String           initMode;
     Setting          setting;
+    String           formMode;
 
     @Override
     void onCreated() {
@@ -100,6 +104,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
         initControls();
 
         initMode = getIntent().getStringExtra(INIT_MODE_KEY);
+        formMode = getIntent().getStringExtra(FORM_MODE_KEY);
 
         assert initMode != null;
         if (initMode.equals(MODE_INSERT_CUSTOM)) {
@@ -137,9 +142,17 @@ public class PackageSettingsActivity extends EnhancedActivity {
 
                 setEditMode(false);
                 if (initMode.equals(MODE_SETTING_ACTIVE)) {
-                    loadActivePackageSettings();
+                    if (formMode.equals(FORM_MODE_NEW)) {
+                        loadNewPackageSettings(dataPackage);
+                    } else {
+                        loadActivePackageSettings();
+                    }
                 } else if (initMode.equals(MODE_SETTING_RESERVED)) {
-                    loadReservedPackageSettings();
+                    if (formMode.equals(FORM_MODE_NEW)) {
+                        loadNewPackageSettings(dataPackage);
+                    } else {
+                        loadReservedPackageSettings();
+                    }
                 }
             }
         }
@@ -294,6 +307,14 @@ public class PackageSettingsActivity extends EnhancedActivity {
         }
     }
 
+    private void loadNewPackageSettings(DataPackage dataPackage) {
+        switchLeftDaysAlarm.setChecked(true);
+        edtLeftDaysAlarm.setText("1");
+        switchTrafficAlarm.setChecked(true);
+        edtTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(dataPackage.getPrimaryTraffic()) * 9 / 10 + "");
+        switchAutoMobileDataOff.setChecked(true);
+    }
+
     private void addCustomPackage() {
         customPackage = new DataPackage();
         long secondaryTraffic = 0;
@@ -311,14 +332,14 @@ public class PackageSettingsActivity extends EnhancedActivity {
 
         if (switchLeftDaysAlarm.isChecked() &&
             Integer.valueOf(edtLeftDaysAlarm.getText().toString()) >=
-            Integer.valueOf(edtPackageValidPeriod.getText().toString())){
+            Integer.valueOf(edtPackageValidPeriod.getText().toString())) {
             MyToast.show("اخطار روز باقیمانده باید از مدت اعتبار بسته کمتر باشد", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
             return;
         }
 
         if (switchTrafficAlarm.isChecked() &&
             Integer.valueOf(edtTrafficAlarm.getText().toString()) >=
-            Integer.valueOf(edtPrimaryTraffic.getText().toString())){
+            Integer.valueOf(edtPrimaryTraffic.getText().toString())) {
             MyToast.show("اخطار حجم باقیمانده باید از حجم شبانه روزی کمتر باشد", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
             return;
         }
