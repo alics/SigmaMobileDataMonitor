@@ -13,9 +13,10 @@ public class Settings {
 
     static final String TableName                    = "Settings";
     static final String Id                           = "Id";
-    static final String MonitoringServiceOn          = "MonitoringServiceOn";
+    static final String DataConnected          = "DataConnected";
     static final String DailyTraffic                 = "DailyTraffic";
     static final String DcDataAfterTerminate         = "DcDataAfterTerminate";
+    static final String DcDataAfterTerminateRes      = "DcDataAfterTerminateRes";
     static final String AlarmType                    = "AlarmType";
     static final String RemindedByteAlarm            = "RemindedByteAlarm";
     static final String LeftDaysAlarm                = "LeftDaysAlarm";
@@ -28,9 +29,10 @@ public class Settings {
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
                                       Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-                                      MonitoringServiceOn + " BOOLEAN NOT NULL, " +
+                                      DataConnected + " BOOLEAN NOT NULL, " +
                                       DailyTraffic + " BIGINT NOT NULL, " +
                                       DcDataAfterTerminate + " BOOLEAN NOT NULL, " +
+                                      DcDataAfterTerminateRes + " BOOLEAN NOT NULL, " +
                                       AlarmType + " INTEGER NOT NULL, " +
                                       RemindedByteAlarm + " BIGINT NOT NULL, " +
                                       LeftDaysAlarm + " INTEGER NOT NULL, " +
@@ -56,12 +58,13 @@ public class Settings {
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     Setting setting = new Setting(cursor.getInt(cursor.getColumnIndex(Id)),
-                                                  cursor.getInt(cursor.getColumnIndex(MonitoringServiceOn)) == 1,
+                                                  cursor.getInt(cursor.getColumnIndex(DataConnected)) == 1,
                                                   cursor.getLong(cursor.getColumnIndex(DailyTraffic)),
                                                   cursor.getInt(cursor.getColumnIndex(DcDataAfterTerminate)) == 1,
                                                   cursor.getInt(cursor.getColumnIndex(AlarmType)),
                                                   cursor.getLong(cursor.getColumnIndex(RemindedByteAlarm)),
                                                   cursor.getInt(cursor.getColumnIndex(LeftDaysAlarm)),
+                                                  cursor.getInt(cursor.getColumnIndex(DcDataAfterTerminateRes)) == 1,
                                                   cursor.getInt(cursor.getColumnIndex(AlarmTypeRes)),
                                                   cursor.getLong(cursor.getColumnIndex(RemindedByteAlarmRes)),
                                                   cursor.getInt(cursor.getColumnIndex(LeftDaysAlarmRes)),
@@ -85,9 +88,10 @@ public class Settings {
     public static long insert(Setting setting) {
         ContentValues values = new ContentValues();
 
-        values.put(MonitoringServiceOn, setting.getMonitoringServiceOn() ? 1 : 0);
+        values.put(DataConnected, setting.getDataConnected() ? 1 : 0);
         values.put(DailyTraffic, setting.getDailyTraffic());
         values.put(DcDataAfterTerminate, setting.getDcDataAfterTerminate() ? 1 : 0);
+        values.put(DcDataAfterTerminateRes, setting.getDcDataAfterTerminate() ? 1 : 0);
         values.put(AlarmType, setting.getAlarmType());
         values.put(RemindedByteAlarm, setting.getRemindedByteAlarm());
         values.put(LeftDaysAlarm, setting.getLeftDaysAlarm());
@@ -105,9 +109,10 @@ public class Settings {
     public static long update(Setting setting) {
         ContentValues values = new ContentValues();
 
-        values.put(MonitoringServiceOn, setting.getMonitoringServiceOn() ? 1 : 0);
+        values.put(DataConnected, setting.getDataConnected() ? 1 : 0);
         values.put(DailyTraffic, setting.getDailyTraffic());
         values.put(DcDataAfterTerminate, setting.getDcDataAfterTerminate() ? 1 : 0);
+        values.put(DcDataAfterTerminateRes, setting.getDcDataAfterTerminate() ? 1 : 0);
         values.put(AlarmType, setting.getAlarmType());
         values.put(RemindedByteAlarm, setting.getRemindedByteAlarm());
         values.put(LeftDaysAlarm, setting.getLeftDaysAlarm());

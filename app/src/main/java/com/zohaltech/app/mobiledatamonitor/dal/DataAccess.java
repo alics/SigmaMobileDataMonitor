@@ -11,6 +11,7 @@ import com.zohaltech.app.mobiledatamonitor.classes.Helper;
 import com.zohaltech.app.mobiledatamonitor.classes.LicenseManager;
 import com.zohaltech.app.mobiledatamonitor.classes.LicenseStatus;
 import com.zohaltech.app.mobiledatamonitor.classes.MyRuntimeException;
+import com.zohaltech.app.mobiledatamonitor.classes.TrafficUnitsUtil;
 
 import java.io.InputStreamReader;
 
@@ -52,14 +53,14 @@ public class DataAccess extends SQLiteOpenHelper {
 
             // initial settings
             ContentValues settingsValues = new ContentValues();
-            settingsValues.put(Settings.MonitoringServiceOn, 1);
+            settingsValues.put(Settings.DataConnected, 1);
             settingsValues.put(Settings.DailyTraffic, 0);
             settingsValues.put(Settings.DcDataAfterTerminate, 1);
             settingsValues.put(Settings.AlarmType, 1);
-            settingsValues.put(Settings.RemindedByteAlarm, 20 * 1024 * 1024);
+            settingsValues.put(Settings.RemindedByteAlarm, 20 * TrafficUnitsUtil.power(1024,2));
             settingsValues.put(Settings.LeftDaysAlarm, 1);
             settingsValues.put(Settings.AlarmTypeRes, 2);
-            settingsValues.put(Settings.RemindedByteAlarmRes, 20 * 1024 * 1024);
+            settingsValues.put(Settings.RemindedByteAlarmRes, 20 * TrafficUnitsUtil.power(1024,2));
             settingsValues.put(Settings.LeftDaysAlarmRes, 1);
             settingsValues.put(Settings.ShowNotification, 1);
             settingsValues.put(Settings.ShowNotificationWhenDataIsOn, 1);

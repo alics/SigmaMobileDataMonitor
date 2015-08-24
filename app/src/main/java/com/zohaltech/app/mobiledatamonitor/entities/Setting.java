@@ -3,12 +3,13 @@ package com.zohaltech.app.mobiledatamonitor.entities;
 
 public class Setting {
 
-    public enum AlarmType {REMINDED_BYTES, LEFT_DAY, BOTH}
+    public enum AlarmType {REMINDED_BYTES, LEFT_DAY, BOTH,NOTE}
 
     private Integer id;
-    private Boolean monitoringServiceOn;
+    private Boolean dataConnected;
     private Long    dailyTraffic;
     private Boolean dcDataAfterTerminate;
+    private Boolean dcDataAfterTerminateRes;
     private int     alarmType;
     private Long    remindedByteAlarm;
     private Integer leftDaysAlarm;
@@ -20,13 +21,14 @@ public class Setting {
     private Boolean showNotificationInLockScreen;
 
 
-    public Setting(Boolean monitoringServiceOn, Long dailyTraffic, Boolean dcDataAfterTerminate,
-                   int alarmType, Long remindedByteAlarm, Integer leftDaysAlarm,
+    public Setting(Boolean dataConnected, Long dailyTraffic, Boolean dcDataAfterTerminate,
+                   int alarmType, Long remindedByteAlarm, Integer leftDaysAlarm,Boolean dcDataAfterTerminateRes,
                    int alarmTypeRes, Long remindedByteAlarmRes, Integer leftDaysAlarmRes,
                    Boolean showNotification, Boolean showNotificationWhenDataIsOn, Boolean showNotificationInLockScreen) {
-        setMonitoringServiceOn(monitoringServiceOn);
+        setDataConnected(dataConnected);
         setDailyTraffic(dailyTraffic);
         setDcDataAfterTerminate(dcDataAfterTerminate);
+        setDcDataAfterTerminateRes(dcDataAfterTerminateRes);
         setAlarmType(alarmType);
         setRemindedByteAlarm(remindedByteAlarm);
         setLeftDaysAlarm(leftDaysAlarm);
@@ -38,11 +40,11 @@ public class Setting {
         setShowNotificationInLockScreen(showNotificationInLockScreen);
     }
 
-    public Setting(Integer id, Boolean monitoringServiceOn, Long dailyTraffic, Boolean dcDataAfterTerminate,
-                   int alarmType, Long remindedByteAlarm, Integer leftDaysAlarm,
+    public Setting(Integer id, Boolean dataConnected, Long dailyTraffic, Boolean dcDataAfterTerminate,
+                   int alarmType, Long remindedByteAlarm, Integer leftDaysAlarm,Boolean dcDataAfterTerminateRes,
                    int alarmTypeRes, Long remindedByteAlarmRes, Integer leftDaysAlarmRes,
                    Boolean showNotification, Boolean showNotificationWhenDataIsOn, Boolean showNotificationInLockScreen) {
-        this(monitoringServiceOn, dailyTraffic, dcDataAfterTerminate, alarmType, remindedByteAlarm, leftDaysAlarm,
+        this(dataConnected, dailyTraffic, dcDataAfterTerminate, alarmType, remindedByteAlarm, leftDaysAlarm,dcDataAfterTerminateRes,
              alarmTypeRes, remindedByteAlarmRes, leftDaysAlarmRes, showNotification, showNotificationWhenDataIsOn, showNotificationInLockScreen);
         this.id = id;
     }
@@ -55,12 +57,12 @@ public class Setting {
         this.id = id;
     }
 
-    public Boolean getMonitoringServiceOn() {
-        return monitoringServiceOn;
+    public Boolean getDataConnected() {
+        return dataConnected;
     }
 
-    public void setMonitoringServiceOn(Boolean monitoringServiceOn) {
-        this.monitoringServiceOn = monitoringServiceOn;
+    public void setDataConnected(Boolean dataConnected) {
+        this.dataConnected = dataConnected;
     }
 
     public Long getDailyTraffic() {
@@ -149,5 +151,13 @@ public class Setting {
 
     public void setShowNotificationInLockScreen(Boolean showNotificationInLockScreen) {
         this.showNotificationInLockScreen = showNotificationInLockScreen;
+    }
+
+    public Boolean getDcDataAfterTerminateRes() {
+        return dcDataAfterTerminateRes;
+    }
+
+    public void setDcDataAfterTerminateRes(Boolean dcDataAfterTerminateRes) {
+        this.dcDataAfterTerminateRes = dcDataAfterTerminateRes;
     }
 }

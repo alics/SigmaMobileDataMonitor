@@ -1,7 +1,6 @@
 package com.zohaltech.app.mobiledatamonitor.activities;
 
 
-import android.content.Intent;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
@@ -247,7 +246,10 @@ public class PackageSettingsActivity extends EnhancedActivity {
         } else if (leftDaysAlarm) {
             setting.setAlarmType(Setting.AlarmType.LEFT_DAY.ordinal());
             setting.setLeftDaysAlarm(Integer.valueOf(edtLeftDaysAlarm.getText().toString()));
-        }
+        } else
+            setting.setAlarmType(Setting.AlarmType.NOTE.ordinal());
+
+        setting.setDcDataAfterTerminate(switchAutoMobileDataOff.isChecked());
         Settings.update(setting);
         return true;
     }
@@ -274,7 +276,10 @@ public class PackageSettingsActivity extends EnhancedActivity {
         } else if (leftDaysAlarm) {
             setting.setAlarmTypeRes(Setting.AlarmType.LEFT_DAY.ordinal());
             setting.setLeftDaysAlarmRes(Integer.valueOf(edtLeftDaysAlarm.getText().toString()));
-        }
+        } else
+            setting.setAlarmType(Setting.AlarmType.NOTE.ordinal());
+
+        setting.setDcDataAfterTerminate(switchAutoMobileDataOff.isChecked());
         Settings.update(setting);
         return true;
     }
@@ -290,10 +295,25 @@ public class PackageSettingsActivity extends EnhancedActivity {
         } else if (alarmType == Setting.AlarmType.LEFT_DAY.ordinal()) {
             switchLeftDaysAlarm.setChecked(true);
             edtLeftDaysAlarm.setText(setting.getLeftDaysAlarm() + "");
+            edtTrafficAlarm.setVisibility(View.INVISIBLE);
+            txtTrafficAlarm.setVisibility(View.INVISIBLE);
+            switchTrafficAlarm.setChecked(false);
         } else if (alarmType == Setting.AlarmType.REMINDED_BYTES.ordinal()) {
             switchTrafficAlarm.setChecked(true);
             edtTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(setting.getRemindedByteAlarm()) + "");
+            edtLeftDaysAlarm.setVisibility(View.INVISIBLE);
+            txtLeftDaysAlarm.setVisibility(View.INVISIBLE);
+            switchLeftDaysAlarm.setChecked(false);
+        } else if (alarmType == Setting.AlarmType.NOTE.ordinal()) {
+            switchTrafficAlarm.setChecked(false);
+            edtTrafficAlarm.setVisibility(View.INVISIBLE);
+            txtTrafficAlarm.setVisibility(View.INVISIBLE);
+
+            switchLeftDaysAlarm.setChecked(false);
+            edtLeftDaysAlarm.setVisibility(View.INVISIBLE);
+            txtLeftDaysAlarm.setVisibility(View.INVISIBLE);
         }
+        switchAutoMobileDataOff.setChecked(setting.getDcDataAfterTerminate());
     }
 
     private void loadReservedPackageSettings() {
@@ -307,10 +327,25 @@ public class PackageSettingsActivity extends EnhancedActivity {
         } else if (alarmType == Setting.AlarmType.LEFT_DAY.ordinal()) {
             switchLeftDaysAlarm.setChecked(true);
             edtLeftDaysAlarm.setText(setting.getLeftDaysAlarmRes() + "");
+            edtTrafficAlarm.setVisibility(View.INVISIBLE);
+            txtTrafficAlarm.setVisibility(View.INVISIBLE);
+            switchTrafficAlarm.setChecked(false);
         } else if (alarmType == Setting.AlarmType.REMINDED_BYTES.ordinal()) {
             switchTrafficAlarm.setChecked(true);
             edtTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(setting.getRemindedByteAlarmRes()) + "");
+            edtLeftDaysAlarm.setVisibility(View.INVISIBLE);
+            txtLeftDaysAlarm.setVisibility(View.INVISIBLE);
+            switchLeftDaysAlarm.setChecked(false);
+        } else if (alarmType == Setting.AlarmType.NOTE.ordinal()) {
+            switchTrafficAlarm.setChecked(false);
+            edtTrafficAlarm.setVisibility(View.INVISIBLE);
+            txtTrafficAlarm.setVisibility(View.INVISIBLE);
+
+            switchLeftDaysAlarm.setChecked(false);
+            edtLeftDaysAlarm.setVisibility(View.INVISIBLE);
+            txtLeftDaysAlarm.setVisibility(View.INVISIBLE);
         }
+        switchAutoMobileDataOff.setChecked(setting.getDcDataAfterTerminateRes());
     }
 
     private void loadNewPackageSettings(DataPackage dataPackage) {
@@ -350,7 +385,8 @@ public class PackageSettingsActivity extends EnhancedActivity {
             return;
         }
 
-        if (edtSecondaryTraffic.getText().toString().trim().length() > 0) {
+        if (edtSecondaryTraffic.getText().toString().trim().length() > 0 &&
+            !edtSecondaryTraffic.getText().toString().equals("0")) {
             secondaryTraffic = TrafficUnitsUtil.MbToByte(Integer.valueOf(edtSecondaryTraffic.getText().toString()));
             customPackage.setSecondaryTraffic(secondaryTraffic);
             if (btnSecondaryStartTime.getText().toString().trim().length() == 0) {
@@ -365,7 +401,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
                 return;
             } else {
                 secondaryTrafficEndTime = btnSecondaryEndTime.getText().toString();
-                customPackage.setSecondaryTrafficStartTime(secondaryTrafficEndTime);
+                customPackage.setSecondaryTrafficEndTime(secondaryTrafficEndTime);
             }
         }
 
@@ -376,7 +412,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
         int period = Integer.valueOf(edtPackageValidPeriod.getText().toString());
         customPackage.setPeriod(period);
         customPackage.setPrice(0);
-        long primaryTraffic = TrafficUnitsUtil.MbToByte(Integer.valueOf(edtPrimaryTraffic.getText().toString()));
+        Long primaryTraffic = TrafficUnitsUtil.MbToByte(Integer.valueOf(edtPrimaryTraffic.getText().toString()));
         customPackage.setPrimaryTraffic(primaryTraffic);
         customPackage.setUssdCode(null);
         customPackage.setCustom(true);
@@ -388,7 +424,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
                         PackageHistories.terminateAll(PackageHistory.StatusEnum.CANCELED);
                         PackageHistories.deletedReservedPackages();
                         long result = DataPackages.insert(customPackage);
-                        boolean saveRes = saveReservedPackageSettings();
+                        boolean saveRes = saveActivePackageSettings();
                         if (result != -1 && saveRes) {
                             PackageHistories.insert(new PackageHistory(Integer.valueOf(result + ""),
                                                                        Helper.getCurrentDateTime(),

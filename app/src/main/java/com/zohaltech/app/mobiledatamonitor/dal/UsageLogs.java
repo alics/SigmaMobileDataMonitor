@@ -71,7 +71,7 @@ public class UsageLogs {
 
         if (!Helper.addDay(-1).equals(DailyTrafficHistories.getMaxDate()) && currentDate.compareTo(maxUsageLogDate) > 0) {
             Log.i("sdj", "integrated");
-            integrateSumUsedTrafficPerDay(Helper.addDay(-1));
+            integrateSumUsedTrafficPerDay();
         }
 
         if (usageLog.getTrafficBytes() != 0) {
@@ -126,56 +126,23 @@ public class UsageLogs {
         return maxLogDate;
     }
 
-    //    public static void integrateSumUsedTrafficPerDay(String date) {
-    //        LicenseManager.validateLicense();
-    //        DataAccess da = new DataAccess();
-    //        SQLiteDatabase db = da.getReadableDB();
-    //        Cursor cursor = null;
-    //        try {
-    //            String query = "SELECT SUM(TrafficBytes) SumTraffic FROM " + TableName +
-    //                           " WHERE SUBSTR(LogDateTime,1,10) = '" + date + "';";
-    //
-    //            cursor = db.rawQuery(query, null);
-    //
-    //            if (cursor != null && cursor.moveToFirst()) {
-    //                do {
-    //                    long sum = cursor.getLong(cursor.getColumnIndex("SumTraffic"));
-    //                    DailyTrafficHistory history = new DailyTrafficHistory(sum, date);
-    //                    DailyTrafficHistories.insert(history);
-    //                } while (cursor.moveToNext());
-    //            }
-    //        } catch (MyRuntimeException e) {
-    //            e.printStackTrace();
-    //        } finally {
-    //            if (cursor != null && !cursor.isClosed())
-    //                cursor.close();
-    //            if (db != null && db.isOpen())
-    //                db.close();
-    //        }
-    //    }
-
-    public static void integrateSumUsedTrafficPerDay(String date) {
+    public static void integrateSumUsedTrafficPerDay() {
         LicenseManager.validateLicense();
         DataAccess da = new DataAccess();
         SQLiteDatabase db = da.getReadableDB();
         Cursor cursor = null;
         try {
-            String query = "SELECT SUBSTR(LogDateTime,11,3) hourPeriod,SUBSTR(LogDateTime,1,10) datePeriod,SUM(TrafficBytes) SumTraffic FROM UsageLogs " +
-                           "WHERE  SUBSTR(LogDateTime,1,10)='" + date + "' GROUP BY  SUBSTR(LogDateTime,1,10), SUBSTR(LogDateTime,11,3) ;";
+            String query = "SELECT SUM(TrafficBytes) SumTraffic,SUBSTR(LogDateTime,1,10) date FROM " + TableName +
+                           " WHERE SUBSTR(LogDateTime,1,10) > " +
+                           " (SELECT MAX(" + DailyTrafficHistories.LogDate + ") FROM " + DailyTrafficHistories.TableName + ")'" +
+                           " GROUP BY SUBSTR(LogDateTime,1,10)";
+
             cursor = db.rawQuery(query, null);
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     long sum = cursor.getLong(cursor.getColumnIndex("SumTraffic"));
-                    String datePeriod = cursor.getString(cursor.getColumnIndex("datePeriod"));
-                    String hour = cursor.getString(cursor.getColumnIndex("hourPeriod"));
-                    String startLogTime = datePeriod + " " + hour + ":00:00";
-                    int endingHour = Integer.parseInt(hour.substring(1)) + 1;
-                    String endLogTime = datePeriod + " " + endingHour + ":00:00";
-
-                    DailyTrafficHistory history = new DailyTrafficHistory(sum,
-                                                                          datePeriod,
-                                                                          startLogTime,
-                                                                          endLogTime);
+                    String date = cursor.getString(cursor.getColumnIndex("date"));
+                    DailyTrafficHistory history = new DailyTrafficHistory(sum, date);
                     DailyTrafficHistories.insert(history);
                 } while (cursor.moveToNext());
             }
@@ -188,6 +155,7 @@ public class UsageLogs {
                 db.close();
         }
     }
+
 
     public static long getUsedPrimaryTrafficOfPackage(DataPackage dataPackage, PackageHistory history) {
         long usedTraffic = 0;

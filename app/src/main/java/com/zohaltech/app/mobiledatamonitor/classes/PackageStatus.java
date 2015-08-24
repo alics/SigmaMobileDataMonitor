@@ -3,9 +3,11 @@ package com.zohaltech.app.mobiledatamonitor.classes;
 
 import com.zohaltech.app.mobiledatamonitor.dal.DataPackages;
 import com.zohaltech.app.mobiledatamonitor.dal.PackageHistories;
+import com.zohaltech.app.mobiledatamonitor.dal.Settings;
 import com.zohaltech.app.mobiledatamonitor.dal.UsageLogs;
 import com.zohaltech.app.mobiledatamonitor.entities.DataPackage;
 import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
+import com.zohaltech.app.mobiledatamonitor.entities.Setting;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -71,7 +73,7 @@ public final class PackageStatus {
     }
 
     public static ArrayList<AlarmObject> getCurrentAlarms() {
-
+        Setting setting= Settings.getCurrentSettings();
         PackageHistory history = PackageHistories.getActivePackage();
         ArrayList<AlarmObject> alarmObjects = new ArrayList<>();
 
@@ -112,28 +114,28 @@ public final class PackageStatus {
             Helper.setMobileDataEnabled(false);
         }
 
-        if (SettingsHandler.getAlarmType() == SettingsHandler.AlarmType.LeftDay.ordinal()) {
-            int leftDayAlarm = SettingsHandler.getLeftDaysAlarm();
+        if (setting.getAlarmType() == Setting.AlarmType.LEFT_DAY.ordinal()) {
+            int leftDayAlarm = setting.getLeftDaysAlarm();
             if (leftDayAlarm >= diffDays && diffDays > 0) {
                 String msg = "روز باقیمانده به اتمام بسته " + diffDays;
                 alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.REMINDED_DAYS_ALARM, msg));
             }
 
-        } else if (SettingsHandler.getAlarmType() == SettingsHandler.AlarmType.RemindedBytes.ordinal()) {
-            long remindedByteAlarm = SettingsHandler.getRemindedByteAlarm();
+        } else if (setting.getAlarmType() == Setting.AlarmType.REMINDED_BYTES.ordinal()) {
+            long remindedByteAlarm = setting.getRemindedByteAlarm();
             long reminded = dataPackage.getPrimaryTraffic() - usedPrimaryTraffic;
             if (reminded <= remindedByteAlarm) {
                 String msg = "حجم رو به اتمام است";
                 alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.REMINDED_TRAFFIC_ALARM, msg));
             }
-        } else if (SettingsHandler.getAlarmType() == SettingsHandler.AlarmType.Both.ordinal()) {
-            int leftDayAlarm = SettingsHandler.getLeftDaysAlarm();
+        } else if (setting.getAlarmType() == Setting.AlarmType.BOTH.ordinal()) {
+            int leftDayAlarm = setting.getLeftDaysAlarm();
             if (leftDayAlarm >= diffDays && diffDays > 0) {
                 String msg = "روز باقیمانده به اتمام بسته " + diffDays;
                 alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.REMINDED_DAYS_ALARM, msg));
             }
 
-            long remindedByteAlarm = SettingsHandler.getRemindedByteAlarm() * 1024 * 1024;
+            long remindedByteAlarm = setting.getRemindedByteAlarm() * TrafficUnitsUtil.power(1024,2);
             long reminded = dataPackage.getPrimaryTraffic() - usedPrimaryTraffic;
             if (reminded <= remindedByteAlarm) {
                 String msg = "حجم رو به اتمام است";
