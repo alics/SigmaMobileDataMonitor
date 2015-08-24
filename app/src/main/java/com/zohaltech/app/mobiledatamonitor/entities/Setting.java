@@ -3,7 +3,7 @@ package com.zohaltech.app.mobiledatamonitor.entities;
 
 public class Setting {
 
-    public enum AlarmType {REMINDED_BYTES, LEFT_DAY, BOTH,NOTE}
+    public enum AlarmType {REMINDED_BYTES, LEFT_DAY, BOTH, NONE}
 
     private Integer id;
     private Boolean dataConnected;

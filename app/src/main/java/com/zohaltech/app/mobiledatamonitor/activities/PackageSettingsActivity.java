@@ -247,7 +247,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
             setting.setAlarmType(Setting.AlarmType.LEFT_DAY.ordinal());
             setting.setLeftDaysAlarm(Integer.valueOf(edtLeftDaysAlarm.getText().toString()));
         } else
-            setting.setAlarmType(Setting.AlarmType.NOTE.ordinal());
+            setting.setAlarmType(Setting.AlarmType.NONE.ordinal());
 
         setting.setDcDataAfterTerminate(switchAutoMobileDataOff.isChecked());
         Settings.update(setting);
@@ -277,7 +277,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
             setting.setAlarmTypeRes(Setting.AlarmType.LEFT_DAY.ordinal());
             setting.setLeftDaysAlarmRes(Integer.valueOf(edtLeftDaysAlarm.getText().toString()));
         } else
-            setting.setAlarmType(Setting.AlarmType.NOTE.ordinal());
+            setting.setAlarmType(Setting.AlarmType.NONE.ordinal());
 
         setting.setDcDataAfterTerminate(switchAutoMobileDataOff.isChecked());
         Settings.update(setting);
@@ -304,7 +304,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
             edtLeftDaysAlarm.setVisibility(View.INVISIBLE);
             txtLeftDaysAlarm.setVisibility(View.INVISIBLE);
             switchLeftDaysAlarm.setChecked(false);
-        } else if (alarmType == Setting.AlarmType.NOTE.ordinal()) {
+        } else if (alarmType == Setting.AlarmType.NONE.ordinal()) {
             switchTrafficAlarm.setChecked(false);
             edtTrafficAlarm.setVisibility(View.INVISIBLE);
             txtTrafficAlarm.setVisibility(View.INVISIBLE);
@@ -336,7 +336,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
             edtLeftDaysAlarm.setVisibility(View.INVISIBLE);
             txtLeftDaysAlarm.setVisibility(View.INVISIBLE);
             switchLeftDaysAlarm.setChecked(false);
-        } else if (alarmType == Setting.AlarmType.NOTE.ordinal()) {
+        } else if (alarmType == Setting.AlarmType.NONE.ordinal()) {
             switchTrafficAlarm.setChecked(false);
             edtTrafficAlarm.setVisibility(View.INVISIBLE);
             txtTrafficAlarm.setVisibility(View.INVISIBLE);

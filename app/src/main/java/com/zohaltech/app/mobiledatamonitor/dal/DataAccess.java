@@ -19,7 +19,7 @@ import java.io.InputStreamReader;
 public class DataAccess extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME    = "ZT_DATA_MONITOR";
-    public static final int    DATABASE_VERSION = 35;
+    public static final int    DATABASE_VERSION = 39;
 
     public DataAccess() {
         super(App.context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -65,7 +65,7 @@ public class DataAccess extends SQLiteOpenHelper {
             settingsValues.put(Settings.ShowNotification, 1);
             settingsValues.put(Settings.ShowNotificationWhenDataIsOn, 1);
             settingsValues.put(Settings.ShowNotificationInLockScreen, 1);
-            database.insert(Settings.TableName, null, settingsValues);
+            long res=database.insert(Settings.TableName, null, settingsValues);
 
             LicenseStatus status = LicenseManager.getExistingLicense();
             if (status == null) {

@@ -13,7 +13,7 @@ public class Settings {
 
     static final String TableName                    = "Settings";
     static final String Id                           = "Id";
-    static final String DataConnected          = "DataConnected";
+    static final String DataConnected                = "DataConnected";
     static final String DailyTraffic                 = "DailyTraffic";
     static final String DcDataAfterTerminate         = "DcDataAfterTerminate";
     static final String DcDataAfterTerminateRes      = "DcDataAfterTerminateRes";
