@@ -62,49 +62,8 @@ public class ExpandablePackageAdapter extends AnimatedExpandableListView.Animate
                                 DialogManager.showConfirmationDialog(activity, "خرید بسته", "آیا مایل به خرید بسته هستید؟", "بله", "خیر", null, new Runnable() {
                                     @Override
                                     public void run() {
-                                        //Helper.runUssd(activity, dataPackage.getUssdCode());
                                         Helper.runUssd(activity, dataPackage);
 
-                                        //DialogManager.showConfirmationDialog(activity, "فعالسازی بسته", "آیا مایل به فعالسازی بسته " + dataPackage.getDescription() + " هستید؟",
-                                        //                                     "بله", "خیر", null, new Runnable() {
-                                        //            @Override
-                                        //            public void run() {
-                                        //                final PackageHistory history = PackageHistories.getActivePackage();
-                                        //                if (history == null) {
-                                        //                    PackageHistories.insert(new PackageHistory(dataPackage.getId(), Helper.getCurrentDateTime(), null, null, null, PackageHistory.StatusEnum.ACTIVE.ordinal()));
-                                        //                    Intent intent = new Intent(App.currentActivity, PackageSettingsActivity.class);
-                                        //                    intent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_SETTING_ACTIVE);
-                                        //                    intent.putExtra(PackageSettingsActivity.PACKAGE_ID_KEY, dataPackage.getId());
-                                        //                    App.currentActivity.startActivity(intent);
-                                        //
-                                        //                } else {
-                                        //                    DataPackage activePackage = DataPackages.selectPackageById(history.getDataPackageId());
-                                        //                    DialogManager.showChoiceDialog(activity, "رزرو بسته", "هم اکنون یک بسته فعال " + activePackage.getTitle() + " وجود دارد،آیا بسته" + dataPackage.getDescription() + "به عنوان رزرو در نظر گرفته شود یا از ابتدا محاسبه گردد؟",
-                                        //                                                   "از ابتدا محاسبه گردد", "رزرو شود", null, new Runnable() {
-                                        //                                @Override
-                                        //                                public void run() {
-                                        //                                    PackageHistories.deletedReservedPackages();
-                                        //                                    PackageHistories.terminateAll(PackageHistory.StatusEnum.CANCELED);
-                                        //                                    PackageHistories.insert(new PackageHistory(dataPackage.getId(), Helper.getCurrentDateTime(), null, null, null, PackageHistory.StatusEnum.ACTIVE.ordinal()));
-                                        //                                    Intent intent = new Intent(App.currentActivity, PackageSettingsActivity.class);
-                                        //                                    intent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_SETTING_ACTIVE);
-                                        //                                    intent.putExtra(PackageSettingsActivity.PACKAGE_ID_KEY, dataPackage.getId());
-                                        //                                    App.currentActivity.startActivity(intent);
-                                        //                                }
-                                        //
-                                        //                            }, new Runnable() {
-                                        //                                public void run() {
-                                        //                                    PackageHistories.deletedReservedPackages();
-                                        //                                    PackageHistories.insert(new PackageHistory(dataPackage.getId(), null, null, null, null, PackageHistory.StatusEnum.RESERVED.ordinal()));
-                                        //                                    Intent intent = new Intent(App.currentActivity, PackageSettingsActivity.class);
-                                        //                                    intent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_SETTING_RESERVED);
-                                        //                                    intent.putExtra(PackageSettingsActivity.PACKAGE_ID_KEY, dataPackage.getId());
-                                        //                                    App.currentActivity.startActivity(intent);
-                                        //                                }
-                                        //                            });
-                                        //                }
-                                        //            }
-                                        //        });
                                     }
                                 });
                             }
@@ -118,31 +77,6 @@ public class ExpandablePackageAdapter extends AnimatedExpandableListView.Animate
     public int getRealChildrenCount(int groupPosition) {
         return this.dataPackages.get(this.periods.get(groupPosition)).size();
     }
-
-    //@Override
-    //public View getChildView(int groupPosition, final int childPosition,
-    //                         boolean isLastChild, View convertView, ViewGroup parent) {
-    //
-    //    final String childText = (String) getChild(groupPosition, childPosition);
-    //
-    //    if (convertView == null) {
-    //        LayoutInflater infalInflater = (LayoutInflater) this.activity
-    //                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    //        convertView = infalInflater.inflate(R.layout.package_item, null);
-    //    }
-    //
-    //    TextView txtListChild = (TextView) convertView
-    //            .findViewById(R.id.txtPackage);
-    //
-    //    txtListChild.setText(childText);
-    //    return convertView;
-    //}
-    //
-    //@Override
-    //public int getChildrenCount(int groupPosition) {
-    //    return this.dataPackages.get(this.periods.get(groupPosition))
-    //                              .size();
-    //}
 
     public Object getGroup(int groupPosition) {
         return this.periods.get(groupPosition);

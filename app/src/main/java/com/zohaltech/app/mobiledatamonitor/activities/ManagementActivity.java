@@ -31,9 +31,6 @@ public class ManagementActivity extends EnhancedActivity {
     void onCreated() {
         setContentView(R.layout.activity_management);
 
-        PackageHistory activePackageHistory = PackageHistories.getActivePackage();
-        PackageHistory reservedPackageHistory = PackageHistories.getReservedPackage();
-
         txtActivePackageDescription = (TextView) findViewById(R.id.txtActivePackageDescription);
         fabActivePackageSettings = (FloatingActionButton) findViewById(R.id.fabActivePackageSettings);
         txtReservedPackageDescription = (TextView) findViewById(R.id.txtReservedPackageDescription);
@@ -86,16 +83,22 @@ public class ManagementActivity extends EnhancedActivity {
                 startActivity(intent);
             }
         });
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        PackageHistory activePackageHistory = PackageHistories.getActivePackage();
+        PackageHistory reservedPackageHistory = PackageHistories.getReservedPackage();
         if (activePackageHistory == null) {
             txtActivePackageDescription.setText("بسته فعالی ثبت نشده است.");
             fabActivePackageSettings.setEnabled(false);
-            setDisable(fabActivePackageSettings);
+            setEnability(fabActivePackageSettings, false);
 
         } else {
             activePackage = DataPackages.selectPackageById(activePackageHistory.getDataPackageId());
             if (activePackage != null)
-                txtActivePackageDescription.setText(activePackage.getDescription());
+                txtActivePackageDescription.setText(activePackage.getTitle());
         }
 
         if (reservedPackageHistory == null) {
@@ -104,7 +107,7 @@ public class ManagementActivity extends EnhancedActivity {
         } else {
             reservedPackage = DataPackages.selectPackageById(reservedPackageHistory.getDataPackageId());
             if (reservedPackage != null)
-                txtReservedPackageDescription.setText(reservedPackage.getDescription());
+                txtReservedPackageDescription.setText(reservedPackage.getTitle());
         }
     }
 
@@ -128,14 +131,14 @@ public class ManagementActivity extends EnhancedActivity {
     private void disableReservePackage() {
         txtReservedPackageDescription.setText("بسته رزروی ثبت نشده است.");
         fabCancelReservedPackage.setEnabled(false);
-        setDisable(fabCancelReservedPackage);
+        setEnability(fabCancelReservedPackage, false);
         fabReservedPackageSettings.setEnabled(false);
-        setDisable(fabReservedPackageSettings);
+        setEnability(fabReservedPackageSettings, false);
     }
 
-    private void setDisable(View view) {
+    private void setEnability(View view, boolean enable) {
         AlphaAnimation alpha = new AlphaAnimation(0.3F, 0.3F);
-        alpha.setDuration(0);
+        alpha.setDuration(enable ? 1 : 0);
         alpha.setFillAfter(true);
         view.startAnimation(alpha);
     }

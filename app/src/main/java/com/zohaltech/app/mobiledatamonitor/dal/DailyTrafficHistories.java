@@ -13,15 +13,19 @@ import java.util.ArrayList;
 
 public class DailyTrafficHistories {
 
-    static final String TableName = "DailyTrafficHistories";
-    static final String Id        = "Id";
-    static final String Traffic   = "Traffic";
-    static final String LogDate   = "LogDate";
+    static final String TableName      = "DailyTrafficHistories";
+    static final String Id             = "Id";
+    static final String Traffic        = "Traffic";
+    static final String LogDate        = "LogDate";
+    static final String StartLogTime   = "BeginningTime";
+    static final String EndLogDateTime = "EndLogTime";
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
                                       Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                                       Traffic + " BIGINT  NOT NULL," +
-                                      LogDate + " CHAR(10)  NOT NULL );";
+                                      LogDate + " CHAR(10)  NOT NULL, " +
+                                      StartLogTime + " CHAR(5)  NOT NULL, " +
+                                      EndLogDateTime + "  CHAR(5)  NOT NULL );";
     static final String DropTable   = "Drop Table If Exists " + TableName;
 
     public static ArrayList<DailyTrafficHistory> select() {
@@ -33,6 +37,8 @@ public class DailyTrafficHistories {
 
         values.put(Traffic, trafficHistory.getTraffic());
         values.put(LogDate, trafficHistory.getLogDate());
+        values.put(StartLogTime, trafficHistory.getStartLogTime());
+        values.put(EndLogDateTime, trafficHistory.getEndLogTime());
 
         DataAccess da = new DataAccess();
         return da.insert(TableName, values);
@@ -43,6 +49,8 @@ public class DailyTrafficHistories {
 
         values.put(Traffic, trafficHistory.getTraffic());
         values.put(LogDate, trafficHistory.getLogDate());
+        values.put(StartLogTime, trafficHistory.getStartLogTime());
+        values.put(EndLogDateTime, trafficHistory.getEndLogTime());
 
         DataAccess da = new DataAccess();
         return da.update(TableName, values, Id + " =? ", new String[]{String.valueOf(trafficHistory.getId())});
@@ -66,7 +74,9 @@ public class DailyTrafficHistories {
                 do {
                     DailyTrafficHistory history = new DailyTrafficHistory(cursor.getInt(cursor.getColumnIndex(Id)),
                                                                           cursor.getLong(cursor.getColumnIndex(Traffic)),
-                                                                          cursor.getString(cursor.getColumnIndex(LogDate)));
+                                                                          cursor.getString(cursor.getColumnIndex(LogDate)),
+                                                                          cursor.getString(cursor.getColumnIndex(StartLogTime)),
+                                                                          cursor.getString(cursor.getColumnIndex(EndLogDateTime)));
                     histories.add(history);
                 } while (cursor.moveToNext());
             }

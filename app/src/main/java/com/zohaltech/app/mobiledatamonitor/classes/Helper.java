@@ -1,15 +1,12 @@
 package com.zohaltech.app.mobiledatamonitor.classes;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
 
 import com.zohaltech.app.mobiledatamonitor.entities.DataPackage;
@@ -70,18 +67,11 @@ public final class Helper {
         return date;
     }
 
-    //public static void runUssd(Activity activity, String code) {
-    //    code = String.format("%s%s", code.substring(0, code.length() - 1), Uri.encode("#"));
-    //    Intent callIntent = new Intent(Intent.ACTION_CALL);
-    //    callIntent.setData(Uri.parse("tel:" + code));
-    //    activity.startActivityForResult(callIntent, 123);
-    //}
 
     public static void runUssd(FragmentActivity activity, DataPackage dataPackage) {
         String code = String.format("%s%s", dataPackage.getUssdCode().substring(0, dataPackage.getUssdCode().length() - 1), Uri.encode("#"));
         Intent callIntent = new Intent(Intent.ACTION_CALL);
         callIntent.setData(Uri.parse("tel:" + code));
-        //callIntent.putExtra("DATA_PACKAGE_ID", dataPackage.getId());
         activity.startActivityForResult(callIntent, dataPackage.getId());
     }
 

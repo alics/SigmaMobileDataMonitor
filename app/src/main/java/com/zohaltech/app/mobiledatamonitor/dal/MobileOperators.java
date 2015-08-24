@@ -54,7 +54,6 @@ public class MobileOperators {
 
     public static long insert(MobileOperator operator) {
         ContentValues values = new ContentValues();
-
         values.put(Name, operator.getName());
 
         DataAccess da = new DataAccess();

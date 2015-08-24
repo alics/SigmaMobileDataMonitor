@@ -107,8 +107,7 @@ public class PackagesActivity extends EnhancedActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //MyToast.show("ussd finished",Toast.LENGTH_SHORT);
-        //final int dataPackageId = data.getIntExtra("DATA_PACKAGE_ID", 0);
+
         if (requestCode != 0) {
             final DataPackage dataPackage = DataPackages.selectPackageById(requestCode);
             DialogManager.showConfirmationDialog(App.currentActivity, "فعالسازی بسته", "آیا مایل به فعالسازی بسته " + dataPackage.getDescription() + " هستید؟",
