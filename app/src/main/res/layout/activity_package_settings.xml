@@ -319,6 +319,46 @@
                         android:textColor="@color/primary"
                         android:textStyle="bold"/>
 
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:orientation="horizontal">
+
+                        <widgets.MyTextView
+                            android:id="@+id/txtLeftDaysAlarm"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text=" روز"/>
+
+                        <widgets.MyEditText
+                            android:id="@+id/edtLeftDaysAlarm"
+                            android:layout_width="64dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:inputType="number"
+                            android:maxLength="3"
+                            android:text="2"/>
+
+                        <widgets.MySwitch
+                            android:id="@+id/switchLeftDaysAlarm"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:text=" اخطار روز باقیمانده "/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/divider"/>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -349,44 +389,6 @@
                             android:layout_height="wrap_content"
                             android:checked="false"
                             android:text=" اخطار حجم مصرف شده "/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@color/divider"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="end"
-                        android:orientation="horizontal">
-
-                        <widgets.MyTextView
-                            android:id="@+id/txtLeftDaysAlarm"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text=" روز"/>
-
-                        <widgets.MyEditText
-                            android:id="@+id/edtLeftDaysAlarm"
-                            android:layout_width="64dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:inputType="number"
-                            android:maxLength="3"
-                            android:text="2"/>
-
-                        <widgets.MySwitch
-                            android:id="@+id/switchLeftDaysAlarm"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:checked="false"
-                            android:text=" اخطار روز باقیمانده "/>
 
                     </LinearLayout>
 

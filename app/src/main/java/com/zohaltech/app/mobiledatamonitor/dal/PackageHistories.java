@@ -6,8 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.zohaltech.app.mobiledatamonitor.classes.Helper;
 import com.zohaltech.app.mobiledatamonitor.classes.MyRuntimeException;
-import com.zohaltech.app.mobiledatamonitor.classes.SolarCalendar;
 import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
+import com.zohaltech.app.mobiledatamonitor.entities.Setting;
 
 import java.util.ArrayList;
 
@@ -103,7 +103,7 @@ public class PackageHistories {
 
     public static PackageHistory getActivePackage() {
         String whereClause = " WHERE " + Status + " = " + PackageHistory.StatusEnum.ACTIVE.ordinal();
-        ArrayList<PackageHistory> packageHistories =  select(whereClause, null);
+        ArrayList<PackageHistory> packageHistories = select(whereClause, null);
         int count = packageHistories.size();
 
         return (count == 0) ? null : packageHistories.get(count - 1);
@@ -165,6 +165,12 @@ public class PackageHistories {
             reservedPackage.setStatus(terminationStatus.ordinal());
             reservedPackage.setStartDateTime(Helper.getCurrentDateTime());
             update(reservedPackage);
+            Setting activeSetting = Settings.getCurrentSettings();
+            activeSetting.setAlarmType(activeSetting.getAlarmTypeRes());
+            activeSetting.setLeftDaysAlarm(activeSetting.getLeftDaysAlarmRes());
+            activeSetting.setRemindedByteAlarm(activeSetting.getRemindedByteAlarmRes());
+            activeSetting.setDcDataAfterTerminate(activeSetting.getDcDataAfterTerminateRes());
+            Settings.update(activeSetting);
         }
     }
 }
