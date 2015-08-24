@@ -57,7 +57,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableTop="@drawable/ic_manage_packages"
-                android:text="مدیریت بسته"/>
+                android:text="مدیریت بسته"
+                android:textColor="@color/primary_text"/>
 
         </LinearLayout>
 
@@ -75,7 +76,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableTop="@drawable/ic_purchase_package"
-                android:text="خرید بسته"/>
+                android:text="خرید بسته"
+                android:textColor="@color/primary_text"/>
 
         </LinearLayout>
 
@@ -102,7 +104,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableTop="@drawable/ic_packages_history"
-                android:text="سوابق بسته ها"/>
+                android:text="سوابق بسته ها"
+                android:textColor="@color/primary_text"/>
 
         </LinearLayout>
 
@@ -120,7 +123,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableTop="@drawable/ic_usage_report"
-                android:text="گزارش مصرف"/>
+                android:text="گزارش مصرف"
+                android:textColor="@color/primary_text"/>
 
         </LinearLayout>
 

@@ -17,10 +17,25 @@
 
     </LinearLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <ListView
         android:id="@+id/lstPackagesHistories"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/adapter_history" />
+
+        <widgets.MyTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:id="@+id/txtNothingFound"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/secondary_text"
+            android:text="بسته ای تا به حال ثبت نشده است"/>
+
+    </RelativeLayout>
 
 </LinearLayout>

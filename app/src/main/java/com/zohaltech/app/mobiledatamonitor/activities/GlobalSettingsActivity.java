@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.support.v7.widget.SwitchCompat;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
@@ -18,8 +18,9 @@ public class GlobalSettingsActivity extends EnhancedActivity {
     SwitchCompat switchShowNotification;
     SwitchCompat switchShowNotificationWhenDataIsOn;
     SwitchCompat switchShowNotificationInLockScreen;
-    Button       btnAboutUs;
-    Button       btnTutorials;
+    LinearLayout layoutPremium;
+    LinearLayout layoutAbout;
+    LinearLayout layoutIntroduction;
     Setting      setting;
 
     @Override
@@ -27,8 +28,9 @@ public class GlobalSettingsActivity extends EnhancedActivity {
         setContentView(R.layout.activity_global_settings);
         setting = Settings.getCurrentSettings();
 
-        btnAboutUs = (Button) findViewById(R.id.btnAboutUs);
-        btnTutorials=(Button) findViewById(R.id.btnTutorials);
+        layoutPremium = (LinearLayout) findViewById(R.id.layoutPremium);
+        layoutAbout = (LinearLayout) findViewById(R.id.layoutAbout);
+        layoutIntroduction = (LinearLayout) findViewById(R.id.layoutIntroduction);
         switchShowNotification = (SwitchCompat) findViewById(R.id.switchShowNotification);
         switchShowNotificationWhenDataIsOn = (SwitchCompat) findViewById(R.id.switchShowNotificationWhenDataIsOn);
         switchShowNotificationInLockScreen = (SwitchCompat) findViewById(R.id.switchShowNotificationInLockScreen);
@@ -61,14 +63,21 @@ public class GlobalSettingsActivity extends EnhancedActivity {
             }
         });
 
-        btnAboutUs.setOnClickListener(new View.OnClickListener() {
+        layoutPremium.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //todo : bazaar payment
+            }
+        });
+
+        layoutAbout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(App.currentActivity, AboutUsActivity.class);
                 startActivity(intent);
             }
         });
-        btnTutorials.setOnClickListener(new View.OnClickListener() {
+        layoutIntroduction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(App.currentActivity, TutorialActivity.class);

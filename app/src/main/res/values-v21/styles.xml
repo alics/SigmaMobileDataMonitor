@@ -9,7 +9,7 @@
         <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
     </style>
 
-    <style name="DialogButton" parent="Widget.AppCompat.Button.Borderless">
+    <style name="BorderlessButton" parent="Widget.AppCompat.Button.Borderless">
 
     </style>
 

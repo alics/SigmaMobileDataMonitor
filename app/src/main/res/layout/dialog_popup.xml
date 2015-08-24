@@ -40,7 +40,7 @@
 
         <widgets.MyButton
             android:id="@+id/positiveButton"
-            style="@style/DialogButton"
+            style="@style/BorderlessButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -51,7 +51,7 @@
 
         <widgets.MyButton
             android:id="@+id/negativeButton"
-            style="@style/DialogButton"
+            style="@style/BorderlessButton"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

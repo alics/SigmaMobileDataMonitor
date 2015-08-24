@@ -375,7 +375,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
         customPackage.setUssdCode(null);
         customPackage.setCustom(true);
 
-        DialogManager.showConfirmationDialog(App.currentActivity, "فعالسازی بسته سفارشی", "با تأیید بسته سفارشی اطلاعات مربوط به بسته های فعال و رزرو شده از بین می رود، آیا انجام شود/؟",
+        DialogManager.showConfirmationDialog(App.currentActivity, "فعالسازی بسته سفارشی", "با تأیید بسته سفارشی اطلاعات مربوط به بسته های فعال و رزرو شده از بین می رود، آیا انجام شود؟",
                                              "بله", "خیر", null, new Runnable() {
                     @Override
                     public void run() {
