@@ -134,7 +134,7 @@ public final class PackageStatus {
                 alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.REMINDED_DAYS_ALARM, msg));
             }
 
-            long remindedByteAlarm = setting.getRemindedByteAlarm() * TrafficUnitsUtil.power(1024,2);
+            long remindedByteAlarm = setting.getRemindedByteAlarm();
             long reminded = dataPackage.getPrimaryTraffic() - usedPrimaryTraffic;
             if (reminded <= remindedByteAlarm) {
                 String msg = TrafficUnitsUtil.ByteToMb(reminded)+  " مانده به اتمام حجم بسته ";
