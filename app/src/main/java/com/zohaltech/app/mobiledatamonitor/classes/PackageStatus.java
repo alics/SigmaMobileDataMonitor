@@ -83,10 +83,13 @@ public final class PackageStatus {
         }
 
         DataPackage dataPackage = DataPackages.selectPackageById(history.getDataPackageId());
+        PackageHistory reservedPackageHistory = PackageHistories.getReservedPackage();
         long usedPrimaryTraffic = UsageLogs.getUsedPrimaryTrafficOfPackage(dataPackage, history);
 
         if (usedPrimaryTraffic >= dataPackage.getPrimaryTraffic()) {
             String msg = "اعتبار حجمی بسته به پایان رسید";
+            if (reservedPackageHistory != null)
+                msg += " و بسته رزور شده فعال شد ";
             alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.FINISH_TRAFFIC_ALARM, msg));
             PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.TRAFFIC_FINISHED);
             //Helper.setMobileDataEnabled(false);
@@ -114,6 +117,8 @@ public final class PackageStatus {
 
         if (leftDays <= 0) {
             String msg = "مهلت اعتبار بسته به پایان رسید";
+            if (reservedPackageHistory != null)
+                msg += " و بسته رزور شده فعال شد ";
             alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.FINISH_VALIDATION_DATE_ALARM, msg));
             PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.PERIOD_FINISHED);
         }
@@ -121,7 +126,7 @@ public final class PackageStatus {
         if (setting.getAlarmType() == Setting.AlarmType.LEFT_DAY.ordinal()) {
             int leftDayAlarm = setting.getLeftDaysAlarm();
             if (leftDayAlarm >= leftDays && leftDays > 0) {
-                String msg = diffDays + " روز باقیمانده به اتمام بسته";
+                String msg = leftDays + " روز باقیمانده به اتمام بسته";
                 alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.REMINDED_DAYS_ALARM, msg));
             }
 
@@ -135,7 +140,7 @@ public final class PackageStatus {
         } else if (setting.getAlarmType() == Setting.AlarmType.BOTH.ordinal()) {
             int leftDayAlarm = setting.getLeftDaysAlarm();
             if (leftDayAlarm >= leftDays && leftDays > 0) {
-                String msg = diffDays + " روز باقیمانده به اتمام بسته";
+                String msg = leftDays + " روز باقیمانده به اتمام بسته";
                 alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.REMINDED_DAYS_ALARM, msg));
             }
 
