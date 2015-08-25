@@ -1,6 +1,8 @@
 package com.zohaltech.app.mobiledatamonitor.classes;
 
 
+import android.util.Log;
+
 import com.zohaltech.app.mobiledatamonitor.dal.DataPackages;
 import com.zohaltech.app.mobiledatamonitor.dal.PackageHistories;
 import com.zohaltech.app.mobiledatamonitor.dal.Settings;
@@ -101,10 +103,14 @@ public final class PackageStatus {
         }
 
         Date packageActivationDate = Helper.getDateTime(history.getStartDateTime());
-        Date currentDateTime = Helper.getDate(Helper.getCurrentDateTime());
+        Date currentDateTime = Helper.getDateTime(Helper.getCurrentDateTime());
         int diffDays = (int) ((currentDateTime.getTime() - packageActivationDate.getTime()) / (1000 * 60 * 60 * 24));
+        Log.i("sdj currentDate", currentDateTime + "");
+        Log.i("sdj packageDate", packageActivationDate + "");
+        Log.i("sdj diffDays", diffDays + "");
 
         int leftDays = dataPackage.getPeriod() - diffDays;
+        Log.i("sdj leftDays", leftDays + "");
 
         if (leftDays <= 0) {
             String msg = "مهلت اعتبار بسته به پایان رسید";

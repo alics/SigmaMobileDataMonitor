@@ -66,7 +66,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
     EditText         edtLeftDaysAlarm;
     TextView         txtLeftDaysAlarm;
     SwitchCompat     switchLeftDaysAlarm;
-    SwitchCompat     switchAutoMobileDataOff;
+    SwitchCompat     switchAlarmAfterTerminate;
     DataPackage      dataPackage;
     DataPackage      customPackage;
     String           initMode;
@@ -98,7 +98,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
         edtLeftDaysAlarm = (EditText) findViewById(R.id.edtLeftDaysAlarm);
         txtLeftDaysAlarm = (TextView) findViewById(R.id.txtLeftDaysAlarm);
         switchLeftDaysAlarm = (SwitchCompat) findViewById(R.id.switchLeftDaysAlarm);
-        switchAutoMobileDataOff = (SwitchCompat) findViewById(R.id.switchAutoMobileDataOff);
+        switchAlarmAfterTerminate = (SwitchCompat) findViewById(R.id.switchAlarmAfterTerminate);
 
         implementListeners();
         initControls();
@@ -124,7 +124,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
             edtLeftDaysAlarm.setText("2");
             switchTrafficAlarm.setChecked(true);
             switchLeftDaysAlarm.setChecked(true);
-            switchAutoMobileDataOff.setChecked(true);
+            switchAlarmAfterTerminate.setChecked(true);
             setEditMode(true);
         } else {
 
@@ -284,7 +284,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
         } else
             setting.setAlarmType(Setting.AlarmType.NONE.ordinal());
 
-        setting.setShowAlarmAfterTerminate(switchAutoMobileDataOff.isChecked());
+        setting.setShowAlarmAfterTerminate(switchAlarmAfterTerminate.isChecked());
         Settings.update(setting);
         return true;
     }
@@ -349,7 +349,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
         } else
             setting.setAlarmTypeRes(Setting.AlarmType.NONE.ordinal());
 
-        setting.setShowAlarmAfterTerminateRes(switchAutoMobileDataOff.isChecked());
+        setting.setShowAlarmAfterTerminateRes(switchAlarmAfterTerminate.isChecked());
         Settings.update(setting);
         return true;
     }
@@ -383,7 +383,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
             edtLeftDaysAlarm.setVisibility(View.INVISIBLE);
             txtLeftDaysAlarm.setVisibility(View.INVISIBLE);
         }
-        switchAutoMobileDataOff.setChecked(setting.getShowAlarmAfterTerminate());
+        switchAlarmAfterTerminate.setChecked(setting.getShowAlarmAfterTerminate());
     }
 
     private void loadReservedPackageSettings() {
@@ -415,7 +415,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
             edtLeftDaysAlarm.setVisibility(View.INVISIBLE);
             txtLeftDaysAlarm.setVisibility(View.INVISIBLE);
         }
-        switchAutoMobileDataOff.setChecked(setting.getShowAlarmAfterTerminateRes());
+        switchAlarmAfterTerminate.setChecked(setting.getShowAlarmAfterTerminateRes());
     }
 
     private void loadNewPackageSettings(DataPackage dataPackage) {
@@ -423,7 +423,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
         edtLeftDaysAlarm.setText("1");
         switchTrafficAlarm.setChecked(true);
         edtTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(dataPackage.getPrimaryTraffic()) * 9 / 10 + "");
-        switchAutoMobileDataOff.setChecked(true);
+        switchAlarmAfterTerminate.setChecked(true);
     }
 
     private void addCustomPackage() {

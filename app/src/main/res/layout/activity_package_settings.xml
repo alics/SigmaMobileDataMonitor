@@ -408,11 +408,11 @@
                         android:orientation="horizontal">
 
                         <widgets.MySwitch
-                            android:id="@+id/switchAutoMobileDataOff"
+                            android:id="@+id/switchAlarmAfterTerminate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checked="false"
-                            android:text=" قطع خودکار اینترنت موبایل پس از اتمام بسته"/>
+                            android:text=" پیغام اتمام بسته"/>
 
                     </LinearLayout>
 
