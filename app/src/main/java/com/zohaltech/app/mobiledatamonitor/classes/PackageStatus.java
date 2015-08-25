@@ -109,7 +109,6 @@ public final class PackageStatus {
         if (leftDays <= 0) {
             String msg = "مهلت اعتبار بسته به پایان رسید";
             alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.FINISH_VALIDATION_DATE_ALARM, msg));
-
             PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.PERIOD_FINISHED);
             //Helper.setMobileDataEnabled(false);
         }
@@ -125,7 +124,7 @@ public final class PackageStatus {
             long remindedByteAlarm = setting.getRemindedByteAlarm();
             long reminded = dataPackage.getPrimaryTraffic() - usedPrimaryTraffic;
             if (reminded <= remindedByteAlarm) {
-                String msg = "حجم رو به اتمام است";
+                String msg = TrafficUnitsUtil.ByteToMb(reminded)+  " مانده به اتمام حجم بسته ";
                 alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.REMINDED_TRAFFIC_ALARM, msg));
             }
         } else if (setting.getAlarmType() == Setting.AlarmType.BOTH.ordinal()) {
@@ -138,7 +137,7 @@ public final class PackageStatus {
             long remindedByteAlarm = setting.getRemindedByteAlarm() * TrafficUnitsUtil.power(1024,2);
             long reminded = dataPackage.getPrimaryTraffic() - usedPrimaryTraffic;
             if (reminded <= remindedByteAlarm) {
-                String msg = "حجم رو به اتمام است";
+                String msg = TrafficUnitsUtil.ByteToMb(reminded)+  " مانده به اتمام حجم بسته ";
                 alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.REMINDED_TRAFFIC_ALARM, msg));
             }
         }
