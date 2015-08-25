@@ -73,7 +73,7 @@ public final class PackageStatus {
     }
 
     public static ArrayList<AlarmObject> getCurrentAlarms() {
-        Setting setting= Settings.getCurrentSettings();
+        Setting setting = Settings.getCurrentSettings();
         PackageHistory history = PackageHistories.getActivePackage();
         ArrayList<AlarmObject> alarmObjects = new ArrayList<>();
 
@@ -85,7 +85,7 @@ public final class PackageStatus {
         long usedPrimaryTraffic = UsageLogs.getUsedPrimaryTrafficOfPackage(dataPackage, history);
 
         if (usedPrimaryTraffic >= dataPackage.getPrimaryTraffic()) {
-            String msg = "اعتبار حجمی بسته به پایان رسید.";
+            String msg = "اعتبار حجمی بسته به پایان رسید";
             alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.FINISH_TRAFFIC_ALARM, msg));
             PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.TRAFFIC_FINISHED);
             //Helper.setMobileDataEnabled(false);
@@ -95,7 +95,7 @@ public final class PackageStatus {
             long usedSecondaryTraffic = UsageLogs.getUsedSecondaryTrafficOfPackage(dataPackage, history);
 
             if (usedSecondaryTraffic >= dataPackage.getSecondaryTraffic()) {
-                String msg = " حجم شبانه بسته به پایان رسید.";
+                String msg = "حجم شبانه بسته به پایان رسید";
                 alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.FINISH_SECONDARY_TRAFFIC_ALARM, msg));
             }
         }
@@ -116,7 +116,7 @@ public final class PackageStatus {
         if (setting.getAlarmType() == Setting.AlarmType.LEFT_DAY.ordinal()) {
             int leftDayAlarm = setting.getLeftDaysAlarm();
             if (leftDayAlarm >= diffDays && diffDays > 0) {
-                String msg = "روز باقیمانده به اتمام بسته " + diffDays;
+                String msg = diffDays + " روز باقیمانده به اتمام بسته";
                 alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.REMINDED_DAYS_ALARM, msg));
             }
 
@@ -124,20 +124,20 @@ public final class PackageStatus {
             long remindedByteAlarm = setting.getRemindedByteAlarm();
             long reminded = dataPackage.getPrimaryTraffic() - usedPrimaryTraffic;
             if (reminded <= remindedByteAlarm) {
-                String msg = TrafficUnitsUtil.ByteToMb(reminded)+  " مانده به اتمام حجم بسته ";
+                String msg = TrafficUnitsUtil.ByteToMb(reminded) + " مگابایت مانده به اتمام حجم بسته";
                 alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.REMINDED_TRAFFIC_ALARM, msg));
             }
         } else if (setting.getAlarmType() == Setting.AlarmType.BOTH.ordinal()) {
             int leftDayAlarm = setting.getLeftDaysAlarm();
             if (leftDayAlarm >= diffDays && diffDays > 0) {
-                String msg = "روز باقیمانده به اتمام بسته " + diffDays;
+                String msg = diffDays + " روز باقیمانده به اتمام بسته";
                 alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.REMINDED_DAYS_ALARM, msg));
             }
 
             long remindedByteAlarm = setting.getRemindedByteAlarm();
             long reminded = dataPackage.getPrimaryTraffic() - usedPrimaryTraffic;
             if (reminded <= remindedByteAlarm) {
-                String msg = TrafficUnitsUtil.ByteToMb(reminded)+  " مانده به اتمام حجم بسته ";
+                String msg = TrafficUnitsUtil.ByteToMb(reminded) + " مگابایت مانده به اتمام حجم بسته";
                 alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.REMINDED_TRAFFIC_ALARM, msg));
             }
         }

@@ -19,20 +19,21 @@ public class ApplicationAlarmReceiver extends BroadcastReceiver {
 
             ArrayList<AlarmObject> objects = PackageStatus.getCurrentAlarms();
 
-
+            Setting setting = Settings.getCurrentSettings();
             for (AlarmObject object : objects) {
                 if (object.alarmType == AlarmObject.AlarmType.REMINDED_DAYS_ALARM ||
                     object.alarmType == AlarmObject.AlarmType.REMINDED_TRAFFIC_ALARM ||
                     object.alarmType == AlarmObject.AlarmType.FINISH_SECONDARY_TRAFFIC_ALARM) {
                     NotificationHandler.displayAlarmNotification(context, 2, "اخطار " + context.getResources().getString(R.string.app_name), object.getAlarmMessage());
-                    Setting setting = Settings.getCurrentSettings();
                     //todo update setting
                 } else if (object.alarmType == AlarmObject.AlarmType.FINISH_TRAFFIC_ALARM ||
                            object.alarmType == AlarmObject.AlarmType.FINISH_VALIDATION_DATE_ALARM) {
-                    Intent intent1 = new Intent(context, ApplicationMessageActivity.class);
-                    intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent1.putExtra(ApplicationMessageActivity.MESSAGES_KEY, object.getAlarmMessage());
-                    context.startActivity(intent1);
+                    if (setting.getShowAlarmAfterTerminate()) {
+                        Intent intent1 = new Intent(context, ApplicationMessageActivity.class);
+                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent1.putExtra(ApplicationMessageActivity.MESSAGES_KEY, object.getAlarmMessage());
+                        context.startActivity(intent1);
+                    }
                 }
             }
         }

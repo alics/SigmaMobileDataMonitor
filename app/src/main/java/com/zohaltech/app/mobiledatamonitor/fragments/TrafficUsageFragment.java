@@ -22,8 +22,8 @@ public class TrafficUsageFragment extends Fragment {
 
     ArcProgress progressPrimaryUsage;
     ArcProgress progressSecondaryUsage;
-    TextView txtSecondary;
-    TextView txtSecondaryCaption;
+    TextView    txtSecondary;
+    TextView    txtSecondaryCaption;
 
     long   usedPrimaryTraffic;
     long   totalPrimaryTraffic;
