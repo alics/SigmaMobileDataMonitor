@@ -43,7 +43,6 @@ public final class PackageStatus {
 
             if (status.getUsedPrimaryTraffic() >= dataPackage.getPrimaryTraffic()) {
                 PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.TRAFFIC_FINISHED);
-                //Helper.setMobileDataEnabled(false);
             }
 
             if (dataPackage.getSecondaryTraffic() != null && dataPackage.getSecondaryTraffic() != 0) {
@@ -84,10 +83,13 @@ public final class PackageStatus {
         }
 
         DataPackage dataPackage = DataPackages.selectPackageById(history.getDataPackageId());
+        PackageHistory reservedPackageHistory = PackageHistories.getReservedPackage();
         long usedPrimaryTraffic = UsageLogs.getUsedPrimaryTrafficOfPackage(dataPackage, history);
 
         if (usedPrimaryTraffic >= dataPackage.getPrimaryTraffic()) {
             String msg = "اعتبار حجمی بسته به پایان رسید";
+            if (reservedPackageHistory != null)
+                msg += " و بسته رزور شده فعال شد ";
             alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.FINISH_TRAFFIC_ALARM, msg));
             PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.TRAFFIC_FINISHED);
             //Helper.setMobileDataEnabled(false);
@@ -108,6 +110,8 @@ public final class PackageStatus {
         int leftDays = dataPackage.getPeriod() - diffDays;
         if (leftDays <= 0) {
             String msg = "مهلت اعتبار بسته به پایان رسید";
+            if (reservedPackageHistory != null)
+                msg += " و بسته رزور شده فعال شد ";
             alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.FINISH_VALIDATION_DATE_ALARM, msg));
             PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.PERIOD_FINISHED);
         }
