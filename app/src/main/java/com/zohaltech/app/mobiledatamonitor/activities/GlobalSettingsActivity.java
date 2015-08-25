@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
 import com.zohaltech.app.mobiledatamonitor.classes.ConnectionManager;
-import com.zohaltech.app.mobiledatamonitor.classes.Helper;
 import com.zohaltech.app.mobiledatamonitor.classes.ZtDataService;
 import com.zohaltech.app.mobiledatamonitor.dal.Settings;
 import com.zohaltech.app.mobiledatamonitor.entities.Setting;
@@ -24,12 +23,10 @@ public class GlobalSettingsActivity extends EnhancedActivity {
     LinearLayout layoutAbout;
     LinearLayout layoutIntroduction;
 
-    boolean mobileData = true;
-
     @Override
     void onCreated() {
         setContentView(R.layout.activity_global_settings);
-        final Setting      setting = Settings.getCurrentSettings();
+        final Setting setting = Settings.getCurrentSettings();
 
         layoutPremium = (LinearLayout) findViewById(R.id.layoutPremium);
         layoutAbout = (LinearLayout) findViewById(R.id.layoutAbout);
@@ -80,8 +77,6 @@ public class GlobalSettingsActivity extends EnhancedActivity {
             @Override
             public void onClick(View v) {
                 //todo : bazaar payment
-                mobileData = !mobileData;
-                Helper.setMobileDataEnabled(mobileData);
             }
         });
 

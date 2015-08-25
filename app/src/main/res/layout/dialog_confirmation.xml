@@ -19,6 +19,7 @@
         android:layout_marginBottom="15dp"
         android:gravity="right|center"
         android:text="حذف مخاطب"
+        android:textColor="@color/primary_text"
         android:textAppearance="?android:attr/textAppearanceLarge"/>
 
 

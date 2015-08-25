@@ -13,48 +13,6 @@ import com.zohaltech.app.mobiledatamonitor.R;
 
 public class ApplicationMessageActivity extends Activity {
 
-    //TextView txtCaption;
-    //TextView txtMessage;
-    //Button   btnOk;
-    //Button   btnOpenApp;
-    //
-    //public static final String MESSAGES_KEY = "MESSAGES";
-    //
-    //@Override
-    //protected void onCreate(Bundle savedInstanceState) {
-    //    super.onCreate(savedInstanceState);
-    //    requestWindowFeature(Window.FEATURE_NO_TITLE);
-    //    setContentView(R.layout.activity_application_message);
-    //
-    //    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-    //        setFinishOnTouchOutside(false);
-    //    }
-    //
-    //    txtCaption = (TextView) findViewById(R.id.txtCaption);
-    //    txtMessage = (TextView) findViewById(R.id.txtMessage);
-    //    btnOk = (Button) findViewById(R.id.btnOk);
-    //    btnOpenApp = (Button) findViewById(R.id.btnOpenApp);
-    //
-    //    txtCaption.setText("پیغام " + getString(R.string.app_name));
-    //    txtMessage.setText(getIntent().getStringExtra(MESSAGES_KEY));
-    //
-    //    btnOk.setOnClickListener(new View.OnClickListener() {
-    //        @Override
-    //        public void onClick(View v) {
-    //            finish();
-    //        }
-    //    });
-    //
-    //    btnOpenApp.setOnClickListener(new View.OnClickListener() {
-    //        @Override
-    //        public void onClick(View v) {
-    //            Intent intent = new Intent(ApplicationMessageActivity.this, DashboardActivity.class);
-    //            startActivity(intent);
-    //            finish();
-    //        }
-    //    });
-    //}
-
     TextView txtCaption;
     TextView txtMessage;
     Button   positiveButton;
@@ -98,7 +56,6 @@ public class ApplicationMessageActivity extends Activity {
             }
         });
     }
-
 
     @Override
     public void onBackPressed() {

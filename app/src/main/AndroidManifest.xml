@@ -45,7 +45,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".classes.ApplicationAlarmReceiver"
+            android:name=".classes.PackageAlarmReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.zohaltech.app.mobiledatamonitor.APPLICATION_ALARM_ACTION"/>
