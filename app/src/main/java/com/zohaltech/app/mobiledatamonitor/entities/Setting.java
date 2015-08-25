@@ -8,8 +8,8 @@ public class Setting {
     private Integer id;
     private Boolean dataConnected;
     private Long    dailyTraffic;
-    private Boolean dcDataAfterTerminate;
-    private Boolean dcDataAfterTerminateRes;
+    private Boolean showAlarmAfterTerminate;
+    private Boolean showAlarmAfterTerminateRes;
     private int     alarmType;
     private Long    remindedByteAlarm;
     private Integer leftDaysAlarm;
@@ -19,16 +19,21 @@ public class Setting {
     private Boolean showNotification;
     private Boolean showNotificationWhenDataIsOn;
     private Boolean showNotificationInLockScreen;
+    private Boolean leftDaysAlarmHasShown;
+    private Boolean trafficAlarmHasShown;
+    private Boolean secondaryTrafficAlarmHasShown;
+    private Boolean showUpDownSpeed;
 
 
-    public Setting(Boolean dataConnected, Long dailyTraffic, Boolean dcDataAfterTerminate,
-                   int alarmType, Long remindedByteAlarm, Integer leftDaysAlarm,Boolean dcDataAfterTerminateRes,
-                   int alarmTypeRes, Long remindedByteAlarmRes, Integer leftDaysAlarmRes,
-                   Boolean showNotification, Boolean showNotificationWhenDataIsOn, Boolean showNotificationInLockScreen) {
+    public Setting(Boolean dataConnected, Long dailyTraffic, Boolean showAlarmAfterTerminate, int alarmType,
+                   Long remindedByteAlarm, Integer leftDaysAlarm, Boolean showAlarmAfterTerminateRes,
+                   int alarmTypeRes, Long remindedByteAlarmRes, Integer leftDaysAlarmRes, Boolean showNotification,
+                   Boolean showNotificationWhenDataIsOn, Boolean showNotificationInLockScreen, Boolean showUpDownSpeed,
+                   Boolean leftDaysAlarmHasShown, Boolean trafficAlarmHasShown, Boolean secondaryTrafficAlarmHasShown) {
         setDataConnected(dataConnected);
         setDailyTraffic(dailyTraffic);
-        setDcDataAfterTerminate(dcDataAfterTerminate);
-        setDcDataAfterTerminateRes(dcDataAfterTerminateRes);
+        setShowAlarmAfterTerminate(showAlarmAfterTerminate);
+        setShowAlarmAfterTerminateRes(showAlarmAfterTerminateRes);
         setAlarmType(alarmType);
         setRemindedByteAlarm(remindedByteAlarm);
         setLeftDaysAlarm(leftDaysAlarm);
@@ -38,14 +43,21 @@ public class Setting {
         setShowNotification(showNotification);
         setShowNotificationWhenDataIsOn(showNotificationWhenDataIsOn);
         setShowNotificationInLockScreen(showNotificationInLockScreen);
+        setShowUpDownSpeed(showUpDownSpeed);
+        setLeftDaysAlarmHasShown(leftDaysAlarmHasShown);
+        setTrafficAlarmHasShown(trafficAlarmHasShown);
+        setSecondaryTrafficAlarmHasShown(secondaryTrafficAlarmHasShown);
     }
 
-    public Setting(Integer id, Boolean dataConnected, Long dailyTraffic, Boolean dcDataAfterTerminate,
-                   int alarmType, Long remindedByteAlarm, Integer leftDaysAlarm,Boolean dcDataAfterTerminateRes,
-                   int alarmTypeRes, Long remindedByteAlarmRes, Integer leftDaysAlarmRes,
-                   Boolean showNotification, Boolean showNotificationWhenDataIsOn, Boolean showNotificationInLockScreen) {
-        this(dataConnected, dailyTraffic, dcDataAfterTerminate, alarmType, remindedByteAlarm, leftDaysAlarm,dcDataAfterTerminateRes,
-             alarmTypeRes, remindedByteAlarmRes, leftDaysAlarmRes, showNotification, showNotificationWhenDataIsOn, showNotificationInLockScreen);
+    public Setting(Integer id, Boolean dataConnected, Long dailyTraffic, Boolean showAlarmAfterTerminate,
+                   int alarmType, Long remindedByteAlarm, Integer leftDaysAlarm, Boolean showAlarmAfterTerminateRes,
+                   int alarmTypeRes, Long remindedByteAlarmRes, Integer leftDaysAlarmRes, Boolean showNotification,
+                   Boolean showNotificationWhenDataIsOn, Boolean showNotificationInLockScreen, Boolean showUpDownSpeed,
+                   Boolean leftDaysAlarmHasShown, Boolean trafficAlarmHasShown, Boolean secondaryTrafficAlarmHasShown) {
+        this(dataConnected, dailyTraffic, showAlarmAfterTerminate, alarmType, remindedByteAlarm,
+             leftDaysAlarm, showAlarmAfterTerminateRes, alarmTypeRes, remindedByteAlarmRes,
+             leftDaysAlarmRes, showNotification, showNotificationWhenDataIsOn, showNotificationInLockScreen,
+             showUpDownSpeed, leftDaysAlarmHasShown, trafficAlarmHasShown, secondaryTrafficAlarmHasShown);
         this.id = id;
     }
 
@@ -73,12 +85,12 @@ public class Setting {
         this.dailyTraffic = dailyTraffic;
     }
 
-    public Boolean getDcDataAfterTerminate() {
-        return dcDataAfterTerminate;
+    public Boolean getShowAlarmAfterTerminate() {
+        return showAlarmAfterTerminate;
     }
 
-    public void setDcDataAfterTerminate(Boolean dcDataAfterTerminate) {
-        this.dcDataAfterTerminate = dcDataAfterTerminate;
+    public void setShowAlarmAfterTerminate(Boolean showAlarmAfterTerminate) {
+        this.showAlarmAfterTerminate = showAlarmAfterTerminate;
     }
 
     public int getAlarmType() {
@@ -153,11 +165,43 @@ public class Setting {
         this.showNotificationInLockScreen = showNotificationInLockScreen;
     }
 
-    public Boolean getDcDataAfterTerminateRes() {
-        return dcDataAfterTerminateRes;
+    public Boolean getShowAlarmAfterTerminateRes() {
+        return showAlarmAfterTerminateRes;
     }
 
-    public void setDcDataAfterTerminateRes(Boolean dcDataAfterTerminateRes) {
-        this.dcDataAfterTerminateRes = dcDataAfterTerminateRes;
+    public void setShowAlarmAfterTerminateRes(Boolean showAlarmAfterTerminateRes) {
+        this.showAlarmAfterTerminateRes = showAlarmAfterTerminateRes;
+    }
+
+    public Boolean getLeftDaysAlarmHasShown() {
+        return leftDaysAlarmHasShown;
+    }
+
+    public void setLeftDaysAlarmHasShown(Boolean leftDaysAlarmHasShown) {
+        this.leftDaysAlarmHasShown = leftDaysAlarmHasShown;
+    }
+
+    public Boolean getTrafficAlarmHasShown() {
+        return trafficAlarmHasShown;
+    }
+
+    public void setTrafficAlarmHasShown(Boolean trafficAlarmHasShown) {
+        this.trafficAlarmHasShown = trafficAlarmHasShown;
+    }
+
+    public Boolean getSecondaryTrafficAlarmHasShown() {
+        return secondaryTrafficAlarmHasShown;
+    }
+
+    public void setSecondaryTrafficAlarmHasShown(Boolean secondaryTrafficAlarmHasShown) {
+        this.secondaryTrafficAlarmHasShown = secondaryTrafficAlarmHasShown;
+    }
+
+    public Boolean getShowUpDownSpeed() {
+        return showUpDownSpeed;
+    }
+
+    public void setShowUpDownSpeed(Boolean showUpDownSpeed) {
+        this.showUpDownSpeed = showUpDownSpeed;
     }
 }

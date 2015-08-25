@@ -284,7 +284,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
         } else
             setting.setAlarmType(Setting.AlarmType.NONE.ordinal());
 
-        setting.setDcDataAfterTerminate(switchAutoMobileDataOff.isChecked());
+        setting.setShowAlarmAfterTerminate(switchAutoMobileDataOff.isChecked());
         Settings.update(setting);
         return true;
     }
@@ -349,7 +349,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
         } else
             setting.setAlarmTypeRes(Setting.AlarmType.NONE.ordinal());
 
-        setting.setDcDataAfterTerminateRes(switchAutoMobileDataOff.isChecked());
+        setting.setShowAlarmAfterTerminateRes(switchAutoMobileDataOff.isChecked());
         Settings.update(setting);
         return true;
     }
@@ -383,7 +383,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
             edtLeftDaysAlarm.setVisibility(View.INVISIBLE);
             txtLeftDaysAlarm.setVisibility(View.INVISIBLE);
         }
-        switchAutoMobileDataOff.setChecked(setting.getDcDataAfterTerminate());
+        switchAutoMobileDataOff.setChecked(setting.getShowAlarmAfterTerminate());
     }
 
     private void loadReservedPackageSettings() {
@@ -415,7 +415,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
             edtLeftDaysAlarm.setVisibility(View.INVISIBLE);
             txtLeftDaysAlarm.setVisibility(View.INVISIBLE);
         }
-        switchAutoMobileDataOff.setChecked(setting.getDcDataAfterTerminateRes());
+        switchAutoMobileDataOff.setChecked(setting.getShowAlarmAfterTerminateRes());
     }
 
     private void loadNewPackageSettings(DataPackage dataPackage) {

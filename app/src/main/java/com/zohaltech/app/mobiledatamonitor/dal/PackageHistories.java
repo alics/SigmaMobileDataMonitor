@@ -160,7 +160,7 @@ public class PackageHistories {
             activeSetting.setAlarmType(activeSetting.getAlarmTypeRes());
             activeSetting.setLeftDaysAlarm(activeSetting.getLeftDaysAlarmRes());
             activeSetting.setRemindedByteAlarm(activeSetting.getRemindedByteAlarmRes());
-            activeSetting.setDcDataAfterTerminate(activeSetting.getDcDataAfterTerminateRes());
+            activeSetting.setShowAlarmAfterTerminate(activeSetting.getShowAlarmAfterTerminateRes());
             Settings.update(activeSetting);
         }
     }

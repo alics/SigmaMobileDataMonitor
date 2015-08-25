@@ -11,21 +11,25 @@ import java.util.ArrayList;
 
 public class Settings {
 
-    static final String TableName                    = "Settings";
-    static final String Id                           = "Id";
-    static final String DataConnected                = "DataConnected";
-    static final String DailyTraffic                 = "DailyTraffic";
-    static final String DcDataAfterTerminate         = "DcDataAfterTerminate";
-    static final String DcDataAfterTerminateRes      = "DcDataAfterTerminateRes";
-    static final String AlarmType                    = "AlarmType";
-    static final String RemindedByteAlarm            = "RemindedByteAlarm";
-    static final String LeftDaysAlarm                = "LeftDaysAlarm";
-    static final String AlarmTypeRes                 = "AlarmTypeRes";
-    static final String RemindedByteAlarmRes         = "RemindedByteAlarmRes";
-    static final String LeftDaysAlarmRes             = "LeftDaysAlarmRes";
-    static final String ShowNotification             = "ShowNotification";
-    static final String ShowNotificationWhenDataIsOn = "ShowNotificationWhenDataIsOn";
-    static final String ShowNotificationInLockScreen = "ShowNotificationInLockScreen";
+    static final String TableName                     = "Settings";
+    static final String Id                            = "Id";
+    static final String DataConnected                 = "DataConnected";
+    static final String DailyTraffic                  = "DailyTraffic";
+    static final String DcDataAfterTerminate          = "DcDataAfterTerminate";
+    static final String DcDataAfterTerminateRes       = "DcDataAfterTerminateRes";
+    static final String AlarmType                     = "AlarmType";
+    static final String RemindedByteAlarm             = "RemindedByteAlarm";
+    static final String LeftDaysAlarm                 = "LeftDaysAlarm";
+    static final String AlarmTypeRes                  = "AlarmTypeRes";
+    static final String RemindedByteAlarmRes          = "RemindedByteAlarmRes";
+    static final String LeftDaysAlarmRes              = "LeftDaysAlarmRes";
+    static final String ShowNotification              = "ShowNotification";
+    static final String ShowNotificationWhenDataIsOn  = "ShowNotificationWhenDataIsOn";
+    static final String ShowNotificationInLockScreen  = "ShowNotificationInLockScreen";
+    static final String LeftDaysAlarmHasShown         = "LeftDaysAlarmHasShown";
+    static final String TrafficAlarmHasShown          = "TrafficAlarmHasShown";
+    static final String SecondaryTrafficAlarmHasShown = "SecondaryTrafficAlarmHasShown";
+    static final String ShowUpDownSpeed               = "ShowUpDownSpeed";
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
                                       Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
@@ -41,6 +45,10 @@ public class Settings {
                                       LeftDaysAlarmRes + " INTEGER NOT NULL, " +
                                       ShowNotification + " BOOLEAN NOT NULL, " +
                                       ShowNotificationWhenDataIsOn + " BOOLEAN NOT NULL, " +
+                                      LeftDaysAlarmHasShown + " BOOLEAN NOT NULL, " +
+                                      TrafficAlarmHasShown + " BOOLEAN NOT NULL, " +
+                                      SecondaryTrafficAlarmHasShown + " BOOLEAN NOT NULL, " +
+                                      ShowUpDownSpeed + " BOOLEAN NOT NULL, " +
                                       ShowNotificationInLockScreen + " BOOLEAN NOT NULL ); ";
 
     static final String DropTable = "Drop Table If Exists " + TableName;
@@ -70,7 +78,11 @@ public class Settings {
                                                   cursor.getInt(cursor.getColumnIndex(LeftDaysAlarmRes)),
                                                   cursor.getInt(cursor.getColumnIndex(ShowNotification)) == 1,
                                                   cursor.getInt(cursor.getColumnIndex(ShowNotificationWhenDataIsOn)) == 1,
-                                                  cursor.getInt(cursor.getColumnIndex(ShowNotificationInLockScreen)) == 1);
+                                                  cursor.getInt(cursor.getColumnIndex(ShowNotificationInLockScreen)) == 1,
+                                                  cursor.getInt(cursor.getColumnIndex(ShowUpDownSpeed)) == 1,
+                                                  cursor.getInt(cursor.getColumnIndex(LeftDaysAlarmHasShown)) == 1,
+                                                  cursor.getInt(cursor.getColumnIndex(TrafficAlarmHasShown)) == 1,
+                                                  cursor.getInt(cursor.getColumnIndex(SecondaryTrafficAlarmHasShown)) == 1);
                     settings.add(setting);
                 } while (cursor.moveToNext());
             }
@@ -90,8 +102,8 @@ public class Settings {
 
         values.put(DataConnected, setting.getDataConnected() ? 1 : 0);
         values.put(DailyTraffic, setting.getDailyTraffic());
-        values.put(DcDataAfterTerminate, setting.getDcDataAfterTerminate() ? 1 : 0);
-        values.put(DcDataAfterTerminateRes, setting.getDcDataAfterTerminate() ? 1 : 0);
+        values.put(DcDataAfterTerminate, setting.getShowAlarmAfterTerminate() ? 1 : 0);
+        values.put(DcDataAfterTerminateRes, setting.getShowAlarmAfterTerminate() ? 1 : 0);
         values.put(AlarmType, setting.getAlarmType());
         values.put(RemindedByteAlarm, setting.getRemindedByteAlarm());
         values.put(LeftDaysAlarm, setting.getLeftDaysAlarm());
@@ -101,6 +113,10 @@ public class Settings {
         values.put(ShowNotification, setting.getShowNotification() ? 1 : 0);
         values.put(ShowNotificationWhenDataIsOn, setting.getShowNotificationWhenDataIsOn() ? 1 : 0);
         values.put(ShowNotificationInLockScreen, setting.getShowNotificationInLockScreen() ? 1 : 0);
+        values.put(TrafficAlarmHasShown, setting.getTrafficAlarmHasShown() ? 1 : 0);
+        values.put(LeftDaysAlarmHasShown, setting.getLeftDaysAlarmHasShown() ? 1 : 0);
+        values.put(SecondaryTrafficAlarmHasShown, setting.getSecondaryTrafficAlarmHasShown() ? 1 : 0);
+        values.put(ShowUpDownSpeed, setting.getShowUpDownSpeed() ? 1 : 0);
 
         DataAccess da = new DataAccess();
         return da.insert(TableName, values);
@@ -111,8 +127,8 @@ public class Settings {
 
         values.put(DataConnected, setting.getDataConnected() ? 1 : 0);
         values.put(DailyTraffic, setting.getDailyTraffic());
-        values.put(DcDataAfterTerminate, setting.getDcDataAfterTerminate() ? 1 : 0);
-        values.put(DcDataAfterTerminateRes, setting.getDcDataAfterTerminate() ? 1 : 0);
+        values.put(DcDataAfterTerminate, setting.getShowAlarmAfterTerminate() ? 1 : 0);
+        values.put(DcDataAfterTerminateRes, setting.getShowAlarmAfterTerminate() ? 1 : 0);
         values.put(AlarmType, setting.getAlarmType());
         values.put(RemindedByteAlarm, setting.getRemindedByteAlarm());
         values.put(LeftDaysAlarm, setting.getLeftDaysAlarm());
@@ -122,6 +138,10 @@ public class Settings {
         values.put(ShowNotification, setting.getShowNotification() ? 1 : 0);
         values.put(ShowNotificationWhenDataIsOn, setting.getShowNotificationWhenDataIsOn() ? 1 : 0);
         values.put(ShowNotificationInLockScreen, setting.getShowNotificationInLockScreen() ? 1 : 0);
+        values.put(TrafficAlarmHasShown, setting.getTrafficAlarmHasShown() ? 1 : 0);
+        values.put(LeftDaysAlarmHasShown, setting.getLeftDaysAlarmHasShown() ? 1 : 0);
+        values.put(SecondaryTrafficAlarmHasShown, setting.getSecondaryTrafficAlarmHasShown() ? 1 : 0);
+        values.put(ShowUpDownSpeed, setting.getShowUpDownSpeed() ? 1 : 0);
 
         DataAccess da = new DataAccess();
         return da.update(TableName, values, Id + " = ? ", new String[]{String.valueOf(setting.getId())});
