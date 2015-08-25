@@ -1,6 +1,7 @@
 package com.zohaltech.app.mobiledatamonitor.classes;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
@@ -100,17 +101,14 @@ public class ZtDataService extends Service {
             Setting setting = Settings.getCurrentSettings();
             boolean showNotification;
             if (setting.getShowNotification()) {
-                Log.i("sdj", "ShowNotificationWhenDataIsOn : " + setting.getShowNotificationWhenDataIsOn());
-                Log.i("sdj", "DATA_CONNECTED : " + ConnectionManager.getDataConnectionStatus());
                 if (setting.getShowNotificationWhenDataIsOn()) {
-                    showNotification = ConnectionManager.getDataConnectionStatus();
+                    showNotification = setting.getDataConnected();
                 } else {
                     showNotification = true;
                 }
             } else {
                 showNotification = false;
             }
-            Log.i("sdj", "showNotification : " + showNotification);
             if (showNotification) {
                 startForeground(1, NotificationHandler.getDataUsageNotification(ZtDataService.this, iconId, getString(R.string.down) + TrafficUnitsUtil.getTransferRate(receivedBytes) + getString(R.string.up) + TrafficUnitsUtil.getTransferRate(sentBytes), getString(R.string.today) + todayUsage));
             } else {
@@ -151,5 +149,11 @@ public class ZtDataService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         return START_STICKY;
+    }
+
+    public static void restart(Context context){
+        Intent service = new Intent(context, ZtDataService.class);
+        context.stopService(service);
+        context.startService(service);
     }
 }

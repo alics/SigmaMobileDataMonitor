@@ -42,34 +42,27 @@ public class GlobalSettingsActivity extends EnhancedActivity {
         switchShowNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Intent intent = new Intent(App.currentActivity, ZtDataService.class);
-                stopService(intent);
                 setting.setShowNotification(isChecked);
                 Settings.update(setting);
-                startService(intent);
+                ZtDataService.restart(App.currentActivity);
             }
         });
 
         switchShowNotificationWhenDataIsOn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Intent intent = new Intent(App.currentActivity, ZtDataService.class);
-                stopService(intent);
                 setting.setShowNotificationWhenDataIsOn(isChecked);
                 Settings.update(setting);
-                ConnectionManager.setDataConnectionStatus();
-                startService(intent);
+                ZtDataService.restart(App.currentActivity);
             }
         });
 
         switchShowNotificationInLockScreen.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Intent intent = new Intent(App.currentActivity, ZtDataService.class);
-                stopService(intent);
                 setting.setShowNotificationInLockScreen(isChecked);
                 Settings.update(setting);
-                startService(intent);
+                ZtDataService.restart(App.currentActivity);
             }
         });
 

@@ -58,19 +58,19 @@ public class ConnectionManager {
         return result;
     }
 
-    public static void setDataConnectionStatus() {
-        Setting setting = Settings.getCurrentSettings();
-        if (getConnectivityStatus() == TYPE_MOBILE) {
-            setting.setDataConnected(true);
-        } else {
-            setting.setDataConnected(false);
-        }
-        Settings.update(setting);
-    }
-
-    public static boolean getDataConnectionStatus() {
-        return Settings.getCurrentSettings().getDataConnected();
-    }
+    //public static void setDataConnectionStatus() {
+    //    Setting setting = Settings.getCurrentSettings();
+    //    if (getConnectivityStatus() == TYPE_MOBILE) {
+    //        setting.setDataConnected(true);
+    //    } else {
+    //        setting.setDataConnected(false);
+    //    }
+    //    Settings.update(setting);
+    //}
+    //
+    //public static boolean getDataConnectionStatus() {
+    //    return Settings.getCurrentSettings().getDataConnected();
+    //}
 
     public enum InternetStatus {
         Connected,
