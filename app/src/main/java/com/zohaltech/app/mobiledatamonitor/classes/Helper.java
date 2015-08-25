@@ -80,51 +80,51 @@ public final class Helper {
         return activeNetwork != null && (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE);
     }
 
-    public static void setMobileDataEnabled(boolean enabled) {
-        try {
-            //if (Build.VERSION.SDK_INT == Build.VERSION_CODES.FROYO) {
-            try {
-                Method dataConnSwitchMethod;
-                Class telephonyManagerClass;
-                Object ITelephonyStub;
-                Class ITelephonyClass;
-                TelephonyManager telephonyManager = (TelephonyManager) App.context.getSystemService(Context.TELEPHONY_SERVICE);
-
-                telephonyManagerClass = Class.forName(telephonyManager.getClass().getName());
-                Method getITelephonyMethod = telephonyManagerClass.getDeclaredMethod("getITelephony");
-                getITelephonyMethod.setAccessible(true);
-                ITelephonyStub = getITelephonyMethod.invoke(telephonyManager);
-                ITelephonyClass = Class.forName(ITelephonyStub.getClass().getName());
-
-                if (enabled) {
-                    dataConnSwitchMethod = ITelephonyClass.getDeclaredMethod("enableDataConnectivity");
-                } else {
-                    dataConnSwitchMethod = ITelephonyClass.getDeclaredMethod("disableDataConnectivity");
-                }
-                dataConnSwitchMethod.setAccessible(true);
-                dataConnSwitchMethod.invoke(ITelephonyStub);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            //} else {
-            try {
-                final ConnectivityManager conman = (ConnectivityManager) App.context.getSystemService(Context.CONNECTIVITY_SERVICE);
-                final Class conmanClass = Class.forName(conman.getClass().getName());
-                final Field connectivityManagerField = conmanClass.getDeclaredField("mService");
-                connectivityManagerField.setAccessible(true);
-                final Object connectivityManager = connectivityManagerField.get(conman);
-                final Class connectivityManagerClass = Class.forName(connectivityManager.getClass().getName());
-                final Method setMobileDataEnabledMethod = connectivityManagerClass.getDeclaredMethod("setMobileDataEnabled", Boolean.TYPE);
-                setMobileDataEnabledMethod.setAccessible(true);
-                setMobileDataEnabledMethod.invoke(connectivityManager, enabled);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            //}
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    //public static void setMobileDataEnabled(boolean enabled) {
+    //    try {
+    //        //if (Build.VERSION.SDK_INT == Build.VERSION_CODES.FROYO) {
+    //        try {
+    //            Method dataConnSwitchMethod;
+    //            Class telephonyManagerClass;
+    //            Object ITelephonyStub;
+    //            Class ITelephonyClass;
+    //            TelephonyManager telephonyManager = (TelephonyManager) App.context.getSystemService(Context.TELEPHONY_SERVICE);
+    //
+    //            telephonyManagerClass = Class.forName(telephonyManager.getClass().getName());
+    //            Method getITelephonyMethod = telephonyManagerClass.getDeclaredMethod("getITelephony");
+    //            getITelephonyMethod.setAccessible(true);
+    //            ITelephonyStub = getITelephonyMethod.invoke(telephonyManager);
+    //            ITelephonyClass = Class.forName(ITelephonyStub.getClass().getName());
+    //
+    //            if (enabled) {
+    //                dataConnSwitchMethod = ITelephonyClass.getDeclaredMethod("enableDataConnectivity");
+    //            } else {
+    //                dataConnSwitchMethod = ITelephonyClass.getDeclaredMethod("disableDataConnectivity");
+    //            }
+    //            dataConnSwitchMethod.setAccessible(true);
+    //            dataConnSwitchMethod.invoke(ITelephonyStub);
+    //        } catch (Exception e) {
+    //            e.printStackTrace();
+    //        }
+    //        //} else {
+    //        try {
+    //            final ConnectivityManager conman = (ConnectivityManager) App.context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    //            final Class conmanClass = Class.forName(conman.getClass().getName());
+    //            final Field connectivityManagerField = conmanClass.getDeclaredField("mService");
+    //            connectivityManagerField.setAccessible(true);
+    //            final Object connectivityManager = connectivityManagerField.get(conman);
+    //            final Class connectivityManagerClass = Class.forName(connectivityManager.getClass().getName());
+    //            final Method setMobileDataEnabledMethod = connectivityManagerClass.getDeclaredMethod("setMobileDataEnabled", Boolean.TYPE);
+    //            setMobileDataEnabledMethod.setAccessible(true);
+    //            setMobileDataEnabledMethod.invoke(connectivityManager, enabled);
+    //        } catch (Exception e) {
+    //            e.printStackTrace();
+    //        }
+    //        //}
+    //    } catch (Exception e) {
+    //        e.printStackTrace();
+    //    }
+    //}
 
     public static Operator getOperator() {
         Operator operator = Operator.NO_SIM;

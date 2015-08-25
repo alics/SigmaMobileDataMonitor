@@ -208,6 +208,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
             case MODE_INSERT_CUSTOM:
                 addCustomPackage();
                 break;
+
         }
     }
 
