@@ -10,5 +10,5 @@ public final class ConstantParams {
     public static final String PASSWORD          = "h4hsd4*h!qdg#j*2";
     public static final String SECRET_KEY        = "f77995466a906864";
     public static final String IV                = "a052108fcc1c4fc5";
-    public static final String SEVEN             = "31c450he388f1c2c";
+    public static final String SEVEN             = "71c450he388f1c2c";
 }
