@@ -26,9 +26,10 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:id="@+id/txtNothingFound"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/secondary_text"
-            android:text="بسته ای تا به حال ثبت نشده است"/>
+            android:text="بسته ای تا به حال ثبت نشده است"
+            android:padding="10dp"/>
 
     </RelativeLayout>
 

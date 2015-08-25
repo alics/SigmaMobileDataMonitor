@@ -59,7 +59,7 @@ public class ReportAdapter extends ArrayAdapter<TrafficMonitor> {
             }
             String date = item.getDate().equals(Helper.getCurrentDate()) ? "امروز        " : SolarCalendar.getShamsiDate(Helper.getDate(item.getDate()));
             txtDate.setText(date);
-            txtTraffic.setText(TrafficUnitsUtil.getUsedTraffic(item.getTotalTraffic()));
+            txtTraffic.setText(TrafficUnitsUtil.getUsedTrafficWithPoint(item.getTotalTraffic()));
         }
     }
 }

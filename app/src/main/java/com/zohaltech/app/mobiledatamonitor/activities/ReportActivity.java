@@ -74,7 +74,7 @@ public class ReportActivity extends EnhancedActivity {
         for (TrafficMonitor trafficMonitor : trafficMonitors) {
             sum += trafficMonitor.getTotalTraffic();
         }
-        txtTotalTraffic.setText(TrafficUnitsUtil.getUsedTraffic(sum));
+        txtTotalTraffic.setText(TrafficUnitsUtil.getUsedTrafficWithPoint(sum));
     }
 
     private void updateUI(long todayUsage) {

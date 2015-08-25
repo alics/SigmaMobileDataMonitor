@@ -13,6 +13,6 @@
         android:gravity="right"
         android:textColor="@color/primary"
         android:paddingRight="?android:attr/expandableListPreferredItemPaddingLeft"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
 
 </LinearLayout>

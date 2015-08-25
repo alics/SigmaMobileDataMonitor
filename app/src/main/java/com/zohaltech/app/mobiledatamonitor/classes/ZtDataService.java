@@ -4,7 +4,6 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
-import android.util.Log;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.dal.Settings;
@@ -96,7 +95,7 @@ public class ZtDataService extends Service {
                 iconId = App.context.getResources().getIdentifier("wmb" + sumReceivedSent, "drawable", getPackageName());
             }
 
-            String todayUsage = TrafficUnitsUtil.getUsedTraffic(App.preferences.getLong(TODAY_USAGE_BYTES, 0));
+            String todayUsage = TrafficUnitsUtil.getUsedTrafficWithPoint(App.preferences.getLong(TODAY_USAGE_BYTES, 0));
 
             Setting setting = Settings.getCurrentSettings();
             boolean showNotification;

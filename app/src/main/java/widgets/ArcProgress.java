@@ -16,8 +16,8 @@ import com.zohaltech.app.mobiledatamonitor.classes.App;
 
 public class ArcProgress extends ImageView {
 
-    private static final int START_ANGLE = 140;
-    private static final int SWEEP_ANGLE = 260;
+    private static final int START_ANGLE = 150;
+    private static final int SWEEP_ANGLE = 240;
     Context context;
     private Paint arcForegroundPaint;
     private Paint arcBackgroundPaint;
@@ -83,7 +83,7 @@ public class ArcProgress extends ImageView {
 
         int baseSize = getWidth() < getHeight() ? getWidth() : getHeight();
 
-        int textSize = baseSize / 4;
+        int textSize = baseSize / 3;
         int strokeWidth = baseSize / 25;
 
         RectF rect = new RectF();

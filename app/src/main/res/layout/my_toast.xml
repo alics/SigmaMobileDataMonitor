@@ -16,7 +16,6 @@
         android:layout_marginRight="10dp"
         android:layout_weight="1"
         android:text="salam"
-        android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/white"/>
 
     <ImageView

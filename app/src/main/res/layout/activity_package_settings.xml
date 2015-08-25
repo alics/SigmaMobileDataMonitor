@@ -37,7 +37,7 @@
                         android:layout_marginBottom="10dp"
                         android:gravity="right"
                         android:text="مشخصات بسته"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="@color/primary"
                         android:textStyle="bold"/>
 
@@ -52,7 +52,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="right"
-                            android:text="بسته سفارشی"/>
+                            android:text="بسته سفارشی"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                         <widgets.MyEditText
                             android:id="@+id/edtPackageTitle"
@@ -61,12 +62,14 @@
                             android:layout_weight="1"
                             android:gravity="right"
                             android:maxLength="100"
-                            android:text="بسته سفارشی"/>
+                            android:text="بسته سفارشی"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                         <widgets.MyTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="عنوان بسته : "/>
+                            android:text="عنوان بسته : "
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                     </LinearLayout>
 
@@ -89,7 +92,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="right"
-                            android:text="همراه اول"/>
+                            android:text="همراه اول"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                         <android.support.v7.widget.AppCompatSpinner
                             android:id="@+id/spinnerOperators"
@@ -102,7 +106,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:text="اپراتور : "/>
+                            android:text="اپراتور : "
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                     </LinearLayout>
 
@@ -123,7 +128,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text=" روز"/>
+                            android:text=" روز"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                         <widgets.MyTextView
                             android:id="@+id/txtPackageValidPeriod"
@@ -132,7 +138,8 @@
                             android:gravity="center"
                             android:inputType="number"
                             android:maxLength="3"
-                            android:text="365"/>
+                            android:text="365"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                         <widgets.MyEditText
                             android:id="@+id/edtPackageValidPeriod"
@@ -141,12 +148,14 @@
                             android:gravity="center"
                             android:inputType="number"
                             android:maxLength="3"
-                            android:text="365"/>
+                            android:text="365"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                         <widgets.MyTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="مدت اعتبار : "/>
+                            android:text="مدت اعتبار : "
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                     </LinearLayout>
 
@@ -167,28 +176,32 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text=" مگابایت"/>
+                            android:text=" مگابایت"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                         <widgets.MyTextView
                             android:id="@+id/txtPrimaryTraffic"
                             android:layout_width="96dp"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="102400"/>
+                            android:text="102400"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                         <widgets.MyEditText
                             android:id="@+id/edtPrimaryTraffic"
-                            android:layout_width="96dp"
+                            android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:inputType="number"
                             android:maxLength="6"
-                            android:text="102400"/>
+                            android:text="102400"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                         <widgets.MyTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="حجم شبانه روزی : "/>
+                            android:text="حجم شبانه روزی : "
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                     </LinearLayout>
 
@@ -209,28 +222,32 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text=" مگابایت"/>
+                            android:text=" مگابایت"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                         <widgets.MyTextView
                             android:id="@+id/txtSecondaryTraffic"
                             android:layout_width="96dp"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="102400"/>
+                            android:text="102400"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                         <widgets.MyEditText
                             android:id="@+id/edtSecondaryTraffic"
-                            android:layout_width="96dp"
+                            android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:inputType="number"
                             android:maxLength="6"
-                            android:text="102400"/>
+                            android:text="102400"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                         <widgets.MyTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="حجم شبانه : "/>
+                            android:text="حجم شبانه : "
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                     </LinearLayout>
 
@@ -252,38 +269,44 @@
                             android:layout_width="64dp"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="02:00"/>
+                            android:text="02:00"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                         <widgets.MyButton
                             android:id="@+id/btnSecondaryEndTime"
                             style="@style/FormButton"
-                            android:layout_width="64dp"
+                            android:layout_width="72dp"
                             android:layout_height="wrap_content"
-                            android:text="02:00"/>
+                            android:text="02:00"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                         <widgets.MyTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=" تا "/>
+                            android:text=" تا "
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                         <widgets.MyTextView
                             android:id="@+id/txtSecondaryStartTime"
                             android:layout_width="64dp"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="12:20"/>
+                            android:text="12:20"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                         <widgets.MyButton
                             android:id="@+id/btnSecondaryStartTime"
                             style="@style/FormButton"
-                            android:layout_width="64dp"
+                            android:layout_width="72dp"
                             android:layout_height="wrap_content"
-                            android:text="12:20"/>
+                            android:text="12:20"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                         <widgets.MyTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="بازه مصرف شبانه : "/>
+                            android:text="بازه مصرف شبانه : "
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                     </LinearLayout>
 
@@ -309,7 +332,7 @@
                         android:layout_marginBottom="10dp"
                         android:gravity="right"
                         android:text="تنظیمات بسته"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="@color/primary"
                         android:textStyle="bold"/>
 
@@ -326,7 +349,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text=" روز"/>
+                            android:text=" روز"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                         <widgets.MyEditText
                             android:id="@+id/edtLeftDaysAlarm"
@@ -335,14 +359,16 @@
                             android:gravity="center"
                             android:inputType="number"
                             android:maxLength="3"
-                            android:text="2"/>
+                            android:text="2"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                         <widgets.MySwitch
                             android:id="@+id/switchLeftDaysAlarm"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checked="false"
-                            android:text=" اخطار روز باقیمانده "/>
+                            android:text=" اخطار روز باقیمانده "
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                     </LinearLayout>
 
@@ -364,17 +390,19 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text=" مگابایت"/>
+                            android:text=" مگابایت"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
 
                         <widgets.MyEditText
                             android:id="@+id/edtTrafficAlarm"
-                            android:layout_width="96dp"
+                            android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:inputType="number"
                             android:maxLength="6"
-                            android:text="512"/>
+                            android:text="512"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
 
                         <widgets.MySwitch
@@ -382,7 +410,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checked="false"
-                            android:text=" اخطار حجم مصرف شده "/>
+                            android:text=" اخطار حجم مصرف شده "
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                     </LinearLayout>
 
@@ -406,7 +435,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checked="false"
-                            android:text=" پیغام اتمام بسته"/>
+                            android:text=" پیغام اتمام بسته"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                     </LinearLayout>
 

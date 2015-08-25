@@ -18,52 +18,68 @@ public class TrafficUnitsUtil {
         if (bytes < 1024) {
             result = bytes + " B/s";
         } else if (bytes >= 1024 && bytes < power(1024, 2)) {
-            result = getCorrectTrafficText((float) bytes / 1024) + " KB/s";
+            result = getTrafficWithPoint((float) bytes / 1024) + " KB/s";
         } else if (bytes >= (1024 * 1024)) {
-            result = getCorrectTrafficText((float) bytes / power(1024, 2)) + " MB/s";
+            result = getTrafficWithPoint((float) bytes / power(1024, 2)) + " MB/s";
         }
         return result;
     }
 
-    public static String getUsedTraffic(long bytes) {
+    public static String getUsedTrafficWithPoint(long bytes) {
         String result = "0 MB";
         if (bytes < power(1024, 3)) {
-            result = getCorrectTrafficText((float) bytes / power(1024, 2)) + " MB";
+            result = getTrafficWithPoint((float) bytes / power(1024, 2)) + " MB";
         } else if (bytes >= (1024 * 1024 * 1024)) {
-            result = getCorrectTrafficText((float) bytes /power(1024, 3))+ " GB";
+            result = getTrafficWithPoint((float) bytes / power(1024, 3)) + " GB";
+        }
+        return result;
+    }
+
+    public static String getUsedTrafficWithoutPoint(long bytes) {
+        String result = "0MB";
+        if (bytes < power(1024, 3)) {
+            result = getTrafficWithoutPoint((float) bytes / power(1024, 2)) + "MB";
+        } else if (bytes >= (1024 * 1024 * 1024)) {
+            result = getTrafficWithoutPoint((float) bytes / power(1024, 3)) + "GB";
         }
         return result;
     }
 
     public static String getArcTraffic(long usedBytes, long totalBytes) {
-        return getCorrectTrafficText((float) usedBytes / (1024 * 1024)) + "/" + getCorrectTrafficText((float) totalBytes / (1024 * 1024)) + " MB";
+        String usedTraffic = getUsedTrafficWithoutPoint(usedBytes);
+        String totalTraffic = getUsedTrafficWithoutPoint(totalBytes);
+        return usedTraffic + "/" + totalTraffic;
     }
 
     public static TrafficUnitsUtil getTodayTraffic(long bytes) {
         TrafficUnitsUtil result = new TrafficUnitsUtil();
         if (bytes < (1024 * 1024)) {
-            result.setValue(getCorrectTrafficText((float) bytes / 1024));
+            result.setValue(getTrafficWithPoint((float) bytes / 1024));
             result.setPostfix("KB");
         } else if (bytes >= (1024 * 1024) && bytes < power(1024, 3)) {
-            result.setValue(getCorrectTrafficText((float) bytes /power(1024, 2)));
+            result.setValue(getTrafficWithPoint((float) bytes / power(1024, 2)));
             result.setPostfix("MB");
         } else if (bytes >= (1024 * 1024 * 1024)) {
-            result.setValue(getCorrectTrafficText((float) bytes /power(1024, 3)));
+            result.setValue(getTrafficWithPoint((float) bytes / power(1024, 3)));
             result.setPostfix("GB");
         }
         return result;
     }
 
     public static long MbToByte(int mb) {
-        return mb* power( 1024,2 ) ;
+        return mb * power(1024, 2);
     }
 
 
-    public static long ByteToMb(long bytes){
+    public static long ByteToMb(long bytes) {
         return bytes / power(1024, 2);
     }
 
-    private static String getCorrectTrafficText(float value) {
+    private static String getTrafficWithoutPoint(float value) {
+        return Helper.round(value, 0).toString();
+    }
+
+    private static String getTrafficWithPoint(float value) {
         String result = Helper.round(value, 1).toString();
         if (result.endsWith(".0")) {
             result = result.substring(0, result.length() - 2);
@@ -71,8 +87,8 @@ public class TrafficUnitsUtil {
         return result;
     }
 
-    public static long power(long x,int y ){
-        return Math.round(Math.pow(x,y));
+    public static long power(long x, int y) {
+        return Math.round(Math.pow(x, y));
     }
 
     public String getValue() {

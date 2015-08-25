@@ -14,6 +14,6 @@
         android:layout_marginTop="15dp"
         android:gravity="right"
         android:paddingRight="?android:attr/expandableListPreferredChildPaddingLeft"
-        android:textAppearance="?android:attr/textAppearanceSmall"/>
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
 </LinearLayout>
