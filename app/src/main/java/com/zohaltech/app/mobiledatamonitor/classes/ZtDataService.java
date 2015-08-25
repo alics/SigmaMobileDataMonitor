@@ -3,10 +3,12 @@ package com.zohaltech.app.mobiledatamonitor.classes;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.util.Log;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.dal.Settings;
 import com.zohaltech.app.mobiledatamonitor.dal.UsageLogs;
+import com.zohaltech.app.mobiledatamonitor.entities.Setting;
 import com.zohaltech.app.mobiledatamonitor.entities.UsageLog;
 
 import java.math.BigDecimal;
@@ -95,7 +97,21 @@ public class ZtDataService extends Service {
 
             String todayUsage = TrafficUnitsUtil.getUsedTraffic(App.preferences.getLong(TODAY_USAGE_BYTES, 0));
 
-            if (Settings.getCurrentSettings().getShowNotification()) {
+            Setting setting = Settings.getCurrentSettings();
+            boolean showNotification;
+            if (setting.getShowNotification()) {
+                Log.i("sdj", "ShowNotificationWhenDataIsOn : " + setting.getShowNotificationWhenDataIsOn());
+                Log.i("sdj", "DATA_CONNECTED : " + ConnectionManager.getDataConnectionStatus());
+                if (setting.getShowNotificationWhenDataIsOn()) {
+                    showNotification = ConnectionManager.getDataConnectionStatus();
+                } else {
+                    showNotification = true;
+                }
+            } else {
+                showNotification = false;
+            }
+            Log.i("sdj", "showNotification : " + showNotification);
+            if (showNotification) {
                 startForeground(1, NotificationHandler.getDataUsageNotification(ZtDataService.this, iconId, getString(R.string.down) + TrafficUnitsUtil.getTransferRate(receivedBytes) + getString(R.string.up) + TrafficUnitsUtil.getTransferRate(sentBytes), getString(R.string.today) + todayUsage));
             } else {
                 NotificationHandler.cancelNotification(1);
@@ -110,6 +126,9 @@ public class ZtDataService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        Thread.setDefaultUncaughtExceptionHandler(new MyUncaughtExceptionHandler());
+
         if (executorService == null) {
             executorService = Executors.newSingleThreadScheduledExecutor();
         }

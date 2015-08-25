@@ -41,7 +41,7 @@ public final class PackageStatus {
 
             if (status.getUsedPrimaryTraffic() >= dataPackage.getPrimaryTraffic()) {
                 PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.TRAFFIC_FINISHED);
-                Helper.setMobileDataEnabled(false);
+                //Helper.setMobileDataEnabled(false);
             }
 
             if (dataPackage.getSecondaryTraffic() != null && dataPackage.getSecondaryTraffic() != 0) {
@@ -88,7 +88,7 @@ public final class PackageStatus {
             String msg = "اعتبار حجمی بسته به پایان رسید.";
             alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.FINISH_TRAFFIC_ALARM, msg));
             PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.TRAFFIC_FINISHED);
-            Helper.setMobileDataEnabled(false);
+            //Helper.setMobileDataEnabled(false);
         }
 
         if (dataPackage.getSecondaryTraffic() != null && dataPackage.getSecondaryTraffic() != 0) {
@@ -111,7 +111,7 @@ public final class PackageStatus {
             alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.FINISH_VALIDATION_DATE_ALARM, msg));
 
             PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.PERIOD_FINISHED);
-            Helper.setMobileDataEnabled(false);
+            //Helper.setMobileDataEnabled(false);
         }
 
         if (setting.getAlarmType() == Setting.AlarmType.LEFT_DAY.ordinal()) {

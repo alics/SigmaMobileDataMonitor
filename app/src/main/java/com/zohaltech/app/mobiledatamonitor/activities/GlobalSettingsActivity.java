@@ -9,6 +9,8 @@ import android.widget.LinearLayout;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
+import com.zohaltech.app.mobiledatamonitor.classes.ConnectionManager;
+import com.zohaltech.app.mobiledatamonitor.classes.Helper;
 import com.zohaltech.app.mobiledatamonitor.classes.ZtDataService;
 import com.zohaltech.app.mobiledatamonitor.dal.Settings;
 import com.zohaltech.app.mobiledatamonitor.entities.Setting;
@@ -21,12 +23,13 @@ public class GlobalSettingsActivity extends EnhancedActivity {
     LinearLayout layoutPremium;
     LinearLayout layoutAbout;
     LinearLayout layoutIntroduction;
-    Setting      setting;
+
+    boolean mobileData = true;
 
     @Override
     void onCreated() {
         setContentView(R.layout.activity_global_settings);
-        setting = Settings.getCurrentSettings();
+        final Setting      setting = Settings.getCurrentSettings();
 
         layoutPremium = (LinearLayout) findViewById(R.id.layoutPremium);
         layoutAbout = (LinearLayout) findViewById(R.id.layoutAbout);
@@ -35,31 +38,41 @@ public class GlobalSettingsActivity extends EnhancedActivity {
         switchShowNotificationWhenDataIsOn = (SwitchCompat) findViewById(R.id.switchShowNotificationWhenDataIsOn);
         switchShowNotificationInLockScreen = (SwitchCompat) findViewById(R.id.switchShowNotificationInLockScreen);
 
+        switchShowNotification.setChecked(setting.getShowNotification());
+        switchShowNotificationWhenDataIsOn.setChecked(setting.getShowNotificationWhenDataIsOn());
+        switchShowNotificationInLockScreen.setChecked(setting.getShowNotificationInLockScreen());
 
         switchShowNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Intent intent = new Intent(App.currentActivity, ZtDataService.class);
+                stopService(intent);
                 setting.setShowNotification(isChecked);
                 Settings.update(setting);
-                restartService();
+                startService(intent);
             }
         });
 
         switchShowNotificationWhenDataIsOn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Intent intent = new Intent(App.currentActivity, ZtDataService.class);
+                stopService(intent);
                 setting.setShowNotificationWhenDataIsOn(isChecked);
                 Settings.update(setting);
-                restartService();
+                ConnectionManager.setDataConnectionStatus();
+                startService(intent);
             }
         });
 
         switchShowNotificationInLockScreen.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Intent intent = new Intent(App.currentActivity, ZtDataService.class);
+                stopService(intent);
                 setting.setShowNotificationInLockScreen(isChecked);
                 Settings.update(setting);
-                restartService();
+                startService(intent);
             }
         });
 
@@ -67,6 +80,8 @@ public class GlobalSettingsActivity extends EnhancedActivity {
             @Override
             public void onClick(View v) {
                 //todo : bazaar payment
+                mobileData = !mobileData;
+                Helper.setMobileDataEnabled(mobileData);
             }
         });
 
@@ -84,8 +99,6 @@ public class GlobalSettingsActivity extends EnhancedActivity {
                 startActivity(intent);
             }
         });
-
-        initControls();
     }
 
     @Override
@@ -104,17 +117,4 @@ public class GlobalSettingsActivity extends EnhancedActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
-
-    private void restartService() {
-        Intent intent = new Intent(App.currentActivity, ZtDataService.class);
-        stopService(intent);
-        startService(intent);
-    }
-
-    private void initControls() {
-        switchShowNotification.setChecked(setting.getShowNotification());
-        switchShowNotificationWhenDataIsOn.setChecked(setting.getShowNotificationWhenDataIsOn());
-        switchShowNotificationInLockScreen.setChecked(setting.getShowNotificationInLockScreen());
-    }
-
 }

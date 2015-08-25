@@ -37,12 +37,12 @@ public final class DialogManager {
                 dialog.setContentView(R.layout.dialog_confirmation);
                 dialog.setCanceledOnTouchOutside(true);
                 dialog.setCancelable(true);
-                TextView txtDialogCaption = (TextView) dialog.findViewById(R.id.txtDialogCaption);
-                TextView txtDialogMessage = (TextView) dialog.findViewById(R.id.txtDialogMessage);
+                TextView txtCaption = (TextView) dialog.findViewById(R.id.txtCaption);
+                TextView txtMessage = (TextView) dialog.findViewById(R.id.txtMessage);
                 Button positiveButton = (Button) dialog.findViewById(R.id.positiveButton);
                 Button negativeButton = (Button) dialog.findViewById(R.id.negativeButton);
-                txtDialogCaption.setText(caption);
-                txtDialogMessage.setText(message);
+                txtCaption.setText(caption);
+                txtMessage.setText(message);
                 positiveButton.setText(positiveButtonText);
                 negativeButton.setText(negativeButtonText);
 
@@ -82,12 +82,12 @@ public final class DialogManager {
         dialog.setContentView(R.layout.dialog_confirmation);
         dialog.setCanceledOnTouchOutside(true);
         dialog.setCancelable(true);
-        TextView txtDialogCaption = (TextView) dialog.findViewById(R.id.txtDialogCaption);
-        TextView txtDialogMessage = (TextView) dialog.findViewById(R.id.txtDialogMessage);
+        TextView txtCaption = (TextView) dialog.findViewById(R.id.txtCaption);
+        TextView txtMessage = (TextView) dialog.findViewById(R.id.txtMessage);
         Button positiveButton = (Button) dialog.findViewById(R.id.positiveButton);
         Button negativeButton = (Button) dialog.findViewById(R.id.negativeButton);
-        txtDialogCaption.setText(caption);
-        txtDialogMessage.setText(message);
+        txtCaption.setText(caption);
+        txtMessage.setText(message);
         positiveButton.setText(positiveButtonText);
         negativeButton.setText(negativeButtonText);
 
@@ -126,12 +126,12 @@ public final class DialogManager {
         dialog.setContentView(R.layout.dialog_popup);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(true);
-        TextView txtDialogCaption = (TextView) dialog.findViewById(R.id.txtDialogCaption);
-        TextView txtDialogMessage = (TextView) dialog.findViewById(R.id.txtDialogMessage);
+        TextView txtCaption = (TextView) dialog.findViewById(R.id.txtCaption);
+        TextView txtMessage = (TextView) dialog.findViewById(R.id.txtMessage);
         Button positiveButton = (Button) dialog.findViewById(R.id.positiveButton);
         Button negativeButton = (Button) dialog.findViewById(R.id.negativeButton);
-        txtDialogCaption.setText(caption);
-        txtDialogMessage.setText(message);
+        txtCaption.setText(caption);
+        txtMessage.setText(message);
         positiveButton.setText(positiveButtonText);
         negativeButton.setText(negativeButtonText);
 

@@ -31,7 +31,6 @@ public class DaysRemainFragment extends Fragment {
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                long todayUsage = intent.getLongExtra(ZtDataService.TODAY_USAGE_BYTES, 0);
                 updateUI();
             }
         };

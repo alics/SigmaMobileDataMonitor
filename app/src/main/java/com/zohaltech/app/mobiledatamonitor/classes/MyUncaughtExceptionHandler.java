@@ -1,7 +1,10 @@
 package com.zohaltech.app.mobiledatamonitor.classes;
 
 import android.app.Activity;
+import android.os.Build;
 import android.os.Environment;
+
+import com.zohaltech.app.mobiledatamonitor.BuildConfig;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -9,12 +12,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-public class MyUncaughtExceptionHandler implements java.lang.Thread.UncaughtExceptionHandler {
-    // private final Activity myContext;
-    private static final String LINE_SEPARATOR = "\n";
-
-    public MyUncaughtExceptionHandler(Activity context) {
-        // myContext = context;
+public class MyUncaughtExceptionHandler implements java.lang.Thread.UncaughtExceptionHandler
+{
+    public MyUncaughtExceptionHandler() {
     }
 
     public void uncaughtException(Thread thread, final Throwable exception) {
@@ -37,10 +37,13 @@ public class MyUncaughtExceptionHandler implements java.lang.Thread.UncaughtExce
         }).start();
     }
 
-    private static void writeToFile(String errorText) {
-        try {
+    private static void writeToFile(String errorText)
+    {
+        try
+        {
             File file = new File(Environment.getExternalStorageDirectory(), "mobiledatamonitor_log.txt");
-            if (!file.exists()) {
+            if (!file.exists())
+            {
                 // file.mkdirs();
                 file.createNewFile();
             }
@@ -48,8 +51,10 @@ public class MyUncaughtExceptionHandler implements java.lang.Thread.UncaughtExce
             writer.append(errorText);
             writer.flush();
             writer.close();
-        } catch (IOException e1) {
+        } catch (IOException e1)
+        {
             e1.printStackTrace();
         }
     }
+
 }

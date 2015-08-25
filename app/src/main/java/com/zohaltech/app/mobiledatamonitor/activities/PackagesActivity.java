@@ -44,9 +44,9 @@ public class PackagesActivity extends EnhancedActivity {
 
             @Override
             public void onPageSelected(int position) {
-                ((TextView) ((ViewGroup) tabOperators.getChildAt(0)).getChildAt(0)).setTextColor(getResources().getColor(R.color.divider));
-                ((TextView) ((ViewGroup) tabOperators.getChildAt(0)).getChildAt(1)).setTextColor(getResources().getColor(R.color.divider));
-                ((TextView) ((ViewGroup) tabOperators.getChildAt(0)).getChildAt(2)).setTextColor(getResources().getColor(R.color.divider));
+                ((TextView) ((ViewGroup) tabOperators.getChildAt(0)).getChildAt(0)).setTextColor(getResources().getColor(R.color.primary_light));
+                ((TextView) ((ViewGroup) tabOperators.getChildAt(0)).getChildAt(1)).setTextColor(getResources().getColor(R.color.primary_light));
+                ((TextView) ((ViewGroup) tabOperators.getChildAt(0)).getChildAt(2)).setTextColor(getResources().getColor(R.color.primary_light));
                 ((TextView) ((ViewGroup) tabOperators.getChildAt(0)).getChildAt(position)).setTextColor(getResources().getColor(R.color.white));
             }
 
@@ -99,7 +99,7 @@ public class PackagesActivity extends EnhancedActivity {
             //        TextView textView = (TextView) tabViewChild;
             textView.setWidth(App.screenWidth / 3);
             textView.setTypeface(App.persianFont);
-            textView.setTextColor(getResources().getColor(R.color.divider));
+            textView.setTextColor(getResources().getColor(R.color.primary_light));
             textView.setTextSize(14);
         }
     }

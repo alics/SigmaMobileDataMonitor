@@ -1,6 +1,5 @@
 package com.zohaltech.app.mobiledatamonitor.activities;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
@@ -25,7 +24,7 @@ public abstract class EnhancedActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
         super.onCreate(savedInstanceState);
 
-        Thread.setDefaultUncaughtExceptionHandler(new MyUncaughtExceptionHandler(this));
+        Thread.setDefaultUncaughtExceptionHandler(new MyUncaughtExceptionHandler());
         App.currentActivity = this;
 
         onCreated();

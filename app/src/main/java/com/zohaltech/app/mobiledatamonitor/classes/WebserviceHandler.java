@@ -23,7 +23,7 @@ public class WebserviceHandler {
     }
 
     public static String verify() {
-        if (ConnectionManager.getNetworkStatus() == ConnectionManager.NetworkStatus.Connected) {
+        if (ConnectionManager.getInternetStatus() == ConnectionManager.InternetStatus.Connected) {
             SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_VERIFICATION);
             request.addProperty("username", ConstantParams.USER_NAME);
             request.addProperty("password", ConstantParams.PASSWORD);
@@ -48,7 +48,7 @@ public class WebserviceHandler {
     }
 
     public static String purchase() {
-        if (ConnectionManager.getNetworkStatus() == ConnectionManager.NetworkStatus.Connected) {
+        if (ConnectionManager.getInternetStatus() == ConnectionManager.InternetStatus.Connected) {
             SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_PURCHASE);
             request.addProperty("username", ConstantParams.USER_NAME);
             request.addProperty("password", ConstantParams.PASSWORD);

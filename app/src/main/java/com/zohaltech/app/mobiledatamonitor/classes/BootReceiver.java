@@ -11,10 +11,8 @@ public class BootReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
-                AlarmHandler.start(context);
-
                 Intent service = new Intent(context, ZtDataService.class);
                 context.startService(service);
+                AlarmHandler.start(context);
     }
 }

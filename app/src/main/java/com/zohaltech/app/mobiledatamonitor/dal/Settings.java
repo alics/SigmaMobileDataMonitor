@@ -15,8 +15,8 @@ public class Settings {
     static final String Id                            = "Id";
     static final String DataConnected                 = "DataConnected";
     static final String DailyTraffic                  = "DailyTraffic";
-    static final String DcDataAfterTerminate          = "DcDataAfterTerminate";
-    static final String DcDataAfterTerminateRes       = "DcDataAfterTerminateRes";
+    static final String ShowAlarmAfterTerminate       = "ShowAlarmAfterTerminate";
+    static final String ShowAlarmAfterTerminateRes    = "ShowAlarmAfterTerminateRes";
     static final String AlarmType                     = "AlarmType";
     static final String RemindedByteAlarm             = "RemindedByteAlarm";
     static final String LeftDaysAlarm                 = "LeftDaysAlarm";
@@ -35,8 +35,8 @@ public class Settings {
                                       Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                                       DataConnected + " BOOLEAN NOT NULL, " +
                                       DailyTraffic + " BIGINT NOT NULL, " +
-                                      DcDataAfterTerminate + " BOOLEAN NOT NULL, " +
-                                      DcDataAfterTerminateRes + " BOOLEAN NOT NULL, " +
+                                      ShowAlarmAfterTerminate + " BOOLEAN NOT NULL, " +
+                                      ShowAlarmAfterTerminateRes + " BOOLEAN NOT NULL, " +
                                       AlarmType + " INTEGER NOT NULL, " +
                                       RemindedByteAlarm + " BIGINT NOT NULL, " +
                                       LeftDaysAlarm + " INTEGER NOT NULL, " +
@@ -68,11 +68,11 @@ public class Settings {
                     Setting setting = new Setting(cursor.getInt(cursor.getColumnIndex(Id)),
                                                   cursor.getInt(cursor.getColumnIndex(DataConnected)) == 1,
                                                   cursor.getLong(cursor.getColumnIndex(DailyTraffic)),
-                                                  cursor.getInt(cursor.getColumnIndex(DcDataAfterTerminate)) == 1,
+                                                  cursor.getInt(cursor.getColumnIndex(ShowAlarmAfterTerminate)) == 1,
                                                   cursor.getInt(cursor.getColumnIndex(AlarmType)),
                                                   cursor.getLong(cursor.getColumnIndex(RemindedByteAlarm)),
                                                   cursor.getInt(cursor.getColumnIndex(LeftDaysAlarm)),
-                                                  cursor.getInt(cursor.getColumnIndex(DcDataAfterTerminateRes)) == 1,
+                                                  cursor.getInt(cursor.getColumnIndex(ShowAlarmAfterTerminateRes)) == 1,
                                                   cursor.getInt(cursor.getColumnIndex(AlarmTypeRes)),
                                                   cursor.getLong(cursor.getColumnIndex(RemindedByteAlarmRes)),
                                                   cursor.getInt(cursor.getColumnIndex(LeftDaysAlarmRes)),
@@ -97,38 +97,38 @@ public class Settings {
         return settings;
     }
 
-    public static long insert(Setting setting) {
-        ContentValues values = new ContentValues();
-
-        values.put(DataConnected, setting.getDataConnected() ? 1 : 0);
-        values.put(DailyTraffic, setting.getDailyTraffic());
-        values.put(DcDataAfterTerminate, setting.getShowAlarmAfterTerminate() ? 1 : 0);
-        values.put(DcDataAfterTerminateRes, setting.getShowAlarmAfterTerminate() ? 1 : 0);
-        values.put(AlarmType, setting.getAlarmType());
-        values.put(RemindedByteAlarm, setting.getRemindedByteAlarm());
-        values.put(LeftDaysAlarm, setting.getLeftDaysAlarm());
-        values.put(AlarmTypeRes, setting.getAlarmTypeRes());
-        values.put(RemindedByteAlarmRes, setting.getRemindedByteAlarmRes());
-        values.put(LeftDaysAlarmRes, setting.getLeftDaysAlarmRes());
-        values.put(ShowNotification, setting.getShowNotification() ? 1 : 0);
-        values.put(ShowNotificationWhenDataIsOn, setting.getShowNotificationWhenDataIsOn() ? 1 : 0);
-        values.put(ShowNotificationInLockScreen, setting.getShowNotificationInLockScreen() ? 1 : 0);
-        values.put(TrafficAlarmHasShown, setting.getTrafficAlarmHasShown() ? 1 : 0);
-        values.put(LeftDaysAlarmHasShown, setting.getLeftDaysAlarmHasShown() ? 1 : 0);
-        values.put(SecondaryTrafficAlarmHasShown, setting.getSecondaryTrafficAlarmHasShown() ? 1 : 0);
-        values.put(ShowUpDownSpeed, setting.getShowUpDownSpeed() ? 1 : 0);
-
-        DataAccess da = new DataAccess();
-        return da.insert(TableName, values);
-    }
+    //public static long insert(Setting setting) {
+    //    ContentValues values = new ContentValues();
+    //
+    //    values.put(DataConnected, setting.getDataConnected() ? 1 : 0);
+    //    values.put(DailyTraffic, setting.getDailyTraffic());
+    //    values.put(ShowAlarmAfterTerminate, setting.getShowAlarmAfterTerminate() ? 1 : 0);
+    //    values.put(ShowAlarmAfterTerminateRes, setting.getShowAlarmAfterTerminateRes() ? 1 : 0);
+    //    values.put(AlarmType, setting.getAlarmType());
+    //    values.put(RemindedByteAlarm, setting.getRemindedByteAlarm());
+    //    values.put(LeftDaysAlarm, setting.getLeftDaysAlarm());
+    //    values.put(AlarmTypeRes, setting.getAlarmTypeRes());
+    //    values.put(RemindedByteAlarmRes, setting.getRemindedByteAlarmRes());
+    //    values.put(LeftDaysAlarmRes, setting.getLeftDaysAlarmRes());
+    //    values.put(ShowNotification, setting.getShowNotification() ? 1 : 0);
+    //    values.put(ShowNotificationWhenDataIsOn, setting.getShowNotificationWhenDataIsOn() ? 1 : 0);
+    //    values.put(ShowNotificationInLockScreen, setting.getShowNotificationInLockScreen() ? 1 : 0);
+    //    values.put(TrafficAlarmHasShown, setting.getTrafficAlarmHasShown() ? 1 : 0);
+    //    values.put(LeftDaysAlarmHasShown, setting.getLeftDaysAlarmHasShown() ? 1 : 0);
+    //    values.put(SecondaryTrafficAlarmHasShown, setting.getSecondaryTrafficAlarmHasShown() ? 1 : 0);
+    //    values.put(ShowUpDownSpeed, setting.getShowUpDownSpeed() ? 1 : 0);
+    //
+    //    DataAccess da = new DataAccess();
+    //    return da.insert(TableName, values);
+    //}
 
     public static long update(Setting setting) {
         ContentValues values = new ContentValues();
 
         values.put(DataConnected, setting.getDataConnected() ? 1 : 0);
         values.put(DailyTraffic, setting.getDailyTraffic());
-        values.put(DcDataAfterTerminate, setting.getShowAlarmAfterTerminate() ? 1 : 0);
-        values.put(DcDataAfterTerminateRes, setting.getShowAlarmAfterTerminate() ? 1 : 0);
+        values.put(ShowAlarmAfterTerminate, setting.getShowAlarmAfterTerminate() ? 1 : 0);
+        values.put(ShowAlarmAfterTerminateRes, setting.getShowAlarmAfterTerminateRes() ? 1 : 0);
         values.put(AlarmType, setting.getAlarmType());
         values.put(RemindedByteAlarm, setting.getRemindedByteAlarm());
         values.put(LeftDaysAlarm, setting.getLeftDaysAlarm());

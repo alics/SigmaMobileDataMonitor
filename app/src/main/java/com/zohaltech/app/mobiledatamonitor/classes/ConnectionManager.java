@@ -4,16 +4,29 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.zohaltech.app.mobiledatamonitor.dal.Settings;
+import com.zohaltech.app.mobiledatamonitor.entities.Setting;
+
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class ConnectionManager {
 
-    public enum NetworkStatus
-    {
-        Connected,
-        NotConnected,
-        Error
+    public static int TYPE_NOT_CONNECTED = 0;
+    public static int TYPE_WIFI          = 1;
+    public static int TYPE_MOBILE        = 2;
+
+    public static int getConnectivityStatus() {
+        ConnectivityManager cm = (ConnectivityManager) App.context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if (activeNetwork != null) {
+            if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI)
+                return TYPE_WIFI;
+            if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE)
+                return TYPE_MOBILE;
+        }
+        return TYPE_NOT_CONNECTED;
     }
 
     private static boolean isNetworkAvailable() {
@@ -22,8 +35,8 @@ public class ConnectionManager {
         return activeNetworkInfo != null;
     }
 
-    public static NetworkStatus getNetworkStatus() {
-        NetworkStatus result = NetworkStatus.NotConnected;
+    public static InternetStatus getInternetStatus() {
+        InternetStatus result = InternetStatus.NotConnected;
         if (isNetworkAvailable()) {
             try {
                 HttpURLConnection urlc = (HttpURLConnection) (new URL("http://clients3.google.com/generate_204").openConnection());
@@ -33,15 +46,35 @@ public class ConnectionManager {
                 urlc.connect();
                 if (urlc.getResponseCode() == 204 &&
                     urlc.getContentLength() == 0) {
-                    result = NetworkStatus.Connected;
+                    result = InternetStatus.Connected;
                 } else {
-                    result = NetworkStatus.Connected;
+                    result = InternetStatus.Connected;
                 }
             } catch (Exception e) {
                 //Log.d("TAG", "Error checking internet connection", e);
-                result = NetworkStatus.Error;
+                result = InternetStatus.Error;
             }
         }
         return result;
+    }
+
+    public static void setDataConnectionStatus() {
+        Setting setting = Settings.getCurrentSettings();
+        if (getConnectivityStatus() == TYPE_MOBILE) {
+            setting.setDataConnected(true);
+        } else {
+            setting.setDataConnected(false);
+        }
+        Settings.update(setting);
+    }
+
+    public static boolean getDataConnectionStatus() {
+        return Settings.getCurrentSettings().getDataConnected();
+    }
+
+    public enum InternetStatus {
+        Connected,
+        NotConnected,
+        Error
     }
 }

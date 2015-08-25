@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.Build;
 import android.support.v4.app.FragmentActivity;
 import android.telephony.TelephonyManager;
 
@@ -83,7 +82,8 @@ public final class Helper {
 
     public static void setMobileDataEnabled(boolean enabled) {
         try {
-            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.FROYO) {
+            //if (Build.VERSION.SDK_INT == Build.VERSION_CODES.FROYO) {
+            try {
                 Method dataConnSwitchMethod;
                 Class telephonyManagerClass;
                 Object ITelephonyStub;
@@ -103,7 +103,11 @@ public final class Helper {
                 }
                 dataConnSwitchMethod.setAccessible(true);
                 dataConnSwitchMethod.invoke(ITelephonyStub);
-            } else {
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            //} else {
+            try {
                 final ConnectivityManager conman = (ConnectivityManager) App.context.getSystemService(Context.CONNECTIVITY_SERVICE);
                 final Class conmanClass = Class.forName(conman.getClass().getName());
                 final Field connectivityManagerField = conmanClass.getDeclaredField("mService");
@@ -113,7 +117,10 @@ public final class Helper {
                 final Method setMobileDataEnabledMethod = connectivityManagerClass.getDeclaredMethod("setMobileDataEnabled", Boolean.TYPE);
                 setMobileDataEnabledMethod.setAccessible(true);
                 setMobileDataEnabledMethod.invoke(connectivityManager, enabled);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+            //}
         } catch (Exception e) {
             e.printStackTrace();
         }

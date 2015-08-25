@@ -83,18 +83,6 @@ public class ReportActivity extends EnhancedActivity {
         adapter.notifyDataSetChanged();
     }
 
-    //@Override
-    //protected void onResume() {
-    //    super.onResume();
-    //    registerReceiver(broadcastReceiver, new IntentFilter(DataUsageService.TODAY_USAGE_ACTION));
-    //}
-    //
-    //@Override
-    //protected void onPause() {
-    //    super.onPause();
-    //    unregisterReceiver(broadcastReceiver);
-    //}
-
     @Override
     public void onStart() {
         super.onStart();
