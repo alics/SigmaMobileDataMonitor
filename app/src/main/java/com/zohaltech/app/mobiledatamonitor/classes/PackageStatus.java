@@ -105,13 +105,7 @@ public final class PackageStatus {
         Date packageActivationDate = Helper.getDateTime(history.getStartDateTime());
         Date currentDateTime = Helper.getDateTime(Helper.getCurrentDateTime());
         int diffDays = (int) ((currentDateTime.getTime() - packageActivationDate.getTime()) / (1000 * 60 * 60 * 24));
-        Log.i("sdj currentDate", currentDateTime + "");
-        Log.i("sdj packageDate", packageActivationDate + "");
-        Log.i("sdj diffDays", diffDays + "");
-
         int leftDays = dataPackage.getPeriod() - diffDays;
-        Log.i("sdj leftDays", leftDays + "");
-
         if (leftDays <= 0) {
             String msg = "مهلت اعتبار بسته به پایان رسید";
             alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.FINISH_VALIDATION_DATE_ALARM, msg));
