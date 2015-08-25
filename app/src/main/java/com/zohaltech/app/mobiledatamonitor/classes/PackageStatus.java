@@ -108,6 +108,7 @@ public final class PackageStatus {
         Log.i("sdj currentDate", currentDateTime + "");
         Log.i("sdj packageDate", packageActivationDate + "");
         Log.i("sdj diffDays", diffDays + "");
+        Log.i("sdj diffDays", setting.getLeftDaysAlarm() + "");
 
         int leftDays = dataPackage.getPeriod() - diffDays;
         Log.i("sdj leftDays", leftDays + "");
