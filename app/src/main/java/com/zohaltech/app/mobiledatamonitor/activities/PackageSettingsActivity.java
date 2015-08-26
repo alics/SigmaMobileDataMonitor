@@ -286,7 +286,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
 
         setting.setShowAlarmAfterTerminate(switchAlarmAfterTerminate.isChecked());
 
-        if(resetAlarm){
+        if (resetAlarm) {
             setting.setTrafficAlarmHasShown(false);
             setting.setSecondaryTrafficAlarmHasShown(false);
             setting.setLeftDaysAlarmHasShown(false);
@@ -356,7 +356,6 @@ public class PackageSettingsActivity extends EnhancedActivity {
             setting.setAlarmTypeRes(Setting.AlarmType.NONE.ordinal());
 
         setting.setShowAlarmAfterTerminateRes(switchAlarmAfterTerminate.isChecked());
-
 
 
         Settings.update(setting);
