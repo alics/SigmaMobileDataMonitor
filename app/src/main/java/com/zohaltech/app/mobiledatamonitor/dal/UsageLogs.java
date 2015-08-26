@@ -139,8 +139,6 @@ public class UsageLogs {
                            " (SELECT MAX(" + DailyTrafficHistories.LogDate + ") FROM " + DailyTrafficHistories.TableName + ")" +
                            " AND " + logDate + " <> '" + Helper.getCurrentDate() + "'" +
                            " GROUP BY " + logDate;
-            MyUncaughtExceptionHandler.writeToFile(query);
-            MyUncaughtExceptionHandler.writeToFile(query);
 
             cursor = db.rawQuery(query, null);
             if (cursor != null && cursor.moveToFirst()) {
