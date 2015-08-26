@@ -230,24 +230,23 @@ public class PackageSettingsActivity extends EnhancedActivity {
 
         setting = Settings.getCurrentSettings();
 
+        int validPeriod = edtPackageValidPeriod.getVisibility() == View.GONE ?
+                          Integer.valueOf(txtPackageValidPeriod.getText().toString()) :
+                          Integer.valueOf(edtPackageValidPeriod.getText().toString());
+        long primaryTraffic = TrafficUnitsUtil.MbToByte(edtPrimaryTraffic.getVisibility() == View.GONE ?
+                                                        Integer.valueOf(txtPrimaryTraffic.getText().toString()) :
+                                                        Integer.valueOf(edtPrimaryTraffic.getText().toString()));
         if (trafficAlarm && leftDaysAlarm) {
             if (!Validator.validateEditText(edtLeftDaysAlarm, "اخطار روز باقیمانده"))
                 return false;
             if (!Validator.validateEditText(edtTrafficAlarm, "اخطار حجمی"))
                 return false;
 
-            int validPeriod = edtPackageValidPeriod.getVisibility() == View.GONE ?
-                              Integer.valueOf(txtPackageValidPeriod.getText().toString()) :
-                              Integer.valueOf(edtPackageValidPeriod.getText().toString());
 
             if (validPeriod <= Integer.valueOf(edtLeftDaysAlarm.getText().toString())) {
                 MyToast.show("اخطار روز باقیمانده باید کمتر مدت اعتبار بسته باشد.", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
                 return false;
             }
-
-            long primaryTraffic = edtPrimaryTraffic.getVisibility() == View.GONE ?
-                                  Integer.valueOf(txtPrimaryTraffic.getText().toString()) :
-                                  Integer.valueOf(edtPrimaryTraffic.getText().toString());
 
             if (primaryTraffic <= Integer.valueOf(edtTrafficAlarm.getText().toString())) {
                 MyToast.show("اخطار حجم باقیمانده باید کمتر از ترافیک اولیه باشد.", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
@@ -256,24 +255,22 @@ public class PackageSettingsActivity extends EnhancedActivity {
 
             setting.setAlarmType(Setting.AlarmType.BOTH.ordinal());
             setting.setLeftDaysAlarm(Integer.valueOf(edtLeftDaysAlarm.getText().toString()));
-            setting.setRemindedByteAlarm(TrafficUnitsUtil.MbToByte(Integer.valueOf(edtTrafficAlarm.getText().toString())));
+            long remindedByteAlarm = Math.round(Integer.valueOf(edtTrafficAlarm.getText().toString()) * 0.01 * primaryTraffic);
+            setting.setRemindedByteAlarm(remindedByteAlarm);
         } else if (trafficAlarm) {
             if (!Validator.validateEditText(edtTrafficAlarm, "اخطار حجمی"))
                 return false;
-            long primaryTraffic = edtPrimaryTraffic.getVisibility() == View.GONE ?
-                                  Integer.valueOf(txtPrimaryTraffic.getText().toString()) :
-                                  Integer.valueOf(edtPrimaryTraffic.getText().toString());
 
-            if (primaryTraffic <= Integer.valueOf(edtTrafficAlarm.getText().toString())) {
-                MyToast.show("اخطار حجم باقیمانده باید کمتر از ترافیک اولیه باشد.", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
-                return false;
-            }
+            //            if (primaryTraffic <= Integer.valueOf(edtTrafficAlarm.getText().toString())) {
+            //                MyToast.show("اخطار حجم باقیمانده باید کمتر از ترافیک اولیه باشد.", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
+            //                return false;
+            //            }
             setting.setAlarmType(Setting.AlarmType.REMINDED_BYTES.ordinal());
-            setting.setRemindedByteAlarm(TrafficUnitsUtil.MbToByte(Integer.valueOf(edtTrafficAlarm.getText().toString())));
+            long remindedByteAlarm = Math.round(Integer.valueOf(edtTrafficAlarm.getText().toString()) * 0.01
+                                                * primaryTraffic);
+            setting.setRemindedByteAlarm(remindedByteAlarm);
         } else if (leftDaysAlarm) {
-            int validPeriod = edtPackageValidPeriod.getVisibility() == View.GONE ?
-                              Integer.valueOf(txtPackageValidPeriod.getText().toString()) :
-                              Integer.valueOf(edtPackageValidPeriod.getText().toString());
+
 
             if (validPeriod <= Integer.valueOf(edtLeftDaysAlarm.getText().toString())) {
                 MyToast.show("اخطار روز باقیمانده باید کمتر مدت اعتبار بسته باشد.", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
@@ -299,6 +296,13 @@ public class PackageSettingsActivity extends EnhancedActivity {
         Boolean trafficAlarm = switchTrafficAlarm.isChecked();
         Boolean leftDaysAlarm = switchLeftDaysAlarm.isChecked();
 
+        int validPeriod = edtPackageValidPeriod.getVisibility() == View.GONE ?
+                          Integer.valueOf(txtPackageValidPeriod.getText().toString()) :
+                          Integer.valueOf(edtPackageValidPeriod.getText().toString());
+        long primaryTraffic = TrafficUnitsUtil.MbToByte(edtPrimaryTraffic.getVisibility() == View.GONE ?
+                                                        Integer.valueOf(txtPrimaryTraffic.getText().toString()) :
+                                                        Integer.valueOf(edtPrimaryTraffic.getText().toString()));
+
         setting = Settings.getCurrentSettings();
 
         if (trafficAlarm && leftDaysAlarm) {
@@ -307,45 +311,33 @@ public class PackageSettingsActivity extends EnhancedActivity {
             if (!Validator.validateEditText(edtTrafficAlarm, "اخطار حجمی"))
                 return false;
 
-            int validPeriod = edtPackageValidPeriod.getVisibility() == View.GONE ?
-                              Integer.valueOf(txtPackageValidPeriod.getText().toString()) :
-                              Integer.valueOf(edtPackageValidPeriod.getText().toString());
-
             if (validPeriod <= Integer.valueOf(edtLeftDaysAlarm.getText().toString())) {
                 MyToast.show("اخطار روز باقیمانده باید کمتر مدت اعتبار بسته باشد.", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
                 return false;
             }
 
-            long primaryTraffic = edtPrimaryTraffic.getVisibility() == View.GONE ?
-                                  Integer.valueOf(txtPrimaryTraffic.getText().toString()) :
-                                  Integer.valueOf(edtPrimaryTraffic.getText().toString());
-
-            if (primaryTraffic <= Integer.valueOf(edtTrafficAlarm.getText().toString())) {
-                MyToast.show("اخطار حجم باقیمانده باید کمتر از ترافیک اولیه باشد.", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
-                return false;
-            }
+            //            if (primaryTraffic <= Integer.valueOf(edtTrafficAlarm.getText().toString())) {
+            //                MyToast.show("اخطار حجم باقیمانده باید کمتر از ترافیک اولیه باشد.", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
+            //                return false;
+            //            }
 
             setting.setAlarmTypeRes(Setting.AlarmType.BOTH.ordinal());
             setting.setLeftDaysAlarmRes(Integer.valueOf(edtLeftDaysAlarm.getText().toString()));
-            setting.setRemindedByteAlarmRes(TrafficUnitsUtil.MbToByte(Integer.valueOf(edtTrafficAlarm.getText().toString())));
+            long remindedByteAlarm = Math.round(Integer.valueOf(edtTrafficAlarm.getText().toString())
+                                                * 0.01 * primaryTraffic);
+            setting.setRemindedByteAlarmRes(remindedByteAlarm);
         } else if (trafficAlarm) {
             if (!Validator.validateEditText(edtTrafficAlarm, "اخطار حجمی"))
                 return false;
-            long primaryTraffic = edtPrimaryTraffic.getVisibility() == View.GONE ?
-                                  Integer.valueOf(txtPrimaryTraffic.getText().toString()) :
-                                  Integer.valueOf(edtPrimaryTraffic.getText().toString());
-
             if (primaryTraffic <= Integer.valueOf(edtTrafficAlarm.getText().toString())) {
                 MyToast.show("اخطار حجم باقیمانده باید کمتر از ترافیک اولیه باشد.", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
                 return false;
             }
             setting.setAlarmTypeRes(Setting.AlarmType.REMINDED_BYTES.ordinal());
-            setting.setRemindedByteAlarmRes(TrafficUnitsUtil.MbToByte(Integer.valueOf(edtTrafficAlarm.getText().toString())));
+            long remindedByteAlarm = Math.round(Integer.valueOf(edtTrafficAlarm.getText().toString())
+                                                * 0.01 * primaryTraffic);
+            setting.setRemindedByteAlarmRes(remindedByteAlarm);
         } else if (leftDaysAlarm) {
-            int validPeriod = edtPackageValidPeriod.getVisibility() == View.GONE ?
-                              Integer.valueOf(txtPackageValidPeriod.getText().toString()) :
-                              Integer.valueOf(edtPackageValidPeriod.getText().toString());
-
             if (validPeriod <= Integer.valueOf(edtLeftDaysAlarm.getText().toString())) {
                 MyToast.show("اخطار روز باقیمانده باید کمتر مدت اعتبار بسته باشد.", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
                 return false;
@@ -356,8 +348,6 @@ public class PackageSettingsActivity extends EnhancedActivity {
             setting.setAlarmTypeRes(Setting.AlarmType.NONE.ordinal());
 
         setting.setShowAlarmAfterTerminateRes(switchAlarmAfterTerminate.isChecked());
-
-
         Settings.update(setting);
         return true;
     }
