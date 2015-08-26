@@ -132,11 +132,10 @@ public class UsageLogs {
         SQLiteDatabase db = da.getReadableDB();
         Cursor cursor = null;
         try {
-            String query = "SELECT SUM(TrafficBytes) SumTraffic,SUBSTR(LogDateTime,1,10) date FROM " + TableName +
+            String query = " SELECT SUM(TrafficBytes) SumTraffic,SUBSTR(LogDateTime,1,10) date FROM " + TableName +
                            " WHERE SUBSTR(LogDateTime,1,10) > " +
-                           " (SELECT MAX(" + DailyTrafficHistories.LogDate + ") FROM "+DailyTrafficHistories.TableName+")" +
-                           " AND SUBSTR(LogDateTime,1,10)<>'" + Helper.getCurrentDate() + "'  AND " +
-                           " FROM " + DailyTrafficHistories.TableName + ")'" +
+                           " (SELECT MAX(" + DailyTrafficHistories.LogDate + ") FROM " + DailyTrafficHistories.TableName + ")" +
+                           " AND SUBSTR(LogDateTime,1,10)<>'" + Helper.getCurrentDate() + "'" +
                            " GROUP BY SUBSTR(LogDateTime,1,10)";
 
             cursor = db.rawQuery(query, null);
