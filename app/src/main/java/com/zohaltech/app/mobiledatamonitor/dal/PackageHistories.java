@@ -133,15 +133,6 @@ public class PackageHistories {
         Settings.update(setting);
     }
 
-    //public static void terminateAll(PackageHistory.StatusEnum terminationStatus) {
-    //    for (PackageHistory packageHistory : PackageHistories.select()) {
-    //        terminateDataPackage(packageHistory,terminationStatus);
-    //        packageHistory.setStatus(terminationStatus.ordinal());
-    //        packageHistory.setEndDateTime(Helper.getCurrentDateTime());
-    //        PackageHistories.update(packageHistory);
-    //    }
-    //}
-
     public static void terminateDataPackageSecondaryPlan(PackageHistory packageHistory) {
         packageHistory.setSecondaryTrafficEndDateTime(Helper.getCurrentDateTime());
         update(packageHistory);

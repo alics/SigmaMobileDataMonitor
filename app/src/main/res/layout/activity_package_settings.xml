@@ -388,11 +388,11 @@
                         android:orientation="horizontal">
 
                         <widgets.MyTextView
-                            android:id="@+id/txtTrafficAlarm"
+                            android:id="@+id/txtPercentTrafficAlarm"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text=" مگابایت"
+                            android:text=" درصد"
                             android:textAppearance="?android:attr/textAppearanceMedium"/>
 
 
@@ -402,8 +402,8 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:inputType="number"
-                            android:maxLength="6"
-                            android:text="512"
+                            android:maxLength="2"
+                            android:text="90"
                             android:textAppearance="?android:attr/textAppearanceMedium"/>
 
 
