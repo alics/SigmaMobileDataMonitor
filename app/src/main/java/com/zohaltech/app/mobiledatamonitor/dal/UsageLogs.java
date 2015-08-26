@@ -134,7 +134,7 @@ public class UsageLogs {
         try {
             String query = "SELECT SUM(TrafficBytes) SumTraffic,SUBSTR(LogDateTime,1,10) date FROM " + TableName +
                            " WHERE SUBSTR(LogDateTime,1,10) > " +
-                           " (SELECT MAX(" + DailyTrafficHistories.LogDate + ")" +
+                           " (SELECT MAX(" + DailyTrafficHistories.LogDate + ") FROM "+DailyTrafficHistories.TableName+")" +
                            " AND SUBSTR(LogDateTime,1,10)<>'" + Helper.getCurrentDate() + "'  AND " +
                            " FROM " + DailyTrafficHistories.TableName + ")'" +
                            " GROUP BY SUBSTR(LogDateTime,1,10)";
