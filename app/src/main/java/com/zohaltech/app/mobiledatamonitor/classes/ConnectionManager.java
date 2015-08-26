@@ -51,26 +51,21 @@ public class ConnectionManager {
                     result = InternetStatus.Connected;
                 }
             } catch (Exception e) {
-                //Log.d("TAG", "Error checking internet connection", e);
                 result = InternetStatus.Error;
             }
         }
         return result;
     }
 
-    //public static void setDataConnectionStatus() {
-    //    Setting setting = Settings.getCurrentSettings();
-    //    if (getConnectivityStatus() == TYPE_MOBILE) {
-    //        setting.setDataConnected(true);
-    //    } else {
-    //        setting.setDataConnected(false);
-    //    }
-    //    Settings.update(setting);
-    //}
-    //
-    //public static boolean getDataConnectionStatus() {
-    //    return Settings.getCurrentSettings().getDataConnected();
-    //}
+    public static void setDataConnectedStatus() {
+        Setting setting = Settings.getCurrentSettings();
+        if (ConnectionManager.getConnectivityStatus() == ConnectionManager.TYPE_MOBILE) {
+            setting.setDataConnected(true);
+        } else {
+            setting.setDataConnected(false);
+        }
+        Settings.update(setting);
+    }
 
     public enum InternetStatus {
         Connected,

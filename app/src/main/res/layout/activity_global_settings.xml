@@ -31,15 +31,32 @@
                     android:orientation="vertical"
                     android:padding="10dp">
 
-                    <widgets.MyTextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:gravity="right"
-                        android:text="نوار اعلان(Notification)"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="@color/primary"
-                        android:textStyle="bold"/>
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:text=" (Notification) "
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textColor="@color/primary"/>
+
+                        <widgets.MyTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:gravity="right"
+                            android:text="نوار اعلان"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textColor="@color/primary"/>
+
+                    </LinearLayout>
+
 
                     <widgets.MySwitch
                         android:id="@+id/switchShowNotification"
@@ -48,7 +65,8 @@
                         android:layout_marginBottom="5dp"
                         android:layout_marginTop="5dp"
                         android:text=" نمایش نوار اعلان "
-                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:gravity="right"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -64,7 +82,8 @@
                         android:layout_marginBottom="5dp"
                         android:layout_marginTop="5dp"
                         android:text=" نمایش فقط وقتی که دیتا روشن باشد "
-                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:gravity="right"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -80,7 +99,8 @@
                         android:layout_marginBottom="5dp"
                         android:layout_marginTop="5dp"
                         android:text=" نمایش سرعت ارسال و دریافت "
-                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:gravity="right"/>
 
                     <LinearLayout
                         android:id="@+id/layoutLockScreen"
@@ -102,7 +122,8 @@
                             android:layout_marginBottom="5dp"
                             android:layout_marginTop="5dp"
                             android:text=" نمایش در صفحه قفل "
-                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:gravity="right"/>
 
                     </LinearLayout>
 

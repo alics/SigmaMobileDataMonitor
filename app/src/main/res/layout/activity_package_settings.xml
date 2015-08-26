@@ -369,7 +369,8 @@
                             android:layout_height="wrap_content"
                             android:checked="false"
                             android:text=" اخطار روز باقیمانده "
-                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:gravity="right"/>
 
                     </LinearLayout>
 
@@ -412,7 +413,8 @@
                             android:layout_height="wrap_content"
                             android:checked="false"
                             android:text=" اخطار حجم مصرف شده "
-                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:gravity="right"/>
 
                     </LinearLayout>
 
@@ -437,7 +439,8 @@
                             android:layout_height="wrap_content"
                             android:checked="false"
                             android:text=" پیغام اتمام بسته"
-                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:gravity="right"/>
 
                     </LinearLayout>
 

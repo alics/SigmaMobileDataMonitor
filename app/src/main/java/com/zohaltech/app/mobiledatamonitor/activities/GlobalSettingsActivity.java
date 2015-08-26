@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
-import com.zohaltech.app.mobiledatamonitor.classes.ZtDataService;
+import com.zohaltech.app.mobiledatamonitor.classes.ConnectionManager;
 import com.zohaltech.app.mobiledatamonitor.dal.Settings;
 import com.zohaltech.app.mobiledatamonitor.entities.Setting;
 
@@ -30,7 +30,6 @@ public class GlobalSettingsActivity extends EnhancedActivity {
     @Override
     void onCreated() {
         setContentView(R.layout.activity_global_settings);
-        final Setting setting = Settings.getCurrentSettings();
 
         switchShowNotification = (SwitchCompat) findViewById(R.id.switchShowNotification);
         switchShowNotificationWhenDataIsOn = (SwitchCompat) findViewById(R.id.switchShowNotificationWhenDataIsOn);
@@ -48,9 +47,11 @@ public class GlobalSettingsActivity extends EnhancedActivity {
 
         txtAbout.setText("درباره " + getString(R.string.app_name));
 
+        Setting setting = Settings.getCurrentSettings();
         switchShowNotification.setChecked(setting.getShowNotification());
         switchShowNotificationWhenDataIsOn.setChecked(setting.getShowNotificationWhenDataIsOn());
         switchShowNotificationInLockScreen.setChecked(setting.getShowNotificationInLockScreen());
+        switchShowDownUpSpeed.setChecked(setting.getShowUpDownSpeed());
 
         switchShowNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -59,36 +60,41 @@ public class GlobalSettingsActivity extends EnhancedActivity {
                 switchShowNotificationInLockScreen.setEnabled(isChecked);
                 switchShowNotificationWhenDataIsOn.setEnabled(isChecked);
 
+                Setting setting = Settings.getCurrentSettings();
                 setting.setShowNotification(isChecked);
                 Settings.update(setting);
-                ZtDataService.restart(App.currentActivity);
+                //ZtDataService.restart(App.currentActivity);
             }
         });
 
         switchShowNotificationWhenDataIsOn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                ConnectionManager.setDataConnectedStatus();
+                Setting setting = Settings.getCurrentSettings();
                 setting.setShowNotificationWhenDataIsOn(isChecked);
                 Settings.update(setting);
-                ZtDataService.restart(App.currentActivity);
+                //ZtDataService.restart(App.currentActivity);
             }
         });
 
         switchShowDownUpSpeed.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Setting setting = Settings.getCurrentSettings();
                 setting.setShowUpDownSpeed(isChecked);
                 Settings.update(setting);
-                ZtDataService.restart(App.currentActivity);
+                //ZtDataService.restart(App.currentActivity);
             }
         });
 
         switchShowNotificationInLockScreen.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Setting setting = Settings.getCurrentSettings();
                 setting.setShowNotificationInLockScreen(isChecked);
                 Settings.update(setting);
-                ZtDataService.restart(App.currentActivity);
+                //ZtDataService.restart(App.currentActivity);
             }
         });
 

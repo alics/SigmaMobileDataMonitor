@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
+import android.util.Log;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.dal.Settings;
@@ -99,6 +100,10 @@ public class ZtDataService extends Service {
 
             Setting setting = Settings.getCurrentSettings();
             boolean showNotification;
+            Log.i("sdj", "Notification On: " + setting.getShowNotification());
+            Log.i("sdj", "Data Connected : " + setting.getDataConnected());
+            Log.i("sdj", "When Data On : " + setting.getShowNotificationWhenDataIsOn());
+            Log.i("sdj", "Lock Screen : " + setting.getShowNotificationInLockScreen());
             if (setting.getShowNotification()) {
                 if (setting.getShowNotificationWhenDataIsOn()) {
                     showNotification = setting.getDataConnected();
@@ -109,14 +114,21 @@ public class ZtDataService extends Service {
                 showNotification = false;
             }
 
+            Log.i("sdj", "showNotification : " + showNotification);
+            Log.i("sdj", "-------------------------------------");
+
+            String title = getString(R.string.speed) + TrafficUnitsUtil.getTransferRate(receivedBytes + sentBytes);
+            if (setting.getShowUpDownSpeed()) {
+                title = getString(R.string.down) + TrafficUnitsUtil.getTransferRate(receivedBytes) + getString(R.string.up) + TrafficUnitsUtil.getTransferRate(sentBytes);
+            }
+
             if (showNotification) {
-                startForeground(1,
-                                NotificationHandler.getDataUsageNotification(ZtDataService.this,
-                                                                             iconId,
-                                                                             getString(R.string.down) + TrafficUnitsUtil.getTransferRate(receivedBytes) + getString(R.string.up) + TrafficUnitsUtil.getTransferRate(sentBytes),
-                                                                             getString(R.string.today) + todayUsage));
+                startForeground(1, NotificationHandler.getDataUsageNotification(ZtDataService.this,
+                                                                                iconId,
+                                                                                title,
+                                                                                getString(R.string.today) + todayUsage));
             } else {
-                NotificationHandler.cancelNotification(1);
+                stopForeground(true);
             }
 
             Intent intent = new Intent(TODAY_USAGE_ACTION);
@@ -124,12 +136,6 @@ public class ZtDataService extends Service {
             sendBroadcast(intent);
         }
     };
-
-    public static void restart(Context context) {
-        Intent service = new Intent(context, ZtDataService.class);
-        context.stopService(service);
-        context.startService(service);
-    }
 
     @Override
     public void onCreate() {

@@ -19,7 +19,7 @@ import java.io.InputStreamReader;
 public class DataAccess extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME    = "ZT_DATA_MONITOR";
-    public static final int    DATABASE_VERSION = 44;
+    public static final int    DATABASE_VERSION = 49;
 
     public DataAccess() {
         super(App.context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -58,19 +58,19 @@ public class DataAccess extends SQLiteOpenHelper {
             settingsValues.put(Settings.ShowAlarmAfterTerminate, 1);
             settingsValues.put(Settings.ShowAlarmAfterTerminateRes, 1);
             settingsValues.put(Settings.AlarmType, 1);
-            settingsValues.put(Settings.RemindedByteAlarm, 20 * TrafficUnitsUtil.power(1024,2));
+            settingsValues.put(Settings.RemindedByteAlarm, 20 * TrafficUnitsUtil.power(1024, 2));
             settingsValues.put(Settings.LeftDaysAlarm, 1);
             settingsValues.put(Settings.AlarmTypeRes, 2);
-            settingsValues.put(Settings.RemindedByteAlarmRes, 20 * TrafficUnitsUtil.power(1024,2));
+            settingsValues.put(Settings.RemindedByteAlarmRes, 20 * TrafficUnitsUtil.power(1024, 2));
             settingsValues.put(Settings.LeftDaysAlarmRes, 1);
             settingsValues.put(Settings.ShowNotification, 1);
             settingsValues.put(Settings.ShowNotificationWhenDataIsOn, 0);
             settingsValues.put(Settings.ShowNotificationInLockScreen, 1);
-            settingsValues.put(Settings.TrafficAlarmHasShown,0);
-            settingsValues.put(Settings.SecondaryTrafficAlarmHasShown,0);
-            settingsValues.put(Settings.ShowUpDownSpeed,1);
-            settingsValues.put(Settings.LeftDaysAlarmHasShown,0);
-            long res=database.insert(Settings.TableName, null, settingsValues);
+            settingsValues.put(Settings.TrafficAlarmHasShown, 0);
+            settingsValues.put(Settings.SecondaryTrafficAlarmHasShown, 0);
+            settingsValues.put(Settings.ShowUpDownSpeed, 0);
+            settingsValues.put(Settings.LeftDaysAlarmHasShown, 0);
+            long res = database.insert(Settings.TableName, null, settingsValues);
 
             LicenseStatus status = LicenseManager.getExistingLicense();
             if (status == null) {
