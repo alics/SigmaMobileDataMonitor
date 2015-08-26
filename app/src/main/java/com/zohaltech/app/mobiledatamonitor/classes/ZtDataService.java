@@ -108,6 +108,7 @@ public class ZtDataService extends Service {
             } else {
                 showNotification = false;
             }
+
             if (showNotification) {
                 startForeground(1, NotificationHandler.getDataUsageNotification(ZtDataService.this, iconId, getString(R.string.down) + TrafficUnitsUtil.getTransferRate(receivedBytes) + getString(R.string.up) + TrafficUnitsUtil.getTransferRate(sentBytes), getString(R.string.today) + todayUsage));
             } else {
@@ -119,6 +120,12 @@ public class ZtDataService extends Service {
             sendBroadcast(intent);
         }
     };
+
+    public static void restart(Context context) {
+        Intent service = new Intent(context, ZtDataService.class);
+        context.stopService(service);
+        context.startService(service);
+    }
 
     @Override
     public void onCreate() {
@@ -148,11 +155,5 @@ public class ZtDataService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         return START_STICKY;
-    }
-
-    public static void restart(Context context){
-        Intent service = new Intent(context, ZtDataService.class);
-        context.stopService(service);
-        context.startService(service);
     }
 }

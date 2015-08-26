@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
-import com.zohaltech.app.mobiledatamonitor.classes.ConnectionManager;
+import com.zohaltech.app.mobiledatamonitor.classes.NotificationHandler;
 import com.zohaltech.app.mobiledatamonitor.classes.ZtDataService;
 import com.zohaltech.app.mobiledatamonitor.dal.Settings;
 import com.zohaltech.app.mobiledatamonitor.entities.Setting;
@@ -43,7 +43,7 @@ public class GlobalSettingsActivity extends EnhancedActivity {
         layoutIntroduction = (LinearLayout) findViewById(R.id.layoutIntroduction);
         txtAbout = (TextView) findViewById(R.id.txtAbout);
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             layoutLockScreen.setVisibility(View.GONE);
         }
 

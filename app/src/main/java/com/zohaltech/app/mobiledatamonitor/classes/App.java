@@ -2,6 +2,7 @@ package com.zohaltech.app.mobiledatamonitor.classes;
 
 import android.app.Activity;
 import android.app.Application;
+import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -26,6 +27,7 @@ public class App extends Application {
     public static int               screenWidth;
     public static int               screenHeight;
     public static Locale            locale;
+    public static KeyguardManager   keyguardManager;
 
     public static void setAppLocal() {
         locale = new Locale("en");
@@ -47,6 +49,7 @@ public class App extends Application {
         inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         screenWidth = getResources().getDisplayMetrics().widthPixels;
         screenHeight = getResources().getDisplayMetrics().heightPixels;
+        keyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
 
         AlarmHandler.start(context);
 
