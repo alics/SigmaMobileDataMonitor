@@ -28,7 +28,7 @@ public class MyUncaughtExceptionHandler implements java.lang.Thread.UncaughtExce
         }).start();
     }
 
-    private static void writeToFile(String errorText) {
+    public static void writeToFile(String errorText) {
         try {
             File file = new File(Environment.getExternalStorageDirectory(), "mobiledatamonitor_log.txt");
             if (!file.exists()) {

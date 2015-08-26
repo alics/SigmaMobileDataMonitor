@@ -8,6 +8,7 @@ import android.util.Log;
 import com.zohaltech.app.mobiledatamonitor.classes.Helper;
 import com.zohaltech.app.mobiledatamonitor.classes.LicenseManager;
 import com.zohaltech.app.mobiledatamonitor.classes.MyRuntimeException;
+import com.zohaltech.app.mobiledatamonitor.classes.MyUncaughtExceptionHandler;
 import com.zohaltech.app.mobiledatamonitor.entities.DailyTrafficHistory;
 import com.zohaltech.app.mobiledatamonitor.entities.DataPackage;
 import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
@@ -132,11 +133,14 @@ public class UsageLogs {
         SQLiteDatabase db = da.getReadableDB();
         Cursor cursor = null;
         try {
-            String query = " SELECT SUM(TrafficBytes) SumTraffic,SUBSTR(LogDateTime,1,10) date FROM " + TableName +
-                           " WHERE SUBSTR(LogDateTime,1,10) > " +
+            String logDate = "SUBSTR(" + LogDateTime + ", 1, 10)";
+            String query = " SELECT SUM(" + TrafficBytes + ") SumTraffic," + logDate + " date FROM " + TableName +
+                           " WHERE " + logDate + " > " +
                            " (SELECT MAX(" + DailyTrafficHistories.LogDate + ") FROM " + DailyTrafficHistories.TableName + ")" +
-                           " AND SUBSTR(LogDateTime,1,10)<>'" + Helper.getCurrentDate() + "'" +
-                           " GROUP BY SUBSTR(LogDateTime,1,10)";
+                           " AND " + logDate + " <> '" + Helper.getCurrentDate() + "'" +
+                           " GROUP BY " + logDate;
+            MyUncaughtExceptionHandler.writeToFile(query);
+            MyUncaughtExceptionHandler.writeToFile(query);
 
             cursor = db.rawQuery(query, null);
             if (cursor != null && cursor.moveToFirst()) {
