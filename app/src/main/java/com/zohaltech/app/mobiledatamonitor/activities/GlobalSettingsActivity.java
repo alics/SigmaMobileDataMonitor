@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
-import com.zohaltech.app.mobiledatamonitor.classes.NotificationHandler;
 import com.zohaltech.app.mobiledatamonitor.classes.ZtDataService;
 import com.zohaltech.app.mobiledatamonitor.dal.Settings;
 import com.zohaltech.app.mobiledatamonitor.entities.Setting;
@@ -56,6 +55,10 @@ public class GlobalSettingsActivity extends EnhancedActivity {
         switchShowNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                switchShowDownUpSpeed.setEnabled(isChecked);
+                switchShowNotificationInLockScreen.setEnabled(isChecked);
+                switchShowNotificationWhenDataIsOn.setEnabled(isChecked);
+
                 setting.setShowNotification(isChecked);
                 Settings.update(setting);
                 ZtDataService.restart(App.currentActivity);

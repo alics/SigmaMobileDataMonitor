@@ -76,7 +76,7 @@ public class NotificationHandler {
                         .setContentText(text)
                         .setShowWhen(true)
                         .setOngoing(false)
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
                         .setVisibility(lockScreenVisibility)
                         .setColor(App.context.getResources().getColor(R.color.primary))
                         .setAutoCancel(true);

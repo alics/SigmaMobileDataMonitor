@@ -208,7 +208,6 @@ public class PackageSettingsActivity extends EnhancedActivity {
             case MODE_INSERT_CUSTOM:
                 addCustomPackage();
                 break;
-
         }
     }
 
@@ -351,6 +350,9 @@ public class PackageSettingsActivity extends EnhancedActivity {
             setting.setAlarmTypeRes(Setting.AlarmType.NONE.ordinal());
 
         setting.setShowAlarmAfterTerminateRes(switchAlarmAfterTerminate.isChecked());
+
+
+
         Settings.update(setting);
         return true;
     }
@@ -497,7 +499,10 @@ public class PackageSettingsActivity extends EnhancedActivity {
                                              "بله", "خیر", null, new Runnable() {
                     @Override
                     public void run() {
-                        PackageHistories.terminateAll(PackageHistory.StatusEnum.CANCELED);
+                        PackageHistory history = PackageHistories.getActivePackage();
+                        if (history != null) {
+                            PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.CANCELED);
+                        }
                         PackageHistories.deletedReservedPackages();
                         long result = DataPackages.insert(customPackage);
                         boolean saveRes = saveActivePackageSettings();

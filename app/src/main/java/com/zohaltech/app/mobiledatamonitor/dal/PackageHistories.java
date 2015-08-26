@@ -125,15 +125,22 @@ public class PackageHistories {
             packageHistory.setSecondaryTrafficEndDateTime(Helper.getCurrentDateTime());
         }
         update(packageHistory);
+
+        Setting setting = Settings.getCurrentSettings();
+        setting.setTrafficAlarmHasShown(false);
+        setting.setSecondaryTrafficAlarmHasShown(false);
+        setting.setLeftDaysAlarmHasShown(false);
+        Settings.update(setting);
     }
 
-    public static void terminateAll(PackageHistory.StatusEnum terminationStatus) {
-        for (PackageHistory packageHistory : PackageHistories.select()) {
-            packageHistory.setStatus(terminationStatus.ordinal());
-            packageHistory.setEndDateTime(Helper.getCurrentDateTime());
-            PackageHistories.update(packageHistory);
-        }
-    }
+    //public static void terminateAll(PackageHistory.StatusEnum terminationStatus) {
+    //    for (PackageHistory packageHistory : PackageHistories.select()) {
+    //        terminateDataPackage(packageHistory,terminationStatus);
+    //        packageHistory.setStatus(terminationStatus.ordinal());
+    //        packageHistory.setEndDateTime(Helper.getCurrentDateTime());
+    //        PackageHistories.update(packageHistory);
+    //    }
+    //}
 
     public static void terminateDataPackageSecondaryPlan(PackageHistory packageHistory) {
         packageHistory.setSecondaryTrafficEndDateTime(Helper.getCurrentDateTime());
@@ -148,21 +155,30 @@ public class PackageHistories {
     }
 
     public static void finishPackageProcess(PackageHistory history, PackageHistory.StatusEnum terminationStatus) {
-        terminateDataPackage(history, terminationStatus);
+        history.setStatus(terminationStatus.ordinal());
+        history.setEndDateTime(Helper.getCurrentDateTime());
+        if (history.getSecondaryTrafficEndDateTime() == null || "".equals(history.getSecondaryTrafficEndDateTime())) {
+            history.setSecondaryTrafficEndDateTime(Helper.getCurrentDateTime());
+        }
+        update(history);
+
         String yesterdayDateStr = Helper.addDay(-1);
         UsageLogs.deleteLogs(yesterdayDateStr);
         PackageHistory reservedPackage = getReservedPackage();
+        Setting setting = Settings.getCurrentSettings();
         if (reservedPackage != null) {
             reservedPackage.setStatus(terminationStatus.ordinal());
             reservedPackage.setStartDateTime(Helper.getCurrentDateTime());
             update(reservedPackage);
-            Setting activeSetting = Settings.getCurrentSettings();
-            activeSetting.setAlarmType(activeSetting.getAlarmTypeRes());
-            activeSetting.setLeftDaysAlarm(activeSetting.getLeftDaysAlarmRes());
-            activeSetting.setRemindedByteAlarm(activeSetting.getRemindedByteAlarmRes());
-            activeSetting.setShowAlarmAfterTerminate(activeSetting.getShowAlarmAfterTerminateRes());
-            Settings.update(activeSetting);
+            setting.setAlarmType(setting.getAlarmTypeRes());
+            setting.setLeftDaysAlarm(setting.getLeftDaysAlarmRes());
+            setting.setRemindedByteAlarm(setting.getRemindedByteAlarmRes());
+            setting.setShowAlarmAfterTerminate(setting.getShowAlarmAfterTerminateRes());
         }
+        setting.setTrafficAlarmHasShown(false);
+        setting.setSecondaryTrafficAlarmHasShown(false);
+        setting.setLeftDaysAlarmHasShown(false);
+        Settings.update(setting);
     }
 }
 

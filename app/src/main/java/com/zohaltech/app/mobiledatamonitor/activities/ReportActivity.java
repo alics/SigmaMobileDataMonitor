@@ -28,6 +28,16 @@ public class ReportActivity extends EnhancedActivity {
     ReportAdapter adapter;
     private BroadcastReceiver broadcastReceiver;
 
+    private long todayUsage;
+
+    public long getTodayUsage() {
+        return todayUsage;
+    }
+
+    public void setTodayUsage(long todayUsage) {
+        this.todayUsage = todayUsage;
+    }
+
     @Override
     void onCreated() {
         setContentView(R.layout.activity_report);
@@ -35,8 +45,8 @@ public class ReportActivity extends EnhancedActivity {
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                long todayUsage = intent.getLongExtra(ZtDataService.TODAY_USAGE_BYTES, 0);
-                updateUI(todayUsage);
+                long usage = intent.getLongExtra(ZtDataService.TODAY_USAGE_BYTES, 0);
+                updateUI(usage);
             }
         };
 
@@ -44,8 +54,8 @@ public class ReportActivity extends EnhancedActivity {
         txtTotalTraffic = (TextView) findViewById(R.id.txtTotalTraffic);
 
         trafficMonitors = DailyTrafficHistories.getMonthlyTraffic();
-        long bytes = App.preferences.getLong(ZtDataService.TODAY_USAGE_BYTES, 0);
-        trafficMonitors.add(0, new TrafficMonitor(bytes, Helper.getCurrentDate()));
+        setTodayUsage(App.preferences.getLong(ZtDataService.TODAY_USAGE_BYTES, 0));
+        trafficMonitors.add(0, new TrafficMonitor(getTodayUsage(), Helper.getCurrentDate()));
 
         adapter = new ReportAdapter(trafficMonitors);
         lstTraffics.setAdapter(adapter);
@@ -77,8 +87,9 @@ public class ReportActivity extends EnhancedActivity {
         txtTotalTraffic.setText(TrafficUnitsUtil.getUsedTrafficWithPoint(sum));
     }
 
-    private void updateUI(long todayUsage) {
-        trafficMonitors.get(0).setTotalTraffic(todayUsage);
+    private void updateUI(long usage) {
+        setTodayUsage(usage);
+        trafficMonitors.get(0).setTotalTraffic(getTodayUsage());
         populateSummery();
         adapter.notifyDataSetChanged();
     }

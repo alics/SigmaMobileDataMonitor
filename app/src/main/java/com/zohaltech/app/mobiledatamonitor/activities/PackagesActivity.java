@@ -130,7 +130,8 @@ public class PackagesActivity extends EnhancedActivity {
                                             @Override
                                             public void run() {
                                                 PackageHistories.deletedReservedPackages();
-                                                PackageHistories.terminateAll(PackageHistory.StatusEnum.CANCELED);
+                                                //PackageHistories.terminateAll(PackageHistory.StatusEnum.CANCELED);
+                                                PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.CANCELED);
                                                 PackageHistories.insert(new PackageHistory(dataPackage.getId(), Helper.getCurrentDateTime(), null, null, null, PackageHistory.StatusEnum.ACTIVE.ordinal()));
                                                 Intent intent = new Intent(App.currentActivity, PackageSettingsActivity.class);
                                                 intent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_SETTING_ACTIVE);

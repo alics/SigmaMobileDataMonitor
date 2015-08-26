@@ -24,14 +24,24 @@ public class TodayUsageFragment extends Fragment {
     CircleProgress progressTodayUsage;
     private BroadcastReceiver broadcastReceiver;
 
+    private long todayUsage;
+
+    public long getTodayUsage() {
+        return todayUsage;
+    }
+
+    public void setTodayUsage(long todayUsage) {
+        this.todayUsage = todayUsage;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                long todayUsage = intent.getLongExtra(ZtDataService.TODAY_USAGE_BYTES, 0);
-                updateUI(todayUsage);
+                long usage = intent.getLongExtra(ZtDataService.TODAY_USAGE_BYTES, 0);
+                updateUI(usage);
             }
         };
     }
@@ -67,8 +77,8 @@ public class TodayUsageFragment extends Fragment {
         App.handler.post(new Runnable() {
             @Override
             public void run() {
-                //TrafficDisplay trafficDisplay = TrafficDisplay.getTodayTraffic(App.preferences.getLong(DataUsageService.TODAY_USAGE_BYTES, 0));
-                TrafficUnitsUtil trafficDisplay = TrafficUnitsUtil.getTodayTraffic(bytes);
+                setTodayUsage(bytes);
+                TrafficUnitsUtil trafficDisplay = TrafficUnitsUtil.getTodayTraffic(getTodayUsage());
                 progressTodayUsage.setProgress(trafficDisplay.getValue(), trafficDisplay.getPostfix());
             }
         });

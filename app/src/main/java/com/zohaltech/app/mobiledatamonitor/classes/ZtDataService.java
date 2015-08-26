@@ -110,7 +110,11 @@ public class ZtDataService extends Service {
             }
 
             if (showNotification) {
-                startForeground(1, NotificationHandler.getDataUsageNotification(ZtDataService.this, iconId, getString(R.string.down) + TrafficUnitsUtil.getTransferRate(receivedBytes) + getString(R.string.up) + TrafficUnitsUtil.getTransferRate(sentBytes), getString(R.string.today) + todayUsage));
+                startForeground(1,
+                                NotificationHandler.getDataUsageNotification(ZtDataService.this,
+                                                                             iconId,
+                                                                             getString(R.string.down) + TrafficUnitsUtil.getTransferRate(receivedBytes) + getString(R.string.up) + TrafficUnitsUtil.getTransferRate(sentBytes),
+                                                                             getString(R.string.today) + todayUsage));
             } else {
                 NotificationHandler.cancelNotification(1);
             }

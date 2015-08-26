@@ -89,7 +89,7 @@ public final class PackageStatus {
         if (usedPrimaryTraffic >= dataPackage.getPrimaryTraffic()) {
             String msg = "اعتبار حجمی بسته به پایان رسید";
             if (reservedPackageHistory != null)
-                msg += " و بسته رزور شده فعال شد ";
+                msg += " و بسته رزور شده فعال شد";
             alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.FINISH_TRAFFIC_ALARM, msg));
             PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.TRAFFIC_FINISHED);
             //Helper.setMobileDataEnabled(false);
@@ -137,10 +137,10 @@ public final class PackageStatus {
                 alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.REMINDED_DAYS_ALARM, msg));
             }
 
-            long remindedByteAlarm = setting.getRemindedByteAlarm();
-            long reminded = dataPackage.getPrimaryTraffic() - usedPrimaryTraffic;
-            if (reminded <= remindedByteAlarm) {
-                String msg = TrafficUnitsUtil.ByteToMb(reminded) + " مگابایت مانده به اتمام حجم بسته";
+            long usedByteAlarm = setting.getRemindedByteAlarm();
+            //long reminded = dataPackage.getPrimaryTraffic() - usedPrimaryTraffic;
+            if (usedPrimaryTraffic >= usedByteAlarm) {
+                String msg = "بیشتر از " + TrafficUnitsUtil.ByteToMb(usedByteAlarm) + " مگابایت از حجم بسته مصرف شده است";
                 alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.REMINDED_TRAFFIC_ALARM, msg));
             }
         }
