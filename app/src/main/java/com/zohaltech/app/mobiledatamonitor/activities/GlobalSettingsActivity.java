@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
@@ -25,6 +26,7 @@ public class GlobalSettingsActivity extends EnhancedActivity {
     LinearLayout layoutPremium;
     LinearLayout layoutAbout;
     LinearLayout layoutIntroduction;
+    TextView     txtAbout;
 
     @Override
     void onCreated() {
@@ -39,10 +41,13 @@ public class GlobalSettingsActivity extends EnhancedActivity {
         layoutPremium = (LinearLayout) findViewById(R.id.layoutPremium);
         layoutAbout = (LinearLayout) findViewById(R.id.layoutAbout);
         layoutIntroduction = (LinearLayout) findViewById(R.id.layoutIntroduction);
+        txtAbout = (TextView) findViewById(R.id.txtAbout);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
             layoutLockScreen.setVisibility(View.GONE);
         }
+
+        txtAbout.setText("درباره " + getString(R.string.app_name));
 
         switchShowNotification.setChecked(setting.getShowNotification());
         switchShowNotificationWhenDataIsOn.setChecked(setting.getShowNotificationWhenDataIsOn());
