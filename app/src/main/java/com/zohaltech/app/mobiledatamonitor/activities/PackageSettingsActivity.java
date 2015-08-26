@@ -62,7 +62,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
     TextView         txtSecondaryEndTime;
     EditText         edtTrafficAlarm;
     SwitchCompat     switchTrafficAlarm;
-    TextView         txtTrafficAlarm;
+    TextView         txtPercentTrafficAlarm;
     EditText         edtLeftDaysAlarm;
     TextView         txtLeftDaysAlarm;
     SwitchCompat     switchLeftDaysAlarm;
@@ -94,7 +94,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
         txtSecondaryEndTime = (TextView) findViewById(R.id.txtSecondaryEndTime);
         edtTrafficAlarm = (EditText) findViewById(R.id.edtTrafficAlarm);
         switchTrafficAlarm = (SwitchCompat) findViewById(R.id.switchTrafficAlarm);
-        txtTrafficAlarm = (TextView) findViewById(R.id.txtTrafficAlarm);
+        txtPercentTrafficAlarm = (TextView) findViewById(R.id.txtPercentTrafficAlarm);
         edtLeftDaysAlarm = (EditText) findViewById(R.id.edtLeftDaysAlarm);
         txtLeftDaysAlarm = (TextView) findViewById(R.id.txtLeftDaysAlarm);
         switchLeftDaysAlarm = (SwitchCompat) findViewById(R.id.switchLeftDaysAlarm);
@@ -198,7 +198,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
     private void confirm() {
         switch (initMode) {
             case MODE_SETTING_ACTIVE:
-                if (saveActivePackageSettings())
+                if (saveActivePackageSettings(true))
                     finish();
                 break;
             case MODE_SETTING_RESERVED:
@@ -224,7 +224,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
         spinnerOperators.setAdapter(operatorsAdapter);
     }
 
-    private boolean saveActivePackageSettings() {
+    private boolean saveActivePackageSettings(Boolean resetAlarm) {
         Boolean trafficAlarm = switchTrafficAlarm.isChecked();
         Boolean leftDaysAlarm = switchLeftDaysAlarm.isChecked();
 
@@ -285,6 +285,12 @@ public class PackageSettingsActivity extends EnhancedActivity {
             setting.setAlarmType(Setting.AlarmType.NONE.ordinal());
 
         setting.setShowAlarmAfterTerminate(switchAlarmAfterTerminate.isChecked());
+
+        if(resetAlarm){
+            setting.setTrafficAlarmHasShown(false);
+            setting.setSecondaryTrafficAlarmHasShown(false);
+            setting.setLeftDaysAlarmHasShown(false);
+        }
         Settings.update(setting);
         return true;
     }
@@ -369,7 +375,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
             switchLeftDaysAlarm.setChecked(true);
             edtLeftDaysAlarm.setText(setting.getLeftDaysAlarm() + "");
             edtTrafficAlarm.setVisibility(View.INVISIBLE);
-            txtTrafficAlarm.setVisibility(View.INVISIBLE);
+            txtPercentTrafficAlarm.setVisibility(View.INVISIBLE);
             switchTrafficAlarm.setChecked(false);
         } else if (alarmType == Setting.AlarmType.REMINDED_BYTES.ordinal()) {
             switchTrafficAlarm.setChecked(true);
@@ -380,7 +386,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
         } else if (alarmType == Setting.AlarmType.NONE.ordinal()) {
             switchTrafficAlarm.setChecked(false);
             edtTrafficAlarm.setVisibility(View.INVISIBLE);
-            txtTrafficAlarm.setVisibility(View.INVISIBLE);
+            txtPercentTrafficAlarm.setVisibility(View.INVISIBLE);
 
             switchLeftDaysAlarm.setChecked(false);
             edtLeftDaysAlarm.setVisibility(View.INVISIBLE);
@@ -401,7 +407,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
             switchLeftDaysAlarm.setChecked(true);
             edtLeftDaysAlarm.setText(setting.getLeftDaysAlarmRes() + "");
             edtTrafficAlarm.setVisibility(View.INVISIBLE);
-            txtTrafficAlarm.setVisibility(View.INVISIBLE);
+            txtPercentTrafficAlarm.setVisibility(View.INVISIBLE);
             switchTrafficAlarm.setChecked(false);
         } else if (alarmType == Setting.AlarmType.REMINDED_BYTES.ordinal()) {
             switchTrafficAlarm.setChecked(true);
@@ -412,7 +418,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
         } else if (alarmType == Setting.AlarmType.NONE.ordinal()) {
             switchTrafficAlarm.setChecked(false);
             edtTrafficAlarm.setVisibility(View.INVISIBLE);
-            txtTrafficAlarm.setVisibility(View.INVISIBLE);
+            txtPercentTrafficAlarm.setVisibility(View.INVISIBLE);
 
             switchLeftDaysAlarm.setChecked(false);
             edtLeftDaysAlarm.setVisibility(View.INVISIBLE);
@@ -505,7 +511,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
                         }
                         PackageHistories.deletedReservedPackages();
                         long result = DataPackages.insert(customPackage);
-                        boolean saveRes = saveActivePackageSettings();
+                        boolean saveRes = saveActivePackageSettings(false);
                         if (result != -1 && saveRes) {
                             PackageHistories.insert(new PackageHistory(Integer.valueOf(result + ""),
                                                                        Helper.getCurrentDateTime(),
@@ -653,10 +659,10 @@ public class PackageSettingsActivity extends EnhancedActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     edtTrafficAlarm.setVisibility(View.VISIBLE);
-                    txtTrafficAlarm.setVisibility(View.VISIBLE);
+                    txtPercentTrafficAlarm.setVisibility(View.VISIBLE);
                 } else {
                     edtTrafficAlarm.setVisibility(View.INVISIBLE);
-                    txtTrafficAlarm.setVisibility(View.INVISIBLE);
+                    txtPercentTrafficAlarm.setVisibility(View.INVISIBLE);
                 }
             }
         });
