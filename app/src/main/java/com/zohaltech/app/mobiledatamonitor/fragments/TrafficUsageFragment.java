@@ -66,23 +66,30 @@ public class TrafficUsageFragment extends Fragment {
     }
 
     public void updateUI() {
+        PackageStatus status = PackageStatus.getCurrentStatus();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            new PrimaryProgressTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            new SecondaryTrafficTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new PrimaryProgressTask(status).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new SecondaryTrafficTask(status).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } else {
-            new PrimaryProgressTask().execute();
-            new SecondaryTrafficTask().execute();
+            new PrimaryProgressTask(status).execute();
+            new SecondaryTrafficTask(status).execute();
         }
     }
 
     private class PrimaryProgressTask extends AsyncTask<Void, Integer, Void> {
 
+        PackageStatus status;
         long   usedPrimaryTraffic;
         long   totalPrimaryTraffic;
         String strPrimaryTraffic;
 
-        public PrimaryProgressTask() {
-            PackageStatus status = PackageStatus.getCurrentStatus();
+        public PrimaryProgressTask(PackageStatus status) {
+            this.status = status;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
             usedPrimaryTraffic = status.getUsedPrimaryTraffic();
             totalPrimaryTraffic = status.getPrimaryTraffic();
             strPrimaryTraffic = TrafficUnitsUtil.getArcTraffic(usedPrimaryTraffic, totalPrimaryTraffic);
@@ -128,12 +135,18 @@ public class TrafficUsageFragment extends Fragment {
 
     private class SecondaryTrafficTask extends AsyncTask<Void, Integer, Void> {
 
+        PackageStatus status;
         long   usedSecondaryTraffic;
         long   totalSecondaryTraffic;
         String strSecondaryTraffic;
 
-        public SecondaryTrafficTask() {
-            PackageStatus status = PackageStatus.getCurrentStatus();
+        public SecondaryTrafficTask(PackageStatus status) {
+            this.status = status;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
             usedSecondaryTraffic = status.getUsedSecondaryTraffic();
             totalSecondaryTraffic = status.getSecondaryTraffic();
             strSecondaryTraffic = TrafficUnitsUtil.getArcTraffic(usedSecondaryTraffic, totalSecondaryTraffic);
