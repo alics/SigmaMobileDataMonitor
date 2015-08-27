@@ -11,10 +11,10 @@ public class Setting {
     private Boolean showAlarmAfterTerminate;
     private Boolean showAlarmAfterTerminateRes;
     private int     alarmType;
-    private Long    remindedByteAlarm;
+    private Integer    percentTrafficAlarm;
     private Integer leftDaysAlarm;
     private int     alarmTypeRes;
-    private Long    remindedByteAlarmRes;
+    private Integer    percentTrafficAlarmRes;
     private Integer leftDaysAlarmRes;
     private Boolean showNotification;
     private Boolean showNotificationWhenDataIsOn;
@@ -26,8 +26,8 @@ public class Setting {
 
 
     public Setting(Boolean dataConnected, Long dailyTraffic, Boolean showAlarmAfterTerminate, int alarmType,
-                   Long remindedByteAlarm, Integer leftDaysAlarm, Boolean showAlarmAfterTerminateRes,
-                   int alarmTypeRes, Long remindedByteAlarmRes, Integer leftDaysAlarmRes, Boolean showNotification,
+                   Integer percentTrafficAlarm, Integer leftDaysAlarm, Boolean showAlarmAfterTerminateRes,
+                   int alarmTypeRes, Integer percentTrafficAlarmRes, Integer leftDaysAlarmRes, Boolean showNotification,
                    Boolean showNotificationWhenDataIsOn, Boolean showNotificationInLockScreen, Boolean showUpDownSpeed,
                    Boolean leftDaysAlarmHasShown, Boolean trafficAlarmHasShown, Boolean secondaryTrafficAlarmHasShown) {
         setDataConnected(dataConnected);
@@ -35,10 +35,10 @@ public class Setting {
         setShowAlarmAfterTerminate(showAlarmAfterTerminate);
         setShowAlarmAfterTerminateRes(showAlarmAfterTerminateRes);
         setAlarmType(alarmType);
-        setRemindedByteAlarm(remindedByteAlarm);
+        setPercentTrafficAlarm(percentTrafficAlarm);
         setLeftDaysAlarm(leftDaysAlarm);
         setAlarmTypeRes(alarmTypeRes);
-        setRemindedByteAlarmRes(remindedByteAlarmRes);
+        setPercentTrafficAlarmRes(percentTrafficAlarmRes);
         setLeftDaysAlarmRes(leftDaysAlarmRes);
         setShowNotification(showNotification);
         setShowNotificationWhenDataIsOn(showNotificationWhenDataIsOn);
@@ -50,12 +50,12 @@ public class Setting {
     }
 
     public Setting(Integer id, Boolean dataConnected, Long dailyTraffic, Boolean showAlarmAfterTerminate,
-                   int alarmType, Long remindedByteAlarm, Integer leftDaysAlarm, Boolean showAlarmAfterTerminateRes,
-                   int alarmTypeRes, Long remindedByteAlarmRes, Integer leftDaysAlarmRes, Boolean showNotification,
+                   int alarmType, Integer percentTrafficAlarm, Integer leftDaysAlarm, Boolean showAlarmAfterTerminateRes,
+                   int alarmTypeRes, Integer percentTrafficAlarmRes, Integer leftDaysAlarmRes, Boolean showNotification,
                    Boolean showNotificationWhenDataIsOn, Boolean showNotificationInLockScreen, Boolean showUpDownSpeed,
                    Boolean leftDaysAlarmHasShown, Boolean trafficAlarmHasShown, Boolean secondaryTrafficAlarmHasShown) {
-        this(dataConnected, dailyTraffic, showAlarmAfterTerminate, alarmType, remindedByteAlarm,
-             leftDaysAlarm, showAlarmAfterTerminateRes, alarmTypeRes, remindedByteAlarmRes,
+        this(dataConnected, dailyTraffic, showAlarmAfterTerminate, alarmType, percentTrafficAlarm,
+             leftDaysAlarm, showAlarmAfterTerminateRes, alarmTypeRes, percentTrafficAlarmRes,
              leftDaysAlarmRes, showNotification, showNotificationWhenDataIsOn, showNotificationInLockScreen,
              showUpDownSpeed, leftDaysAlarmHasShown, trafficAlarmHasShown, secondaryTrafficAlarmHasShown);
         this.id = id;
@@ -101,12 +101,12 @@ public class Setting {
         this.alarmType = alarmType;
     }
 
-    public Long getRemindedByteAlarm() {
-        return remindedByteAlarm;
+    public Integer getPercentTrafficAlarm() {
+        return percentTrafficAlarm;
     }
 
-    public void setRemindedByteAlarm(Long remindedByteAlarm) {
-        this.remindedByteAlarm = remindedByteAlarm;
+    public void setPercentTrafficAlarm(Integer percentTrafficAlarm) {
+        this.percentTrafficAlarm = percentTrafficAlarm;
     }
 
     public Integer getLeftDaysAlarm() {
@@ -125,12 +125,12 @@ public class Setting {
         this.alarmTypeRes = alarmTypeRes;
     }
 
-    public Long getRemindedByteAlarmRes() {
-        return remindedByteAlarmRes;
+    public Integer getPercentTrafficAlarmRes() {
+        return percentTrafficAlarmRes;
     }
 
-    public void setRemindedByteAlarmRes(Long remindedByteAlarmRes) {
-        this.remindedByteAlarmRes = remindedByteAlarmRes;
+    public void setPercentTrafficAlarmRes(Integer percentTrafficAlarmRes) {
+        this.percentTrafficAlarmRes = percentTrafficAlarmRes;
     }
 
     public Integer getLeftDaysAlarmRes() {

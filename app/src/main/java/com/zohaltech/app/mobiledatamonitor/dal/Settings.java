@@ -18,10 +18,10 @@ public class Settings {
     static final String ShowAlarmAfterTerminate       = "ShowAlarmAfterTerminate";
     static final String ShowAlarmAfterTerminateRes    = "ShowAlarmAfterTerminateRes";
     static final String AlarmType                     = "AlarmType";
-    static final String RemindedByteAlarm             = "RemindedByteAlarm";
+    static final String PercentTrafficAlarm           = "PercentTrafficAlarm";
     static final String LeftDaysAlarm                 = "LeftDaysAlarm";
     static final String AlarmTypeRes                  = "AlarmTypeRes";
-    static final String RemindedByteAlarmRes          = "RemindedByteAlarmRes";
+    static final String PercentTrafficAlarmRes        = "PercentTrafficAlarmRes";
     static final String LeftDaysAlarmRes              = "LeftDaysAlarmRes";
     static final String ShowNotification              = "ShowNotification";
     static final String ShowNotificationWhenDataIsOn  = "ShowNotificationWhenDataIsOn";
@@ -38,10 +38,10 @@ public class Settings {
                                       ShowAlarmAfterTerminate + " BOOLEAN NOT NULL, " +
                                       ShowAlarmAfterTerminateRes + " BOOLEAN NOT NULL, " +
                                       AlarmType + " INTEGER NOT NULL, " +
-                                      RemindedByteAlarm + " BIGINT NOT NULL, " +
+                                      PercentTrafficAlarm + " INTEGER NOT NULL, " +
                                       LeftDaysAlarm + " INTEGER NOT NULL, " +
                                       AlarmTypeRes + " INTEGER NOT NULL, " +
-                                      RemindedByteAlarmRes + " BIGINT NOT NULL, " +
+                                      PercentTrafficAlarmRes + " INTEGER NOT NULL, " +
                                       LeftDaysAlarmRes + " INTEGER NOT NULL, " +
                                       ShowNotification + " BOOLEAN NOT NULL, " +
                                       ShowNotificationWhenDataIsOn + " BOOLEAN NOT NULL, " +
@@ -70,11 +70,11 @@ public class Settings {
                                                   cursor.getLong(cursor.getColumnIndex(DailyTraffic)),
                                                   cursor.getInt(cursor.getColumnIndex(ShowAlarmAfterTerminate)) == 1,
                                                   cursor.getInt(cursor.getColumnIndex(AlarmType)),
-                                                  cursor.getLong(cursor.getColumnIndex(RemindedByteAlarm)),
+                                                  cursor.getInt(cursor.getColumnIndex(PercentTrafficAlarm)),
                                                   cursor.getInt(cursor.getColumnIndex(LeftDaysAlarm)),
                                                   cursor.getInt(cursor.getColumnIndex(ShowAlarmAfterTerminateRes)) == 1,
                                                   cursor.getInt(cursor.getColumnIndex(AlarmTypeRes)),
-                                                  cursor.getLong(cursor.getColumnIndex(RemindedByteAlarmRes)),
+                                                  cursor.getInt(cursor.getColumnIndex(PercentTrafficAlarmRes)),
                                                   cursor.getInt(cursor.getColumnIndex(LeftDaysAlarmRes)),
                                                   cursor.getInt(cursor.getColumnIndex(ShowNotification)) == 1,
                                                   cursor.getInt(cursor.getColumnIndex(ShowNotificationWhenDataIsOn)) == 1,
@@ -105,10 +105,10 @@ public class Settings {
     //    values.put(ShowAlarmAfterTerminate, setting.getShowAlarmAfterTerminate() ? 1 : 0);
     //    values.put(ShowAlarmAfterTerminateRes, setting.getShowAlarmAfterTerminateRes() ? 1 : 0);
     //    values.put(AlarmType, setting.getAlarmType());
-    //    values.put(RemindedByteAlarm, setting.getRemindedByteAlarm());
+    //    values.put(PercentTrafficAlarm, setting.getPercentTrafficAlarm());
     //    values.put(LeftDaysAlarm, setting.getLeftDaysAlarm());
     //    values.put(AlarmTypeRes, setting.getAlarmTypeRes());
-    //    values.put(RemindedByteAlarmRes, setting.getRemindedByteAlarmRes());
+    //    values.put(PercentTrafficAlarmRes, setting.getPercentTrafficAlarmRes());
     //    values.put(LeftDaysAlarmRes, setting.getLeftDaysAlarmRes());
     //    values.put(ShowNotification, setting.getShowNotification() ? 1 : 0);
     //    values.put(ShowNotificationWhenDataIsOn, setting.getShowNotificationWhenDataIsOn() ? 1 : 0);
@@ -130,10 +130,10 @@ public class Settings {
         values.put(ShowAlarmAfterTerminate, setting.getShowAlarmAfterTerminate() ? 1 : 0);
         values.put(ShowAlarmAfterTerminateRes, setting.getShowAlarmAfterTerminateRes() ? 1 : 0);
         values.put(AlarmType, setting.getAlarmType());
-        values.put(RemindedByteAlarm, setting.getRemindedByteAlarm());
+        values.put(PercentTrafficAlarm, setting.getPercentTrafficAlarm());
         values.put(LeftDaysAlarm, setting.getLeftDaysAlarm());
         values.put(AlarmTypeRes, setting.getAlarmTypeRes());
-        values.put(RemindedByteAlarmRes, setting.getRemindedByteAlarmRes());
+        values.put(PercentTrafficAlarmRes, setting.getPercentTrafficAlarmRes());
         values.put(LeftDaysAlarmRes, setting.getLeftDaysAlarmRes());
         values.put(ShowNotification, setting.getShowNotification() ? 1 : 0);
         values.put(ShowNotificationWhenDataIsOn, setting.getShowNotificationWhenDataIsOn() ? 1 : 0);

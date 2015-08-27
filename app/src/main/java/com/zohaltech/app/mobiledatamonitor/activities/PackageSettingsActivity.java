@@ -255,8 +255,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
 
             setting.setAlarmType(Setting.AlarmType.BOTH.ordinal());
             setting.setLeftDaysAlarm(Integer.valueOf(edtLeftDaysAlarm.getText().toString()));
-            long remindedByteAlarm = Math.round(Integer.valueOf(edtTrafficAlarm.getText().toString()) * 0.01 * primaryTraffic);
-            setting.setRemindedByteAlarm(remindedByteAlarm);
+            setting.setPercentTrafficAlarm(Integer.valueOf(edtTrafficAlarm.getText().toString()));
         } else if (trafficAlarm) {
             if (!Validator.validateEditText(edtTrafficAlarm, "اخطار حجمی"))
                 return false;
@@ -266,9 +265,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
             //                return false;
             //            }
             setting.setAlarmType(Setting.AlarmType.REMINDED_BYTES.ordinal());
-            long remindedByteAlarm = Math.round(Integer.valueOf(edtTrafficAlarm.getText().toString()) * 0.01
-                                                * primaryTraffic);
-            setting.setRemindedByteAlarm(remindedByteAlarm);
+            setting.setPercentTrafficAlarm(Integer.valueOf(edtTrafficAlarm.getText().toString()));
         } else if (leftDaysAlarm) {
 
 
@@ -323,9 +320,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
 
             setting.setAlarmTypeRes(Setting.AlarmType.BOTH.ordinal());
             setting.setLeftDaysAlarmRes(Integer.valueOf(edtLeftDaysAlarm.getText().toString()));
-            long remindedByteAlarm = Math.round(Integer.valueOf(edtTrafficAlarm.getText().toString())
-                                                * 0.01 * primaryTraffic);
-            setting.setRemindedByteAlarmRes(remindedByteAlarm);
+            setting.setPercentTrafficAlarmRes(Integer.valueOf(edtTrafficAlarm.getText().toString()));
         } else if (trafficAlarm) {
             if (!Validator.validateEditText(edtTrafficAlarm, "اخطار حجمی"))
                 return false;
@@ -334,9 +329,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
                 return false;
             }
             setting.setAlarmTypeRes(Setting.AlarmType.REMINDED_BYTES.ordinal());
-            long remindedByteAlarm = Math.round(Integer.valueOf(edtTrafficAlarm.getText().toString())
-                                                * 0.01 * primaryTraffic);
-            setting.setRemindedByteAlarmRes(remindedByteAlarm);
+            setting.setPercentTrafficAlarmRes(Integer.valueOf(edtTrafficAlarm.getText().toString()));
         } else if (leftDaysAlarm) {
             if (validPeriod <= Integer.valueOf(edtLeftDaysAlarm.getText().toString())) {
                 MyToast.show("اخطار روز باقیمانده باید کمتر مدت اعتبار بسته باشد.", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
@@ -359,7 +352,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
             switchLeftDaysAlarm.setChecked(true);
             edtLeftDaysAlarm.setText(setting.getLeftDaysAlarm() + "");
             switchTrafficAlarm.setChecked(true);
-            edtTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(setting.getRemindedByteAlarm()) + "");
+            edtTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(setting.getPercentTrafficAlarm()) + "");
         } else if (alarmType == Setting.AlarmType.LEFT_DAY.ordinal()) {
             switchLeftDaysAlarm.setChecked(true);
             edtLeftDaysAlarm.setText(setting.getLeftDaysAlarm() + "");
@@ -368,7 +361,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
             switchTrafficAlarm.setChecked(false);
         } else if (alarmType == Setting.AlarmType.REMINDED_BYTES.ordinal()) {
             switchTrafficAlarm.setChecked(true);
-            edtTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(setting.getRemindedByteAlarm()) + "");
+            edtTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(setting.getPercentTrafficAlarm()) + "");
             edtLeftDaysAlarm.setVisibility(View.INVISIBLE);
             txtLeftDaysAlarm.setVisibility(View.INVISIBLE);
             switchLeftDaysAlarm.setChecked(false);
@@ -391,7 +384,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
             switchLeftDaysAlarm.setChecked(true);
             edtLeftDaysAlarm.setText(setting.getLeftDaysAlarmRes() + "");
             switchTrafficAlarm.setChecked(true);
-            edtTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(setting.getRemindedByteAlarmRes()) + "");
+            edtTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(setting.getPercentTrafficAlarmRes()) + "");
         } else if (alarmType == Setting.AlarmType.LEFT_DAY.ordinal()) {
             switchLeftDaysAlarm.setChecked(true);
             edtLeftDaysAlarm.setText(setting.getLeftDaysAlarmRes() + "");
@@ -400,7 +393,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
             switchTrafficAlarm.setChecked(false);
         } else if (alarmType == Setting.AlarmType.REMINDED_BYTES.ordinal()) {
             switchTrafficAlarm.setChecked(true);
-            edtTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(setting.getRemindedByteAlarmRes()) + "");
+            edtTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(setting.getPercentTrafficAlarmRes()) + "");
             edtLeftDaysAlarm.setVisibility(View.INVISIBLE);
             txtLeftDaysAlarm.setVisibility(View.INVISIBLE);
             switchLeftDaysAlarm.setChecked(false);

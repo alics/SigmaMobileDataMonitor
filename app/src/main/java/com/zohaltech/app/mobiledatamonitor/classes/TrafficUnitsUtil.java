@@ -70,7 +70,6 @@ public class TrafficUnitsUtil {
         return mb * power(1024, 2);
     }
 
-
     public static long ByteToMb(long bytes) {
         return bytes / power(1024, 2);
     }

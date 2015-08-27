@@ -163,7 +163,7 @@ public class PackageHistories {
             update(reservedPackage);
             setting.setAlarmType(setting.getAlarmTypeRes());
             setting.setLeftDaysAlarm(setting.getLeftDaysAlarmRes());
-            setting.setRemindedByteAlarm(setting.getRemindedByteAlarmRes());
+            setting.setPercentTrafficAlarm(setting.getPercentTrafficAlarmRes());
             setting.setShowAlarmAfterTerminate(setting.getShowAlarmAfterTerminateRes());
         }
         setting.setTrafficAlarmHasShown(false);

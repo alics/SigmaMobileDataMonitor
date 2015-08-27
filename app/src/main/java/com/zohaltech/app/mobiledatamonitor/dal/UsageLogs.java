@@ -192,7 +192,7 @@ public class UsageLogs {
 
         if (history.getSecondaryTrafficEndDateTime() == null || "".equals(history.getSecondaryTrafficEndDateTime())) {
             return "SELECT SUM(" + TrafficBytes + ") SumTraffic FROM " + TableName + " WHERE " + LogDateTime + " > '" + history.getStartDateTime() + "'" +
-                   "AND SUBSTR(" + LogDateTime + ",11,9) NOT BETWEEN '" + dataPackage.getSecondaryTrafficStartTime() + "' AND '" + dataPackage.getSecondaryTrafficEndTime() + "'";
+                   "AND SUBSTR(" + LogDateTime + ",12,5) NOT BETWEEN '" + dataPackage.getSecondaryTrafficStartTime() + "' AND '" + dataPackage.getSecondaryTrafficEndTime() + "'";
         }
         return "SELECT (SELECT SUM(" + TrafficBytes + ") FROM " + TableName + " WHERE " + LogDateTime + " >= '" + history.getStartDateTime() + "' )-\n" +
                "(SELECT SUM(TrafficBytes)  FROM " + TableName + " WHERE (" + LogDateTime + " BETWEEN '" + history.getStartDateTime() + "' AND '" + history.getSecondaryTrafficEndDateTime() + "')\n";
@@ -206,7 +206,7 @@ public class UsageLogs {
         try {
             String query = "SELECT SUM(TrafficBytes) SumTraffic FROM " + TableName +
                            " WHERE " + LogDateTime + " >= '" + history.getStartDateTime() + "'" +
-                           "AND SUBSTR(" + LogDateTime + ",11,9) BETWEEN '" + dataPackage.getSecondaryTrafficStartTime() + "' AND '" + dataPackage.getSecondaryTrafficEndTime() + "'";
+                           "AND SUBSTR(" + LogDateTime + ",12,5) BETWEEN '" + dataPackage.getSecondaryTrafficStartTime() + "' AND '" + dataPackage.getSecondaryTrafficEndTime() + "'";
 
             cursor = db.rawQuery(query, null);
             if (cursor != null && cursor.moveToFirst()) {

@@ -1,8 +1,6 @@
 package com.zohaltech.app.mobiledatamonitor.classes;
 
 
-import android.util.Log;
-
 import com.zohaltech.app.mobiledatamonitor.dal.DataPackages;
 import com.zohaltech.app.mobiledatamonitor.dal.PackageHistories;
 import com.zohaltech.app.mobiledatamonitor.dal.Settings;
@@ -124,10 +122,9 @@ public final class PackageStatus {
             }
 
         } else if (setting.getAlarmType() == Setting.AlarmType.REMINDED_BYTES.ordinal()) {
-            long remindedByteAlarm = setting.getRemindedByteAlarm();
-            long reminded = dataPackage.getPrimaryTraffic() - usedPrimaryTraffic;
-            if (reminded <= remindedByteAlarm) {
-                String msg = TrafficUnitsUtil.ByteToMb(reminded) + " مگابایت مانده به اتمام حجم بسته";
+            long trafficAlarm = Math.round(setting.getPercentTrafficAlarm() * 0.01 * dataPackage.getPrimaryTraffic());
+            if (trafficAlarm >= usedPrimaryTraffic) {
+                String msg = "بیشتر از " + TrafficUnitsUtil.ByteToMb(trafficAlarm) + " مگابایت از حجم بسته مصرف شده است";
                 alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.REMINDED_TRAFFIC_ALARM, msg));
             }
         } else if (setting.getAlarmType() == Setting.AlarmType.BOTH.ordinal()) {
@@ -137,10 +134,10 @@ public final class PackageStatus {
                 alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.REMINDED_DAYS_ALARM, msg));
             }
 
-            long usedByteAlarm = setting.getRemindedByteAlarm();
-            //long reminded = dataPackage.getPrimaryTraffic() - usedPrimaryTraffic;
-            if (usedPrimaryTraffic >= usedByteAlarm) {
-                String msg = "بیشتر از " + TrafficUnitsUtil.ByteToMb(usedByteAlarm) + " مگابایت از حجم بسته مصرف شده است";
+            long trafficAlarm = Math.round(setting.getPercentTrafficAlarm() * 0.01 * dataPackage.getPrimaryTraffic());
+            long reminded = dataPackage.getPrimaryTraffic() - usedPrimaryTraffic;
+            if (trafficAlarm >= usedPrimaryTraffic) {
+                String msg = "بیشتر از " + TrafficUnitsUtil.ByteToMb(trafficAlarm) + " مگابایت از حجم بسته مصرف شده است";
                 alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.REMINDED_TRAFFIC_ALARM, msg));
             }
         }
