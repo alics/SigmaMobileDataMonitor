@@ -233,9 +233,9 @@ public class PackageSettingsActivity extends EnhancedActivity {
         int validPeriod = edtPackageValidPeriod.getVisibility() == View.GONE ?
                           Integer.valueOf(txtPackageValidPeriod.getText().toString()) :
                           Integer.valueOf(edtPackageValidPeriod.getText().toString());
-        long primaryTraffic = TrafficUnitsUtil.MbToByte(edtPrimaryTraffic.getVisibility() == View.GONE ?
-                                                        Integer.valueOf(txtPrimaryTraffic.getText().toString()) :
-                                                        Integer.valueOf(edtPrimaryTraffic.getText().toString()));
+//        long primaryTraffic = TrafficUnitsUtil.MbToByte(edtPrimaryTraffic.getVisibility() == View.GONE ?
+//                                                        Integer.valueOf(txtPrimaryTraffic.getText().toString()) :
+//                                                        Integer.valueOf(edtPrimaryTraffic.getText().toString()));
         if (trafficAlarm && leftDaysAlarm) {
             if (!Validator.validateEditText(edtLeftDaysAlarm, "اخطار روز باقیمانده"))
                 return false;
@@ -248,10 +248,10 @@ public class PackageSettingsActivity extends EnhancedActivity {
                 return false;
             }
 
-            if (primaryTraffic <= Integer.valueOf(edtTrafficAlarm.getText().toString())) {
-                MyToast.show("اخطار حجم باقیمانده باید کمتر از ترافیک اولیه باشد.", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
-                return false;
-            }
+//            if (primaryTraffic <= Integer.valueOf(edtTrafficAlarm.getText().toString())) {
+//                MyToast.show("اخطار حجم باقیمانده باید کمتر از ترافیک اولیه باشد.", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
+//                return false;
+//            }
 
             setting.setAlarmType(Setting.AlarmType.BOTH.ordinal());
             setting.setLeftDaysAlarm(Integer.valueOf(edtLeftDaysAlarm.getText().toString()));
@@ -324,10 +324,10 @@ public class PackageSettingsActivity extends EnhancedActivity {
         } else if (trafficAlarm) {
             if (!Validator.validateEditText(edtTrafficAlarm, "اخطار حجمی"))
                 return false;
-            if (primaryTraffic <= Integer.valueOf(edtTrafficAlarm.getText().toString())) {
-                MyToast.show("اخطار حجم باقیمانده باید کمتر از ترافیک اولیه باشد.", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
-                return false;
-            }
+//            if (primaryTraffic <= Integer.valueOf(edtTrafficAlarm.getText().toString())) {
+//                MyToast.show("اخطار حجم باقیمانده باید کمتر از ترافیک اولیه باشد.", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
+//                return false;
+//            }
             setting.setAlarmTypeRes(Setting.AlarmType.REMINDED_BYTES.ordinal());
             setting.setPercentTrafficAlarmRes(Integer.valueOf(edtTrafficAlarm.getText().toString()));
         } else if (leftDaysAlarm) {
@@ -439,12 +439,12 @@ public class PackageSettingsActivity extends EnhancedActivity {
             return;
         }
 
-        if (switchTrafficAlarm.isChecked() &&
-            Integer.valueOf(edtTrafficAlarm.getText().toString()) >=
-            Integer.valueOf(edtPrimaryTraffic.getText().toString())) {
-            MyToast.show("اخطار حجم باقیمانده باید از حجم شبانه روزی کمتر باشد", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
-            return;
-        }
+//        if (switchTrafficAlarm.isChecked() &&
+//            Integer.valueOf(edtTrafficAlarm.getText().toString()) >=
+//            Integer.valueOf(edtPrimaryTraffic.getText().toString())) {
+//            MyToast.show("اخطار حجم باقیمانده باید از حجم شبانه روزی کمتر باشد", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
+//            return;
+//        }
 
         if (edtSecondaryTraffic.getText().toString().trim().length() > 0 &&
             !edtSecondaryTraffic.getText().toString().equals("0")) {
@@ -588,25 +588,25 @@ public class PackageSettingsActivity extends EnhancedActivity {
             }
         });
 
-        edtPrimaryTraffic.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.length() != 0 && !s.toString().equals("0")) {
-                    long limitationValue = Long.valueOf(s.toString()) * 9 / 10;
-                    edtTrafficAlarm.setText(limitationValue + "");
-                }
-            }
-        });
+//        edtPrimaryTraffic.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                if (s.length() != 0 && !s.toString().equals("0")) {
+//                    long limitationValue = Long.valueOf(s.toString()) * 9 / 10;
+//                    edtTrafficAlarm.setText(limitationValue + "");
+//                }
+//            }
+//        });
 
         edtSecondaryTraffic.addTextChangedListener(new TextWatcher() {
             @Override
