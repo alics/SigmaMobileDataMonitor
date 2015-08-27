@@ -352,7 +352,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
             switchLeftDaysAlarm.setChecked(true);
             edtLeftDaysAlarm.setText(setting.getLeftDaysAlarm() + "");
             switchTrafficAlarm.setChecked(true);
-            edtTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(setting.getPercentTrafficAlarm()) + "");
+            edtTrafficAlarm.setText(setting.getPercentTrafficAlarm() + "");
         } else if (alarmType == Setting.AlarmType.LEFT_DAY.ordinal()) {
             switchLeftDaysAlarm.setChecked(true);
             edtLeftDaysAlarm.setText(setting.getLeftDaysAlarm() + "");
@@ -361,7 +361,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
             switchTrafficAlarm.setChecked(false);
         } else if (alarmType == Setting.AlarmType.REMINDED_BYTES.ordinal()) {
             switchTrafficAlarm.setChecked(true);
-            edtTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(setting.getPercentTrafficAlarm()) + "");
+            edtTrafficAlarm.setText(setting.getPercentTrafficAlarm()+ "");
             edtLeftDaysAlarm.setVisibility(View.INVISIBLE);
             txtLeftDaysAlarm.setVisibility(View.INVISIBLE);
             switchLeftDaysAlarm.setChecked(false);
