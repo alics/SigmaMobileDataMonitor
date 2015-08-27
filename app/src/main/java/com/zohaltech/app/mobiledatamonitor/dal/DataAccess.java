@@ -79,9 +79,6 @@ public class DataAccess extends SQLiteOpenHelper {
                                                                        Helper.getCurrentDate(),
                                                                        LicenseManager.Status.TESTING_TIME.ordinal(),
                                                                        1));
-            } else {
-                status.setStatus(LicenseManager.Status.EXPIRED.ordinal());
-                LicenseManager.updateLicense(status);
             }
         } catch (MyRuntimeException e) {
             e.printStackTrace();

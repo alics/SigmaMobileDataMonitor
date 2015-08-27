@@ -205,7 +205,7 @@ public class UsageLogs {
         Cursor cursor = null;
         try {
             String query = "SELECT SUM(TrafficBytes) SumTraffic FROM " + TableName +
-                           " WHERE " + LogDateTime + " > '" + history.getStartDateTime() + "'" +
+                           " WHERE " + LogDateTime + " >= '" + history.getStartDateTime() + "'" +
                            "AND SUBSTR(" + LogDateTime + ",11,9) BETWEEN '" + dataPackage.getSecondaryTrafficStartTime() + "' AND '" + dataPackage.getSecondaryTrafficEndTime() + "'";
 
             cursor = db.rawQuery(query, null);
