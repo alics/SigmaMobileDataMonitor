@@ -26,8 +26,7 @@ public class PackageHistories {
                                       DataPackageId + " INTEGER REFERENCES " + DataPackages.TableName + " (" + DataPackages.Id + "), " +
                                       StartDateTime + " CHAR(19)  ," +
                                       EndDateTime + " CHAR(19)  ," +
-                                      SecondaryTrafficEndDateTime + " " +
-                                      "CHAR(19) ," +
+                                      SecondaryTrafficEndDateTime + " CHAR(19) ," +
                                       SimSerial + " VARCHAR(50) ," +
                                       Status + " INTEGER NOT NULL );";
 
@@ -76,6 +75,7 @@ public class PackageHistories {
         values.put(DataPackageId, packageHistory.getDataPackageId());
         values.put(StartDateTime, packageHistory.getStartDateTime());
         values.put(EndDateTime, packageHistory.getEndDateTime());
+        values.put(SecondaryTrafficEndDateTime, packageHistory.getSecondaryTrafficEndDateTime());
         values.put(SimSerial, packageHistory.getSimSerial());
         values.put(Status, packageHistory.getStatus());
 
@@ -88,6 +88,7 @@ public class PackageHistories {
         values.put(DataPackageId, packageHistory.getDataPackageId());
         values.put(StartDateTime, packageHistory.getStartDateTime());
         values.put(EndDateTime, packageHistory.getEndDateTime());
+        values.put(SecondaryTrafficEndDateTime, packageHistory.getSecondaryTrafficEndDateTime());
         values.put(SimSerial, packageHistory.getSimSerial());
         values.put(Status, packageHistory.getStatus());
 

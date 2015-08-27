@@ -19,7 +19,7 @@ public class TrafficUnitsUtil {
             result = bytes + " B/s";
         } else if (bytes >= 1024 && bytes < power(1024, 2)) {
             result = getTrafficWithPoint((float) bytes / 1024) + " KB/s";
-        } else if (bytes >= (1024 * 1024)) {
+        } else if (bytes >= power(1024, 2)) {
             result = getTrafficWithPoint((float) bytes / power(1024, 2)) + " MB/s";
         }
         return result;
@@ -29,7 +29,7 @@ public class TrafficUnitsUtil {
         String result = "0 MB";
         if (bytes < power(1024, 3)) {
             result = getTrafficWithPoint((float) bytes / power(1024, 2)) + " MB";
-        } else if (bytes >= (1024 * 1024 * 1024)) {
+        } else if (bytes >= power(1024, 3)) {
             result = getTrafficWithPoint((float) bytes / power(1024, 3)) + " GB";
         }
         return result;
@@ -39,27 +39,27 @@ public class TrafficUnitsUtil {
         String result = "0MB";
         if (bytes < power(1024, 3)) {
             result = getTrafficWithoutPoint((float) bytes / power(1024, 2)) + "MB";
-        } else if (bytes >= (1024 * 1024 * 1024)) {
+        } else if (bytes >= power(1024, 3)) {
             result = getTrafficWithoutPoint((float) bytes / power(1024, 3)) + "GB";
         }
         return result;
     }
 
     public static String getArcTraffic(long usedBytes, long totalBytes) {
-        String usedTraffic = getUsedTrafficWithoutPoint(usedBytes);
-        String totalTraffic = getUsedTrafficWithoutPoint(totalBytes);
+        String usedTraffic = getUsedTrafficWithPoint(usedBytes);
+        String totalTraffic = getUsedTrafficWithPoint(totalBytes);
         return usedTraffic + "/" + totalTraffic;
     }
 
     public static TrafficUnitsUtil getTodayTraffic(long bytes) {
         TrafficUnitsUtil result = new TrafficUnitsUtil();
-        if (bytes < (1024 * 1024)) {
+        if (bytes < power(1024, 2)) {
             result.setValue(getTrafficWithPoint((float) bytes / 1024));
             result.setPostfix("KB");
-        } else if (bytes >= (1024 * 1024) && bytes < power(1024, 3)) {
+        } else if (bytes >= power(1024, 2) && bytes < power(1024, 3)) {
             result.setValue(getTrafficWithPoint((float) bytes / power(1024, 2)));
             result.setPostfix("MB");
-        } else if (bytes >= (1024 * 1024 * 1024)) {
+        } else if (bytes >= power(1024, 3)) {
             result.setValue(getTrafficWithPoint((float) bytes / power(1024, 3)));
             result.setPostfix("GB");
         }

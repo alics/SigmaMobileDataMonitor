@@ -8,7 +8,6 @@ import android.util.Log;
 import com.zohaltech.app.mobiledatamonitor.classes.Helper;
 import com.zohaltech.app.mobiledatamonitor.classes.LicenseManager;
 import com.zohaltech.app.mobiledatamonitor.classes.MyRuntimeException;
-import com.zohaltech.app.mobiledatamonitor.classes.MyUncaughtExceptionHandler;
 import com.zohaltech.app.mobiledatamonitor.entities.DailyTrafficHistory;
 import com.zohaltech.app.mobiledatamonitor.entities.DataPackage;
 import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
@@ -167,6 +166,7 @@ public class UsageLogs {
         Cursor cursor = null;
         try {
             String query = generateQueryForPrimaryTraffic(dataPackage, history);
+            Log.i("sdj", query);
             cursor = db.rawQuery(query, null);
             if (cursor != null && cursor.moveToFirst()) {
                 do {
@@ -191,11 +191,11 @@ public class UsageLogs {
             return "SELECT SUM(" + TrafficBytes + ") SumTraffic FROM " + TableName + " WHERE " + LogDateTime + " > '" + history.getStartDateTime() + "'";
 
         if (history.getSecondaryTrafficEndDateTime() == null || "".equals(history.getSecondaryTrafficEndDateTime())) {
-            return "SELECT SUM(" + TrafficBytes + ") SumTraffic FROM " + TableName + " WHERE " + LogDateTime + " > '" + history.getStartDateTime() + "'" +
-                   "AND SUBSTR(" + LogDateTime + ",12,5) NOT BETWEEN '" + dataPackage.getSecondaryTrafficStartTime() + "' AND '" + dataPackage.getSecondaryTrafficEndTime() + "'";
+            return " SELECT SUM(" + TrafficBytes + ") SumTraffic FROM " + TableName + " WHERE " + LogDateTime + " > '" + history.getStartDateTime() + "'" +
+                   " AND SUBSTR(" + LogDateTime + ", 12, 5) NOT BETWEEN '" + dataPackage.getSecondaryTrafficStartTime() + "' AND '" + dataPackage.getSecondaryTrafficEndTime() + "'";
         }
-        return "SELECT (SELECT SUM(" + TrafficBytes + ") FROM " + TableName + " WHERE " + LogDateTime + " >= '" + history.getStartDateTime() + "' )-\n" +
-               "(SELECT SUM(TrafficBytes)  FROM " + TableName + " WHERE (" + LogDateTime + " BETWEEN '" + history.getStartDateTime() + "' AND '" + history.getSecondaryTrafficEndDateTime() + "')\n";
+        return " SELECT (SELECT IFNULL(SUM(" + TrafficBytes + "), 0) FROM " + TableName + " WHERE " + LogDateTime + " >= '" + history.getStartDateTime() + "') - " +
+               " (SELECT IFNULL(SUM(" + TrafficBytes + "), 0) FROM " + TableName + " WHERE " + LogDateTime + " BETWEEN '" + history.getStartDateTime() + "' AND '" + history.getSecondaryTrafficEndDateTime() + "') AS SumTraffic";
     }
 
     public static long getUsedSecondaryTrafficOfPackage(DataPackage dataPackage, PackageHistory history) {
@@ -205,8 +205,9 @@ public class UsageLogs {
         Cursor cursor = null;
         try {
             String query = "SELECT SUM(TrafficBytes) SumTraffic FROM " + TableName +
-                           " WHERE " + LogDateTime + " >= '" + history.getStartDateTime() + "'" +
-                           "AND SUBSTR(" + LogDateTime + ",12,5) BETWEEN '" + dataPackage.getSecondaryTrafficStartTime() + "' AND '" + dataPackage.getSecondaryTrafficEndTime() + "'";
+                           " WHERE " + LogDateTime + " >= '" + history.getStartDateTime() + "' AND" +
+                           " SUBSTR(" + LogDateTime + ",12,5) BETWEEN '" + dataPackage.getSecondaryTrafficStartTime() +
+                           "' AND '" + dataPackage.getSecondaryTrafficEndTime() + "'";
 
 
             cursor = db.rawQuery(query, null);

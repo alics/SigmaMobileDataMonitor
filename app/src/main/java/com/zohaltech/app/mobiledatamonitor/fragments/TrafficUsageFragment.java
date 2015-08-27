@@ -79,9 +79,9 @@ public class TrafficUsageFragment extends Fragment {
     private class PrimaryProgressTask extends AsyncTask<Void, Integer, Void> {
 
         PackageStatus status;
-        long   usedPrimaryTraffic;
-        long   totalPrimaryTraffic;
-        String strPrimaryTraffic;
+        long          usedPrimaryTraffic;
+        long          totalPrimaryTraffic;
+        String        strPrimaryTraffic;
 
         public PrimaryProgressTask(PackageStatus status) {
             this.status = status;
@@ -90,8 +90,8 @@ public class TrafficUsageFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            usedPrimaryTraffic = status.getUsedPrimaryTraffic();
             totalPrimaryTraffic = status.getPrimaryTraffic();
+            usedPrimaryTraffic = status.getUsedPrimaryTraffic() <= totalPrimaryTraffic ? status.getUsedPrimaryTraffic() : totalPrimaryTraffic;
             strPrimaryTraffic = TrafficUnitsUtil.getArcTraffic(usedPrimaryTraffic, totalPrimaryTraffic);
         }
 
@@ -136,9 +136,9 @@ public class TrafficUsageFragment extends Fragment {
     private class SecondaryTrafficTask extends AsyncTask<Void, Integer, Void> {
 
         PackageStatus status;
-        long   usedSecondaryTraffic;
-        long   totalSecondaryTraffic;
-        String strSecondaryTraffic;
+        long          usedSecondaryTraffic;
+        long          totalSecondaryTraffic;
+        String        strSecondaryTraffic;
 
         public SecondaryTrafficTask(PackageStatus status) {
             this.status = status;
@@ -147,8 +147,8 @@ public class TrafficUsageFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            usedSecondaryTraffic = status.getUsedSecondaryTraffic();
             totalSecondaryTraffic = status.getSecondaryTraffic();
+            usedSecondaryTraffic = status.getUsedSecondaryTraffic() <= totalSecondaryTraffic ? status.getUsedSecondaryTraffic() : totalSecondaryTraffic;
             strSecondaryTraffic = TrafficUnitsUtil.getArcTraffic(usedSecondaryTraffic, totalSecondaryTraffic);
             txtSecondaryCaption.setText(status.getSecondaryCaption());
         }
