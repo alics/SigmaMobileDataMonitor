@@ -208,6 +208,7 @@ public class UsageLogs {
                            " WHERE " + LogDateTime + " >= '" + history.getStartDateTime() + "'" +
                            "AND SUBSTR(" + LogDateTime + ",12,5) BETWEEN '" + dataPackage.getSecondaryTrafficStartTime() + "' AND '" + dataPackage.getSecondaryTrafficEndTime() + "'";
 
+
             cursor = db.rawQuery(query, null);
             if (cursor != null && cursor.moveToFirst()) {
                 do {
@@ -229,10 +230,8 @@ public class UsageLogs {
     }
 
     public static void deleteLogs(String date) {
-        ArrayList<UsageLog> logs = select("Where " + LogDateTime + " < " + date, null);
-        for (int i = 0; i < logs.size(); i++) {
-            delete(logs.get(i));
-        }
+        DataAccess db = new DataAccess();
+        db.delete(TableName, LogDateTime + " < '" + date + "'", null);
     }
 }
 

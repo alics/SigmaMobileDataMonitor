@@ -7,6 +7,7 @@ import com.zohaltech.app.mobiledatamonitor.dal.UsageLogs;
 import com.zohaltech.app.mobiledatamonitor.entities.DataPackage;
 import com.zohaltech.app.mobiledatamonitor.entities.PackageHistory;
 import com.zohaltech.app.mobiledatamonitor.entities.Setting;
+import com.zohaltech.app.mobiledatamonitor.entities.UsageLog;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,6 +20,8 @@ public final class PackageStatus {
     String secondaryCaption;
 
     public static PackageStatus getCurrentStatus() {
+       ArrayList<UsageLog> usageLogs =  UsageLogs.select();
+
         PackageStatus status = new PackageStatus();
         PackageHistory history = PackageHistories.getActivePackage();
 
