@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="@color/primary"
               android:orientation="vertical">
 
     <include
@@ -10,14 +11,131 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <widgets.MyTextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="رفع مسئولیت:
- لطفا توجه داشته باشید در مواردی که برنامه به اجبار توسط کاربر بسته شده است و یا به طور ناگهانی دستگاه خاموش شده باشد این برنامه ممکن است میزان استفاده شده از پهنای باند را به اشتباه نشان دهد.
-درصورتی که هنگام نصب نرم¬افزار تاریخ دستگاه صحیح نبوده و یا بعد از نصب نرم¬افزار تاریخ دستگاه تغییر داده شود، گزارش-های نرم¬افزار و اعلان¬های مربوط به اتمام اعتبار یا ترافیک نرم افزار دچار اختلال خواهند شد.
-با پاک کردن کردن داده¬های مربوط به نرم¬افزار کارکرد نرم¬افزار دچار اختلال خواهد شد
-در صورت وقوع موارد یادشده، توسعه دهندگان مسئول هیچ گونه خسارت یا عدم کارکرد درست استفاده از این نرم افزار نیستند.
-"/>
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher"/>
+
+        <widgets.MyTextView
+            android:id="@+id/txtAppName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textStyle="bold"/>
+
+        <widgets.MyTextView
+            android:id="@+id/txtVersion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="نسخه 1.0"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.7"
+        android:gravity="center"
+        android:padding="15dp">
+
+        <widgets.MyButton
+            android:id="@+id/btnShare"
+            style="@style/DashboardButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_share_white"
+            android:onClick="btnShareOnClick"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="اشتراک گذاری"/>
+
+        <widgets.MyButton
+            android:id="@+id/btnProducts"
+            style="@style/DashboardButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_purchase_package"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="محصولات"/>
+
+        <widgets.MyButton
+            android:id="@+id/btnFeedback"
+            style="@style/DashboardButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_manage_packages"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="بازخورد"/>
+
+        <widgets.MyButton
+            android:id="@+id/btnRate"
+            style="@style/DashboardButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_edit_white"
+            android:onClick="btnRateOnClick"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="امتیازدهی"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutCopyright"
+        style="@style/DashboardButton"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:paddingLeft="25dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imgUnco"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_launcher"/>
+
+            <TextView
+                android:id="@+id/txtEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="info@zohaltech.com"/>
+
+            <TextView
+                android:id="@+id/txtCopyright"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/copyright"/>
+
+            <TextView
+                android:id="@+id/txtReserved"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/all_rights"/>
+
+        </LinearLayout>
+
+        <!--<ImageView-->
+            <!--android:id="@+id/ImageView01"-->
+            <!--android:layout_width="23dp"-->
+            <!--android:layout_height="23dp"-->
+            <!--android:src="@drawable/ic_back_white"/>-->
+    </LinearLayout>
 
 </LinearLayout>
