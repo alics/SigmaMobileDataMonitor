@@ -17,9 +17,9 @@
             android:layout_height="wrap_content"
             android:gravity="right"
             android:paddingBottom="5dp"
+            android:text="بسته آلفا+ 30 روزه + 3 گیگ هدیه شبانه kjh sdfkjlskdfj sdlfkjnsadkjsdhf sdkfjhsd fkjsdfh "
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/primary"
-            android:text="بسته آلفا+ 30 روزه + 3 گیگ هدیه شبانه kjh sdfkjlskdfj sdlfkjnsadkjsdhf sdkfjhsd fkjsdfh "/>
+            android:textColor="@color/primary"/>
 
     </LinearLayout>
 
@@ -34,20 +34,46 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingBottom="5dp"
-            android:textColor="@color/secondary_text"
-            android:text="1394yuuyghkjghiugj ghjgjdfasd sdf sdhf klsjdf lksdjfh slkdjfh sdlkfjh sdlkfj dflkj flkjsh dflksdfh lksjdh"
             android:gravity="right"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:paddingBottom="5dp"
+            android:text="1394yuuyghkjghiugj ghjgjdfasd sdf sdhf klsjdf lksdjfh slkdjfh sdlkfjh sdlkfj dflkj flkjsh dflksdfh lksjdh"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/secondary_text"/>
 
         <widgets.MyTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="5dp"
             android:text="تاریخ فعال سازی : "
-            android:textColor="@color/secondary_text"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/secondary_text"/>
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="horizontal">
+
+        <widgets.MyTextView
+            android:id="@+id/txtSecondaryExpDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:paddingBottom="5dp"
+            android:text=" lskdjfhskdf lskdjfhsd flksdjfh slkdjfhsl kdjd6lfkj65shd16lf k4jsd1hf 1dslkjf1351"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/secondary_text"/>
+
+        <widgets.MyTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:text="تاریخ پایان بسته شبانه :"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/secondary_text"/>
     </LinearLayout>
 
 
@@ -62,19 +88,19 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingBottom="5dp"
-            android:textColor="@color/secondary_text"
-            android:text=" lskdjfhskdf lskdjfhsd flksdjfh slkdjfhsl kdjfhslkdjfhsldkjfhsldkfjhsdlfjh sd6lfkj65shd16lf k4jsd1hf 1dslkjf1351"
             android:gravity="right"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:paddingBottom="5dp"
+            android:text=" lskdjfhskdf lskdjfhsd flksdjfh slkdjfhsl kdjfhslkdjfhsldkjfhsldkfjhsdlfjh sd6lfkj65shd16lf k4jsd1hf 1dslkjf1351"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/secondary_text"/>
 
         <widgets.MyTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="5dp"
             android:text="تاریخ پایان : "
-            android:textColor="@color/secondary_text"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/secondary_text"/>
 
     </LinearLayout>
 
@@ -89,19 +115,19 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingBottom="5dp"
-            android:textColor="@color/secondary_text"
-            android:text=" o;sdj sld56 lkjdffasl dfjls dfj56;lask6djf4 6;asl4dk6fj 4;a6lsdk4fj6 4as;l6dkf4j6 a46;ls4dkfj5446"
             android:gravity="right"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:paddingBottom="5dp"
+            android:text=" o;sdj sld56 lkjdffasl dfjls dfj56;lask6djf4 6;asl4dk6fj 4;a6lsdk4fj6 4as;l6dkf4j6 a46;ls4dkfj5446"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/secondary_text"/>
 
         <widgets.MyTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="5dp"
             android:text="وضعیت بسته : "
-            android:textColor="@color/secondary_text"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/secondary_text"/>
 
     </LinearLayout>
 

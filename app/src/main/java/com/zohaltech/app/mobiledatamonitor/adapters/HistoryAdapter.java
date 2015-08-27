@@ -27,6 +27,7 @@ public class HistoryAdapter extends ArrayAdapter<PackageHistory> {
         TextView     txtActivateDate;
         TextView     txtExpDate;
         TextView     txtStatus;
+        TextView     txtSecondaryExpDate;
         LinearLayout layoutPackageHistory;
 
         public ViewHolder(View view) {
@@ -34,6 +35,7 @@ public class HistoryAdapter extends ArrayAdapter<PackageHistory> {
             txtActivateDate = (TextView) view.findViewById(R.id.txtActivateDate);
             txtExpDate = (TextView) view.findViewById(R.id.txtExpDate);
             txtStatus = (TextView) view.findViewById(R.id.txtStatus);
+            txtSecondaryExpDate = (TextView) view.findViewById(R.id.txtSecondaryExpDate);
             layoutPackageHistory = (LinearLayout) view.findViewById(R.id.layoutPackageHistory);
         }
 
@@ -46,6 +48,10 @@ public class HistoryAdapter extends ArrayAdapter<PackageHistory> {
             String expDate = item.getEndDateTime() != null && !item.getEndDateTime().isEmpty() ?
                              SolarCalendar.getShamsiDateTime(Helper.getDateTime(item.getEndDateTime())).substring(0, 16) : "---";
             txtExpDate.setText(expDate);
+
+            String secondaryExpDate = item.getSecondaryTrafficEndDateTime() != null && !item.getSecondaryTrafficEndDateTime().isEmpty() ?
+                             SolarCalendar.getShamsiDateTime(Helper.getDateTime(item.getSecondaryTrafficEndDateTime())).substring(0, 16) : "---";
+            txtSecondaryExpDate.setText(secondaryExpDate);
             String status = "";
             if (item.getStatus() == PackageHistory.StatusEnum.ACTIVE.ordinal())
                 status = "فعال";

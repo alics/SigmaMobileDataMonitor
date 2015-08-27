@@ -122,7 +122,7 @@ public final class PackageStatus {
 
         } else if (setting.getAlarmType() == Setting.AlarmType.REMINDED_BYTES.ordinal()) {
             long trafficAlarm = Math.round(setting.getPercentTrafficAlarm() * 0.01 * dataPackage.getPrimaryTraffic());
-            if (trafficAlarm >= usedPrimaryTraffic) {
+            if(usedPrimaryTraffic >= trafficAlarm) {
                 String msg = "بیشتر از " + TrafficUnitsUtil.ByteToMb(trafficAlarm) + " مگابایت از حجم بسته مصرف شده است";
                 alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.REMINDED_TRAFFIC_ALARM, msg));
             }
@@ -135,7 +135,7 @@ public final class PackageStatus {
 
             long trafficAlarm = Math.round(setting.getPercentTrafficAlarm() * 0.01 * dataPackage.getPrimaryTraffic());
             long reminded = dataPackage.getPrimaryTraffic() - usedPrimaryTraffic;
-            if (trafficAlarm >= usedPrimaryTraffic) {
+            if (usedPrimaryTraffic >= trafficAlarm) {
                 String msg = "بیشتر از " + TrafficUnitsUtil.ByteToMb(trafficAlarm) + " مگابایت از حجم بسته مصرف شده است";
                 alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.REMINDED_TRAFFIC_ALARM, msg));
             }
