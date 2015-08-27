@@ -3,10 +3,10 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         config {
-            keyAlias 'android'
-            keyPassword 'android'
-            storeFile file('D:/android/key_stores/debug.keystore')
-            storePassword 'android'
+            keyAlias 'mobiledatamonitor_debug'
+            keyPassword '8113024'
+            storeFile file('D:/android/key_stores/mobiledatamonitor_debug.keystore')
+            storePassword '8113024'
         }
     }
     compileSdkVersion 22
