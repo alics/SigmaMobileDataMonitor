@@ -1,6 +1,5 @@
 package com.zohaltech.app.mobiledatamonitor.classes;
 
-
 import com.zohaltech.app.mobiledatamonitor.dal.DataPackages;
 import com.zohaltech.app.mobiledatamonitor.dal.PackageHistories;
 import com.zohaltech.app.mobiledatamonitor.dal.Settings;
@@ -143,7 +142,6 @@ public final class PackageStatus {
         }
         return alarmObjects;
     }
-
 
     public long getPrimaryTraffic() {
         return primaryTraffic;
