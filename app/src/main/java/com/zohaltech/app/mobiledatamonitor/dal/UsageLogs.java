@@ -160,6 +160,7 @@ public class UsageLogs {
 
 
     public static long getUsedPrimaryTrafficOfPackage(DataPackage dataPackage, PackageHistory history) {
+        ArrayList<UsageLog> list = UsageLogs.select();
         long usedTraffic = 0;
         DataAccess da = new DataAccess();
         SQLiteDatabase db = da.getReadableDB();
@@ -224,7 +225,9 @@ public class UsageLogs {
             if (db != null && db.isOpen())
                 db.close();
         }
-        if (usedTraffic >= dataPackage.getSecondaryTraffic()) {
+        if (usedTraffic >= dataPackage.getSecondaryTraffic() &&
+            (history.getSecondaryTrafficEndDateTime() == null ||
+             history.getSecondaryTrafficEndDateTime().equals(""))) {
             PackageHistories.terminateDataPackageSecondaryPlan(history);
         }
         return usedTraffic;

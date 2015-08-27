@@ -20,8 +20,6 @@ public final class PackageStatus {
     String secondaryCaption;
 
     public static PackageStatus getCurrentStatus() {
-       ArrayList<UsageLog> usageLogs =  UsageLogs.select();
-
         PackageStatus status = new PackageStatus();
         PackageHistory history = PackageHistories.getActivePackage();
 
@@ -125,7 +123,7 @@ public final class PackageStatus {
 
         } else if (setting.getAlarmType() == Setting.AlarmType.REMINDED_BYTES.ordinal()) {
             long trafficAlarm = Math.round(setting.getPercentTrafficAlarm() * 0.01 * dataPackage.getPrimaryTraffic());
-            if(usedPrimaryTraffic >= trafficAlarm) {
+            if (usedPrimaryTraffic >= trafficAlarm) {
                 String msg = "بیشتر از " + TrafficUnitsUtil.ByteToMb(trafficAlarm) + " مگابایت از حجم بسته مصرف شده است";
                 alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.REMINDED_TRAFFIC_ALARM, msg));
             }

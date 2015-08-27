@@ -137,6 +137,7 @@ public class PackageHistories {
     public static void terminateDataPackageSecondaryPlan(PackageHistory packageHistory) {
         packageHistory.setSecondaryTrafficEndDateTime(Helper.getCurrentDateTime());
         update(packageHistory);
+
     }
 
     public static void deletedReservedPackages() {
