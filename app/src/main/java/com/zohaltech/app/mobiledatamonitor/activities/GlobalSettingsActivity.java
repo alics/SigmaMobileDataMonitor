@@ -25,7 +25,6 @@ public class GlobalSettingsActivity extends EnhancedActivity {
     LinearLayout layoutPremium;
     LinearLayout layoutAbout;
     LinearLayout layoutIntroduction;
-    TextView     txtAbout;
 
     @Override
     void onCreated() {
@@ -39,13 +38,10 @@ public class GlobalSettingsActivity extends EnhancedActivity {
         layoutPremium = (LinearLayout) findViewById(R.id.layoutPremium);
         layoutAbout = (LinearLayout) findViewById(R.id.layoutAbout);
         layoutIntroduction = (LinearLayout) findViewById(R.id.layoutIntroduction);
-        txtAbout = (TextView) findViewById(R.id.txtAbout);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             layoutLockScreen.setVisibility(View.GONE);
         }
-
-        txtAbout.setText("درباره " + getString(R.string.app_name));
 
         Setting setting = Settings.getCurrentSettings();
         switchShowNotification.setChecked(setting.getShowNotification());
@@ -108,7 +104,7 @@ public class GlobalSettingsActivity extends EnhancedActivity {
         layoutAbout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(App.currentActivity, AboutUsActivity.class);
+                Intent intent = new Intent(App.currentActivity, AboutActivity.class);
                 startActivity(intent);
             }
         });

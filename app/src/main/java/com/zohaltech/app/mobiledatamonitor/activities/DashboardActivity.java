@@ -118,40 +118,41 @@ public class DashboardActivity extends EnhancedActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (LicenseManager.getLicenseStatus() == false) {
-            if (paymentDialog == null) {
-                paymentDialog = DialogManager.getPopupDialog(App.currentActivity,
-                                                             "خرید نسخه کامل",
-                                                             "مدت استفاده آزمایشی از برنامه به پایان رسیده است، آیا مایل به خریداری نسخه کامل هستید؟",
-                                                             "خوشم اومد، میخرم",
-                                                             "شاید بعدا!",
-                                                             null,
-                                                             new Runnable() {
-                                                                 @Override
-                                                                 public void run() {
-                                                                     MyToast.show("خرید بازار", Toast.LENGTH_SHORT);
-                                                                     //// TODO: 2015/08/20
-                                                                     //go to bazar payment
-                                                                     //get result in onActivityResult
-                                                                     //if result is ok --> update license , call webservice for purchase
-                                                                     //else if result is not ok --> finish activity
-                                                                 }
-                                                             },
-                                                             new Runnable() {
-                                                                 @Override
-                                                                 public void run() {
-                                                                     finish();
-                                                                 }
-                                                             });
-            }
-            paymentDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                @Override
-                public void onCancel(DialogInterface dialog) {
-                    finish();
-                }
-            });
-            paymentDialog.show();
-        }
+        //TODO : these lines shoub be uncommented
+        //if (LicenseManager.getLicenseStatus() == false) {
+        //    if (paymentDialog == null) {
+        //        paymentDialog = DialogManager.getPopupDialog(App.currentActivity,
+        //                                                     "خرید نسخه کامل",
+        //                                                     "مدت استفاده آزمایشی از برنامه به پایان رسیده است، آیا مایل به خریداری نسخه کامل هستید؟",
+        //                                                     "خوشم اومد، میخرم",
+        //                                                     "شاید بعدا!",
+        //                                                     null,
+        //                                                     new Runnable() {
+        //                                                         @Override
+        //                                                         public void run() {
+        //                                                             MyToast.show("خرید بازار", Toast.LENGTH_SHORT);
+        //                                                             //// TODO: 2015/08/20
+        //                                                             //go to bazar payment
+        //                                                             //get result in onActivityResult
+        //                                                             //if result is ok --> update license , call webservice for purchase
+        //                                                             //else if result is not ok --> finish activity
+        //                                                         }
+        //                                                     },
+        //                                                     new Runnable() {
+        //                                                         @Override
+        //                                                         public void run() {
+        //                                                             finish();
+        //                                                         }
+        //                                                     });
+        //    }
+        //    paymentDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+        //        @Override
+        //        public void onCancel(DialogInterface dialog) {
+        //            finish();
+        //        }
+        //    });
+        //    paymentDialog.show();
+        //}
     }
 
     @Override

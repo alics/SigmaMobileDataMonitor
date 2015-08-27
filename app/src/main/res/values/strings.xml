@@ -1,10 +1,12 @@
 <resources>
     <string name="app_name">دیتا داشبورد</string>
-    <string name="copyright">Copyright © 2015</string>
     <string name="press_back_again_to_exit">برای خروج دوباره دکمه بازگشت را فشار دهید</string>
     <string name="speed">"Speed: "</string>
     <string name="down">"Down: "</string>
     <string name="up">", Up: "</string>
     <string name="today">"Today: "</string>
     <string name="slide_left"><![CDATA[<<<<<]]></string>
+
+    <string name="copyright">Copyright © 2015 ZohalTech</string>
+    <string name="all_rights">All Rights Reserved</string>
 </resources>
