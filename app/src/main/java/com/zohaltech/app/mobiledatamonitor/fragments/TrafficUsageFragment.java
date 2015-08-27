@@ -25,13 +25,13 @@ public class TrafficUsageFragment extends Fragment {
     TextView    txtSecondary;
     TextView    txtSecondaryCaption;
 
-    long   usedPrimaryTraffic;
-    long   totalPrimaryTraffic;
-    String strPrimaryTraffic;
-
-    long   usedSecondaryTraffic;
-    long   totalSecondaryTraffic;
-    String strSecondaryTraffic;
+    //long   usedPrimaryTraffic;
+    //long   totalPrimaryTraffic;
+    //String strPrimaryTraffic;
+    //
+    //long   usedSecondaryTraffic;
+    //long   totalSecondaryTraffic;
+    //String strSecondaryTraffic;
 
     @Nullable
     @Override
@@ -54,6 +54,9 @@ public class TrafficUsageFragment extends Fragment {
 
         txtSecondary.setLayoutParams(new LinearLayout.LayoutParams(size2, ViewGroup.LayoutParams.WRAP_CONTENT));
         txtSecondaryCaption.setLayoutParams(new LinearLayout.LayoutParams(size2, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        progressPrimaryUsage.setProgress(0, "0MB/0MB");
+        progressSecondaryUsage.setProgress(0, "0MB/0MB");
     }
 
     @Override
@@ -63,19 +66,6 @@ public class TrafficUsageFragment extends Fragment {
     }
 
     public void updateUI() {
-        PackageStatus status = PackageStatus.getCurrentStatus();
-
-        usedPrimaryTraffic = status.getUsedPrimaryTraffic();
-        totalPrimaryTraffic = status.getPrimaryTraffic();
-        usedSecondaryTraffic = status.getUsedSecondaryTraffic();
-        totalSecondaryTraffic = status.getSecondaryTraffic();
-        strPrimaryTraffic = TrafficUnitsUtil.getArcTraffic(usedPrimaryTraffic, totalPrimaryTraffic);
-        strSecondaryTraffic = TrafficUnitsUtil.getArcTraffic(usedSecondaryTraffic, totalSecondaryTraffic);
-        progressPrimaryUsage.setProgress(0, strPrimaryTraffic);
-        progressSecondaryUsage.setProgress(0, strSecondaryTraffic);
-
-        txtSecondaryCaption.setText(status.getSecondaryCaption());
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             new PrimaryProgressTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             new SecondaryTrafficTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -86,6 +76,17 @@ public class TrafficUsageFragment extends Fragment {
     }
 
     private class PrimaryProgressTask extends AsyncTask<Void, Integer, Void> {
+
+        long   usedPrimaryTraffic;
+        long   totalPrimaryTraffic;
+        String strPrimaryTraffic;
+
+        public PrimaryProgressTask() {
+            PackageStatus status = PackageStatus.getCurrentStatus();
+            usedPrimaryTraffic = status.getUsedPrimaryTraffic();
+            totalPrimaryTraffic = status.getPrimaryTraffic();
+            strPrimaryTraffic = TrafficUnitsUtil.getArcTraffic(usedPrimaryTraffic, totalPrimaryTraffic);
+        }
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -127,6 +128,18 @@ public class TrafficUsageFragment extends Fragment {
 
     private class SecondaryTrafficTask extends AsyncTask<Void, Integer, Void> {
 
+        long   usedSecondaryTraffic;
+        long   totalSecondaryTraffic;
+        String strSecondaryTraffic;
+
+        public SecondaryTrafficTask() {
+            PackageStatus status = PackageStatus.getCurrentStatus();
+            usedSecondaryTraffic = status.getUsedSecondaryTraffic();
+            totalSecondaryTraffic = status.getSecondaryTraffic();
+            strSecondaryTraffic = TrafficUnitsUtil.getArcTraffic(usedSecondaryTraffic, totalSecondaryTraffic);
+            txtSecondaryCaption.setText(status.getSecondaryCaption());
+        }
+
         @Override
         protected Void doInBackground(Void... voids) {
             try {
@@ -164,5 +177,4 @@ public class TrafficUsageFragment extends Fragment {
             progressSecondaryUsage.setProgress(values[0], strSecondaryTraffic);
         }
     }
-
 }
