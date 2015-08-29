@@ -76,6 +76,8 @@ public class NotificationHandler {
                         .setContentText(text)
                         .setShowWhen(true)
                         .setOngoing(false)
+                        //.setVibrate({10L,20L})
+                        //.setSound()
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
                         .setVisibility(lockScreenVisibility)
                         .setColor(App.context.getResources().getColor(R.color.primary))

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <widgets.MyTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="رفع مسئولیت:
+ لطفا توجه داشته باشید در مواردی که برنامه به اجبار توسط کاربر بسته شده است و یا به طور ناگهانی دستگاه خاموش شده باشد این برنامه ممکن است میزان استفاده شده از پهنای باند را به اشتباه نشان دهد.
+درصورتی که هنگام نصب نرم¬افزار تاریخ دستگاه صحیح نبوده و یا بعد از نصب نرم¬افزار تاریخ دستگاه تغییر داده شود، گزارش-های نرم¬افزار و اعلان¬های مربوط به اتمام اعتبار یا ترافیک نرم افزار دچار اختلال خواهند شد.
+با پاک کردن کردن داده¬های مربوط به نرم¬افزار کارکرد نرم¬افزار دچار اختلال خواهد شد
+در صورت وقوع موارد یادشده، توسعه دهندگان مسئول هیچ گونه خسارت یا عدم کارکرد درست استفاده از این نرم افزار نیستند.
+"/>
+
+</LinearLayout>
