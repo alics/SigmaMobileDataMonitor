@@ -15,88 +15,121 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <ImageView
-            android:id="@+id/imgLogo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@drawable/ic_app"/>
 
         <widgets.MyTextView
-            android:id="@+id/txtAppName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/white"
             android:textStyle="bold"/>
 
         <widgets.MyTextView
             android:id="@+id/txtVersion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="نسخه 1.0"/>
+            android:text="نسخه 1.0"
+            android:textColor="@color/white"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.7"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:padding="15dp">
+        android:padding="10dp">
 
         <widgets.MyButton
             android:id="@+id/btnShare"
             style="@style/DashboardButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:drawablePadding="5dp"
             android:drawableTop="@drawable/ic_share_white"
+            android:padding="5dp"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="اشتراک گذاری"/>
-
-        <widgets.MyButton
-            android:id="@+id/btnProducts"
-            style="@style/DashboardButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableTop="@drawable/ic_purchase_package"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:text="محصولات"/>
+            android:text="اشتراک گذاری"
+            android:textColor="@color/white"/>
 
         <widgets.MyButton
             android:id="@+id/btnFeedback"
             style="@style/DashboardButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:drawableTop="@drawable/ic_manage_packages"
+            android:layout_margin="5dp"
+            android:drawablePadding="5dp"
+            android:drawableTop="@drawable/ic_feedback_white"
+            android:padding="5dp"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="بازخورد"/>
+            android:text="بازخورد"
+            android:textColor="@color/white"/>
 
         <widgets.MyButton
             android:id="@+id/btnRate"
             style="@style/DashboardButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:drawableTop="@drawable/ic_edit_white"
+            android:layout_margin="5dp"
+            android:drawablePadding="5dp"
+            android:drawableTop="@drawable/ic_rate_white"
             android:onClick="btnRateOnClick"
+            android:padding="5dp"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="امتیازدهی"/>
+            android:text="امتیازدهی"
+            android:textColor="@color/white"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/layoutCopyright"
-        style="@style/DashboardButton"
+    <widgets.MyTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="15dp"
+        android:text="رفع مسئولیت :"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/white"/>
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_gravity="center_horizontal"
         android:layout_weight="1"
+        android:fadeScrollbars="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <widgets.MyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="@string/disclaimer"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:gravity="center"
-        android:paddingLeft="25dp">
+        android:padding="10dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -105,36 +138,30 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/imgUnco"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_launcher"/>
+                android:src="@drawable/ic_zohal_tech"/>
 
             <TextView
-                android:id="@+id/txtEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="info@zohaltech.com"/>
+                android:text="info@zohaltech.com"
+                android:textColor="@color/white"/>
 
             <TextView
-                android:id="@+id/txtCopyright"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/copyright"/>
+                android:text="@string/copyright"
+                android:textColor="@color/white"/>
 
             <TextView
-                android:id="@+id/txtReserved"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/all_rights"/>
+                android:text="@string/all_rights"
+                android:textColor="@color/white"/>
 
         </LinearLayout>
 
-        <!--<ImageView-->
-            <!--android:id="@+id/ImageView01"-->
-            <!--android:layout_width="23dp"-->
-            <!--android:layout_height="23dp"-->
-            <!--android:src="@drawable/ic_back_white"/>-->
     </LinearLayout>
 
 </LinearLayout>

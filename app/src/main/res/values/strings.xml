@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">سیگما</string>
+    <string name="app_name">سیگمــا</string>
     <string name="press_back_again_to_exit">برای خروج دوباره دکمه بازگشت را فشار دهید</string>
     <string name="speed">"Speed: "</string>
     <string name="down">"Down: "</string>
@@ -9,4 +9,13 @@
 
     <string name="copyright">Copyright © 2015 ZohalTech</string>
     <string name="all_rights">All Rights Reserved</string>
+    <string name="share_title">اشتراک گذاری با دوستان</string>
+    <string name="feedback_subject">بازخورد سیگمــا</string>
+    <string name="feedback_title">ارسال انتقادات و پیشنهادات</string>
+    <string name="could_not_open_market" formatted="false">%s یافت نشد، لطفا %s را نصب کنید!</string>
+    <string name="sharing_message" formatted="false">من \"%s\" رو نصب کردم، برنامه بسیار کاربردی برای کنترل و گزارش گیری از مصرف اینترنت موبایل. تو هم از این آدرس دانلودش کن و لذت ببر: %s</string>
+    <string name="disclaimer">"لطفا توجه داشته باشید در مواردی که برنامه به اجبار توسط  کاربر بسته شده است و یا به طور ناگهانی دستگاه خاموش شده باشد، سیگما ممکن است میزان پهنای باند استفاده شده را به اشتباه نشان دهد.
+درصورتی که هنگام نصب، تاریخ دستگاه صحیح نبوده و یا بعد از نصب، تاریخ دستگاه تغییر داده شود، گزارش های سیگما و اعلان های مربوط به اتمام اعتبار یا حجم بسته با مشکل مواجه خواهند شد.
+با پاک کردن کردن داده های مربوط به برنامه کارکرد و گزارش های آن دچار اختلال خواهند شد.
+در صورت رخ دادن موارد یاد شده، توسعه دهندگان مسئول هیچ گونه خسارت یا عدم کارکرد درست استفاده از این برنامه نیستند."</string>
 </resources>
