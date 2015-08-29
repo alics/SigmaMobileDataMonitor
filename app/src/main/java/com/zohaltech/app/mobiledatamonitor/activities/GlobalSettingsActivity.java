@@ -22,9 +22,11 @@ public class GlobalSettingsActivity extends EnhancedActivity {
     SwitchCompat switchShowDownUpSpeed;
     LinearLayout layoutLockScreen;
     SwitchCompat switchShowNotificationInLockScreen;
+    SwitchCompat switchVibrateInAlarms;
     LinearLayout layoutPremium;
     LinearLayout layoutAbout;
     LinearLayout layoutIntroduction;
+   // LinearLayout layoutVibrateInAlarms;
 
     @Override
     void onCreated() {
@@ -33,11 +35,13 @@ public class GlobalSettingsActivity extends EnhancedActivity {
         switchShowNotification = (SwitchCompat) findViewById(R.id.switchShowNotification);
         switchShowNotificationWhenDataIsOn = (SwitchCompat) findViewById(R.id.switchShowNotificationWhenDataIsOn);
         switchShowDownUpSpeed = (SwitchCompat) findViewById(R.id.switchShowDownUpSpeed);
+        switchVibrateInAlarms=(SwitchCompat) findViewById(R.id.switchVibrateInAlarms);
         layoutLockScreen = (LinearLayout) findViewById(R.id.layoutLockScreen);
         switchShowNotificationInLockScreen = (SwitchCompat) findViewById(R.id.switchShowNotificationInLockScreen);
         layoutPremium = (LinearLayout) findViewById(R.id.layoutPremium);
         layoutAbout = (LinearLayout) findViewById(R.id.layoutAbout);
         layoutIntroduction = (LinearLayout) findViewById(R.id.layoutIntroduction);
+       // layoutVibrateInAlarms=(LinearLayout) findViewById(R.id.layoutVibrateInAlarms);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             layoutLockScreen.setVisibility(View.GONE);
@@ -48,6 +52,7 @@ public class GlobalSettingsActivity extends EnhancedActivity {
         switchShowNotificationWhenDataIsOn.setChecked(setting.getShowNotificationWhenDataIsOn());
         switchShowNotificationInLockScreen.setChecked(setting.getShowNotificationInLockScreen());
         switchShowDownUpSpeed.setChecked(setting.getShowUpDownSpeed());
+        switchVibrateInAlarms.setChecked(setting.getVibrateInAlarms());
 
         switchShowNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -79,6 +84,16 @@ public class GlobalSettingsActivity extends EnhancedActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Setting setting = Settings.getCurrentSettings();
                 setting.setShowUpDownSpeed(isChecked);
+                Settings.update(setting);
+                //ZtDataService.restart(App.currentActivity);
+            }
+        });
+
+        switchVibrateInAlarms.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Setting setting = Settings.getCurrentSettings();
+                setting.setVibrateInAlarms(isChecked);
                 Settings.update(setting);
                 //ZtDataService.restart(App.currentActivity);
             }
