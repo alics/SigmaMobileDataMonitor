@@ -39,7 +39,7 @@ public class DataPackages {
 
     static final String DropTable = "Drop Table If Exists " + TableName;
 
-    private static ArrayList<DataPackage> select(String whereClause, String[] selectionArgs) {
+    public static ArrayList<DataPackage> select(String whereClause, String[] selectionArgs) {
         ArrayList<DataPackage> packageList = new ArrayList<>();
         DataAccess da = new DataAccess();
         SQLiteDatabase db = da.getReadableDB();
@@ -87,7 +87,9 @@ public class DataPackages {
         Cursor cursor = null;
 
         try {
-            String query = "Select DISTINCT " + Period + " FROM " + TableName + " WHERE " + OperatorId + " = " + operatorId + " Order By " + Period;
+
+            String query = "SELECT DISTINCT " + Period + " FROM " + TableName + " WHERE " + OperatorId + " = " + operatorId +
+                           " AND "+Custom+ "= 0 Order By " + Period;
             cursor = db.rawQuery(query, null);
             if (cursor != null && cursor.moveToFirst()) {
                 do {
