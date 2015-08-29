@@ -87,7 +87,6 @@ public class DataPackages {
         Cursor cursor = null;
 
         try {
-
             String query = "SELECT DISTINCT " + Period + " FROM " + TableName + " WHERE " + OperatorId + " = " + operatorId +
                            " AND "+Custom+ "= 0 Order By " + Period;
             cursor = db.rawQuery(query, null);
@@ -113,9 +112,6 @@ public class DataPackages {
     }
 
     public static DataPackage selectPackageById(int packageId) {
-        //String whereClause = " WHERE " + Id + " = " + packageId;
-        //return select(whereClause, null).get(0);
-
         ArrayList<DataPackage> dataPackages = select("Where " + Id + " = ? ", new String[]{String.valueOf(packageId)});
         if (dataPackages.size() == 1)
         {

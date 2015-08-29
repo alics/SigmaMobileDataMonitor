@@ -11,47 +11,49 @@ import java.util.ArrayList;
 
 public class Settings {
 
-    static final String TableName                     = "Settings";
-    static final String Id                            = "Id";
-    static final String DataConnected                 = "DataConnected";
-    static final String DailyTraffic                  = "DailyTraffic";
-    static final String ShowAlarmAfterTerminate       = "ShowAlarmAfterTerminate";
-    static final String ShowAlarmAfterTerminateRes    = "ShowAlarmAfterTerminateRes";
-    static final String AlarmType                     = "AlarmType";
-    static final String PercentTrafficAlarm           = "PercentTrafficAlarm";
-    static final String LeftDaysAlarm                 = "LeftDaysAlarm";
-    static final String AlarmTypeRes                  = "AlarmTypeRes";
-    static final String PercentTrafficAlarmRes        = "PercentTrafficAlarmRes";
-    static final String LeftDaysAlarmRes              = "LeftDaysAlarmRes";
-    static final String ShowNotification              = "ShowNotification";
-    static final String ShowNotificationWhenDataIsOn  = "ShowNotificationWhenDataIsOn";
-    static final String ShowNotificationInLockScreen  = "ShowNotificationInLockScreen";
-    static final String LeftDaysAlarmHasShown         = "LeftDaysAlarmHasShown";
-    static final String TrafficAlarmHasShown          = "TrafficAlarmHasShown";
+    static final String TableName = "Settings";
+    static final String Id = "Id";
+    static final String DataConnected = "DataConnected";
+    static final String DailyTraffic = "DailyTraffic";
+    static final String ShowAlarmAfterTerminate = "ShowAlarmAfterTerminate";
+    static final String ShowAlarmAfterTerminateRes = "ShowAlarmAfterTerminateRes";
+    static final String AlarmType = "AlarmType";
+    static final String PercentTrafficAlarm = "PercentTrafficAlarm";
+    static final String LeftDaysAlarm = "LeftDaysAlarm";
+    static final String AlarmTypeRes = "AlarmTypeRes";
+    static final String PercentTrafficAlarmRes = "PercentTrafficAlarmRes";
+    static final String LeftDaysAlarmRes = "LeftDaysAlarmRes";
+    static final String ShowNotification = "ShowNotification";
+    static final String ShowNotificationWhenDataIsOn = "ShowNotificationWhenDataIsOn";
+    static final String ShowNotificationInLockScreen = "ShowNotificationInLockScreen";
+    static final String LeftDaysAlarmHasShown = "LeftDaysAlarmHasShown";
+    static final String TrafficAlarmHasShown = "TrafficAlarmHasShown";
     static final String SecondaryTrafficAlarmHasShown = "SecondaryTrafficAlarmHasShown";
-    static final String ShowUpDownSpeed               = "ShowUpDownSpeed";
-    static final String VibrateInAlarms               = "VibrateInAlarms";
+    static final String ShowUpDownSpeed = "ShowUpDownSpeed";
+    static final String VibrateInAlarms = "VibrateInAlarms";
+    static final String SoundInAlarms = "SoundInAlarms";
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
-                                      Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-                                      DataConnected + " BOOLEAN NOT NULL, " +
-                                      DailyTraffic + " BIGINT NOT NULL, " +
-                                      ShowAlarmAfterTerminate + " BOOLEAN NOT NULL, " +
-                                      ShowAlarmAfterTerminateRes + " BOOLEAN NOT NULL, " +
-                                      AlarmType + " INTEGER NOT NULL, " +
-                                      PercentTrafficAlarm + " INTEGER NOT NULL, " +
-                                      LeftDaysAlarm + " INTEGER NOT NULL, " +
-                                      AlarmTypeRes + " INTEGER NOT NULL, " +
-                                      PercentTrafficAlarmRes + " INTEGER NOT NULL, " +
-                                      LeftDaysAlarmRes + " INTEGER NOT NULL, " +
-                                      ShowNotification + " BOOLEAN NOT NULL, " +
-                                      ShowNotificationWhenDataIsOn + " BOOLEAN NOT NULL, " +
-                                      LeftDaysAlarmHasShown + " BOOLEAN NOT NULL, " +
-                                      TrafficAlarmHasShown + " BOOLEAN NOT NULL, " +
-                                      SecondaryTrafficAlarmHasShown + " BOOLEAN NOT NULL, " +
-                                      ShowUpDownSpeed + " BOOLEAN NOT NULL, " +
-                                      VibrateInAlarms + " BOOLEAN NOT NULL, " +
-                                      ShowNotificationInLockScreen + " BOOLEAN NOT NULL ); ";
+            Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+            DataConnected + " BOOLEAN NOT NULL, " +
+            DailyTraffic + " BIGINT NOT NULL, " +
+            ShowAlarmAfterTerminate + " BOOLEAN NOT NULL, " +
+            ShowAlarmAfterTerminateRes + " BOOLEAN NOT NULL, " +
+            AlarmType + " INTEGER NOT NULL, " +
+            PercentTrafficAlarm + " INTEGER NOT NULL, " +
+            LeftDaysAlarm + " INTEGER NOT NULL, " +
+            AlarmTypeRes + " INTEGER NOT NULL, " +
+            PercentTrafficAlarmRes + " INTEGER NOT NULL, " +
+            LeftDaysAlarmRes + " INTEGER NOT NULL, " +
+            ShowNotification + " BOOLEAN NOT NULL, " +
+            ShowNotificationWhenDataIsOn + " BOOLEAN NOT NULL, " +
+            LeftDaysAlarmHasShown + " BOOLEAN NOT NULL, " +
+            TrafficAlarmHasShown + " BOOLEAN NOT NULL, " +
+            SecondaryTrafficAlarmHasShown + " BOOLEAN NOT NULL, " +
+            ShowUpDownSpeed + " BOOLEAN NOT NULL, " +
+            VibrateInAlarms + " BOOLEAN NOT NULL, " +
+            SoundInAlarms + " BOOLEAN NOT NULL, " +
+            ShowNotificationInLockScreen + " BOOLEAN NOT NULL ); ";
 
     static final String DropTable = "Drop Table If Exists " + TableName;
 
@@ -68,24 +70,25 @@ public class Settings {
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     Setting setting = new Setting(cursor.getInt(cursor.getColumnIndex(Id)),
-                                                  cursor.getInt(cursor.getColumnIndex(DataConnected)) == 1,
-                                                  cursor.getLong(cursor.getColumnIndex(DailyTraffic)),
-                                                  cursor.getInt(cursor.getColumnIndex(ShowAlarmAfterTerminate)) == 1,
-                                                  cursor.getInt(cursor.getColumnIndex(AlarmType)),
-                                                  cursor.getInt(cursor.getColumnIndex(PercentTrafficAlarm)),
-                                                  cursor.getInt(cursor.getColumnIndex(LeftDaysAlarm)),
-                                                  cursor.getInt(cursor.getColumnIndex(ShowAlarmAfterTerminateRes)) == 1,
-                                                  cursor.getInt(cursor.getColumnIndex(AlarmTypeRes)),
-                                                  cursor.getInt(cursor.getColumnIndex(PercentTrafficAlarmRes)),
-                                                  cursor.getInt(cursor.getColumnIndex(LeftDaysAlarmRes)),
-                                                  cursor.getInt(cursor.getColumnIndex(ShowNotification)) == 1,
-                                                  cursor.getInt(cursor.getColumnIndex(ShowNotificationWhenDataIsOn)) == 1,
-                                                  cursor.getInt(cursor.getColumnIndex(ShowNotificationInLockScreen)) == 1,
-                                                  cursor.getInt(cursor.getColumnIndex(ShowUpDownSpeed)) == 1,
-                                                  cursor.getInt(cursor.getColumnIndex(LeftDaysAlarmHasShown)) == 1,
-                                                  cursor.getInt(cursor.getColumnIndex(TrafficAlarmHasShown)) == 1,
-                                                  cursor.getInt(cursor.getColumnIndex(SecondaryTrafficAlarmHasShown)) == 1,
-                                                  cursor.getInt(cursor.getColumnIndex(VibrateInAlarms))==1);
+                            cursor.getInt(cursor.getColumnIndex(DataConnected)) == 1,
+                            cursor.getLong(cursor.getColumnIndex(DailyTraffic)),
+                            cursor.getInt(cursor.getColumnIndex(ShowAlarmAfterTerminate)) == 1,
+                            cursor.getInt(cursor.getColumnIndex(AlarmType)),
+                            cursor.getInt(cursor.getColumnIndex(PercentTrafficAlarm)),
+                            cursor.getInt(cursor.getColumnIndex(LeftDaysAlarm)),
+                            cursor.getInt(cursor.getColumnIndex(ShowAlarmAfterTerminateRes)) == 1,
+                            cursor.getInt(cursor.getColumnIndex(AlarmTypeRes)),
+                            cursor.getInt(cursor.getColumnIndex(PercentTrafficAlarmRes)),
+                            cursor.getInt(cursor.getColumnIndex(LeftDaysAlarmRes)),
+                            cursor.getInt(cursor.getColumnIndex(ShowNotification)) == 1,
+                            cursor.getInt(cursor.getColumnIndex(ShowNotificationWhenDataIsOn)) == 1,
+                            cursor.getInt(cursor.getColumnIndex(ShowNotificationInLockScreen)) == 1,
+                            cursor.getInt(cursor.getColumnIndex(ShowUpDownSpeed)) == 1,
+                            cursor.getInt(cursor.getColumnIndex(LeftDaysAlarmHasShown)) == 1,
+                            cursor.getInt(cursor.getColumnIndex(TrafficAlarmHasShown)) == 1,
+                            cursor.getInt(cursor.getColumnIndex(SecondaryTrafficAlarmHasShown)) == 1,
+                            cursor.getInt(cursor.getColumnIndex(VibrateInAlarms)) == 1,
+                            cursor.getInt(cursor.getColumnIndex(SoundInAlarms)) == 1);
                     settings.add(setting);
                 } while (cursor.moveToNext());
             }
@@ -146,6 +149,7 @@ public class Settings {
         values.put(SecondaryTrafficAlarmHasShown, setting.getSecondaryTrafficAlarmHasShown() ? 1 : 0);
         values.put(ShowUpDownSpeed, setting.getShowUpDownSpeed() ? 1 : 0);
         values.put(VibrateInAlarms, setting.getVibrateInAlarms() ? 1 : 0);
+        values.put(SoundInAlarms, setting.getSoundInAlarms() ? 1 : 0);
 
         DataAccess da = new DataAccess();
         return da.update(TableName, values, Id + " = ? ", new String[]{String.valueOf(setting.getId())});

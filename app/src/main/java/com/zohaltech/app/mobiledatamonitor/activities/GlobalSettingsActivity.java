@@ -7,7 +7,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.classes.App;
@@ -23,10 +22,11 @@ public class GlobalSettingsActivity extends EnhancedActivity {
     LinearLayout layoutLockScreen;
     SwitchCompat switchShowNotificationInLockScreen;
     SwitchCompat switchVibrateInAlarms;
+    SwitchCompat switchSoundInAlarms;
     LinearLayout layoutPremium;
     LinearLayout layoutAbout;
     LinearLayout layoutIntroduction;
-   // LinearLayout layoutVibrateInAlarms;
+    // LinearLayout layoutVibrateInAlarms;
 
     @Override
     void onCreated() {
@@ -35,13 +35,14 @@ public class GlobalSettingsActivity extends EnhancedActivity {
         switchShowNotification = (SwitchCompat) findViewById(R.id.switchShowNotification);
         switchShowNotificationWhenDataIsOn = (SwitchCompat) findViewById(R.id.switchShowNotificationWhenDataIsOn);
         switchShowDownUpSpeed = (SwitchCompat) findViewById(R.id.switchShowDownUpSpeed);
-        switchVibrateInAlarms=(SwitchCompat) findViewById(R.id.switchVibrateInAlarms);
+        switchVibrateInAlarms = (SwitchCompat) findViewById(R.id.switchVibrateInAlarms);
+        switchSoundInAlarms = (SwitchCompat) findViewById(R.id.switchSoundInAlarms);
         layoutLockScreen = (LinearLayout) findViewById(R.id.layoutLockScreen);
         switchShowNotificationInLockScreen = (SwitchCompat) findViewById(R.id.switchShowNotificationInLockScreen);
         layoutPremium = (LinearLayout) findViewById(R.id.layoutPremium);
         layoutAbout = (LinearLayout) findViewById(R.id.layoutAbout);
         layoutIntroduction = (LinearLayout) findViewById(R.id.layoutIntroduction);
-       // layoutVibrateInAlarms=(LinearLayout) findViewById(R.id.layoutVibrateInAlarms);
+        // layoutVibrateInAlarms=(LinearLayout) findViewById(R.id.layoutVibrateInAlarms);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             layoutLockScreen.setVisibility(View.GONE);
@@ -53,6 +54,7 @@ public class GlobalSettingsActivity extends EnhancedActivity {
         switchShowNotificationInLockScreen.setChecked(setting.getShowNotificationInLockScreen());
         switchShowDownUpSpeed.setChecked(setting.getShowUpDownSpeed());
         switchVibrateInAlarms.setChecked(setting.getVibrateInAlarms());
+        switchSoundInAlarms.setChecked(setting.getSoundInAlarms());
 
         switchShowNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -84,6 +86,16 @@ public class GlobalSettingsActivity extends EnhancedActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Setting setting = Settings.getCurrentSettings();
                 setting.setShowUpDownSpeed(isChecked);
+                Settings.update(setting);
+                //ZtDataService.restart(App.currentActivity);
+            }
+        });
+
+        switchSoundInAlarms.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Setting setting = Settings.getCurrentSettings();
+                setting.setSoundInAlarms(isChecked);
                 Settings.update(setting);
                 //ZtDataService.restart(App.currentActivity);
             }
