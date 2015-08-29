@@ -19,7 +19,7 @@ import java.io.InputStreamReader;
 public class DataAccess extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME    = "ZT_DATA_MONITOR";
-    public static final int    DATABASE_VERSION = 53;
+    public static final int    DATABASE_VERSION = 54;
 
     public DataAccess() {
         super(App.context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -70,6 +70,7 @@ public class DataAccess extends SQLiteOpenHelper {
             settingsValues.put(Settings.SecondaryTrafficAlarmHasShown, 0);
             settingsValues.put(Settings.ShowUpDownSpeed, 0);
             settingsValues.put(Settings.LeftDaysAlarmHasShown, 0);
+            settingsValues.put(Settings.VibrateInAlarms, 1);
             long res = database.insert(Settings.TableName, null, settingsValues);
 
             LicenseStatus status = LicenseManager.getExistingLicense();
@@ -150,7 +151,6 @@ public class DataAccess extends SQLiteOpenHelper {
     }
 
     private void insertDataFromAsset(SQLiteDatabase db, String tableName, String filePathFromAsset, char delimiter) {
-
         InputStreamReader isr;
         try {
             isr = new InputStreamReader(App.context.getAssets().open(filePathFromAsset), "UTF-8");

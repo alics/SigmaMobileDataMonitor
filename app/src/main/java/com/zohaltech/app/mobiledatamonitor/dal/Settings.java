@@ -30,6 +30,7 @@ public class Settings {
     static final String TrafficAlarmHasShown          = "TrafficAlarmHasShown";
     static final String SecondaryTrafficAlarmHasShown = "SecondaryTrafficAlarmHasShown";
     static final String ShowUpDownSpeed               = "ShowUpDownSpeed";
+    static final String VibrateInAlarms               = "VibrateInAlarms";
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
                                       Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
@@ -49,6 +50,7 @@ public class Settings {
                                       TrafficAlarmHasShown + " BOOLEAN NOT NULL, " +
                                       SecondaryTrafficAlarmHasShown + " BOOLEAN NOT NULL, " +
                                       ShowUpDownSpeed + " BOOLEAN NOT NULL, " +
+                                      VibrateInAlarms + " BOOLEAN NOT NULL, " +
                                       ShowNotificationInLockScreen + " BOOLEAN NOT NULL ); ";
 
     static final String DropTable = "Drop Table If Exists " + TableName;
@@ -82,7 +84,8 @@ public class Settings {
                                                   cursor.getInt(cursor.getColumnIndex(ShowUpDownSpeed)) == 1,
                                                   cursor.getInt(cursor.getColumnIndex(LeftDaysAlarmHasShown)) == 1,
                                                   cursor.getInt(cursor.getColumnIndex(TrafficAlarmHasShown)) == 1,
-                                                  cursor.getInt(cursor.getColumnIndex(SecondaryTrafficAlarmHasShown)) == 1);
+                                                  cursor.getInt(cursor.getColumnIndex(SecondaryTrafficAlarmHasShown)) == 1,
+                                                  cursor.getInt(cursor.getColumnIndex(VibrateInAlarms))==1);
                     settings.add(setting);
                 } while (cursor.moveToNext());
             }
@@ -142,6 +145,7 @@ public class Settings {
         values.put(LeftDaysAlarmHasShown, setting.getLeftDaysAlarmHasShown() ? 1 : 0);
         values.put(SecondaryTrafficAlarmHasShown, setting.getSecondaryTrafficAlarmHasShown() ? 1 : 0);
         values.put(ShowUpDownSpeed, setting.getShowUpDownSpeed() ? 1 : 0);
+        values.put(VibrateInAlarms, setting.getVibrateInAlarms() ? 1 : 0);
 
         DataAccess da = new DataAccess();
         return da.update(TableName, values, Id + " = ? ", new String[]{String.valueOf(setting.getId())});

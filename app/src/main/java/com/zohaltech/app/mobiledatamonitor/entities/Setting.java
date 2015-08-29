@@ -23,13 +23,14 @@ public class Setting {
     private Boolean trafficAlarmHasShown;
     private Boolean secondaryTrafficAlarmHasShown;
     private Boolean showUpDownSpeed;
+    private Boolean VibrateInAlarms;
 
 
     public Setting(Boolean dataConnected, Long dailyTraffic, Boolean showAlarmAfterTerminate, int alarmType,
-                   Integer percentTrafficAlarm, Integer leftDaysAlarm, Boolean showAlarmAfterTerminateRes,
-                   int alarmTypeRes, Integer percentTrafficAlarmRes, Integer leftDaysAlarmRes, Boolean showNotification,
-                   Boolean showNotificationWhenDataIsOn, Boolean showNotificationInLockScreen, Boolean showUpDownSpeed,
-                   Boolean leftDaysAlarmHasShown, Boolean trafficAlarmHasShown, Boolean secondaryTrafficAlarmHasShown) {
+                   Integer percentTrafficAlarm, Integer leftDaysAlarm, Boolean showAlarmAfterTerminateRes, int alarmTypeRes,
+                   Integer percentTrafficAlarmRes, Integer leftDaysAlarmRes, Boolean showNotification, Boolean showNotificationWhenDataIsOn,
+                   Boolean showNotificationInLockScreen, Boolean showUpDownSpeed, Boolean leftDaysAlarmHasShown, Boolean trafficAlarmHasShown,
+                   Boolean secondaryTrafficAlarmHasShown, Boolean vibrateInAlarms) {
         setDataConnected(dataConnected);
         setDailyTraffic(dailyTraffic);
         setShowAlarmAfterTerminate(showAlarmAfterTerminate);
@@ -47,17 +48,19 @@ public class Setting {
         setLeftDaysAlarmHasShown(leftDaysAlarmHasShown);
         setTrafficAlarmHasShown(trafficAlarmHasShown);
         setSecondaryTrafficAlarmHasShown(secondaryTrafficAlarmHasShown);
+        setVibrateInAlarms(vibrateInAlarms);
     }
 
     public Setting(Integer id, Boolean dataConnected, Long dailyTraffic, Boolean showAlarmAfterTerminate,
                    int alarmType, Integer percentTrafficAlarm, Integer leftDaysAlarm, Boolean showAlarmAfterTerminateRes,
                    int alarmTypeRes, Integer percentTrafficAlarmRes, Integer leftDaysAlarmRes, Boolean showNotification,
                    Boolean showNotificationWhenDataIsOn, Boolean showNotificationInLockScreen, Boolean showUpDownSpeed,
-                   Boolean leftDaysAlarmHasShown, Boolean trafficAlarmHasShown, Boolean secondaryTrafficAlarmHasShown) {
+                   Boolean leftDaysAlarmHasShown, Boolean trafficAlarmHasShown, Boolean secondaryTrafficAlarmHasShown,
+                  Boolean vibrateInAlarms) {
         this(dataConnected, dailyTraffic, showAlarmAfterTerminate, alarmType, percentTrafficAlarm,
              leftDaysAlarm, showAlarmAfterTerminateRes, alarmTypeRes, percentTrafficAlarmRes,
              leftDaysAlarmRes, showNotification, showNotificationWhenDataIsOn, showNotificationInLockScreen,
-             showUpDownSpeed, leftDaysAlarmHasShown, trafficAlarmHasShown, secondaryTrafficAlarmHasShown);
+             showUpDownSpeed, leftDaysAlarmHasShown, trafficAlarmHasShown, secondaryTrafficAlarmHasShown,vibrateInAlarms);
         this.id = id;
     }
 
@@ -203,5 +206,13 @@ public class Setting {
 
     public void setShowUpDownSpeed(Boolean showUpDownSpeed) {
         this.showUpDownSpeed = showUpDownSpeed;
+    }
+
+    public Boolean getVibrateInAlarms() {
+        return VibrateInAlarms;
+    }
+
+    public void setVibrateInAlarms(Boolean vibrateInAlarms) {
+        VibrateInAlarms = vibrateInAlarms;
     }
 }

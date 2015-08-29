@@ -1,10 +1,8 @@
 package com.zohaltech.app.mobiledatamonitor.classes;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
-import android.util.Log;
 
 import com.zohaltech.app.mobiledatamonitor.R;
 import com.zohaltech.app.mobiledatamonitor.dal.Settings;

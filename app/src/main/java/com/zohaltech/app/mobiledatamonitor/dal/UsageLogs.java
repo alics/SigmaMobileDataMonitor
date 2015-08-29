@@ -70,7 +70,12 @@ public class UsageLogs {
         Log.i("sdj currentDate", currentDate);
 
         if (!Helper.addDay(-1).equals(DailyTrafficHistories.getMaxDate()) && currentDate.compareTo(maxUsageLogDate) > 0) {
-            Log.i("sdj", "integrated");
+            ContentValues values = new ContentValues();
+            values.put(TrafficBytes, 0);
+            values.put(LogDateTime, Helper.addDay(-1));
+            DataAccess da = new DataAccess();
+            da.insert(TableName, values);
+
             integrateSumUsedTrafficPerDay();
         }
 
@@ -160,7 +165,6 @@ public class UsageLogs {
 
 
     public static long getUsedPrimaryTrafficOfPackage(DataPackage dataPackage, PackageHistory history) {
-        ArrayList<UsageLog> list = UsageLogs.select();
         long usedTraffic = 0;
         DataAccess da = new DataAccess();
         SQLiteDatabase db = da.getReadableDB();
@@ -196,7 +200,10 @@ public class UsageLogs {
                    " AND SUBSTR(" + LogDateTime + ", 12, 5) NOT BETWEEN '" + dataPackage.getSecondaryTrafficStartTime() + "' AND '" + dataPackage.getSecondaryTrafficEndTime() + "'";
         }
         return " SELECT (SELECT IFNULL(SUM(" + TrafficBytes + "), 0) FROM " + TableName + " WHERE " + LogDateTime + " >= '" + history.getStartDateTime() + "') - " +
-               " (SELECT IFNULL(SUM(" + TrafficBytes + "), 0) FROM " + TableName + " WHERE " + LogDateTime + " BETWEEN '" + history.getStartDateTime() + "' AND '" + history.getSecondaryTrafficEndDateTime() + "') AS SumTraffic";
+               dataPackage.getSecondaryTraffic() + " AS SumTraffic";
+
+        //        return " SELECT (SELECT IFNULL(SUM(" + TrafficBytes + "), 0) FROM " + TableName + " WHERE " + LogDateTime + " >= '" + history.getStartDateTime() + "') - " +
+        //               " (SELECT IFNULL(SUM(" + TrafficBytes + "), 0) FROM " + TableName + " WHERE " + LogDateTime + " BETWEEN '" + history.getStartDateTime() + "' AND '" + history.getSecondaryTrafficEndDateTime() + "') AS SumTraffic";
     }
 
     public static long getUsedSecondaryTrafficOfPackage(DataPackage dataPackage, PackageHistory history) {
