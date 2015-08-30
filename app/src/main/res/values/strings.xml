@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">سیگمـــا</string>
+    <string name="app_name">سیگما</string>
     <string name="press_back_again_to_exit">برای خروج دوباره دکمه بازگشت را فشار دهید</string>
     <string name="speed">"Speed: "</string>
     <string name="down">"Down: "</string>
@@ -10,7 +10,7 @@
     <string name="copyright">Copyright © 2015 ZohalTech</string>
     <string name="all_rights">All Rights Reserved</string>
     <string name="share_title">اشتراک گذاری با دوستان</string>
-    <string name="feedback_subject">بازخورد سیگمــا</string>
+    <string name="feedback_subject">بازخورد سیگما</string>
     <string name="feedback_title">ارسال انتقادات و پیشنهادات</string>
     <string name="could_not_open_market" formatted="false">%s یافت نشد، لطفا %s را نصب کنید!</string>
     <string name="sharing_message" formatted="false">من \"%s\" رو نصب کردم، برنامه بسیار کاربردی برای کنترل و گزارش گیری از مصرف اینترنت موبایل. تو هم از این آدرس دانلودش کن و لذت ببر: %s</string>

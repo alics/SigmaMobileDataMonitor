@@ -30,7 +30,7 @@ public class NotificationHandler {
     }
 
     public static Notification getDataUsageNotification(Context context, int iconId, String title, String text) {
-        int priority = NotificationCompat.PRIORITY_MAX;
+        int priority = NotificationCompat.PRIORITY_HIGH;
         int visibility = NotificationCompat.VISIBILITY_PUBLIC;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             if (!Settings.getCurrentSettings().getShowNotificationInLockScreen()) {
@@ -77,7 +77,7 @@ public class NotificationHandler {
                         .setOngoing(false)
                         //.setVibrate({10L,20L})
                         //.setSound()
-                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                         .setVisibility(lockScreenVisibility)
                         .setColor(App.context.getResources().getColor(R.color.primary))
                         .setAutoCancel(true);

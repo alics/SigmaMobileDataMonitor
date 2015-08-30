@@ -222,7 +222,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
                             android:gravity="right|center"
-                            android:text="راهنمای برنامه"
+                            android:text="سیگما چیست؟"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:textColor="@color/primary_text"/>
 

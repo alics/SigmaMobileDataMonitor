@@ -7,12 +7,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.classes.App;
 import com.zohaltech.app.sigma.classes.ConnectionManager;
 import com.zohaltech.app.sigma.dal.Settings;
 import com.zohaltech.app.sigma.entities.Setting;
+
+import widgets.MyToast;
 
 public class GlobalSettingsActivity extends EnhancedActivity {
 
@@ -127,11 +130,13 @@ public class GlobalSettingsActivity extends EnhancedActivity {
                 startActivity(intent);
             }
         });
+
         layoutIntroduction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(App.currentActivity, TutorialActivity.class);
-                startActivity(intent);
+                //Intent intent = new Intent(App.currentActivity, TutorialActivity.class);
+                //startActivity(intent);
+                MyToast.show("بعدا بهت میگم " + getString(R.string.app_name) + " چیه", Toast.LENGTH_SHORT);
             }
         });
     }
