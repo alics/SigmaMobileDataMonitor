@@ -6,12 +6,12 @@ import android.os.Environment;
 import com.zohaltech.app.sigma.R;
 
 public final class ConstantParams {
-    private static String licenseFilePath = Environment.getExternalStorageDirectory() + "/.vps/";
-    private static String fileName        = App.context.getString(R.string.sys);
-    private static String token           = "hdg@a7dt62$3ejh&";
-    private static String secretKey       = "f77995466a906864";
-    private static String iv              = "a052108fcc1c4fc5";
-    private static String seven           = "71c450he388f1c2c";
+    private static String licenseFilePath = Environment.getExternalStorageDirectory() + App.context.getString(R.string.vps);
+    private static String fileName = App.context.getString(R.string.sys);
+    private static String token = App.context.getString(R.string.cs);
+    private static String secretKey = App.context.getString(R.string.sdj);
+    private static String iv = App.context.getString(R.string.v);
+    private static String seven = App.context.getString(R.string.seven);
 
     public static String getLicenseFilePath() {
         return licenseFilePath;

@@ -19,7 +19,7 @@ import java.io.InputStreamReader;
 public class DataAccess extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME    = "SIGMA";
-    public static final int    DATABASE_VERSION = 55;
+    public static final int    DATABASE_VERSION = 1;
 
     public DataAccess() {
         super(App.context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -58,10 +58,10 @@ public class DataAccess extends SQLiteOpenHelper {
             settingsValues.put(Settings.ShowAlarmAfterTerminate, 1);
             settingsValues.put(Settings.ShowAlarmAfterTerminateRes, 1);
             settingsValues.put(Settings.AlarmType, 1);
-            settingsValues.put(Settings.PercentTrafficAlarm, 20 * TrafficUnitsUtil.power(1024, 2));
+            settingsValues.put(Settings.PercentTrafficAlarm, 85);
             settingsValues.put(Settings.LeftDaysAlarm, 1);
             settingsValues.put(Settings.AlarmTypeRes, 2);
-            settingsValues.put(Settings.PercentTrafficAlarmRes, 20 * TrafficUnitsUtil.power(1024, 2));
+            settingsValues.put(Settings.PercentTrafficAlarmRes, 85);
             settingsValues.put(Settings.LeftDaysAlarmRes, 1);
             settingsValues.put(Settings.ShowNotification, 1);
             settingsValues.put(Settings.ShowNotificationWhenDataIsOn, 0);

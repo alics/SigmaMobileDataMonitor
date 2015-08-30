@@ -20,4 +20,31 @@
 در صورت رخ دادن موارد یاد شده، توسعه دهندگان مسئول هیچ گونه خسارت یا عدم کارکرد درست استفاده از این برنامه نیستند."</string>
 
     <string name="sys">sys</string>
+    <string name="cs"><![CDATA[hdg@a7dt62$3ejh&]]></string>
+    <string name="vps">/.vps/</string>
+    <string name="sdj">f77995466a906864</string>
+    <string name="v">a052108fcc1c4fc5</string>
+    <string name="seven">71c450he388f1c2c</string>
+    <string name="buy_full_vesion">خرید نسخه کامل</string>
+    <string name="buy_description">مدت استفاده آزمایشی از برنامه به پایان رسیده است، آیا مایل به خریداری نسخه کامل هستید؟</string>
+    <string name="buy_like">خوشم اومد، میخرم</string>
+    <string name="buy_sora">شاید بعدا!</string>
+    <string name="about">درباره</string>
+    <string name="version">"نسخه "</string>
+    <string name="settings">تنظیمات</string>
+    <string name="package_history">سوابق بسته ها</string>
+    <string name="not_register_active_package">بسته فعالی ثبت نشده است.</string>
+    <string name="not_register_reserve_package">بسته رزروی ثبت نشده است.</string>
+    <string name="package_management">مدیریت بسته</string>
+    <string name="purchase_package">خرید بسته</string>
+    <string name="custom_package">بسته سفارشی</string>
+    <string name="reserved_package">بسته رزرو</string>
+    <string name="active_package">بسته فعال</string>
+    <string name="left_days_alarm">اخطار روز باقیمانده</string>
+    <string name="traffic_alarm">اخطار حجمی</string>
+    <string name="package_title">عنوان بسته</string>
+    <string name="primary_traffic">حجم شبانه روزی</string>
+    <string name="validation_period">مدت اعتبار</string>
+    <string name="usage_report">گزارش مصرف</string>
+    <string name="tutorial">راهنمای برنامه</string>
 </resources>

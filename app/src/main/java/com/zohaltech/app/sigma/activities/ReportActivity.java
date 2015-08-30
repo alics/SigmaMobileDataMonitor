@@ -73,7 +73,7 @@ public class ReportActivity extends EnhancedActivity {
 
     @Override
     void onToolbarCreated() {
-        txtToolbarTitle.setText("گزارش مصرف");
+        txtToolbarTitle.setText(getString(R.string.usage_report));
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

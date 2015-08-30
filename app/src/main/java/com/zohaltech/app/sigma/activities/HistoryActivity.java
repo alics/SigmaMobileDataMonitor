@@ -56,7 +56,7 @@ public class HistoryActivity extends EnhancedActivity {
 
     @Override
     void onToolbarCreated() {
-        txtToolbarTitle.setText("سوابق بسته ها");
+        txtToolbarTitle.setText(getString(R.string.package_history));
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

@@ -91,7 +91,7 @@ public class ManagementActivity extends EnhancedActivity {
 
         PackageHistory activePackageHistory = PackageHistories.getActivePackage();
         if (activePackageHistory == null) {
-            txtActivePackageDescription.setText("بسته فعالی ثبت نشده است.");
+            txtActivePackageDescription.setText(getString(R.string.not_register_active_package));
             setActivePackageStatus(false);
         } else {
             activePackage = DataPackages.selectPackageById(activePackageHistory.getDataPackageId());
@@ -101,7 +101,7 @@ public class ManagementActivity extends EnhancedActivity {
 
         PackageHistory reservedPackageHistory = PackageHistories.getReservedPackage();
         if (reservedPackageHistory == null) {
-            txtReservedPackageDescription.setText("بسته رزروی ثبت نشده است.");
+            txtReservedPackageDescription.setText(getString(R.string.not_register_reserve_package));
             setReservePackageStatus(false);
 
         } else {
@@ -122,7 +122,7 @@ public class ManagementActivity extends EnhancedActivity {
 
     @Override
     void onToolbarCreated() {
-        txtToolbarTitle.setText("مدیریت بسته");
+        txtToolbarTitle.setText(getString(R.string.package_management));
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

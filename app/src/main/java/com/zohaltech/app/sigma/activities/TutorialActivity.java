@@ -35,8 +35,7 @@ public class TutorialActivity extends EnhancedActivity {
 
     @Override
     void onToolbarCreated() {
-        txtToolbarTitle.setText("راهنمای برنامه");
-
+        txtToolbarTitle.setText(getString(R.string.tutorial));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }

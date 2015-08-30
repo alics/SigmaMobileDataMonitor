@@ -38,7 +38,7 @@ public class AboutActivity extends EnhancedActivity {
         final String email = "info@zohaltech.com";
         final String marketUri = "bazaar://details?id=" + getPackageName();
 
-        txtVersion.setText("نسخه " + BuildConfig.VERSION_NAME);
+        txtVersion.setText(getString(R.string.version) + BuildConfig.VERSION_NAME);
 
         btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,7 +107,7 @@ public class AboutActivity extends EnhancedActivity {
 
     @Override
     void onToolbarCreated() {
-        txtToolbarTitle.setText("درباره");
+        txtToolbarTitle.setText(getString(R.string.about));
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

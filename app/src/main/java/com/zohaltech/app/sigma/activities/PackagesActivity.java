@@ -71,7 +71,7 @@ public class PackagesActivity extends EnhancedActivity {
 
     @Override
     void onToolbarCreated() {
-        txtToolbarTitle.setText("خرید بسته");
+        txtToolbarTitle.setText(getString(R.string.purchase_package));
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

@@ -122,10 +122,10 @@ public class DashboardActivity extends EnhancedActivity {
         if (LicenseManager.getLicenseStatus() == false) {
             if (paymentDialog == null) {
                 paymentDialog = DialogManager.getPopupDialog(App.currentActivity,
-                                                             "خرید نسخه کامل",
-                                                             "مدت استفاده آزمایشی از برنامه به پایان رسیده است، آیا مایل به خریداری نسخه کامل هستید؟",
-                                                             "خوشم اومد، میخرم",
-                                                             "شاید بعدا!",
+                                                             getString(R.string.buy_full_vesion),
+                                                             getString(R.string.buy_description),
+                                                             getString(R.string.buy_like),
+                                                             getString(R.string.buy_sora),
                                                              null,
                                                              new Runnable() {
                                                                  @Override

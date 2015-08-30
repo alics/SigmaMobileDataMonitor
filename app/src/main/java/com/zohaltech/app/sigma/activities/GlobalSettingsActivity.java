@@ -26,7 +26,6 @@ public class GlobalSettingsActivity extends EnhancedActivity {
     LinearLayout layoutPremium;
     LinearLayout layoutAbout;
     LinearLayout layoutIntroduction;
-    // LinearLayout layoutVibrateInAlarms;
 
     @Override
     void onCreated() {
@@ -42,7 +41,6 @@ public class GlobalSettingsActivity extends EnhancedActivity {
         layoutPremium = (LinearLayout) findViewById(R.id.layoutPremium);
         layoutAbout = (LinearLayout) findViewById(R.id.layoutAbout);
         layoutIntroduction = (LinearLayout) findViewById(R.id.layoutIntroduction);
-        // layoutVibrateInAlarms=(LinearLayout) findViewById(R.id.layoutVibrateInAlarms);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             layoutLockScreen.setVisibility(View.GONE);
@@ -66,7 +64,6 @@ public class GlobalSettingsActivity extends EnhancedActivity {
                 Setting setting = Settings.getCurrentSettings();
                 setting.setShowNotification(isChecked);
                 Settings.update(setting);
-                //ZtDataService.restart(App.currentActivity);
             }
         });
 
@@ -77,7 +74,6 @@ public class GlobalSettingsActivity extends EnhancedActivity {
                 Setting setting = Settings.getCurrentSettings();
                 setting.setShowNotificationWhenDataIsOn(isChecked);
                 Settings.update(setting);
-                //ZtDataService.restart(App.currentActivity);
             }
         });
 
@@ -87,7 +83,6 @@ public class GlobalSettingsActivity extends EnhancedActivity {
                 Setting setting = Settings.getCurrentSettings();
                 setting.setShowUpDownSpeed(isChecked);
                 Settings.update(setting);
-                //ZtDataService.restart(App.currentActivity);
             }
         });
 
@@ -97,7 +92,6 @@ public class GlobalSettingsActivity extends EnhancedActivity {
                 Setting setting = Settings.getCurrentSettings();
                 setting.setSoundInAlarms(isChecked);
                 Settings.update(setting);
-                //ZtDataService.restart(App.currentActivity);
             }
         });
 
@@ -107,7 +101,6 @@ public class GlobalSettingsActivity extends EnhancedActivity {
                 Setting setting = Settings.getCurrentSettings();
                 setting.setVibrateInAlarms(isChecked);
                 Settings.update(setting);
-                //ZtDataService.restart(App.currentActivity);
             }
         });
 
@@ -117,7 +110,6 @@ public class GlobalSettingsActivity extends EnhancedActivity {
                 Setting setting = Settings.getCurrentSettings();
                 setting.setShowNotificationInLockScreen(isChecked);
                 Settings.update(setting);
-                //ZtDataService.restart(App.currentActivity);
             }
         });
 
@@ -155,7 +147,7 @@ public class GlobalSettingsActivity extends EnhancedActivity {
 
     @Override
     void onToolbarCreated() {
-        txtToolbarTitle.setText("تنظیمات");
+        txtToolbarTitle.setText(getString(R.string.settings));
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
