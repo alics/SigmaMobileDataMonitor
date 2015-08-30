@@ -5,7 +5,7 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.support.v7.widget.AppCompatButton;
 
-import com.zohaltech.app.mobiledatamonitor.classes.App;
+import com.zohaltech.app.sigma.classes.App;
 
 
 public class MyButton extends AppCompatButton

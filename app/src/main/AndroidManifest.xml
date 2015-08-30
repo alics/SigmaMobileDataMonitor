@@ -1,28 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
-    package="com.zohaltech.app.mobiledatamonitor"
+    package="com.zohaltech.app.sigma"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.MODIFY_PHONE_STATE" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 
     <application
-        android:name=".classes.App"
+        android:name="com.zohaltech.app.sigma.classes.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
 
         <receiver
-            android:name=".classes.AlarmReceiver"
+            android:name="com.zohaltech.app.sigma.classes.AlarmReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter android:priority="999">
@@ -30,7 +28,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".classes.BootReceiver"
+            android:name="com.zohaltech.app.sigma.classes.BootReceiver"
             android:enabled="true">
             <intent-filter android:priority="999">
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
@@ -38,29 +36,28 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".classes.ConnectivityStateReceiver">
+            android:name="com.zohaltech.app.sigma.classes.ConnectivityStateReceiver">
             <intent-filter android:priority="999">
                 <!--<action android:name="android.net.wifi.STATE_CHANGE"/>-->
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".classes.PackageAlarmReceiver"
+            android:name="com.zohaltech.app.sigma.classes.PackageAlarmReceiver"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.zohaltech.app.mobiledatamonitor.APPLICATION_ALARM_ACTION"/>
+                <action android:name="com.zohaltech.app.sigma.APPLICATION_ALARM_ACTION"/>
             </intent-filter>
         </receiver>
 
         <service
-            android:name=".classes.ZtDataService"
+            android:name="com.zohaltech.app.sigma.classes.SigmaDataService"
             android:enabled="true"
             android:exported="false"
-            android:process=":data_usage"
-            />
+            android:process=":data_usage"/>
 
         <activity
-            android:name=".activities.DashboardActivity"
+            android:name="com.zohaltech.app.sigma.activities.DashboardActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -69,33 +66,33 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.HistoryActivity"
+            android:name="com.zohaltech.app.sigma.activities.HistoryActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activities.GlobalSettingsActivity"
+            android:name="com.zohaltech.app.sigma.activities.GlobalSettingsActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activities.AboutActivity"
+            android:name="com.zohaltech.app.sigma.activities.AboutActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activities.PackagesActivity"
+            android:name="com.zohaltech.app.sigma.activities.PackagesActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activities.ReportActivity"
+            android:name="com.zohaltech.app.sigma.activities.ReportActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activities.PackageSettingsActivity"
+            android:name="com.zohaltech.app.sigma.activities.PackageSettingsActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activities.ManagementActivity"
+            android:name="com.zohaltech.app.sigma.activities.ManagementActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activities.TutorialActivity"
+            android:name="com.zohaltech.app.sigma.activities.TutorialActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activities.ApplicationMessageActivity"
-            android:screenOrientation="portrait"
+            android:name="com.zohaltech.app.sigma.activities.ApplicationMessageActivity"
             android:excludeFromRecents="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.Dialog"/>
     </application>
 </manifest>

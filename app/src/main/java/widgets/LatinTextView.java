@@ -5,7 +5,7 @@ import android.graphics.Typeface;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 
-import com.zohaltech.app.mobiledatamonitor.classes.App;
+import com.zohaltech.app.sigma.classes.App;
 
 
 public class LatinTextView extends AppCompatTextView {

@@ -1,17 +1,17 @@
 package widgets;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.zohaltech.app.mobiledatamonitor.R;
-import com.zohaltech.app.mobiledatamonitor.classes.App;
+import com.zohaltech.app.sigma.R;
+import com.zohaltech.app.sigma.classes.App;
 
 
-public class MyToast extends Toast
-{
+public class MyToast extends Toast {
 
     //    public static enum MessageType{
     //        INFORMATION,
@@ -19,10 +19,9 @@ public class MyToast extends Toast
     //        ERROR
     //    }
     ImageView image;
-    TextView text;
+    TextView  text;
 
-    private MyToast(Context context)
-    {
+    private MyToast(Context context) {
         super(context);
         View layout = App.inflater.inflate(R.layout.my_toast, null);
         image = (ImageView) layout.findViewById(R.id.image);
@@ -31,8 +30,7 @@ public class MyToast extends Toast
         //setGravity(Gravity.BOTTOM, 0, 0);
     }
 
-    public static void show(String message, int duration)
-    {
+    public static void show(String message, int duration) {
         MyToast myToast = new MyToast(App.context);
         myToast.image.setVisibility(View.GONE);
         myToast.text.setText(message);
@@ -40,8 +38,15 @@ public class MyToast extends Toast
         myToast.show();
     }
 
-    public static void show(String message, int duration, int imageResId)
-    {
+    public static void show(Activity activity, String message, int duration) {
+        MyToast myToast = new MyToast(activity);
+        myToast.image.setVisibility(View.GONE);
+        myToast.text.setText(message);
+        myToast.setDuration(duration);
+        myToast.show();
+    }
+
+    public static void show(String message, int duration, int imageResId) {
         MyToast myToast = new MyToast(App.context);
         myToast.image.setVisibility(View.VISIBLE);
         myToast.image.setImageResource(imageResId);

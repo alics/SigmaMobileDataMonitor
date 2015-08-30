@@ -10,8 +10,8 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-import com.zohaltech.app.mobiledatamonitor.R;
-import com.zohaltech.app.mobiledatamonitor.classes.App;
+import com.zohaltech.app.sigma.R;
+import com.zohaltech.app.sigma.classes.App;
 
 
 public class CircleProgress extends ImageView {

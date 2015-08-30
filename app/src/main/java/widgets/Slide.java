@@ -12,7 +12,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.zohaltech.app.mobiledatamonitor.R;
+import com.zohaltech.app.sigma.R;
 
 
 public class Slide extends RelativeLayout {

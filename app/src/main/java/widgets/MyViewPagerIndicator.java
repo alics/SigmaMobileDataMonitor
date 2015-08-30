@@ -2,13 +2,12 @@ package widgets;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-import com.zohaltech.app.mobiledatamonitor.R;
-import com.zohaltech.app.mobiledatamonitor.classes.App;
+import com.zohaltech.app.sigma.R;
+import com.zohaltech.app.sigma.classes.App;
 
 public class MyViewPagerIndicator extends ImageView {
     //private static final int CIRCLE_RADIUS       = 20;
