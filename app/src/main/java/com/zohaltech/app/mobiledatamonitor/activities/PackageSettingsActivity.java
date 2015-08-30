@@ -120,7 +120,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
             edtSecondaryTraffic.setText("1024");
             btnSecondaryStartTime.setText("02:00");
             btnSecondaryEndTime.setText("07:00");
-            edtTrafficAlarm.setText("900");
+            edtTrafficAlarm.setText("85");
             edtLeftDaysAlarm.setText("2");
             switchTrafficAlarm.setChecked(true);
             switchLeftDaysAlarm.setChecked(true);
