@@ -126,6 +126,10 @@ public class DataPackage {
     }
 
     public String getDescription() {
-        return String.format("%s %d تومان", getTitle(), getPrice());
+        return String.format("%s به قیمت %d تومان", getTitle(), getPrice());
+    }
+
+    public String getPackageDescription() {
+        return getTitle() + "\n" + getPrice() + " تومان";
     }
 }

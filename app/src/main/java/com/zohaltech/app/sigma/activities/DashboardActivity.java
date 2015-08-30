@@ -20,7 +20,7 @@ import com.zohaltech.app.sigma.dal.DataAccess;
 import widgets.MyToast;
 import widgets.MyViewPagerIndicator;
 
-public class DashboardActivity extends EnhancedActivity {
+public class DashboardActivity extends BazaarPaymentActivity {
 
     ViewPager            pagerUsages;
     MyViewPagerIndicator indicator;
@@ -36,7 +36,6 @@ public class DashboardActivity extends EnhancedActivity {
 
     @Override
     void onCreated() {
-
         DataAccess da = new DataAccess();
         da.getReadableDB();
         da.close();
@@ -105,6 +104,8 @@ public class DashboardActivity extends EnhancedActivity {
         usagePagerAdapter = new UsagePagerAdapter(getSupportFragmentManager());
         pagerUsages.setAdapter(usagePagerAdapter);
         pagerUsages.setCurrentItem(1);
+
+        super.onCreated();
     }
 
     @Override
@@ -116,10 +117,17 @@ public class DashboardActivity extends EnhancedActivity {
     }
 
     @Override
+    void updateUiToPremiumVersion() {
+        if (paymentDialog != null && paymentDialog.isShowing()) {
+            paymentDialog.dismiss();
+            paymentDialog = null;
+        }
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
-        //TODO : these lines shoub be uncommented
-        if (LicenseManager.getLicenseStatus() == false) {
+        if (LicenseManager.getLicenseStatus() == LicenseManager.Status.EXPIRED) {
             if (paymentDialog == null) {
                 paymentDialog = DialogManager.getPopupDialog(App.currentActivity,
                                                              getString(R.string.buy_full_vesion),
@@ -130,12 +138,7 @@ public class DashboardActivity extends EnhancedActivity {
                                                              new Runnable() {
                                                                  @Override
                                                                  public void run() {
-                                                                     MyToast.show("خرید بازار", Toast.LENGTH_SHORT);
-                                                                     //// TODO: 2015/08/20
-                                                                     //go to bazar payment
-                                                                     //get result in onActivityResult
-                                                                     //if result is ok --> update license , call webservice for purchase
-                                                                     //else if result is not ok --> finish activity
+                                                                     pay();
                                                                  }
                                                              },
                                                              new Runnable() {

@@ -12,12 +12,13 @@ import android.widget.Toast;
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.classes.App;
 import com.zohaltech.app.sigma.classes.ConnectionManager;
+import com.zohaltech.app.sigma.classes.LicenseManager;
 import com.zohaltech.app.sigma.dal.Settings;
 import com.zohaltech.app.sigma.entities.Setting;
 
 import widgets.MyToast;
 
-public class GlobalSettingsActivity extends EnhancedActivity {
+public class GlobalSettingsActivity extends BazaarPaymentActivity {
 
     SwitchCompat switchShowNotification;
     SwitchCompat switchShowNotificationWhenDataIsOn;
@@ -27,6 +28,7 @@ public class GlobalSettingsActivity extends EnhancedActivity {
     SwitchCompat switchVibrateInAlarms;
     SwitchCompat switchSoundInAlarms;
     LinearLayout layoutPremium;
+    LinearLayout layoutPremiumSplitter;
     LinearLayout layoutAbout;
     LinearLayout layoutIntroduction;
 
@@ -42,6 +44,7 @@ public class GlobalSettingsActivity extends EnhancedActivity {
         layoutLockScreen = (LinearLayout) findViewById(R.id.layoutLockScreen);
         switchShowNotificationInLockScreen = (SwitchCompat) findViewById(R.id.switchShowNotificationInLockScreen);
         layoutPremium = (LinearLayout) findViewById(R.id.layoutPremium);
+        layoutPremiumSplitter = (LinearLayout) findViewById(R.id.layoutPremiumSplitter);
         layoutAbout = (LinearLayout) findViewById(R.id.layoutAbout);
         layoutIntroduction = (LinearLayout) findViewById(R.id.layoutIntroduction);
 
@@ -119,7 +122,7 @@ public class GlobalSettingsActivity extends EnhancedActivity {
         layoutPremium.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todo : bazaar payment
+                pay();
             }
         });
 
@@ -139,6 +142,16 @@ public class GlobalSettingsActivity extends EnhancedActivity {
                 MyToast.show("بعدا بهت میگم " + getString(R.string.app_name) + " چیه", Toast.LENGTH_SHORT);
             }
         });
+
+        super.onCreated();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (LicenseManager.getLicenseStatus() == LicenseManager.Status.REGISTERED){
+            updateUiToPremiumVersion();
+        }
     }
 
     @Override
@@ -156,5 +169,11 @@ public class GlobalSettingsActivity extends EnhancedActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+
+    @Override
+    void updateUiToPremiumVersion() {
+        layoutPremium.setVisibility(View.GONE);
+        layoutPremiumSplitter.setVisibility(View.GONE);
     }
 }

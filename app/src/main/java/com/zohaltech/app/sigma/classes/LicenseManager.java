@@ -9,8 +9,6 @@ import java.io.FileWriter;
 
 public class LicenseManager {
 
-    public enum Status {TESTING_TIME, REGISTERED, EXPIRED}
-
     public LicenseManager() {
     }
 
@@ -58,11 +56,15 @@ public class LicenseManager {
         return true;
     }
 
-    public static Boolean getLicenseStatus() {
+    public static Status getLicenseStatus() {
         LicenseStatus status = LicenseModifier.getLicenceFile();
-        return status != null &&
-               (status.getStatus() == Status.REGISTERED.ordinal() ||
-                status.getStatus() == Status.TESTING_TIME.ordinal());
+        if (status == null || status.getStatus() == Status.EXPIRED.ordinal()) {
+            return Status.EXPIRED;
+        } else if (status.getStatus() == Status.REGISTERED.ordinal()) {
+            return Status.REGISTERED;
+        } else {
+            return Status.TESTING_TIME;
+        }
     }
 
     public static void registerLicense() {
@@ -83,10 +85,11 @@ public class LicenseManager {
         return LicenseModifier.getLicenceFile();
     }
 
-    public static void updateLicense(LicenseStatus status){
+    public static void updateLicense(LicenseStatus status) {
         LicenseModifier.updateLicenseFile(status);
     }
 
+    public enum Status {TESTING_TIME, REGISTERED, EXPIRED}
 
     private static class LicenseModifier {
         private static void initializeLicenseFile(LicenseStatus licenseStatus) {

@@ -52,18 +52,17 @@ public class ExpandablePackageAdapter extends AnimatedExpandableListView.Animate
 
         LinearLayout layoutPackage = (LinearLayout) convertView.findViewById(R.id.layoutPackage);
         TextView txtPackage = (TextView) convertView.findViewById(R.id.txtPackage);
-        txtPackage.setText(dataPackage.getDescription());
+        txtPackage.setText(dataPackage.getPackageDescription());
 
         layoutPackage.setOnClickListener
                 (
                         new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                DialogManager.showConfirmationDialog(activity, "خرید بسته", "آیا مایل به خرید بسته هستید؟", "بله", "خیر", null, new Runnable() {
+                                DialogManager.showConfirmationDialog(activity, "خرید بسته", "آیا مایل به خرید بسته "  + dataPackage.getDescription() + " هستید؟", "بله", "خیر", null, new Runnable() {
                                     @Override
                                     public void run() {
                                         Helper.runUssd(activity, dataPackage);
-
                                     }
                                 });
                             }

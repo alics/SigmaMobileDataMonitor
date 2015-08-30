@@ -110,7 +110,7 @@ public class PackagesActivity extends EnhancedActivity {
 
         if (requestCode != 0) {
             final DataPackage dataPackage = DataPackages.selectPackageById(requestCode);
-            DialogManager.showConfirmationDialog(App.currentActivity, "فعالسازی بسته", "آیا مایل به فعالسازی بسته " + dataPackage.getDescription() + " هستید؟",
+            DialogManager.showConfirmationDialog(App.currentActivity, "فعالسازی بسته", "آیا مایل به فعالسازی بسته " + dataPackage.getTitle() + " هستید؟",
                                                  "بله", "خیر", null, new Runnable() {
                         @Override
                         public void run() {
@@ -122,6 +122,7 @@ public class PackagesActivity extends EnhancedActivity {
                                 intent.putExtra(PackageSettingsActivity.PACKAGE_ID_KEY, dataPackage.getId());
                                 intent.putExtra(PackageSettingsActivity.FORM_MODE_KEY, PackageSettingsActivity.FORM_MODE_NEW);
                                 App.currentActivity.startActivity(intent);
+                                finish();
 
                             } else {
                                 DataPackage activePackage = DataPackages.selectPackageById(history.getDataPackageId());
@@ -138,6 +139,7 @@ public class PackagesActivity extends EnhancedActivity {
                                                 intent.putExtra(PackageSettingsActivity.PACKAGE_ID_KEY, dataPackage.getId());
                                                 intent.putExtra(PackageSettingsActivity.FORM_MODE_KEY, PackageSettingsActivity.FORM_MODE_NEW);
                                                 App.currentActivity.startActivity(intent);
+                                                finish();
                                             }
 
                                         }, new Runnable() {
@@ -149,6 +151,7 @@ public class PackagesActivity extends EnhancedActivity {
                                                 intent.putExtra(PackageSettingsActivity.PACKAGE_ID_KEY, dataPackage.getId());
                                                 intent.putExtra(PackageSettingsActivity.FORM_MODE_KEY, PackageSettingsActivity.FORM_MODE_NEW);
                                                 App.currentActivity.startActivity(intent);
+                                                finish();
                                             }
                                         });
                             }

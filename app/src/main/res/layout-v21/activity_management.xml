@@ -92,15 +92,15 @@
                 android:gravity="bottom"
                 android:orientation="vertical">
 
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fabCancelReservedPackage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-                    app:backgroundTint="@color/accent"
-                    android:src="@drawable/ic_delete_white"/>
+                <!--<android.support.design.widget.FloatingActionButton-->
+                    <!--android:id="@+id/fabCancelReservedPackage"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--android:layout_marginRight="10dp"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--app:backgroundTint="@color/accent"-->
+                    <!--android:src="@drawable/ic_delete_white"/>-->
 
                 <android.support.design.widget.FloatingActionButton
                     android:id="@+id/fabReservedPackageSettings"

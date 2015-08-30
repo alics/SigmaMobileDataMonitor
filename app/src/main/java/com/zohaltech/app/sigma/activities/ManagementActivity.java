@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.classes.App;
-import com.zohaltech.app.sigma.classes.DialogManager;
 import com.zohaltech.app.sigma.dal.DataPackages;
 import com.zohaltech.app.sigma.dal.PackageHistories;
 import com.zohaltech.app.sigma.entities.DataPackage;
@@ -21,7 +20,7 @@ public class ManagementActivity extends EnhancedActivity {
     FloatingActionButton fabActivePackageSettings;
     TextView             txtReservedPackageDescription;
     FloatingActionButton fabReservedPackageSettings;
-    FloatingActionButton fabCancelReservedPackage;
+    //FloatingActionButton fabCancelReservedPackage;
     FloatingActionButton fabAddPackage;
 
     DataPackage activePackage;
@@ -34,7 +33,7 @@ public class ManagementActivity extends EnhancedActivity {
         txtActivePackageDescription = (TextView) findViewById(R.id.txtActivePackageDescription);
         fabActivePackageSettings = (FloatingActionButton) findViewById(R.id.fabActivePackageSettings);
         txtReservedPackageDescription = (TextView) findViewById(R.id.txtReservedPackageDescription);
-        fabCancelReservedPackage = (FloatingActionButton) findViewById(R.id.fabCancelReservedPackage);
+        //fabCancelReservedPackage = (FloatingActionButton) findViewById(R.id.fabCancelReservedPackage);
         fabReservedPackageSettings = (FloatingActionButton) findViewById(R.id.fabReservedPackageSettings);
         fabAddPackage = (FloatingActionButton) findViewById(R.id.fabAddPackage);
 
@@ -60,18 +59,18 @@ public class ManagementActivity extends EnhancedActivity {
             }
         });
 
-        fabCancelReservedPackage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogManager.showConfirmationDialog(App.currentActivity, "حذف بسته رزرو", "بسته رزرو حذف شود؟", "بله", "خیر", null, new Runnable() {
-                    @Override
-                    public void run() {
-                        PackageHistories.deletedReservedPackages();
-                        setReservePackageStatus(false);
-                    }
-                });
-            }
-        });
+        //fabCancelReservedPackage.setOnClickListener(new View.OnClickListener() {
+        //    @Override
+        //    public void onClick(View v) {
+        //        DialogManager.showConfirmationDialog(App.currentActivity, "حذف بسته رزرو", "بسته رزرو حذف شود؟", "بله", "خیر", null, new Runnable() {
+        //            @Override
+        //            public void run() {
+        //                PackageHistories.deletedReservedPackages();
+        //                setReservePackageStatus(false);
+        //            }
+        //        });
+        //    }
+        //});
 
         fabReservedPackageSettings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,8 +128,8 @@ public class ManagementActivity extends EnhancedActivity {
     }
 
     private void setReservePackageStatus(boolean enable) {
-        fabCancelReservedPackage.setEnabled(enable);
-        setEnability(fabCancelReservedPackage, enable);
+        //fabCancelReservedPackage.setEnabled(enable);
+        //setEnability(fabCancelReservedPackage, enable);
         fabReservedPackageSettings.setEnabled(enable);
         setEnability(fabReservedPackageSettings, enable);
     }
