@@ -125,7 +125,7 @@ public class PackagesActivity extends EnhancedActivity {
 
                             } else {
                                 DataPackage activePackage = DataPackages.selectPackageById(history.getDataPackageId());
-                                DialogManager.showChoiceDialog(App.currentActivity, "رزرو بسته", "هم اکنون یک بسته فعال " + activePackage.getTitle() + " وجود دارد،آیا بسته" + dataPackage.getDescription() + "به عنوان رزرو در نظر گرفته شود یا از ابتدا محاسبه گردد؟",
+                                DialogManager.showChoiceDialog(App.currentActivity, "رزرو بسته", "هم اکنون یک بسته فعال " + activePackage.getTitle() + " وجود دارد،آیا بسته " + dataPackage.getDescription() + "به عنوان رزرو در نظر گرفته شود یا از ابتدا محاسبه گردد؟",
                                                                "از ابتدا محاسبه گردد", "رزرو شود", null, new Runnable() {
                                             @Override
                                             public void run() {

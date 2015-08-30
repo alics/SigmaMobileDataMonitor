@@ -170,6 +170,4 @@ public class DataAccess extends SQLiteOpenHelper {
             e.printStackTrace();
         }
     }
-
-
 }
