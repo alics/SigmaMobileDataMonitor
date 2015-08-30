@@ -6,11 +6,13 @@ import android.net.Uri;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zohaltech.app.mobiledatamonitor.BuildConfig;
 import com.zohaltech.app.mobiledatamonitor.R;
+import com.zohaltech.app.mobiledatamonitor.classes.Helper;
 
 import widgets.MyToast;
 
@@ -20,6 +22,7 @@ public class AboutActivity extends EnhancedActivity {
     Button   btnShare;
     Button   btnFeedback;
     Button   btnRate;
+    LinearLayout layoutWebsite;
 
     @Override
     void onCreated() {
@@ -29,6 +32,7 @@ public class AboutActivity extends EnhancedActivity {
         btnShare = (Button) findViewById(R.id.btnShare);
         btnFeedback = (Button) findViewById(R.id.btnFeedback);
         btnRate = (Button) findViewById(R.id.btnRate);
+        layoutWebsite = (LinearLayout) findViewById(R.id.layoutWebsite);
 
         final String marketWebsiteUri = "http://cafebazaar.ir/app/" + getPackageName();
         final String email = "info@zohaltech.com";
@@ -69,6 +73,13 @@ public class AboutActivity extends EnhancedActivity {
                         MyToast.show(String.format(getResources().getString(R.string.could_not_open_market), "بازار", "بازار"), Toast.LENGTH_SHORT);
                     }
                 }
+            }
+        });
+
+        layoutWebsite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Helper.goToWebsite("http://zohaltech.com");
             }
         });
     }
