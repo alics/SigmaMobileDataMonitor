@@ -143,13 +143,13 @@ public class PackageSettingsActivity extends EnhancedActivity {
                 setEditMode(false);
                 if (initMode.equals(MODE_SETTING_ACTIVE)) {
                     if (formMode.equals(FORM_MODE_NEW)) {
-                        loadNewPackageSettings(dataPackage);
+                        loadNewPackageSettings();
                     } else {
                         loadActivePackageSettings();
                     }
                 } else if (initMode.equals(MODE_SETTING_RESERVED)) {
                     if (formMode.equals(FORM_MODE_NEW)) {
-                        loadNewPackageSettings(dataPackage);
+                        loadNewPackageSettings();
                     } else {
                         loadReservedPackageSettings();
                     }
@@ -233,9 +233,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
         int validPeriod = edtPackageValidPeriod.getVisibility() == View.GONE ?
                 Integer.valueOf(txtPackageValidPeriod.getText().toString()) :
                 Integer.valueOf(edtPackageValidPeriod.getText().toString());
-//        long primaryTraffic = TrafficUnitsUtil.MbToByte(edtPrimaryTraffic.getVisibility() == View.GONE ?
-//                                                        Integer.valueOf(txtPrimaryTraffic.getText().toString()) :
-//                                                        Integer.valueOf(edtPrimaryTraffic.getText().toString()));
+
         if (trafficAlarm && leftDaysAlarm) {
             if (!Validator.validateEditText(edtLeftDaysAlarm, getString(R.string.left_days_alarm)))
                 return false;
@@ -247,11 +245,6 @@ public class PackageSettingsActivity extends EnhancedActivity {
                 MyToast.show("اخطار روز باقیمانده باید کمتر مدت اعتبار بسته باشد.", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
                 return false;
             }
-
-//            if (primaryTraffic <= Integer.valueOf(edtTrafficAlarm.getText().toString())) {
-//                MyToast.show("اخطار حجم باقیمانده باید کمتر از ترافیک اولیه باشد.", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
-//                return false;
-//            }
 
             setting.setAlarmType(Setting.AlarmType.BOTH.ordinal());
             setting.setLeftDaysAlarm(Integer.valueOf(edtLeftDaysAlarm.getText().toString()));
@@ -409,11 +402,11 @@ public class PackageSettingsActivity extends EnhancedActivity {
         switchAlarmAfterTerminate.setChecked(setting.getShowAlarmAfterTerminateRes());
     }
 
-    private void loadNewPackageSettings(DataPackage dataPackage) {
+    private void loadNewPackageSettings() {
         switchLeftDaysAlarm.setChecked(true);
-        edtLeftDaysAlarm.setText("1");
+        edtLeftDaysAlarm.setText("2");
         switchTrafficAlarm.setChecked(true);
-        edtTrafficAlarm.setText(TrafficUnitsUtil.ByteToMb(dataPackage.getPrimaryTraffic()) * 9 / 10 + "");
+        edtTrafficAlarm.setText("85");
         switchAlarmAfterTerminate.setChecked(true);
     }
 
@@ -437,13 +430,6 @@ public class PackageSettingsActivity extends EnhancedActivity {
             MyToast.show("اخطار روز باقیمانده باید از مدت اعتبار بسته کمتر باشد", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
             return;
         }
-
-//        if (switchTrafficAlarm.isChecked() &&
-//            Integer.valueOf(edtTrafficAlarm.getText().toString()) >=
-//            Integer.valueOf(edtPrimaryTraffic.getText().toString())) {
-//            MyToast.show("اخطار حجم باقیمانده باید از حجم شبانه روزی کمتر باشد", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
-//            return;
-//        }
 
         if (edtSecondaryTraffic.getText().toString().trim().length() > 0 &&
                 !edtSecondaryTraffic.getText().toString().equals("0")) {
