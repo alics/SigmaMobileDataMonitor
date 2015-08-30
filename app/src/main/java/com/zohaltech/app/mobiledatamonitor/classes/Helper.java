@@ -162,10 +162,10 @@ public final class Helper {
         NO_SIM
     }
 
-    //public static void goToWebsite(String url) {
-    //    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-    //    G.currentActivity.startActivity(browserIntent);
-    //}
+    public static void goToWebsite(String url) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        App.currentActivity.startActivity(browserIntent);
+    }
 
     //    public static void share(String message)
     //    {
