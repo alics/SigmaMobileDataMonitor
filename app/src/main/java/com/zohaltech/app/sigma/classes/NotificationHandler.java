@@ -12,6 +12,7 @@ import android.support.v4.app.NotificationCompat;
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.activities.DashboardActivity;
 import com.zohaltech.app.sigma.dal.Settings;
+import com.zohaltech.app.sigma.entities.Setting;
 
 public class NotificationHandler {
 
@@ -62,7 +63,8 @@ public class NotificationHandler {
 
     private static Notification getAlarmNotification(Context context, String title, String text) {
         int lockScreenVisibility;
-        if (Settings.getCurrentSettings().getShowNotificationInLockScreen()) {
+        Setting setting = Settings.getCurrentSettings();
+        if (setting.getShowNotificationInLockScreen()) {
             lockScreenVisibility = NotificationCompat.VISIBILITY_PUBLIC;//visible in lock screen
         } else {
             lockScreenVisibility = NotificationCompat.VISIBILITY_SECRET;//invisible in lock screen
@@ -81,6 +83,13 @@ public class NotificationHandler {
                         .setVisibility(lockScreenVisibility)
                         .setColor(App.context.getResources().getColor(R.color.primary))
                         .setAutoCancel(true);
+
+        if (setting.getVibrateInAlarms()){
+            builder.setDefaults(Notification.DEFAULT_VIBRATE);
+        }
+        if (setting.getSoundInAlarms()){
+            builder.setDefaults(Notification.DEFAULT_SOUND);
+        }
 
         Intent resultIntent = new Intent(context, DashboardActivity.class);
         resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);

@@ -38,9 +38,9 @@ public final class PackageStatus {
             status.setPrimaryTraffic(dataPackage.getPrimaryTraffic());
             status.setUsedPrimaryTraffic(UsageLogs.getUsedPrimaryTrafficOfPackage(dataPackage, history));
 
-            if (status.getUsedPrimaryTraffic() >= dataPackage.getPrimaryTraffic()) {
-                PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.TRAFFIC_FINISHED);
-            }
+            //if (status.getUsedPrimaryTraffic() >= dataPackage.getPrimaryTraffic()) {
+            //    PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.TRAFFIC_FINISHED);
+            //}
 
             if (dataPackage.getSecondaryTraffic() != null && dataPackage.getSecondaryTraffic() != 0) {
                 status.setSecondaryTraffic(dataPackage.getSecondaryTraffic());
@@ -108,7 +108,7 @@ public final class PackageStatus {
         if (leftDays <= 0) {
             String msg = "مهلت اعتبار بسته به پایان رسید";
             if (reservedPackageHistory != null)
-                msg += " و بسته رزور شده فعال شد ";
+                msg += " و بسته رزور شده فعال شد";
             alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.FINISH_VALIDATION_DATE_ALARM, msg));
             PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.PERIOD_FINISHED);
         }
@@ -123,7 +123,7 @@ public final class PackageStatus {
         } else if (setting.getAlarmType() == Setting.AlarmType.REMINDED_BYTES.ordinal()) {
             long trafficAlarm = Math.round(setting.getPercentTrafficAlarm() * 0.01 * dataPackage.getPrimaryTraffic());
             if (usedPrimaryTraffic >= trafficAlarm) {
-                String msg = "بیشتر از " + setting.getPercentTrafficAlarm() + "درصد از حجم بسته مصرف شده است. ";
+                String msg = "بیشتر از " + setting.getPercentTrafficAlarm() + " درصد از حجم بسته مصرف شده است";
                 alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.REMINDED_TRAFFIC_ALARM, msg));
             }
         } else if (setting.getAlarmType() == Setting.AlarmType.BOTH.ordinal()) {
@@ -136,7 +136,7 @@ public final class PackageStatus {
             long trafficAlarm = Math.round(setting.getPercentTrafficAlarm() * 0.01 * dataPackage.getPrimaryTraffic());
             long reminded = dataPackage.getPrimaryTraffic() - usedPrimaryTraffic;
             if (usedPrimaryTraffic >= trafficAlarm) {
-                String msg = "بیشتر از " + setting.getPercentTrafficAlarm() + "درصد از حجم بسته مصرف شده است. ";
+                String msg = "بیشتر از " + setting.getPercentTrafficAlarm() + " درصد از حجم بسته مصرف شده است";
                 alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.REMINDED_TRAFFIC_ALARM, msg));
             }
         }

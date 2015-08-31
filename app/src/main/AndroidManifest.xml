@@ -48,7 +48,7 @@
             android:name=".classes.PackageAlarmReceiver"
             android:exported="false">
             <intent-filter>
-                <action android:name=".APPLICATION_ALARM_ACTION"/>
+                <action android:name="APPLICATION_ALARM_ACTION"/>
             </intent-filter>
         </receiver>
 

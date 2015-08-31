@@ -51,7 +51,7 @@
                             android:layout_height="wrap_content"
 
                             android:gravity="right"
-                            android:text="نوار اعلان"
+                            android:text="تنظیمات نوار اعلان"
                             android:textAppearance="?android:attr/textAppearanceLarge"
                             android:textColor="@color/primary"/>
 
@@ -127,12 +127,39 @@
 
                     </LinearLayout>
 
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@android:drawable/divider_horizontal_bright"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="right"
+                        android:orientation="horizontal">
+
+                        <widgets.MyTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:gravity="right"
+                            android:text="تنظیمات هشدارها"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textColor="@color/primary"/>
+
+                    </LinearLayout>
 
                     <widgets.MySwitch
                         android:id="@+id/switchVibrateInAlarms"
@@ -141,7 +168,7 @@
                         android:layout_marginBottom="5dp"
                         android:layout_marginTop="5dp"
                         android:gravity="right"
-                        android:text=" لرزش هنگام اخطارها"
+                        android:text=" لرزش دستگاه در هنگام هشدار"
                         android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                     <LinearLayout
@@ -158,7 +185,7 @@
                         android:layout_marginBottom="5dp"
                         android:layout_marginTop="5dp"
                         android:gravity="right"
-                        android:text=" صدا در هنگام اخطارها"
+                        android:text=" پخش صدا برای هشدار"
                         android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                 </LinearLayout>

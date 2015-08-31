@@ -18,8 +18,8 @@ import java.util.concurrent.TimeUnit;
 public class SigmaDataService extends Service {
 
     public static final  String  TODAY_USAGE_BYTES        = "TODAY_USAGE_BYTES";
-    public static final  String  TODAY_USAGE_ACTION       = "com.zohaltech.app.sigma.TODAY_USAGE_ACTION";
-    public static final  String  APPLICATION_ALARM_ACTION = "com.zohaltech.app.sigma.APPLICATION_ALARM_ACTION";
+    public static final  String  TODAY_USAGE_ACTION       = "TODAY_USAGE_ACTION";
+    public static final  String  APPLICATION_ALARM_ACTION = "APPLICATION_ALARM_ACTION";
     private static final String  LAST_RECEIVED_BYTES      = "LAST_RECEIVED_BYTES";
     private static final String  LAST_SENT_BYTES          = "LAST_SENT_BYTES";
     private static final String  TODAY_USAGE_DATE         = "TODAY_USAGE_DATE";
@@ -68,8 +68,8 @@ public class SigmaDataService extends Service {
                 }).start();
                 usageLogInterval = 0;
 
-                Intent intent = new Intent(APPLICATION_ALARM_ACTION);
-                sendBroadcast(intent);
+                //Intent intent = new Intent(APPLICATION_ALARM_ACTION);
+                //sendBroadcast(intent);
             }
 
             String currentDate = Helper.getCurrentDate();
@@ -129,6 +129,9 @@ public class SigmaDataService extends Service {
             Intent intent = new Intent(TODAY_USAGE_ACTION);
             intent.putExtra(TODAY_USAGE_BYTES, App.preferences.getLong(TODAY_USAGE_BYTES, 0));
             sendBroadcast(intent);
+
+            Intent intent1 = new Intent(APPLICATION_ALARM_ACTION);
+            sendBroadcast(intent1);
         }
     };
 
