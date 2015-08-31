@@ -118,43 +118,57 @@ public class DashboardActivity extends BazaarPaymentActivity {
 
     @Override
     void updateUiToPremiumVersion() {
-        if (paymentDialog != null && paymentDialog.isShowing()) {
-            paymentDialog.dismiss();
-            paymentDialog = null;
-        }
+        destroyPaymentDialog();
+    }
+
+    @Override
+    void updateUiToTrialVersion() {
+        showPaymentDialog();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         if (LicenseManager.getLicenseStatus() == LicenseManager.Status.EXPIRED) {
-            if (paymentDialog == null) {
-                paymentDialog = DialogManager.getPopupDialog(App.currentActivity,
-                                                             getString(R.string.buy_full_vesion),
-                                                             getString(R.string.buy_description),
-                                                             getString(R.string.buy_like),
-                                                             getString(R.string.buy_sora),
-                                                             null,
-                                                             new Runnable() {
-                                                                 @Override
-                                                                 public void run() {
-                                                                     pay();
-                                                                 }
-                                                             },
-                                                             new Runnable() {
-                                                                 @Override
-                                                                 public void run() {
-                                                                     finish();
-                                                                 }
-                                                             });
+            showPaymentDialog();
+        }
+    }
+
+    private void showPaymentDialog() {
+        destroyPaymentDialog();
+        paymentDialog = DialogManager.getPopupDialog(App.currentActivity,
+                                                     getString(R.string.buy_full_vesion),
+                                                     getString(R.string.buy_description),
+                                                     getString(R.string.buy_like),
+                                                     getString(R.string.buy_sora),
+                                                     null,
+                                                     new Runnable() {
+                                                         @Override
+                                                         public void run() {
+                                                             pay();
+                                                         }
+                                                     },
+                                                     new Runnable() {
+                                                         @Override
+                                                         public void run() {
+                                                             finish();
+                                                         }
+                                                     });
+        paymentDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                finish();
             }
-            paymentDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                @Override
-                public void onCancel(DialogInterface dialog) {
-                    finish();
-                }
-            });
-            paymentDialog.show();
+        });
+        paymentDialog.show();
+    }
+
+    private void destroyPaymentDialog() {
+        if (paymentDialog != null) {
+            if (paymentDialog.isShowing()) {
+                paymentDialog.dismiss();
+            }
+            paymentDialog = null;
         }
     }
 

@@ -102,10 +102,6 @@ public class SigmaDataService extends Service {
 
             Setting setting = Settings.getCurrentSettings();
             boolean showNotification;
-            //Log.i("sdj", "Notification On: " + setting.getShowNotification());
-            //Log.i("sdj", "Data Connected : " + setting.getDataConnected());
-            //Log.i("sdj", "When Data On : " + setting.getShowNotificationWhenDataIsOn());
-            //Log.i("sdj", "Lock Screen : " + setting.getShowNotificationInLockScreen());
             if (setting.getShowNotification()) {
                 if (setting.getShowNotificationWhenDataIsOn()) {
                     showNotification = setting.getDataConnected();
@@ -115,9 +111,6 @@ public class SigmaDataService extends Service {
             } else {
                 showNotification = false;
             }
-
-            //Log.i("sdj", "showNotification : " + showNotification);
-            //Log.i("sdj", "-------------------------------------");
 
             String title = getString(R.string.speed) + TrafficUnitsUtil.getTransferRate(receivedBytes + sentBytes);
             if (setting.getShowUpDownSpeed()) {

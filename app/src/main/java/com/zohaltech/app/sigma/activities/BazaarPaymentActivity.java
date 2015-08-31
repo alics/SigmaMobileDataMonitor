@@ -2,6 +2,7 @@ package com.zohaltech.app.sigma.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.zohaltech.app.sigma.R;
@@ -30,7 +31,7 @@ public abstract class BazaarPaymentActivity extends EnhancedActivity {
             //Log.i(TAG, "Query inventory finished.");
             if (result.isFailure()) {
                 //Log.i(TAG, "Failed to query inventory: " + result);
-                complain("خطا در خرید از بازار");
+                //complain("خطا در خرید از بازار");
                 return;
             } else {
                 //Log.i(TAG, "Query inventory was successful.");
@@ -74,20 +75,24 @@ public abstract class BazaarPaymentActivity extends EnhancedActivity {
     @Override
     void onCreated() {
         if (LicenseManager.getLicenseStatus() != LicenseManager.Status.REGISTERED) {
-            mHelper = new IabHelper(App.currentActivity, ConstantParams.getBase64EncodedPublicKey());
-            //Log.d(TAG, "Starting setup.");
-            mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-                public void onIabSetupFinished(IabResult result) {
-                    //Log.d(TAG, "Setup finished.");
+            try {
+                mHelper = new IabHelper(App.currentActivity, ConstantParams.getBase64EncodedPublicKey());
+                //Log.d(TAG, "Starting setup.");
+                mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+                    public void onIabSetupFinished(IabResult result) {
+                        //Log.d(TAG, "Setup finished.");
 
-                    if (!result.isSuccess()) {
-                        // Oh noes, there was a problem.
-                        //Log.d(TAG, "Problem setting up In-app Billing: " + result);
+                        if (!result.isSuccess()) {
+                            // Oh noes, there was a problem.
+                            //Log.d(TAG, "Problem setting up In-app Billing: " + result);
+                        }
+                        // Hooray, IAB is fully set up!
+                        mHelper.queryInventoryAsync(mGotInventoryListener);
                     }
-                    // Hooray, IAB is fully set up!
-                    mHelper.queryInventoryAsync(mGotInventoryListener);
-                }
-            });
+                });
+            } catch (Exception e) {
+                //Log.e(TAG, "برنامه بازار نصب نیست");
+            }
         }
     }
 
@@ -113,10 +118,14 @@ public abstract class BazaarPaymentActivity extends EnhancedActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mHelper != null) {
-            mHelper.dispose();
+        try {
+            if (mHelper != null) {
+                mHelper.dispose();
+            }
+            mHelper = null;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        mHelper = null;
     }
 
     private boolean verifyDeveloperPayload(Purchase p) {
@@ -129,16 +138,24 @@ public abstract class BazaarPaymentActivity extends EnhancedActivity {
     private void complain(String message) {
         MyToast.show(message, Toast.LENGTH_LONG, R.drawable.ic_warning_white);
     }
+
     void pay() {
         setWaitScreen(true);
-        mHelper.launchPurchaseFlow(App.currentActivity, SKU_PREMIUM, RC_REQUEST, mPurchaseFinishedListener, PAY_LOAD);
+        try {
+            mHelper.launchPurchaseFlow(App.currentActivity, SKU_PREMIUM, RC_REQUEST, mPurchaseFinishedListener, PAY_LOAD);
+        } catch (Exception e) {
+            //Log.e(TAG, "Error : " + e.getMessage());
+            setWaitScreen(false);
+            updateUiToTrialVersion();
+            MyToast.show("لطفا آخرین نسخه بازار را نصب کنید", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
+        }
     }
 
     private void setWaitScreen(boolean wait) {
         if (wait) {
             progressDialog = new ProgressDialog(this);
             progressDialog.setIndeterminate(true);
-            progressDialog.setMessage("لطفاً کمی صبر کنید...");
+            progressDialog.setMessage("لطفاً کمی صبر کنید");
             progressDialog.setCancelable(false);
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.show();
@@ -151,4 +168,6 @@ public abstract class BazaarPaymentActivity extends EnhancedActivity {
     }
 
     abstract void updateUiToPremiumVersion();
+
+    abstract void updateUiToTrialVersion();
 }

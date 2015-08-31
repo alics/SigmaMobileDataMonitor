@@ -65,9 +65,6 @@ public class UsageLogs {
         String maxUsageLogDate = getMaxDateTime().substring(0, 10);
         String currentDateTime = Helper.getCurrentDateTime();
         String currentDate = Helper.getCurrentDate();
-        Log.i("sdj maxUsageLogDate", maxUsageLogDate);
-        Log.i("sdj currentDateTime", currentDateTime);
-        Log.i("sdj currentDate", currentDate);
 
         if (!Helper.addDay(-1).equals(DailyTrafficHistories.getMaxDate()) && currentDate.compareTo(maxUsageLogDate) > 0) {
             ContentValues values = new ContentValues();
@@ -84,7 +81,6 @@ public class UsageLogs {
             values.put(TrafficBytes, usageLog.getTrafficBytes());
             values.put(LogDateTime, currentDateTime);
 
-            Log.i("sdj", "usage log inserted " + usageLog.getTrafficBytes());
             DataAccess da = new DataAccess();
             return da.insert(TableName, values);
         }
@@ -171,7 +167,6 @@ public class UsageLogs {
         Cursor cursor = null;
         try {
             String query = generateQueryForPrimaryTraffic(dataPackage, history);
-            Log.i("sdj", query);
             cursor = db.rawQuery(query, null);
             if (cursor != null && cursor.moveToFirst()) {
                 do {

@@ -176,4 +176,10 @@ public class GlobalSettingsActivity extends BazaarPaymentActivity {
         layoutPremium.setVisibility(View.GONE);
         layoutPremiumSplitter.setVisibility(View.GONE);
     }
+
+    @Override
+    void updateUiToTrialVersion() {
+        //layoutPremium.setVisibility(View.VISIBLE);
+        //layoutPremiumSplitter.setVisibility(View.VISIBLE);
+    }
 }

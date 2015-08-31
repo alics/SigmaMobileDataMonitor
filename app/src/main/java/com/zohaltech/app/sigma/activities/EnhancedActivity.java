@@ -24,6 +24,10 @@ public abstract class EnhancedActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
         super.onCreate(savedInstanceState);
 
+        initialize();
+    }
+
+    private void initialize() {
         Thread.setDefaultUncaughtExceptionHandler(new MyUncaughtExceptionHandler());
         App.currentActivity = this;
 
@@ -35,6 +39,8 @@ public abstract class EnhancedActivity extends AppCompatActivity {
     @Override
     public final void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
+
+        initialize();
     }
 
     private void onInitialized() {
@@ -59,5 +65,6 @@ public abstract class EnhancedActivity extends AppCompatActivity {
     }
 
     abstract void onCreated();
+
     abstract void onToolbarCreated();
 }
