@@ -6,12 +6,13 @@ import android.os.Environment;
 import com.zohaltech.app.sigma.R;
 
 public final class ConstantParams {
-    private static String licenseFilePath = Environment.getExternalStorageDirectory() + App.context.getString(R.string.vps);
-    private static String fileName = App.context.getString(R.string.sys);
-    private static String token = App.context.getString(R.string.cs);
-    private static String secretKey = App.context.getString(R.string.sdj);
-    private static String iv = App.context.getString(R.string.v);
-    private static String seven = App.context.getString(R.string.seven);
+    private static String licenseFilePath        = Environment.getExternalStorageDirectory() + App.context.getString(R.string.vps);
+    private static String fileName               = App.context.getString(R.string.sys);
+    private static String token                  = App.context.getString(R.string.cs);
+    private static String secretKey              = App.context.getString(R.string.sdj);
+    private static String iv                     = App.context.getString(R.string.v);
+    private static String seven                  = App.context.getString(R.string.seven);
+    private static String base64EncodedPublicKey = App.context.getString(R.string.base64EncodedPublicKey);
 
     public static String getLicenseFilePath() {
         return licenseFilePath;
@@ -35,5 +36,9 @@ public final class ConstantParams {
 
     public static String getSeven() {
         return seven;
+    }
+
+    public static String getBase64EncodedPublicKey() {
+        return base64EncodedPublicKey;
     }
 }

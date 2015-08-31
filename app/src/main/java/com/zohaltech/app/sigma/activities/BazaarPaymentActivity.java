@@ -2,11 +2,11 @@ package com.zohaltech.app.sigma.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.classes.App;
+import com.zohaltech.app.sigma.classes.ConstantParams;
 import com.zohaltech.app.sigma.classes.LicenseManager;
 import com.zohaltech.app.sigma.util.IabHelper;
 import com.zohaltech.app.sigma.util.IabResult;
@@ -27,13 +27,13 @@ public abstract class BazaarPaymentActivity extends EnhancedActivity {
 
     private IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
         public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
-            Log.i(TAG, "Query inventory finished.");
+            //Log.i(TAG, "Query inventory finished.");
             if (result.isFailure()) {
-                Log.i(TAG, "Failed to query inventory: " + result);
+                //Log.i(TAG, "Failed to query inventory: " + result);
                 complain("خطا در خرید از بازار");
                 return;
             } else {
-                Log.i(TAG, "Query inventory was successful.");
+                //Log.i(TAG, "Query inventory was successful.");
                 // does the user have the premium upgrade?
                 mIsPremium = inventory.hasPurchase(SKU_PREMIUM);
 
@@ -44,21 +44,21 @@ public abstract class BazaarPaymentActivity extends EnhancedActivity {
                     setWaitScreen(false);
                 }
 
-                Log.i(TAG, "User is " + (mIsPremium ? "PREMIUM" : "NOT PREMIUM"));
+                //Log.i(TAG, "User is " + (mIsPremium ? "PREMIUM" : "NOT PREMIUM"));
             }
 
-            Log.i(TAG, "Initial inventory query finished; enabling main UI.");
+            //Log.i(TAG, "Initial inventory query finished; enabling main UI.");
         }
     };
 
     private IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
         public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
             if (result.isFailure()) {
-                Log.e("PAYMENT", "Error purchasing: " + result);
+                //Log.e("PAYMENT", "Error purchasing: " + result);
                 complain("خطا در خرید از بازار");
             } else if (purchase.getSku().equals(SKU_PREMIUM)) {
                 if (!verifyDeveloperPayload(purchase)) {
-                    Log.e("PAYMENT", "Error purchasing. Authenticity verification failed.");
+                    //Log.e("PAYMENT", "Error purchasing. Authenticity verification failed.");
                     complain("خطا در ورود به حساب کاربری بازار");
                 } else {
                     // give user access to premium content and update the UI
@@ -74,16 +74,15 @@ public abstract class BazaarPaymentActivity extends EnhancedActivity {
     @Override
     void onCreated() {
         if (LicenseManager.getLicenseStatus() != LicenseManager.Status.REGISTERED) {
-            String base64EncodedPublicKey = "MIHNMA0GCSqGSIb3DQEBAQUAA4G7ADCBtwKBrwDEZZ4jpPHrnb/I+16h4DRUB0u13UCme31/0Jz+b4enw1xUmMmvlduzZUTruV1fM8bH14gEBMvOIt+g7u0AhejrfYXavhE/R3JrNq+TuZTrKuO73MpO1aaeiuYmsuA1wcN7fP5akffu/1HSqAj4s0F7fArJRZeiGnEb7ApTBFlGLg/o4groUZZwF3f1abFEcC9wM+HfGuiUZdKDTKkT3XyVzPcsvnrjMODiPeFsTH8CAwEAAQ==";
-            mHelper = new IabHelper(App.currentActivity, base64EncodedPublicKey);
-            Log.d(TAG, "Starting setup.");
+            mHelper = new IabHelper(App.currentActivity, ConstantParams.getBase64EncodedPublicKey());
+            //Log.d(TAG, "Starting setup.");
             mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
                 public void onIabSetupFinished(IabResult result) {
-                    Log.d(TAG, "Setup finished.");
+                    //Log.d(TAG, "Setup finished.");
 
                     if (!result.isSuccess()) {
                         // Oh noes, there was a problem.
-                        Log.d(TAG, "Problem setting up In-app Billing: " + result);
+                        //Log.d(TAG, "Problem setting up In-app Billing: " + result);
                     }
                     // Hooray, IAB is fully set up!
                     mHelper.queryInventoryAsync(mGotInventoryListener);
@@ -101,13 +100,13 @@ public abstract class BazaarPaymentActivity extends EnhancedActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Log.d(TAG, "onActivityResult(" + requestCode + "," + resultCode + "," + data);
+        //Log.d(TAG, "onActivityResult(" + requestCode + "," + resultCode + "," + data);
 
         // Pass on the activity result to the helper for handling
         if (!mHelper.handleActivityResult(requestCode, resultCode, data)) {
             super.onActivityResult(requestCode, resultCode, data);
         } else {
-            Log.d(TAG, "onActivityResult handled by IABUtil.");
+            //Log.d(TAG, "onActivityResult handled by IABUtil.");
         }
     }
 
