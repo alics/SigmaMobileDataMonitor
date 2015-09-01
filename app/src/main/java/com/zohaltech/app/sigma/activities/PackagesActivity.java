@@ -105,58 +105,61 @@ public class PackagesActivity extends EnhancedActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(final int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode != 0) {
-            final DataPackage dataPackage = DataPackages.selectPackageById(requestCode);
-            DialogManager.showConfirmationDialog(App.currentActivity, "فعالسازی بسته", "آیا مایل به فعالسازی بسته " + dataPackage.getTitle() + " هستید؟",
-                                                 "بله", "خیر", null, new Runnable() {
-                        @Override
-                        public void run() {
-                            final PackageHistory history = PackageHistories.getActivePackage();
-                            if (history == null) {
-                                PackageHistories.insert(new PackageHistory(dataPackage.getId(), Helper.getCurrentDateTime(),null, null, null, null, PackageHistory.StatusEnum.ACTIVE.ordinal()));
-                                Intent intent = new Intent(App.currentActivity, PackageSettingsActivity.class);
-                                intent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_SETTING_ACTIVE);
-                                intent.putExtra(PackageSettingsActivity.PACKAGE_ID_KEY, dataPackage.getId());
-                                intent.putExtra(PackageSettingsActivity.FORM_MODE_KEY, PackageSettingsActivity.FORM_MODE_NEW);
-                                App.currentActivity.startActivity(intent);
-                                finish();
+            App.handler.postDelayed(new Runnable() {
+                public void run() {
+                    final DataPackage dataPackage = DataPackages.selectPackageById(requestCode);
+                    DialogManager.showConfirmationDialog(App.currentActivity, "فعالسازی بسته", "آیا مایل به فعالسازی بسته " + dataPackage.getTitle() + " هستید؟",
+                                                         "بله", "خیر", null, new Runnable() {
+                                @Override
+                                public void run() {
+                                    final PackageHistory history = PackageHistories.getActivePackage();
+                                    if (history == null) {
+                                        PackageHistories.insert(new PackageHistory(dataPackage.getId(), Helper.getCurrentDateTime(), null, null, null, null, PackageHistory.StatusEnum.ACTIVE.ordinal()));
+                                        Intent intent = new Intent(App.currentActivity, PackageSettingsActivity.class);
+                                        intent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_SETTING_ACTIVE);
+                                        intent.putExtra(PackageSettingsActivity.PACKAGE_ID_KEY, dataPackage.getId());
+                                        intent.putExtra(PackageSettingsActivity.FORM_MODE_KEY, PackageSettingsActivity.FORM_MODE_NEW);
+                                        App.currentActivity.startActivity(intent);
+                                        finish();
 
-                            } else {
-                                DataPackage activePackage = DataPackages.selectPackageById(history.getDataPackageId());
-                                DialogManager.showChoiceDialog(App.currentActivity, "رزرو بسته", "هم اکنون یک بسته فعال " + activePackage.getTitle() + " وجود دارد،آیا بسته " + dataPackage.getDescription() + "به عنوان رزرو در نظر گرفته شود یا از ابتدا محاسبه گردد؟",
-                                                               "از ابتدا محاسبه گردد", "رزرو شود", null, new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                PackageHistories.deletedReservedPackages();
-                                                //PackageHistories.terminateAll(PackageHistory.StatusEnum.CANCELED);
-                                                PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.CANCELED);
-                                                PackageHistories.insert(new PackageHistory(dataPackage.getId(), Helper.getCurrentDateTime(),null, null, null, null, PackageHistory.StatusEnum.ACTIVE.ordinal()));
-                                                Intent intent = new Intent(App.currentActivity, PackageSettingsActivity.class);
-                                                intent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_SETTING_ACTIVE);
-                                                intent.putExtra(PackageSettingsActivity.PACKAGE_ID_KEY, dataPackage.getId());
-                                                intent.putExtra(PackageSettingsActivity.FORM_MODE_KEY, PackageSettingsActivity.FORM_MODE_NEW);
-                                                App.currentActivity.startActivity(intent);
-                                                finish();
-                                            }
+                                    } else {
+                                        DataPackage activePackage = DataPackages.selectPackageById(history.getDataPackageId());
+                                        DialogManager.showChoiceDialog(App.currentActivity, "رزرو بسته", "هم اکنون یک بسته فعال " + activePackage.getTitle() + " وجود دارد، آیا بسته " + dataPackage.getTitle() + " به عنوان بسته رزرو در نظر گرفته شود؟",
+                                                                       "رزرو شود", "فعال شود", null, new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        PackageHistories.deletedReservedPackages();
+                                                        PackageHistories.insert(new PackageHistory(dataPackage.getId(), null, null, null, null, null, PackageHistory.StatusEnum.RESERVED.ordinal()));
+                                                        Intent intent = new Intent(App.currentActivity, PackageSettingsActivity.class);
+                                                        intent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_SETTING_RESERVED);
+                                                        intent.putExtra(PackageSettingsActivity.PACKAGE_ID_KEY, dataPackage.getId());
+                                                        intent.putExtra(PackageSettingsActivity.FORM_MODE_KEY, PackageSettingsActivity.FORM_MODE_NEW);
+                                                        App.currentActivity.startActivity(intent);
+                                                        finish();
+                                                    }
 
-                                        }, new Runnable() {
-                                            public void run() {
-                                                PackageHistories.deletedReservedPackages();
-                                                PackageHistories.insert(new PackageHistory(dataPackage.getId(),null, null, null, null, null, PackageHistory.StatusEnum.RESERVED.ordinal()));
-                                                Intent intent = new Intent(App.currentActivity, PackageSettingsActivity.class);
-                                                intent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_SETTING_RESERVED);
-                                                intent.putExtra(PackageSettingsActivity.PACKAGE_ID_KEY, dataPackage.getId());
-                                                intent.putExtra(PackageSettingsActivity.FORM_MODE_KEY, PackageSettingsActivity.FORM_MODE_NEW);
-                                                App.currentActivity.startActivity(intent);
-                                                finish();
-                                            }
-                                        });
-                            }
-                        }
-                    });
+                                                }, new Runnable() {
+                                                    public void run() {
+                                                        PackageHistories.deletedReservedPackages();
+                                                        //PackageHistories.terminateAll(PackageHistory.StatusEnum.CANCELED);
+                                                        PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.CANCELED);
+                                                        PackageHistories.insert(new PackageHistory(dataPackage.getId(), Helper.getCurrentDateTime(), null, null, null, null, PackageHistory.StatusEnum.ACTIVE.ordinal()));
+                                                        Intent intent = new Intent(App.currentActivity, PackageSettingsActivity.class);
+                                                        intent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_SETTING_ACTIVE);
+                                                        intent.putExtra(PackageSettingsActivity.PACKAGE_ID_KEY, dataPackage.getId());
+                                                        intent.putExtra(PackageSettingsActivity.FORM_MODE_KEY, PackageSettingsActivity.FORM_MODE_NEW);
+                                                        App.currentActivity.startActivity(intent);
+                                                        finish();
+                                                    }
+                                                });
+                                    }
+                                }
+                            });
+                }
+            }, 2000);
         }
     }
 }

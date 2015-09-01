@@ -34,6 +34,9 @@ public class GlobalSettingsActivity extends BazaarPaymentActivity {
 
     @Override
     void onCreated() {
+
+        super.onCreated();
+
         setContentView(R.layout.activity_global_settings);
 
         switchShowNotification = (SwitchCompat) findViewById(R.id.switchShowNotification);
@@ -142,8 +145,6 @@ public class GlobalSettingsActivity extends BazaarPaymentActivity {
                 MyToast.show("بعدا بهت میگم " + getString(R.string.app_name) + " چیه", Toast.LENGTH_SHORT);
             }
         });
-
-        super.onCreated();
     }
 
     @Override
