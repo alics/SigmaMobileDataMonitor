@@ -15,20 +15,23 @@ import com.zohaltech.app.sigma.adapters.UsagePagerAdapter;
 import com.zohaltech.app.sigma.classes.App;
 import com.zohaltech.app.sigma.classes.DialogManager;
 import com.zohaltech.app.sigma.classes.LicenseManager;
+import com.zohaltech.app.sigma.classes.WebApiClient;
 import com.zohaltech.app.sigma.dal.DataAccess;
+
+import org.json.JSONException;
 
 import widgets.MyToast;
 import widgets.MyViewPagerIndicator;
 
 public class DashboardActivity extends BazaarPaymentActivity {
 
-    ViewPager            pagerUsages;
+    ViewPager pagerUsages;
     MyViewPagerIndicator indicator;
-    Button               btnPackageManagement;
-    Button               btnPurchasePackage;
-    Button               btnUsageReport;
-    Button               btnPackagesHistory;
-    Dialog               paymentDialog;
+    Button btnPackageManagement;
+    Button btnPurchasePackage;
+    Button btnUsageReport;
+    Button btnPackagesHistory;
+    Dialog paymentDialog;
 
     UsagePagerAdapter usagePagerAdapter;
 
@@ -36,6 +39,13 @@ public class DashboardActivity extends BazaarPaymentActivity {
 
     @Override
     void onCreated() {
+
+        try {
+            WebApiClient webApiClient = new WebApiClient();
+            webApiClient.postSubscriberData(WebApiClient.PostAction.REGISTER);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         DataAccess da = new DataAccess();
         da.getReadableDB();
         da.close();
@@ -137,23 +147,23 @@ public class DashboardActivity extends BazaarPaymentActivity {
     private void showPaymentDialog() {
         destroyPaymentDialog();
         paymentDialog = DialogManager.getPopupDialog(App.currentActivity,
-                                                     getString(R.string.buy_full_vesion),
-                                                     getString(R.string.buy_description),
-                                                     getString(R.string.buy_like),
-                                                     getString(R.string.buy_sora),
-                                                     null,
-                                                     new Runnable() {
-                                                         @Override
-                                                         public void run() {
-                                                             pay();
-                                                         }
-                                                     },
-                                                     new Runnable() {
-                                                         @Override
-                                                         public void run() {
-                                                             finish();
-                                                         }
-                                                     });
+                getString(R.string.buy_full_vesion),
+                getString(R.string.buy_description),
+                getString(R.string.buy_like),
+                getString(R.string.buy_sora),
+                null,
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        pay();
+                    }
+                },
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                });
         paymentDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
@@ -198,4 +208,6 @@ public class DashboardActivity extends BazaarPaymentActivity {
             super.onBackPressed();
         }
     }
+
+
 }
