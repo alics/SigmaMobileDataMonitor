@@ -68,9 +68,6 @@ public class SigmaDataService extends Service {
                     }
                 }).start();
                 usageLogInterval = 0;
-
-            }
-            if (usageLogInterval % 15 == 0) {
                 Intent intent = new Intent(APPLICATION_ALARM_ACTION);
                 sendBroadcast(intent);
             }
