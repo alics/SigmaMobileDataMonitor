@@ -186,7 +186,6 @@ public class UsageLogs {
     }
 
     private static String generateQueryForPrimaryTraffic(DataPackage dataPackage, PackageHistory history) {
-
         if (dataPackage.getSecondaryTraffic() == null || dataPackage.getSecondaryTraffic() == 0)
             return "SELECT SUM(" + TrafficBytes + ") SumTraffic FROM " + TableName + " WHERE " + LogDateTime + " > '" + history.getStartDateTime() + "'";
 
