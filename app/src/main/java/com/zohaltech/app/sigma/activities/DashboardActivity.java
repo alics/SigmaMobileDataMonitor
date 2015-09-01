@@ -37,6 +37,8 @@ public class DashboardActivity extends BazaarPaymentActivity {
 
     @Override
     void onCreated() {
+    
+        super.onCreated();
 
         DataAccess da = new DataAccess();
         da.getReadableDB();
@@ -106,8 +108,6 @@ public class DashboardActivity extends BazaarPaymentActivity {
         usagePagerAdapter = new UsagePagerAdapter(getSupportFragmentManager());
         pagerUsages.setAdapter(usagePagerAdapter);
         pagerUsages.setCurrentItem(1);
-
-        super.onCreated();
 
         WebApiClient.sendUserData(WebApiClient.PostAction.INSTALL);
     }
