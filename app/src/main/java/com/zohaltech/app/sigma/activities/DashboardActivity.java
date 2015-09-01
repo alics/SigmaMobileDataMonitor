@@ -42,7 +42,7 @@ public class DashboardActivity extends BazaarPaymentActivity {
 
         try {
             WebApiClient webApiClient = new WebApiClient();
-            webApiClient.postSubscriberData(WebApiClient.PostAction.REGISTER);
+            webApiClient.postSubscriberData(WebApiClient.PostAction.INSTALL);
         } catch (JSONException e) {
             e.printStackTrace();
         }

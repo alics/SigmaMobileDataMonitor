@@ -1,10 +1,10 @@
 package com.zohaltech.app.sigma.classes;
 
-import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Log;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -21,8 +21,8 @@ import java.util.Map;
 
 public class WebApiClient {
 
-    private static final String POST_URL = "http://zohaltech.com/api/app/post";
-    private static final String PUT_URL = "http://zohaltech.com/api/app/put";
+    private static final String HOST_URL = "http://zohaltech.com/api/app/post";
+    private static final String POST_SUCCESS = "POST_SUCCESS";
     private JSONObject jsonObject;
 
     public enum PostAction {
@@ -48,28 +48,38 @@ public class WebApiClient {
             jsonObject.accumulate("AndroidVersion", Build.VERSION.RELEASE);
             jsonObject.accumulate("ApiVersion", Build.VERSION.SDK_INT + "");
             jsonObject.accumulate("OperatorId", Helper.getOperator().ordinal());
-            jsonObject.accumulate("IsPurchased", "false");
+            jsonObject.accumulate("IsPurchased", "0");
 
             setJsonObject(jsonObject);
-            new HttpAsyncTask().execute(POST_URL);
+
+
         } else {
             jsonObject.accumulate("AppId", "1");
             jsonObject.accumulate("DeviceId", Helper.getDeviceId());
-            jsonObject.accumulate("IsPurchased", "true");
+            jsonObject.accumulate("IsPurchased", "1");
 
             setJsonObject(jsonObject);
-            new HttpAsyncTask().execute(PUT_URL);
+
         }
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Boolean result = post(getJsonObject());
+                App.preferences.edit().putBoolean(POST_SUCCESS, result).commit();
+            }
+        });
+
+        thread.start();
     }
 
-    private String post(String url,JSONObject jsonObject) {
-        InputStream inputStream = null;
+    private Boolean post(JSONObject jsonObject) {
         String result = "";
         try {
             // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
             // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(url);
+            HttpPost httpPost = new HttpPost(HOST_URL);
             String json = "";
             // 3. build jsonObject
             //JSONObject jsonObject = getJsonObject();
@@ -89,18 +99,15 @@ public class WebApiClient {
             httpPost.setHeader("Content-type", "application/json");
             // 8. Execute POST request to the given URL
             HttpResponse httpResponse = httpclient.execute(httpPost);
-            // 9. receive response as inputStream
-            inputStream = httpResponse.getEntity().getContent();
-            // 10. convert input stream to string
-            if (inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
+
+            StatusLine statusLine = httpResponse.getStatusLine();
+            int resultCode = statusLine.getStatusCode();
+            return resultCode == 200;
 
         } catch (Exception e) {
             Log.d("InputStream", e.getLocalizedMessage());
         }
-        return result;
+        return false;
     }
 
     private static String convertInputStreamToString(InputStream inputStream) throws IOException {
@@ -112,16 +119,8 @@ public class WebApiClient {
 
         inputStream.close();
         return result;
-
     }
 
-    private class HttpAsyncTask extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... urls) {
-            WebApiClient webApiClient = new WebApiClient();
-            return webApiClient.post(urls[0],getJsonObject());
-        }
-    }
 
     private static JSONObject getJsonObjectFromMap(Map params) throws JSONException {
 
