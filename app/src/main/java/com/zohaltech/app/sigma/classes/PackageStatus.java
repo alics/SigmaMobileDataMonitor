@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public final class PackageStatus {
-    long   primaryTraffic;
-    long   usedPrimaryTraffic;
-    long   secondaryTraffic;
-    long   usedSecondaryTraffic;
+    long primaryTraffic;
+    long usedPrimaryTraffic;
+    long secondaryTraffic;
+    long usedSecondaryTraffic;
     String secondaryCaption;
 
     public static PackageStatus getCurrentStatus() {
@@ -38,9 +38,10 @@ public final class PackageStatus {
             status.setPrimaryTraffic(dataPackage.getPrimaryTraffic());
             status.setUsedPrimaryTraffic(UsageLogs.getUsedPrimaryTrafficOfPackage(dataPackage, history));
 
-            //if (status.getUsedPrimaryTraffic() >= dataPackage.getPrimaryTraffic()) {
-            //    PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.TRAFFIC_FINISHED);
-            //}
+            if (status.getUsedPrimaryTraffic() >= dataPackage.getPrimaryTraffic()) {
+                history.setPrimaryPackageEndDateTime(Helper.getCurrentDateTime());
+                PackageHistories.update(history);
+            }
 
             if (dataPackage.getSecondaryTraffic() != null && dataPackage.getSecondaryTraffic() != 0) {
                 status.setSecondaryTraffic(dataPackage.getSecondaryTraffic());
@@ -85,10 +86,13 @@ public final class PackageStatus {
 
         if (usedPrimaryTraffic >= dataPackage.getPrimaryTraffic()) {
             String msg = "اعتبار حجمی بسته به پایان رسید";
-            if (reservedPackageHistory != null)
-                msg += " و بسته رزور شده فعال شد";
+//            if (reservedPackageHistory != null)
+//                msg += " و بسته رزور شده فعال شد";
             alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.FINISH_TRAFFIC_ALARM, msg));
-            PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.TRAFFIC_FINISHED);
+
+            history.setPrimaryPackageEndDateTime(Helper.getCurrentDateTime());
+            PackageHistories.update(history);
+            //PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.TRAFFIC_FINISHED);
             //Helper.setMobileDataEnabled(false);
         }
 

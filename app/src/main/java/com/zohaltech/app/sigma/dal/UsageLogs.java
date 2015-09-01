@@ -3,7 +3,6 @@ package com.zohaltech.app.sigma.dal;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.zohaltech.app.sigma.classes.Helper;
 import com.zohaltech.app.sigma.classes.LicenseManager;
@@ -17,15 +16,15 @@ import java.util.ArrayList;
 
 public class UsageLogs {
 
-    static final String TableName    = "UsageLogs";
-    static final String Id           = "Id";
+    static final String TableName = "UsageLogs";
+    static final String Id = "Id";
     static final String TrafficBytes = "TrafficBytes";
-    static final String LogDateTime  = "LogDateTime";
+    static final String LogDateTime = "LogDateTime";
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
-                                      Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-                                      TrafficBytes + " BIGINT NOT NULL, " +
-                                      LogDateTime + " CHAR(19) );";
+            Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+            TrafficBytes + " BIGINT NOT NULL, " +
+            LogDateTime + " CHAR(19) );";
 
     static final String DropTable = "Drop Table If Exists " + TableName;
 
@@ -41,8 +40,8 @@ public class UsageLogs {
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     UsageLog log = new UsageLog(cursor.getInt(cursor.getColumnIndex(Id)),
-                                                cursor.getLong(cursor.getColumnIndex(TrafficBytes)),
-                                                cursor.getString(cursor.getColumnIndex(LogDateTime)));
+                            cursor.getLong(cursor.getColumnIndex(TrafficBytes)),
+                            cursor.getString(cursor.getColumnIndex(LogDateTime)));
                     logList.add(log);
                 } while (cursor.moveToNext());
             }
@@ -135,10 +134,10 @@ public class UsageLogs {
         try {
             String logDate = "SUBSTR(" + LogDateTime + ", 1, 10)";
             String query = " SELECT SUM(" + TrafficBytes + ") SumTraffic," + logDate + " date FROM " + TableName +
-                           " WHERE " + logDate + " > " +
-                           " (SELECT MAX(" + DailyTrafficHistories.LogDate + ") FROM " + DailyTrafficHistories.TableName + ")" +
-                           " AND " + logDate + " <> '" + Helper.getCurrentDate() + "'" +
-                           " GROUP BY " + logDate;
+                    " WHERE " + logDate + " > " +
+                    " (SELECT MAX(" + DailyTrafficHistories.LogDate + ") FROM " + DailyTrafficHistories.TableName + ")" +
+                    " AND " + logDate + " <> '" + Helper.getCurrentDate() + "'" +
+                    " GROUP BY " + logDate;
 
             cursor = db.rawQuery(query, null);
             if (cursor != null && cursor.moveToFirst()) {
@@ -191,10 +190,10 @@ public class UsageLogs {
 
         if (history.getSecondaryTrafficEndDateTime() == null || "".equals(history.getSecondaryTrafficEndDateTime())) {
             return " SELECT SUM(" + TrafficBytes + ") SumTraffic FROM " + TableName + " WHERE " + LogDateTime + " > '" + history.getStartDateTime() + "'" +
-                   " AND SUBSTR(" + LogDateTime + ", 12, 5) NOT BETWEEN '" + dataPackage.getSecondaryTrafficStartTime() + "' AND '" + dataPackage.getSecondaryTrafficEndTime() + "'";
+                    " AND SUBSTR(" + LogDateTime + ", 12, 5) NOT BETWEEN '" + dataPackage.getSecondaryTrafficStartTime() + "' AND '" + dataPackage.getSecondaryTrafficEndTime() + "'";
         }
         return " SELECT (SELECT IFNULL(SUM(" + TrafficBytes + "), 0) FROM " + TableName + " WHERE " + LogDateTime + " >= '" + history.getStartDateTime() + "') - " +
-               dataPackage.getSecondaryTraffic() + " AS SumTraffic";
+                dataPackage.getSecondaryTraffic() + " AS SumTraffic";
 
         //        return " SELECT (SELECT IFNULL(SUM(" + TrafficBytes + "), 0) FROM " + TableName + " WHERE " + LogDateTime + " >= '" + history.getStartDateTime() + "') - " +
         //               " (SELECT IFNULL(SUM(" + TrafficBytes + "), 0) FROM " + TableName + " WHERE " + LogDateTime + " BETWEEN '" + history.getStartDateTime() + "' AND '" + history.getSecondaryTrafficEndDateTime() + "') AS SumTraffic";
@@ -207,9 +206,9 @@ public class UsageLogs {
         Cursor cursor = null;
         try {
             String query = "SELECT SUM(TrafficBytes) SumTraffic FROM " + TableName +
-                           " WHERE " + LogDateTime + " >= '" + history.getStartDateTime() + "' AND" +
-                           " SUBSTR(" + LogDateTime + ",12,5) BETWEEN '" + dataPackage.getSecondaryTrafficStartTime() +
-                           "' AND '" + dataPackage.getSecondaryTrafficEndTime() + "'";
+                    " WHERE " + LogDateTime + " >= '" + history.getStartDateTime() + "' AND" +
+                    " SUBSTR(" + LogDateTime + ",12,5) BETWEEN '" + dataPackage.getSecondaryTrafficStartTime() +
+                    "' AND '" + dataPackage.getSecondaryTrafficEndTime() + "'";
 
 
             cursor = db.rawQuery(query, null);
@@ -227,9 +226,12 @@ public class UsageLogs {
                 db.close();
         }
         if (usedTraffic >= dataPackage.getSecondaryTraffic() &&
-            (history.getSecondaryTrafficEndDateTime() == null ||
-             history.getSecondaryTrafficEndDateTime().equals(""))) {
-            PackageHistories.terminateDataPackageSecondaryPlan(history);
+                (history.getSecondaryTrafficEndDateTime() == null ||
+                        history.getSecondaryTrafficEndDateTime().equals(""))) {
+            history.setSecondaryTrafficEndDateTime(Helper.getCurrentDateTime());
+            PackageHistories.update(history);
+
+            // PackageHistories.terminateDataPackageSecondaryPlan(history);
         }
         return usedTraffic;
     }
