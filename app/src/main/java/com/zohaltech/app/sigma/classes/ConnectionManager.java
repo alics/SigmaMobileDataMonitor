@@ -48,7 +48,7 @@ public class ConnectionManager {
                     urlc.getContentLength() == 0) {
                     result = InternetStatus.Connected;
                 } else {
-                    result = InternetStatus.Connected;
+                    result = InternetStatus.NotConnected;
                 }
             } catch (Exception e) {
                 result = InternetStatus.Error;
@@ -60,17 +60,6 @@ public class ConnectionManager {
     public static void setDataConnectedStatus() {
         Setting setting = Settings.getCurrentSettings();
         if (ConnectionManager.getConnectivityStatus() == ConnectionManager.TYPE_MOBILE) {
-            setting.setDataConnected(true);
-        } else {
-            setting.setDataConnected(false);
-        }
-        Settings.update(setting);
-    }
-
-    public static void manageInstallationStatus() {
-        Setting setting = Settings.getCurrentSettings();
-        if (App.preferences.getBoolean("INSTALLED",false) && (ConnectionManager.getConnectivityStatus() == ConnectionManager.TYPE_MOBILE ||
-         ConnectionManager.getConnectivityStatus() == ConnectionManager.TYPE_MOBILE) ) {
             setting.setDataConnected(true);
         } else {
             setting.setDataConnected(false);
