@@ -19,7 +19,7 @@ import widgets.MyToast;
 public abstract class BazaarPaymentActivity extends EnhancedActivity {
 
     private final String PAY_LOAD    = "SIGMA_ANDROID_APP";
-    private final String TAG         = "SIGMA_TAG";
+    //private final String TAG         = "SIGMA_TAG";
     private final String SKU_PREMIUM = "PREMIUM";
     private final int    RC_REQUEST  = 10001;
     private ProgressDialog progressDialog;
@@ -54,9 +54,7 @@ public abstract class BazaarPaymentActivity extends EnhancedActivity {
         public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
             if (result.isFailure()) {
                 //Log.e("PAYMENT", "Error purchasing: " + result);
-                complain("خطا در خرید از بازار");
-                //todo : delete this line
-                WebApiClient.sendUserData(WebApiClient.PostAction.REGISTER);
+                complain("ارتقای برنامه با مشکل مواجه شد");
             } else if (purchase.getSku().equals(SKU_PREMIUM)) {
                 if (!verifyDeveloperPayload(purchase)) {
                     //Log.e("PAYMENT", "Error purchasing. Authenticity verification failed.");

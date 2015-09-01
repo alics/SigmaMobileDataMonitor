@@ -31,7 +31,7 @@ public class NotificationHandler {
     }
 
     public static Notification getDataUsageNotification(Context context, int iconId, String title, String text) {
-        int priority = NotificationCompat.PRIORITY_HIGH;
+        int priority = NotificationCompat.PRIORITY_DEFAULT;
         int visibility = NotificationCompat.VISIBILITY_PUBLIC;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             if (!Settings.getCurrentSettings().getShowNotificationInLockScreen()) {

@@ -152,6 +152,8 @@ public class ManagementActivity extends EnhancedActivity {
     private void setReservePackageStatus(boolean enable) {
         //fabCancelReservedPackage.setEnabled(enable);
         //setEnability(fabCancelReservedPackage, enable);
+        fabActivateReservedPackage.setEnabled(enable);
+        setEnability(fabActivateReservedPackage, enable);
         fabReservedPackageSettings.setEnabled(enable);
         setEnability(fabReservedPackageSettings, enable);
     }

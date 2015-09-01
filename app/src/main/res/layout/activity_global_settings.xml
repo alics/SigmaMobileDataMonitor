@@ -217,7 +217,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
                             android:gravity="right|center"
-                            android:text="خرید نسخه کامل"
+                            android:text="ارتقا به نسخه کامل"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:textColor="@color/primary_text"/>
 

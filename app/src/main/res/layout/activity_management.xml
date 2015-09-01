@@ -107,8 +107,7 @@
                     android:layout_above="@+id/fabReservedPackageSettings"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:src="@drawable/ic_done_white"
-                    app:backgroundTint="@color/accent"/>
+                    android:src="@drawable/ic_done_white"/>
 
                 <android.support.design.widget.FloatingActionButton
                     android:id="@+id/fabReservedPackageSettings"
