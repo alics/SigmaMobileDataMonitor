@@ -17,16 +17,16 @@ import java.util.concurrent.TimeUnit;
 
 public class SigmaDataService extends Service {
 
-    public static final  String  TODAY_USAGE_BYTES        = "TODAY_USAGE_BYTES";
-    public static final  String  TODAY_USAGE_ACTION       = "TODAY_USAGE_ACTION";
+    public static final  String  TODAY_USAGE_BYTES     = "TODAY_USAGE_BYTES";
+    public static final  String  TODAY_USAGE_ACTION    = "TODAY_USAGE_ACTION";
     public static final  String  APPLICATION_ALARM_ACTION = "APPLICATION_ALARM_ACTION";
-    private static final String  LAST_RECEIVED_BYTES      = "LAST_RECEIVED_BYTES";
-    private static final String  LAST_SENT_BYTES          = "LAST_SENT_BYTES";
-    private static final String  TODAY_USAGE_DATE         = "TODAY_USAGE_DATE";
-    private static final String  ONE_MINUTE_USED_BYTES    = "ONE_MINUTE_USED_BYTES";
-    private static final int     USAGE_LOG_INTERVAL       = 60;
-    private static       boolean firstTime                = true;
-    private static       int     usageLogInterval         = 0;
+    private static final String  LAST_RECEIVED_BYTES   = "LAST_RECEIVED_BYTES";
+    private static final String  LAST_SENT_BYTES       = "LAST_SENT_BYTES";
+    private static final String  TODAY_USAGE_DATE      = "TODAY_USAGE_DATE";
+    private static final String  ONE_MINUTE_USED_BYTES = "ONE_MINUTE_USED_BYTES";
+    private static final int     USAGE_LOG_INTERVAL    = 60;
+    private static       boolean firstTime             = true;
+    private static       int     usageLogInterval      = 0;
     private static ScheduledExecutorService executorService;
 
     private Runnable runnable = new Runnable() {
@@ -68,8 +68,10 @@ public class SigmaDataService extends Service {
                 }).start();
                 usageLogInterval = 0;
 
-                //Intent intent = new Intent(APPLICATION_ALARM_ACTION);
-                //sendBroadcast(intent);
+            }
+            if (usageLogInterval % 15 == 0) {
+                Intent intent = new Intent(APPLICATION_ALARM_ACTION);
+                sendBroadcast(intent);
             }
 
             String currentDate = Helper.getCurrentDate();
@@ -129,9 +131,6 @@ public class SigmaDataService extends Service {
             Intent intent = new Intent(TODAY_USAGE_ACTION);
             intent.putExtra(TODAY_USAGE_BYTES, App.preferences.getLong(TODAY_USAGE_BYTES, 0));
             sendBroadcast(intent);
-
-            Intent intent1 = new Intent(APPLICATION_ALARM_ACTION);
-            sendBroadcast(intent1);
         }
     };
 

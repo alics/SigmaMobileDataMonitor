@@ -2,13 +2,14 @@ package com.zohaltech.app.sigma.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.classes.App;
 import com.zohaltech.app.sigma.classes.ConstantParams;
+import com.zohaltech.app.sigma.classes.Helper;
 import com.zohaltech.app.sigma.classes.LicenseManager;
+import com.zohaltech.app.sigma.classes.WebApiClient;
 import com.zohaltech.app.sigma.util.IabHelper;
 import com.zohaltech.app.sigma.util.IabResult;
 import com.zohaltech.app.sigma.util.Inventory;
@@ -43,6 +44,7 @@ public abstract class BazaarPaymentActivity extends EnhancedActivity {
                     LicenseManager.registerLicense();
                     updateUiToPremiumVersion();
                     setWaitScreen(false);
+                    Helper.sendUserData(WebApiClient.PostAction.REGISTER);
                 }
 
                 //Log.i(TAG, "User is " + (mIsPremium ? "PREMIUM" : "NOT PREMIUM"));

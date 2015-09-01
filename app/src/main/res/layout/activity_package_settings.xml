@@ -369,7 +369,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checked="false"
-                            android:text=" اخطار روز باقیمانده "
+                            android:text=" هشدار روز باقیمانده "
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:gravity="right"/>
 
@@ -413,7 +413,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checked="false"
-                            android:text=" اخطار حجم مصرف شده "
+                            android:text=" هشدار حجم مصرف شده "
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:gravity="right"/>
 

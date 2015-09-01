@@ -91,8 +91,8 @@ public class TrafficUsageFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
             totalPrimaryTraffic = status.getPrimaryTraffic();
-            usedPrimaryTraffic = status.getUsedPrimaryTraffic() <= totalPrimaryTraffic ? status.getUsedPrimaryTraffic() : totalPrimaryTraffic;
-            strPrimaryTraffic = TrafficUnitsUtil.getArcTraffic(usedPrimaryTraffic, totalPrimaryTraffic);
+            usedPrimaryTraffic =  status.getUsedPrimaryTraffic() <= totalPrimaryTraffic ? status.getUsedPrimaryTraffic() : totalPrimaryTraffic;
+            strPrimaryTraffic = TrafficUnitsUtil.getArcTraffic(usedPrimaryTraffic, totalPrimaryTraffic).replace(" ","");
         }
 
         @Override
@@ -148,8 +148,8 @@ public class TrafficUsageFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
             totalSecondaryTraffic = status.getSecondaryTraffic();
-            usedSecondaryTraffic = status.getUsedSecondaryTraffic() <= totalSecondaryTraffic ? status.getUsedSecondaryTraffic() : totalSecondaryTraffic;
-            strSecondaryTraffic = TrafficUnitsUtil.getArcTraffic(usedSecondaryTraffic, totalSecondaryTraffic);
+            usedSecondaryTraffic =  status.getUsedSecondaryTraffic() <= totalSecondaryTraffic ? status.getUsedSecondaryTraffic() : totalSecondaryTraffic;
+            strSecondaryTraffic = TrafficUnitsUtil.getArcTraffic(usedSecondaryTraffic, totalSecondaryTraffic).replace(" ","");
             txtSecondaryCaption.setText(status.getSecondaryCaption());
         }
 

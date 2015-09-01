@@ -10,15 +10,18 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.zohaltech.app.sigma.R;
+import com.zohaltech.app.sigma.classes.App;
+import com.zohaltech.app.sigma.classes.Helper;
+import com.zohaltech.app.sigma.dal.Settings;
+import com.zohaltech.app.sigma.entities.Setting;
 
-public class ApplicationMessageActivity extends Activity {
+public class ApplicationAlarmActivity extends Activity {
 
+    public static final String MESSAGES_KEY = "MESSAGES";
     TextView txtCaption;
     TextView txtMessage;
     Button   positiveButton;
     Button   negativeButton;
-
-    public static final String MESSAGES_KEY = "MESSAGES";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +53,29 @@ public class ApplicationMessageActivity extends Activity {
         positiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ApplicationMessageActivity.this, DashboardActivity.class);
+                Intent intent = new Intent(ApplicationAlarmActivity.this, DashboardActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
+
+        Setting setting = Settings.getCurrentSettings();
+        if (setting.getVibrateInAlarms()) {
+            App.handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Helper.vibrate();
+                }
+            });
+        }
+        if (setting.getSoundInAlarms()) {
+            App.handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Helper.playSound();
+                }
+            });
+        }
     }
 
     @Override

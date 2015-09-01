@@ -67,6 +67,17 @@ public class ConnectionManager {
         Settings.update(setting);
     }
 
+    public static void manageInstallationStatus() {
+        Setting setting = Settings.getCurrentSettings();
+        if (App.preferences.getBoolean("INSTALLED",false) && (ConnectionManager.getConnectivityStatus() == ConnectionManager.TYPE_MOBILE ||
+         ConnectionManager.getConnectivityStatus() == ConnectionManager.TYPE_MOBILE) ) {
+            setting.setDataConnected(true);
+        } else {
+            setting.setDataConnected(false);
+        }
+        Settings.update(setting);
+    }
+
     public enum InternetStatus {
         Connected,
         NotConnected,
