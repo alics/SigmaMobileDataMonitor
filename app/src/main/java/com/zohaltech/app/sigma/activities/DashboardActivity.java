@@ -18,20 +18,18 @@ import com.zohaltech.app.sigma.classes.LicenseManager;
 import com.zohaltech.app.sigma.classes.WebApiClient;
 import com.zohaltech.app.sigma.dal.DataAccess;
 
-import org.json.JSONException;
-
 import widgets.MyToast;
 import widgets.MyViewPagerIndicator;
 
 public class DashboardActivity extends BazaarPaymentActivity {
 
-    ViewPager pagerUsages;
+    ViewPager            pagerUsages;
     MyViewPagerIndicator indicator;
-    Button btnPackageManagement;
-    Button btnPurchasePackage;
-    Button btnUsageReport;
-    Button btnPackagesHistory;
-    Dialog paymentDialog;
+    Button               btnPackageManagement;
+    Button               btnPurchasePackage;
+    Button               btnUsageReport;
+    Button               btnPackagesHistory;
+    Dialog               paymentDialog;
 
     UsagePagerAdapter usagePagerAdapter;
 
@@ -39,7 +37,6 @@ public class DashboardActivity extends BazaarPaymentActivity {
 
     @Override
     void onCreated() {
-
 
         DataAccess da = new DataAccess();
         da.getReadableDB();
@@ -111,6 +108,8 @@ public class DashboardActivity extends BazaarPaymentActivity {
         pagerUsages.setCurrentItem(1);
 
         super.onCreated();
+
+        WebApiClient.sendUserData(WebApiClient.PostAction.INSTALL);
     }
 
     @Override
@@ -142,23 +141,23 @@ public class DashboardActivity extends BazaarPaymentActivity {
     private void showPaymentDialog() {
         destroyPaymentDialog();
         paymentDialog = DialogManager.getPopupDialog(App.currentActivity,
-                getString(R.string.buy_full_vesion),
-                getString(R.string.buy_description),
-                getString(R.string.buy_like),
-                getString(R.string.buy_sora),
-                null,
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        pay();
-                    }
-                },
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        finish();
-                    }
-                });
+                                                     getString(R.string.buy_full_vesion),
+                                                     getString(R.string.buy_description),
+                                                     getString(R.string.buy_like),
+                                                     getString(R.string.buy_sora),
+                                                     null,
+                                                     new Runnable() {
+                                                         @Override
+                                                         public void run() {
+                                                             pay();
+                                                         }
+                                                     },
+                                                     new Runnable() {
+                                                         @Override
+                                                         public void run() {
+                                                             finish();
+                                                         }
+                                                     });
         paymentDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {

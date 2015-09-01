@@ -9,73 +9,22 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Iterator;
-import java.util.Map;
+
 
 public class WebApiClient {
 
+    public enum PostAction {
+        INSTALL,
+        REGISTER
+    }
+
+    public static final  String SUCCESS_INSTALL  = "SUCCESS_INSTALL";
+    public static final  String SUCCESS_REGISTER = "SUCCESS_REGISTER";
     private static final String HOST_URL         = "http://zohaltech.com/api/app/post";
-    public static final String SUCCESS_INSTALL  = "SUCCESS_INSTALL";
-    public static final String SUCCESS_REGISTER = "SUCCESS_REGISTER";
+
     private JSONObject jsonObject;
-
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while ((line = bufferedReader.readLine()) != null)
-            result += line;
-
-        inputStream.close();
-        return result;
-    }
-
-    private static JSONObject getJsonObjectFromMap(Map params) throws JSONException {
-
-        //all the passed parameters from the post request
-        //iterator used to loop through all the parameters
-        //passed in the post request
-        Iterator iter = params.entrySet().iterator();
-
-        //Stores JSON
-        JSONObject holder = new JSONObject();
-
-        //using the earlier example your first entry would get email
-        //and the inner while would get the value which would be 'foo@bar.com'
-        //{ fan: { email : 'foo@bar.com' } }
-
-        //While there is another entry
-        while (iter.hasNext()) {
-            //gets an entry in the params
-            Map.Entry pairs = (Map.Entry) iter.next();
-
-            //creates a key for Map
-            String key = (String) pairs.getKey();
-
-            //Create a new map
-            Map m = (Map) pairs.getValue();
-
-            //object for storing Json
-            JSONObject data = new JSONObject();
-
-            //gets the value
-            for (Object o : m.entrySet()) {
-                Map.Entry pairs2 = (Map.Entry) o;
-                data.put((String) pairs2.getKey(), (String) pairs2.getValue());
-            }
-
-            //puts email and 'foo@bar.com'  together in map
-            holder.put(key, data);
-        }
-        return holder;
-    }
 
     private JSONObject getJsonObject() {
         return jsonObject;
@@ -86,43 +35,67 @@ public class WebApiClient {
     }
 
     public void postSubscriberData(final PostAction action) {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    String resultKey;
-                    JSONObject jsonObject = new JSONObject();
-                    if (action == PostAction.INSTALL) {
-                        jsonObject.accumulate("AppId", "1");
-                        jsonObject.accumulate("DeviceId", Helper.getDeviceId());
-                        jsonObject.accumulate("DeviceBrand", Build.MANUFACTURER);
-                        jsonObject.accumulate("DeviceModel", Build.MODEL);
-                        jsonObject.accumulate("AndroidVersion", Build.VERSION.RELEASE);
-                        jsonObject.accumulate("ApiVersion", Build.VERSION.SDK_INT + "");
-                        jsonObject.accumulate("OperatorId", Helper.getOperator().ordinal());
-                        jsonObject.accumulate("IsPurchased", "0");
-                        setJsonObject(jsonObject);
-                        resultKey = SUCCESS_INSTALL;
-                    } else {
-                        jsonObject.accumulate("AppId", "1");
-                        jsonObject.accumulate("DeviceId", Helper.getDeviceId());
-                        jsonObject.accumulate("IsPurchased", "1");
-                        setJsonObject(jsonObject);
-                        resultKey = SUCCESS_REGISTER;
+        if (action == PostAction.INSTALL) {
+            if (!App.preferences.getBoolean(WebApiClient.SUCCESS_INSTALL, false)) {
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject = new JSONObject();
+                            if (ConnectionManager.getInternetStatus() == ConnectionManager.InternetStatus.Connected) {
+                                jsonObject.accumulate("AppId", 1);
+                                jsonObject.accumulate("DeviceId", Helper.getDeviceId());
+                                jsonObject.accumulate("DeviceBrand", Build.MANUFACTURER);
+                                jsonObject.accumulate("DeviceModel", Build.MODEL);
+                                jsonObject.accumulate("AndroidVersion", Build.VERSION.RELEASE);
+                                jsonObject.accumulate("ApiVersion", Build.VERSION.SDK_INT);
+                                jsonObject.accumulate("OperatorId", Helper.getOperator().ordinal());
+                                jsonObject.accumulate("IsPurchased", false);
+                                setJsonObject(jsonObject);
+                                Boolean result = post(getJsonObject());
+                                App.preferences.edit().putBoolean(SUCCESS_INSTALL, result).apply();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
-                    Boolean result = post(getJsonObject());
-                    App.preferences.edit().putBoolean(resultKey, result).commit();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+                });
 
-        thread.start();
+                thread.start();
+            }
+        } else {
+            if (!App.preferences.getBoolean(WebApiClient.SUCCESS_REGISTER, false)) {
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject = new JSONObject();
+                            if (ConnectionManager.getInternetStatus() == ConnectionManager.InternetStatus.Connected) {
+                                jsonObject.accumulate("AppId", 1);
+                                jsonObject.accumulate("DeviceId", Helper.getDeviceId());
+                                jsonObject.accumulate("DeviceBrand", Build.MANUFACTURER);
+                                jsonObject.accumulate("DeviceModel", Build.MODEL);
+                                jsonObject.accumulate("AndroidVersion", Build.VERSION.RELEASE);
+                                jsonObject.accumulate("ApiVersion", Build.VERSION.SDK_INT);
+                                jsonObject.accumulate("OperatorId", Helper.getOperator().ordinal());
+                                jsonObject.accumulate("IsPurchased", true);
+                                setJsonObject(jsonObject);
+                                Boolean result = post(getJsonObject());
+                                App.preferences.edit().putBoolean(SUCCESS_REGISTER, result).apply();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+                thread.start();
+            }
+        }
+
     }
 
     private Boolean post(JSONObject jsonObject) {
-        String result = "";
         try {
             // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
@@ -161,10 +134,5 @@ public class WebApiClient {
     public static void sendUserData(WebApiClient.PostAction postAction) {
         WebApiClient webApiClient = new WebApiClient();
         webApiClient.postSubscriberData(postAction);
-    }
-
-    public enum PostAction {
-        INSTALL,
-        REGISTER
     }
 }

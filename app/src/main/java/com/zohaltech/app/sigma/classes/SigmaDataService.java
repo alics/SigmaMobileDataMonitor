@@ -42,23 +42,23 @@ public class SigmaDataService extends Service {
             } else {
                 if (firstTime) {
                     firstTime = false;
-                    App.preferences.edit().putLong(LAST_RECEIVED_BYTES, currentReceivedBytes).commit();
-                    App.preferences.edit().putLong(LAST_SENT_BYTES, currentSentBytes).commit();
+                    App.preferences.edit().putLong(LAST_RECEIVED_BYTES, currentReceivedBytes).apply();
+                    App.preferences.edit().putLong(LAST_SENT_BYTES, currentSentBytes).apply();
                 }
                 receivedBytes = currentReceivedBytes - App.preferences.getLong(LAST_RECEIVED_BYTES, 0);
                 sentBytes = currentSentBytes - App.preferences.getLong(LAST_SENT_BYTES, 0);
-                App.preferences.edit().putLong(LAST_RECEIVED_BYTES, currentReceivedBytes).commit();
-                App.preferences.edit().putLong(LAST_SENT_BYTES, currentSentBytes).commit();
+                App.preferences.edit().putLong(LAST_RECEIVED_BYTES, currentReceivedBytes).apply();
+                App.preferences.edit().putLong(LAST_SENT_BYTES, currentSentBytes).apply();
             }
 
             final long oneMinuteUsedBytes = App.preferences.getLong(ONE_MINUTE_USED_BYTES, 0) + receivedBytes + sentBytes;
-            App.preferences.edit().putLong(ONE_MINUTE_USED_BYTES, oneMinuteUsedBytes).commit();
+            App.preferences.edit().putLong(ONE_MINUTE_USED_BYTES, oneMinuteUsedBytes).apply();
 
             usageLogInterval++;
             if (usageLogInterval == USAGE_LOG_INTERVAL) {
                 new Thread(new Runnable() {
                     public void run() {
-                        App.preferences.edit().putLong(ONE_MINUTE_USED_BYTES, 0).commit();
+                        App.preferences.edit().putLong(ONE_MINUTE_USED_BYTES, 0).apply();
                         try {
                             UsageLogs.insert(new UsageLog(oneMinuteUsedBytes));
                         } catch (Exception e) {
@@ -76,11 +76,11 @@ public class SigmaDataService extends Service {
 
             String currentDate = Helper.getCurrentDate();
             if (currentDate.equals(App.preferences.getString(TODAY_USAGE_DATE, currentDate))) {
-                App.preferences.edit().putLong(TODAY_USAGE_BYTES, App.preferences.getLong(TODAY_USAGE_BYTES, 0) + receivedBytes + sentBytes).commit();
+                App.preferences.edit().putLong(TODAY_USAGE_BYTES, App.preferences.getLong(TODAY_USAGE_BYTES, 0) + receivedBytes + sentBytes).apply();
             } else {
-                App.preferences.edit().putLong(TODAY_USAGE_BYTES, receivedBytes + sentBytes).commit();
+                App.preferences.edit().putLong(TODAY_USAGE_BYTES, receivedBytes + sentBytes).apply();
             }
-            App.preferences.edit().putString(TODAY_USAGE_DATE, currentDate).commit();
+            App.preferences.edit().putString(TODAY_USAGE_DATE, currentDate).apply();
 
             int iconId = R.drawable.wkb000;
             long sumReceivedSent = (receivedBytes + sentBytes) / 1024;

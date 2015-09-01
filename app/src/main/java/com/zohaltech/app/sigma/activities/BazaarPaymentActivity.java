@@ -55,6 +55,8 @@ public abstract class BazaarPaymentActivity extends EnhancedActivity {
             if (result.isFailure()) {
                 //Log.e("PAYMENT", "Error purchasing: " + result);
                 complain("خطا در خرید از بازار");
+                //todo : delete this line
+                WebApiClient.sendUserData(WebApiClient.PostAction.REGISTER);
             } else if (purchase.getSku().equals(SKU_PREMIUM)) {
                 if (!verifyDeveloperPayload(purchase)) {
                     //Log.e("PAYMENT", "Error purchasing. Authenticity verification failed.");
@@ -64,9 +66,7 @@ public abstract class BazaarPaymentActivity extends EnhancedActivity {
                     LicenseManager.registerLicense();
                     MyToast.show("شما با موفقیت به نسخه کامل ارتقا یافتید", Toast.LENGTH_LONG);
                     updateUiToPremiumVersion();
-                    if (App.preferences.getBoolean(WebApiClient.SUCCESS_REGISTER, false) == false) {
-                        WebApiClient.sendUserData(WebApiClient.PostAction.REGISTER);
-                    }
+                    WebApiClient.sendUserData(WebApiClient.PostAction.REGISTER);
                 }
             }
             setWaitScreen(false);

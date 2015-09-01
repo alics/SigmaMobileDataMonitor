@@ -9,9 +9,6 @@ public class ConnectivityStateReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         ConnectionManager.setDataConnectedStatus();
-
-        if (App.preferences.getBoolean(WebApiClient.SUCCESS_INSTALL, false) == false && ConnectionManager.getInternetStatus() == ConnectionManager.InternetStatus.Connected) {
-            WebApiClient.sendUserData(WebApiClient.PostAction.INSTALL);
-        }
+        WebApiClient.sendUserData(WebApiClient.PostAction.INSTALL);
     }
 }
