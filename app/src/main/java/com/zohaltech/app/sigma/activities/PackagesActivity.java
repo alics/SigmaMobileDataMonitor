@@ -116,7 +116,7 @@ public class PackagesActivity extends EnhancedActivity {
                         public void run() {
                             final PackageHistory history = PackageHistories.getActivePackage();
                             if (history == null) {
-                                PackageHistories.insert(new PackageHistory(dataPackage.getId(), Helper.getCurrentDateTime(), null, null, null, PackageHistory.StatusEnum.ACTIVE.ordinal()));
+                                PackageHistories.insert(new PackageHistory(dataPackage.getId(), Helper.getCurrentDateTime(),null, null, null, null, PackageHistory.StatusEnum.ACTIVE.ordinal()));
                                 Intent intent = new Intent(App.currentActivity, PackageSettingsActivity.class);
                                 intent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_SETTING_ACTIVE);
                                 intent.putExtra(PackageSettingsActivity.PACKAGE_ID_KEY, dataPackage.getId());
@@ -133,7 +133,7 @@ public class PackagesActivity extends EnhancedActivity {
                                                 PackageHistories.deletedReservedPackages();
                                                 //PackageHistories.terminateAll(PackageHistory.StatusEnum.CANCELED);
                                                 PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.CANCELED);
-                                                PackageHistories.insert(new PackageHistory(dataPackage.getId(), Helper.getCurrentDateTime(), null, null, null, PackageHistory.StatusEnum.ACTIVE.ordinal()));
+                                                PackageHistories.insert(new PackageHistory(dataPackage.getId(), Helper.getCurrentDateTime(),null, null, null, null, PackageHistory.StatusEnum.ACTIVE.ordinal()));
                                                 Intent intent = new Intent(App.currentActivity, PackageSettingsActivity.class);
                                                 intent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_SETTING_ACTIVE);
                                                 intent.putExtra(PackageSettingsActivity.PACKAGE_ID_KEY, dataPackage.getId());
@@ -145,7 +145,7 @@ public class PackagesActivity extends EnhancedActivity {
                                         }, new Runnable() {
                                             public void run() {
                                                 PackageHistories.deletedReservedPackages();
-                                                PackageHistories.insert(new PackageHistory(dataPackage.getId(), null, null, null, null, PackageHistory.StatusEnum.RESERVED.ordinal()));
+                                                PackageHistories.insert(new PackageHistory(dataPackage.getId(),null, null, null, null, null, PackageHistory.StatusEnum.RESERVED.ordinal()));
                                                 Intent intent = new Intent(App.currentActivity, PackageSettingsActivity.class);
                                                 intent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_SETTING_RESERVED);
                                                 intent.putExtra(PackageSettingsActivity.PACKAGE_ID_KEY, dataPackage.getId());

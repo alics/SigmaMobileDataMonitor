@@ -13,23 +13,25 @@ import com.zohaltech.app.sigma.entities.Setting;
 import java.util.ArrayList;
 
 public class PackageHistories {
-    static final String TableName                   = "PackageHistories";
-    static final String Id                          = "Id";
-    static final String DataPackageId               = "DataPackageId";
-    static final String StartDateTime               = "StartDateTime";
-    static final String EndDateTime                 = "EndDateTime";
+    static final String TableName = "PackageHistories";
+    static final String Id = "Id";
+    static final String DataPackageId = "DataPackageId";
+    static final String StartDateTime = "StartDateTime";
+    static final String EndDateTime = "EndDateTime";
+    static final String PrimaryPackageEndDateTime = "PrimaryPackageEndDateTime";
     static final String SecondaryTrafficEndDateTime = "SecondaryTrafficEndDateTime";
-    static final String SimSerial                   = "SimSerial";
-    static final String Status                      = "Status";
+    static final String SimSerial = "SimSerial";
+    static final String Status = "Status";
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
-                                      Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-                                      DataPackageId + " INTEGER REFERENCES " + DataPackages.TableName + " (" + DataPackages.Id + "), " +
-                                      StartDateTime + " CHAR(19)  ," +
-                                      EndDateTime + " CHAR(19)  ," +
-                                      SecondaryTrafficEndDateTime + " CHAR(19) ," +
-                                      SimSerial + " VARCHAR(50) ," +
-                                      Status + " INTEGER NOT NULL );";
+            Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+            DataPackageId + " INTEGER REFERENCES " + DataPackages.TableName + " (" + DataPackages.Id + "), " +
+            StartDateTime + " CHAR(19)  ," +
+            EndDateTime + " CHAR(19)  ," +
+            PrimaryPackageEndDateTime + " CHAR(19) ," +
+            SecondaryTrafficEndDateTime + " CHAR(19) ," +
+            SimSerial + " VARCHAR(50) ," +
+            Status + " INTEGER NOT NULL );";
 
     static final String DropTable = "Drop Table If Exists " + TableName;
 
@@ -46,12 +48,13 @@ public class PackageHistories {
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     PackageHistory packageHistory = new PackageHistory(cursor.getInt(cursor.getColumnIndex(Id)),
-                                                                       cursor.getInt(cursor.getColumnIndex(DataPackageId)),
-                                                                       cursor.getString(cursor.getColumnIndex(StartDateTime)),
-                                                                       cursor.getString(cursor.getColumnIndex(EndDateTime)),
-                                                                       cursor.getString(cursor.getColumnIndex(SecondaryTrafficEndDateTime)),
-                                                                       cursor.getString(cursor.getColumnIndex(SimSerial)),
-                                                                       cursor.getInt(cursor.getColumnIndex(Status)));
+                            cursor.getInt(cursor.getColumnIndex(DataPackageId)),
+                            cursor.getString(cursor.getColumnIndex(StartDateTime)),
+                            cursor.getString(cursor.getColumnIndex(EndDateTime)),
+                            cursor.getString(cursor.getColumnIndex(PrimaryPackageEndDateTime)),
+                            cursor.getString(cursor.getColumnIndex(SecondaryTrafficEndDateTime)),
+                            cursor.getString(cursor.getColumnIndex(SimSerial)),
+                            cursor.getInt(cursor.getColumnIndex(Status)));
                     packageList.add(packageHistory);
                 } while (cursor.moveToNext());
             }
@@ -76,6 +79,7 @@ public class PackageHistories {
         values.put(DataPackageId, packageHistory.getDataPackageId());
         values.put(StartDateTime, packageHistory.getStartDateTime());
         values.put(EndDateTime, packageHistory.getEndDateTime());
+        values.put(PrimaryPackageEndDateTime, packageHistory.getPrimaryPackageEndDateTime());
         values.put(SecondaryTrafficEndDateTime, packageHistory.getSecondaryTrafficEndDateTime());
         values.put(SimSerial, packageHistory.getSimSerial());
         values.put(Status, packageHistory.getStatus());
@@ -89,6 +93,7 @@ public class PackageHistories {
         values.put(DataPackageId, packageHistory.getDataPackageId());
         values.put(StartDateTime, packageHistory.getStartDateTime());
         values.put(EndDateTime, packageHistory.getEndDateTime());
+        values.put(PrimaryPackageEndDateTime, packageHistory.getPrimaryPackageEndDateTime());
         values.put(SecondaryTrafficEndDateTime, packageHistory.getSecondaryTrafficEndDateTime());
         values.put(SimSerial, packageHistory.getSimSerial());
         values.put(Status, packageHistory.getStatus());
@@ -118,23 +123,6 @@ public class PackageHistories {
         return (count == 0) ? null : packageHistories.get(count - 1);
     }
 
-    public static void terminateDataPackage(PackageHistory packageHistory, PackageHistory.StatusEnum terminationStatus) {
-        packageHistory.setStatus(terminationStatus.ordinal());
-        packageHistory.setEndDateTime(Helper.getCurrentDateTime());
-
-        if (packageHistory.getSecondaryTrafficEndDateTime() == null ||
-            "".equals(packageHistory.getSecondaryTrafficEndDateTime())) {
-            packageHistory.setSecondaryTrafficEndDateTime(Helper.getCurrentDateTime());
-        }
-        update(packageHistory);
-
-        Setting setting = Settings.getCurrentSettings();
-        setting.setTrafficAlarmHasShown(false);
-        setting.setSecondaryTrafficAlarmHasShown(false);
-        setting.setLeftDaysAlarmHasShown(false);
-        Settings.update(setting);
-    }
-
     public static void terminateDataPackageSecondaryPlan(PackageHistory packageHistory) {
         packageHistory.setSecondaryTrafficEndDateTime(Helper.getCurrentDateTime());
         update(packageHistory);
@@ -151,6 +139,7 @@ public class PackageHistories {
     public static void finishPackageProcess(PackageHistory history, PackageHistory.StatusEnum terminationStatus) {
         history.setStatus(terminationStatus.ordinal());
         history.setEndDateTime(Helper.getCurrentDateTime());
+        history.setPrimaryPackageEndDateTime(Helper.getCurrentDateTime());
         DataPackage dataPackage = DataPackages.selectPackageById(history.getDataPackageId());
         if (dataPackage != null) {
             if (dataPackage.getSecondaryTraffic() != null && dataPackage.getSecondaryTraffic() != 0) {

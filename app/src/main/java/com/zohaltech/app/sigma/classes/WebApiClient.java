@@ -59,7 +59,6 @@ public class WebApiClient {
             jsonObject.accumulate("IsPurchased", "1");
 
             setJsonObject(jsonObject);
-
         }
 
         Thread thread = new Thread(new Runnable() {

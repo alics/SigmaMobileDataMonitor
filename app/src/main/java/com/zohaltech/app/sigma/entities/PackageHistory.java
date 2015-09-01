@@ -4,10 +4,11 @@ public class PackageHistory {
 
     Integer id;
     Integer dataPackageId;
-    String  startDateTime;
-    String  endDateTime;
-    String  secondaryTrafficEndDateTime;
-    String  simSerial;
+    String startDateTime;
+    String endDateTime;
+    String primaryPackageEndDateTime;
+    String secondaryTrafficEndDateTime;
+    String simSerial;
     Integer status;
 
     public enum StatusEnum {
@@ -18,18 +19,19 @@ public class PackageHistory {
         PERIOD_FINISHED
     }
 
-    public PackageHistory(Integer dataPackageId, String startDateTime, String endDateTime, String secondaryTrafficEndDateTime, String simSerial, Integer status) {
+    public PackageHistory(Integer dataPackageId, String startDateTime, String endDateTime, String primaryPackageEndDateTime, String secondaryTrafficEndDateTime, String simSerial, Integer status) {
         setDataPackageId(dataPackageId);
         setStartDateTime(startDateTime);
         setEndDateTime(endDateTime);
         setSimSerial(simSerial);
+        setPrimaryPackageEndDateTime(primaryPackageEndDateTime);
         setSecondaryTrafficEndDateTime(secondaryTrafficEndDateTime);
         setStatus(status);
 
     }
 
-    public PackageHistory(Integer id, Integer dataPackageId, String startDateTime, String endDateTime, String secondaryTrafficEndDateTime, String simSerial, Integer status) {
-        this(dataPackageId, startDateTime, endDateTime, secondaryTrafficEndDateTime, simSerial, status);
+    public PackageHistory(Integer id, Integer dataPackageId, String startDateTime, String endDateTime, String primaryPackageEndDateTime, String secondaryTrafficEndDateTime, String simSerial, Integer status) {
+        this(dataPackageId, startDateTime, endDateTime, primaryPackageEndDateTime, secondaryTrafficEndDateTime, simSerial, status);
         this.id = id;
     }
 
@@ -79,6 +81,14 @@ public class PackageHistory {
 
     public void setSecondaryTrafficEndDateTime(String secondaryTrafficEndDateTime) {
         this.secondaryTrafficEndDateTime = secondaryTrafficEndDateTime;
+    }
+
+    public String getPrimaryPackageEndDateTime() {
+        return primaryPackageEndDateTime;
+    }
+
+    public void setPrimaryPackageEndDateTime(String primaryPackageEndDateTime) {
+        this.primaryPackageEndDateTime = primaryPackageEndDateTime;
     }
 
     public Integer getStatus() {

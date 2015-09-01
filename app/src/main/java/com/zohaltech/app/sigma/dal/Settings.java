@@ -32,6 +32,8 @@ public class Settings {
     static final String ShowUpDownSpeed = "ShowUpDownSpeed";
     static final String VibrateInAlarms = "VibrateInAlarms";
     static final String SoundInAlarms = "SoundInAlarms";
+    static final String Installed = "Installed";
+    static final String Registered = "Registered";
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
             Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
@@ -53,6 +55,8 @@ public class Settings {
             ShowUpDownSpeed + " BOOLEAN NOT NULL, " +
             VibrateInAlarms + " BOOLEAN NOT NULL, " +
             SoundInAlarms + " BOOLEAN NOT NULL, " +
+            Installed + " BOOLEAN NOT NULL, " +
+            Registered + " BOOLEAN NOT NULL, " +
             ShowNotificationInLockScreen + " BOOLEAN NOT NULL ); ";
 
     static final String DropTable = "Drop Table If Exists " + TableName;
@@ -88,7 +92,9 @@ public class Settings {
                             cursor.getInt(cursor.getColumnIndex(TrafficAlarmHasShown)) == 1,
                             cursor.getInt(cursor.getColumnIndex(SecondaryTrafficAlarmHasShown)) == 1,
                             cursor.getInt(cursor.getColumnIndex(VibrateInAlarms)) == 1,
-                            cursor.getInt(cursor.getColumnIndex(SoundInAlarms)) == 1);
+                            cursor.getInt(cursor.getColumnIndex(SoundInAlarms)) == 1,
+                            cursor.getInt(cursor.getColumnIndex(Installed)) == 1,
+                            cursor.getInt(cursor.getColumnIndex(Registered)) == 1);
                     settings.add(setting);
                 } while (cursor.moveToNext());
             }
@@ -150,6 +156,8 @@ public class Settings {
         values.put(ShowUpDownSpeed, setting.getShowUpDownSpeed() ? 1 : 0);
         values.put(VibrateInAlarms, setting.getVibrateInAlarms() ? 1 : 0);
         values.put(SoundInAlarms, setting.getSoundInAlarms() ? 1 : 0);
+        values.put(Installed, setting.getInstalled() ? 1 : 0);
+        values.put(Registered, setting.getRegistered() ? 1 : 0);
 
         DataAccess da = new DataAccess();
         return da.update(TableName, values, Id + " = ? ", new String[]{String.valueOf(setting.getId())});
