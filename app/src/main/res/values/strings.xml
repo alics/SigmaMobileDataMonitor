@@ -40,8 +40,8 @@
     <string name="custom_package">بسته سفارشی</string>
     <string name="reserved_package">بسته رزرو</string>
     <string name="active_package">بسته فعال</string>
-    <string name="left_days_alarm">اخطار روز باقیمانده</string>
-    <string name="traffic_alarm">اخطار حجمی</string>
+    <string name="left_days_alarm">هشدار روز باقیمانده</string>
+    <string name="traffic_alarm">هشدار حجمی</string>
     <string name="package_title">عنوان بسته</string>
     <string name="primary_traffic">حجم شبانه روزی</string>
     <string name="validation_period">مدت اعتبار</string>

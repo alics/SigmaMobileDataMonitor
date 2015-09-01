@@ -2,9 +2,12 @@ package com.zohaltech.app.sigma.classes;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Vibrator;
 import android.support.v4.app.FragmentActivity;
 import android.telephony.TelephonyManager;
 
@@ -163,6 +166,21 @@ public final class Helper {
     public static void goToWebsite(String url) {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         App.currentActivity.startActivity(browserIntent);
+    }
+
+    public static void playSound(){
+        try {
+            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            Ringtone r = RingtoneManager.getRingtone(App.context, notification);
+            r.play();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void vibrate(){
+        Vibrator vibrator = (Vibrator) App.context.getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(500);
     }
 
     //    public static void share(String message)
