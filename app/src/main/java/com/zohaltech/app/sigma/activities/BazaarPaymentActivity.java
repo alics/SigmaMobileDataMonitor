@@ -7,7 +7,6 @@ import android.widget.Toast;
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.classes.App;
 import com.zohaltech.app.sigma.classes.ConstantParams;
-import com.zohaltech.app.sigma.classes.Helper;
 import com.zohaltech.app.sigma.classes.LicenseManager;
 import com.zohaltech.app.sigma.classes.WebApiClient;
 import com.zohaltech.app.sigma.util.IabHelper;
@@ -44,12 +43,9 @@ public abstract class BazaarPaymentActivity extends EnhancedActivity {
                     LicenseManager.registerLicense();
                     updateUiToPremiumVersion();
                     setWaitScreen(false);
-                    Helper.sendUserData(WebApiClient.PostAction.REGISTER);
                 }
-
                 //Log.i(TAG, "User is " + (mIsPremium ? "PREMIUM" : "NOT PREMIUM"));
             }
-
             //Log.i(TAG, "Initial inventory query finished; enabling main UI.");
         }
     };
@@ -68,6 +64,9 @@ public abstract class BazaarPaymentActivity extends EnhancedActivity {
                     LicenseManager.registerLicense();
                     MyToast.show("شما با موفقیت به نسخه کامل ارتقا یافتید", Toast.LENGTH_LONG);
                     updateUiToPremiumVersion();
+                    if (App.preferences.getBoolean(WebApiClient.SUCCESS_REGISTER, false) == false) {
+                        WebApiClient.sendUserData(WebApiClient.PostAction.REGISTER);
+                    }
                 }
             }
             setWaitScreen(false);

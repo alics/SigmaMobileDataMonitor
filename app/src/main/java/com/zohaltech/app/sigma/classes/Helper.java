@@ -178,15 +178,6 @@ public final class Helper {
         vibrator.vibrate(500);
     }
 
-    public static void sendUserData(WebApiClient.PostAction postAction) {
-        try {
-            WebApiClient webApiClient = new WebApiClient();
-            webApiClient.postSubscriberData(postAction);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
     public enum Operator {
         MCI,
         IRANCELL,
