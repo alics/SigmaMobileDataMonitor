@@ -11,15 +11,14 @@ import com.zohaltech.app.sigma.classes.Helper;
 import com.zohaltech.app.sigma.classes.LicenseManager;
 import com.zohaltech.app.sigma.classes.LicenseStatus;
 import com.zohaltech.app.sigma.classes.MyRuntimeException;
-import com.zohaltech.app.sigma.classes.TrafficUnitsUtil;
 
 import java.io.InputStreamReader;
 
 
 public class DataAccess extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME    = "SIGMA";
-    public static final int    DATABASE_VERSION = 4;
+    public static final String DATABASE_NAME = "SIGMA";
+    public static final int DATABASE_VERSION = 5;
 
     public DataAccess() {
         super(App.context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -34,6 +33,7 @@ public class DataAccess extends SQLiteOpenHelper {
             database.execSQL(DataPackages.CreateTable);
             database.execSQL(PackageHistories.CreateTable);
             database.execSQL(Settings.CreateTable);
+            database.execSQL(SystemSettings.CreateTable);
 
             insertDataFromAsset(database, MobileOperators.TableName, "data/operators.csv", ';');
             insertDataFromAsset(database, DataPackages.TableName, "data/packages.csv", ';');
@@ -74,15 +74,25 @@ public class DataAccess extends SQLiteOpenHelper {
             settingsValues.put(Settings.SoundInAlarms, 1);
             settingsValues.put(Settings.Installed, 0);
             settingsValues.put(Settings.Registered, 0);
-            long res = database.insert(Settings.TableName, null, settingsValues);
+            database.insert(Settings.TableName, null, settingsValues);
+
+
+            ContentValues systemSettingsValues = new ContentValues();
+            systemSettingsValues.put(SystemSettings.LeftDaysAlarmHasShown, 1);
+            systemSettingsValues.put(SystemSettings.TrafficAlarmHasShown, 0);
+            systemSettingsValues.put(SystemSettings.PrimaryTrafficFinishHasShown, 1);
+            systemSettingsValues.put(SystemSettings.SecondaryTrafficFinishHasShown, 1);
+            systemSettingsValues.put(SystemSettings.Installed, 1);
+            settingsValues.put(SystemSettings.Registered, 1);
+            database.insert(SystemSettings.TableName, null, systemSettingsValues);
 
             LicenseStatus status = LicenseManager.getExistingLicense();
             if (status == null) {
                 LicenseManager.initializeLicenseFile(new LicenseStatus(BuildConfig.VERSION_CODE + "",
-                                                                       Helper.getDeviceId(),
-                                                                       Helper.getCurrentDate(),
-                                                                       LicenseManager.Status.TESTING_TIME.ordinal(),
-                                                                       1));
+                        Helper.getDeviceId(),
+                        Helper.getCurrentDate(),
+                        LicenseManager.Status.TESTING_TIME.ordinal(),
+                        1));
             }
         } catch (MyRuntimeException e) {
             e.printStackTrace();

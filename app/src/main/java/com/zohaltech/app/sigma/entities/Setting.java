@@ -23,10 +23,10 @@ public class Setting {
     private Boolean trafficAlarmHasShown;
     private Boolean secondaryTrafficAlarmHasShown;
     private Boolean showUpDownSpeed;
-    private Boolean VibrateInAlarms;
-    private Boolean SoundInAlarms;
-    private Boolean Installed;
-    private Boolean Registered;
+    private Boolean vibrateInAlarms;
+    private Boolean soundInAlarms;
+    private Boolean installed;
+    private Boolean registered;
 
 
     public Setting(Boolean dataConnected, Long dailyTraffic, Boolean showAlarmAfterTerminate, int alarmType,
@@ -216,34 +216,34 @@ public class Setting {
     }
 
     public Boolean getVibrateInAlarms() {
-        return VibrateInAlarms;
+        return vibrateInAlarms;
     }
 
     public void setVibrateInAlarms(Boolean vibrateInAlarms) {
-        VibrateInAlarms = vibrateInAlarms;
+        this.vibrateInAlarms = vibrateInAlarms;
     }
 
     public Boolean getSoundInAlarms() {
-        return SoundInAlarms;
+        return soundInAlarms;
     }
 
     public void setSoundInAlarms(Boolean soundInAlarms) {
-        SoundInAlarms = soundInAlarms;
+        this.soundInAlarms = soundInAlarms;
     }
 
     public Boolean getInstalled() {
-        return Installed;
+        return installed;
     }
 
     public void setInstalled(Boolean installed) {
-        Installed = installed;
+        this.installed = installed;
     }
 
     public Boolean getRegistered() {
-        return Registered;
+        return registered;
     }
 
     public void setRegistered(Boolean registered) {
-        Registered = registered;
+        this.registered = registered;
     }
 }
