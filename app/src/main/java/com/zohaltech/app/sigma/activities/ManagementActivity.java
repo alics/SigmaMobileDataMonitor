@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.classes.App;
+import com.zohaltech.app.sigma.classes.DialogManager;
 import com.zohaltech.app.sigma.dal.DataPackages;
 import com.zohaltech.app.sigma.dal.PackageHistories;
 import com.zohaltech.app.sigma.entities.DataPackage;
@@ -21,6 +22,7 @@ public class ManagementActivity extends EnhancedActivity {
     TextView             txtReservedPackageDescription;
     FloatingActionButton fabReservedPackageSettings;
     //FloatingActionButton fabCancelReservedPackage;
+    FloatingActionButton fabActivateReservedPackage;
     FloatingActionButton fabAddPackage;
 
     DataPackage activePackage;
@@ -33,19 +35,10 @@ public class ManagementActivity extends EnhancedActivity {
         txtActivePackageDescription = (TextView) findViewById(R.id.txtActivePackageDescription);
         fabActivePackageSettings = (FloatingActionButton) findViewById(R.id.fabActivePackageSettings);
         txtReservedPackageDescription = (TextView) findViewById(R.id.txtReservedPackageDescription);
-        //fabCancelReservedPackage = (FloatingActionButton) findViewById(R.id.fabCancelReservedPackage);
         fabReservedPackageSettings = (FloatingActionButton) findViewById(R.id.fabReservedPackageSettings);
+        //fabCancelReservedPackage = (FloatingActionButton) findViewById(R.id.fabCancelReservedPackage);
+        fabActivateReservedPackage = (FloatingActionButton) findViewById(R.id.fabActivateReservedPackage);
         fabAddPackage = (FloatingActionButton) findViewById(R.id.fabAddPackage);
-
-        fabAddPackage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(App.currentActivity, PackageSettingsActivity.class);
-                intent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_INSERT_CUSTOM);
-                intent.putExtra(PackageSettingsActivity.FORM_MODE_KEY, PackageSettingsActivity.FORM_MODE_NEW);
-                startActivity(intent);
-            }
-        });
 
         fabActivePackageSettings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +72,35 @@ public class ManagementActivity extends EnhancedActivity {
                 intent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_SETTING_RESERVED);
                 intent.putExtra(PackageSettingsActivity.PACKAGE_ID_KEY, reservedPackage.getId());
                 intent.putExtra(PackageSettingsActivity.FORM_MODE_KEY, PackageSettingsActivity.FORM_MODE_EDIT);
+                startActivity(intent);
+            }
+        });
+
+        fabActivateReservedPackage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogManager.showConfirmationDialog(App.currentActivity,
+                                                     "فعالسازی بسته رزرو", "آیا مایل به لغو بسته فعال و فعالسازی بسته رزرو هستید؟",
+                                                     "بله",
+                                                     "خیر",
+                                                     null,
+                                                     new Runnable() {
+                                                         @Override
+                                                         public void run() {
+                                                             PackageHistory activePackage = PackageHistories.getActivePackage();
+                                                             PackageHistories.finishPackageProcess(activePackage, PackageHistory.StatusEnum.CANCELED);
+                                                             finish();
+                                                         }
+                                                     });
+            }
+        });
+
+        fabAddPackage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(App.currentActivity, PackageSettingsActivity.class);
+                intent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_INSERT_CUSTOM);
+                intent.putExtra(PackageSettingsActivity.FORM_MODE_KEY, PackageSettingsActivity.FORM_MODE_NEW);
                 startActivity(intent);
             }
         });

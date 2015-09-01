@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.zohaltech.app.sigma.classes.Helper;
 import com.zohaltech.app.sigma.classes.MyRuntimeException;
+import com.zohaltech.app.sigma.entities.DataPackage;
 import com.zohaltech.app.sigma.entities.PackageHistory;
 import com.zohaltech.app.sigma.entities.Setting;
 
@@ -150,8 +151,13 @@ public class PackageHistories {
     public static void finishPackageProcess(PackageHistory history, PackageHistory.StatusEnum terminationStatus) {
         history.setStatus(terminationStatus.ordinal());
         history.setEndDateTime(Helper.getCurrentDateTime());
-        if (history.getSecondaryTrafficEndDateTime() == null || "".equals(history.getSecondaryTrafficEndDateTime())) {
-            history.setSecondaryTrafficEndDateTime(Helper.getCurrentDateTime());
+        DataPackage dataPackage = DataPackages.selectPackageById(history.getDataPackageId());
+        if (dataPackage != null) {
+            if (dataPackage.getSecondaryTraffic() != null && dataPackage.getSecondaryTraffic() != 0) {
+                if (history.getSecondaryTrafficEndDateTime() == null || "".equals(history.getSecondaryTrafficEndDateTime())) {
+                    history.setSecondaryTrafficEndDateTime(Helper.getCurrentDateTime());
+                }
+            }
         }
         update(history);
 
@@ -160,7 +166,7 @@ public class PackageHistories {
         PackageHistory reservedPackage = getReservedPackage();
         Setting setting = Settings.getCurrentSettings();
         if (reservedPackage != null) {
-            reservedPackage.setStatus(terminationStatus.ordinal());
+            reservedPackage.setStatus(PackageHistory.StatusEnum.ACTIVE.ordinal());
             reservedPackage.setStartDateTime(Helper.getCurrentDateTime());
             update(reservedPackage);
             setting.setAlarmType(setting.getAlarmTypeRes());
@@ -174,4 +180,3 @@ public class PackageHistories {
         Settings.update(setting);
     }
 }
-

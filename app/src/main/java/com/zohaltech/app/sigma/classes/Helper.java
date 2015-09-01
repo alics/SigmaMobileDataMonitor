@@ -13,6 +13,8 @@ import android.telephony.TelephonyManager;
 
 import com.zohaltech.app.sigma.entities.DataPackage;
 
+import org.json.JSONException;
+
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -156,19 +158,12 @@ public final class Helper {
         return telephonyManager.getDeviceId();
     }
 
-    public enum Operator {
-        MCI,
-        IRANCELL,
-        RIGHTELL,
-        NO_SIM
-    }
-
     public static void goToWebsite(String url) {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         App.currentActivity.startActivity(browserIntent);
     }
 
-    public static void playSound(){
+    public static void playSound() {
         try {
             Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             Ringtone r = RingtoneManager.getRingtone(App.context, notification);
@@ -178,9 +173,25 @@ public final class Helper {
         }
     }
 
-    public static void vibrate(){
+    public static void vibrate() {
         Vibrator vibrator = (Vibrator) App.context.getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(500);
+    }
+
+    public static void sendUserData(WebApiClient.PostAction postAction) {
+        try {
+            WebApiClient webApiClient = new WebApiClient();
+            webApiClient.postSubscriberData(postAction);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public enum Operator {
+        MCI,
+        IRANCELL,
+        RIGHTELL,
+        NO_SIM
     }
 
     //    public static void share(String message)

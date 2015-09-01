@@ -40,12 +40,7 @@ public class DashboardActivity extends BazaarPaymentActivity {
     @Override
     void onCreated() {
 
-        try {
-            WebApiClient webApiClient = new WebApiClient();
-            webApiClient.postSubscriberData(WebApiClient.PostAction.REGISTER);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
         DataAccess da = new DataAccess();
         da.getReadableDB();
         da.close();

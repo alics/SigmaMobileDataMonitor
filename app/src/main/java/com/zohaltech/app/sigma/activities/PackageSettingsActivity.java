@@ -467,11 +467,11 @@ public class PackageSettingsActivity extends EnhancedActivity {
     }
 
     private void activate() {
+        PackageHistories.deletedReservedPackages();
         PackageHistory history = PackageHistories.getActivePackage();
         if (history != null) {
             PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.CANCELED);
         }
-        PackageHistories.deletedReservedPackages();
         long result = DataPackages.insert(customPackage);
         boolean saveRes = saveActivePackageSettings(false);
         if (result != -1 && saveRes) {
