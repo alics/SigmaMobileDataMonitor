@@ -86,8 +86,8 @@ public final class PackageStatus {
 
         if (usedPrimaryTraffic >= dataPackage.getPrimaryTraffic()) {
             String msg = "اعتبار حجمی بسته به پایان رسید";
-            if (reservedPackageHistory != null)
-                msg += " و بسته رزور شده فعال شد";
+//            if (reservedPackageHistory != null)
+//                msg += " و بسته رزور شده فعال شد";
             alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.FINISH_TRAFFIC_ALARM, msg));
 
             history.setPrimaryPackageEndDateTime(Helper.getCurrentDateTime());
