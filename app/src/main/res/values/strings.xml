@@ -48,4 +48,5 @@
     <string name="usage_report">گزارش مصرف</string>
     <string name="tutorial">راهنمای برنامه</string>
     <string name="base64EncodedPublicKey">MIHNMA0GCSqGSIb3DQEBAQUAA4G7ADCBtwKBrwDEZZ4jpPHrnb/I+16h4DRUB0u13UCme31/0Jz+b4enw1xUmMmvlduzZUTruV1fM8bH14gEBMvOIt+g7u0AhejrfYXavhE/R3JrNq+TuZTrKuO73MpO1aaeiuYmsuA1wcN7fP5akffu/1HSqAj4s0F7fArJRZeiGnEb7ApTBFlGLg/o4groUZZwF3f1abFEcC9wM+HfGuiUZdKDTKkT3XyVzPcsvnrjMODiPeFsTH8CAwEAAQ==</string>
+    <string name="host_name">http://zohaltech.com/api/app/post</string>
 </resources>

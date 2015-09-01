@@ -3,6 +3,7 @@ package com.zohaltech.app.sigma.classes;
 import android.os.Build;
 import android.util.Log;
 
+import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.dal.Settings;
 import com.zohaltech.app.sigma.entities.Setting;
 
@@ -15,10 +16,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
 
 public class WebApiClient {
-
-    public static final  String SUCCESS_INSTALL  = "SUCCESS_INSTALL";
-    public static final  String SUCCESS_REGISTER = "SUCCESS_REGISTER";
-    private static final String HOST_URL         = "http://zohaltech.com/api/app/post";
+    private static final String HOST_URL = App.context.getString(R.string.host_name);
     private JSONObject jsonObject;
 
     public static void sendUserData(WebApiClient.PostAction postAction) {
