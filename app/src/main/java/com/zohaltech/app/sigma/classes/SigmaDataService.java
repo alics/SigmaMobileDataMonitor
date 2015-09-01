@@ -54,6 +54,7 @@ public class SigmaDataService extends Service {
             final long oneMinuteUsedBytes = App.preferences.getLong(ONE_MINUTE_USED_BYTES, 0) + receivedBytes + sentBytes;
             App.preferences.edit().putLong(ONE_MINUTE_USED_BYTES, oneMinuteUsedBytes).apply();
 
+
             usageLogInterval++;
             if (usageLogInterval == USAGE_LOG_INTERVAL) {
                 new Thread(new Runnable() {

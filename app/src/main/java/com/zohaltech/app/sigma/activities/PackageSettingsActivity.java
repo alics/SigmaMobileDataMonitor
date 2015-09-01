@@ -480,6 +480,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
                                                        null,
                                                        null,
                                                        null,
+                                                       null,
                                                        PackageHistory.StatusEnum.ACTIVE.ordinal()));
             finish();
         }

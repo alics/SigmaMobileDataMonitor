@@ -72,6 +72,8 @@ public class DataAccess extends SQLiteOpenHelper {
             settingsValues.put(Settings.LeftDaysAlarmHasShown, 0);
             settingsValues.put(Settings.VibrateInAlarms, 1);
             settingsValues.put(Settings.SoundInAlarms, 1);
+            settingsValues.put(Settings.Installed, 0);
+            settingsValues.put(Settings.Registered, 0);
             long res = database.insert(Settings.TableName, null, settingsValues);
 
             LicenseStatus status = LicenseManager.getExistingLicense();
