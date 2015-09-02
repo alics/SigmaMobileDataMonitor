@@ -270,9 +270,10 @@ public class PackageSettingsActivity extends EnhancedActivity {
 
         if (resetAlarm) {
             SystemSetting systemSetting = SystemSettings.getCurrentSettings();
-            systemSetting.setTrafficAlarmHasShown(false);
-            systemSetting.setSecondaryTrafficFinishHasShown(false);
             systemSetting.setLeftDaysAlarmHasShown(false);
+            systemSetting.setTrafficAlarmHasShown(false);
+            systemSetting.setPrimaryTrafficFinishHasShown(false);
+            systemSetting.setSecondaryTrafficFinishHasShown(false);
             SystemSettings.update(systemSetting);
         }
         return true;

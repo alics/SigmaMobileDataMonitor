@@ -167,6 +167,7 @@ public class PackageHistories {
 
         SystemSetting systemSetting = SystemSettings.getCurrentSettings();
         systemSetting.setTrafficAlarmHasShown(false);
+        systemSetting.setPrimaryTrafficFinishHasShown(false);
         systemSetting.setSecondaryTrafficFinishHasShown(false);
         systemSetting.setLeftDaysAlarmHasShown(false);
         SystemSettings.update(systemSetting);
