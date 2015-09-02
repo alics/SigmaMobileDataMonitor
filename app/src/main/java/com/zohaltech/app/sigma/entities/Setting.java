@@ -6,8 +6,6 @@ public class Setting {
     private Integer id;
     private Boolean dataConnected;
     private Long    dailyTraffic;
-    private Boolean showAlarmAfterTerminate;
-    private Boolean showAlarmAfterTerminateRes;
     private int     alarmType;
     private Integer percentTrafficAlarm;
     private Integer leftDaysAlarm;
@@ -17,21 +15,16 @@ public class Setting {
     private Boolean showNotification;
     private Boolean showNotificationWhenDataIsOn;
     private Boolean showNotificationInLockScreen;
-    //private Boolean leftDaysAlarmHasShown;
-    //private Boolean trafficAlarmHasShown;
-    //private Boolean secondaryTrafficAlarmHasShown;
     private Boolean showUpDownSpeed;
     private Boolean vibrateInAlarms;
     private Boolean soundInAlarms;
 
-    public Setting(Boolean dataConnected, Long dailyTraffic, Boolean showAlarmAfterTerminate, int alarmType,
-                   Integer percentTrafficAlarm, Integer leftDaysAlarm, Boolean showAlarmAfterTerminateRes, int alarmTypeRes,
-                   Integer percentTrafficAlarmRes, Integer leftDaysAlarmRes, Boolean showNotification, Boolean showNotificationWhenDataIsOn,
-                   Boolean showNotificationInLockScreen, Boolean showUpDownSpeed, Boolean vibrateInAlarms, Boolean soundInAlarms) {
+    public Setting(Boolean dataConnected, Long dailyTraffic, int alarmType, Integer percentTrafficAlarm, Integer leftDaysAlarm,
+                   int alarmTypeRes, Integer percentTrafficAlarmRes, Integer leftDaysAlarmRes, Boolean showNotification,
+                   Boolean showNotificationWhenDataIsOn, Boolean showNotificationInLockScreen, Boolean showUpDownSpeed,
+                   Boolean vibrateInAlarms, Boolean soundInAlarms) {
         setDataConnected(dataConnected);
         setDailyTraffic(dailyTraffic);
-        setShowAlarmAfterTerminate(showAlarmAfterTerminate);
-        setShowAlarmAfterTerminateRes(showAlarmAfterTerminateRes);
         setAlarmType(alarmType);
         setPercentTrafficAlarm(percentTrafficAlarm);
         setLeftDaysAlarm(leftDaysAlarm);
@@ -45,17 +38,13 @@ public class Setting {
         setVibrateInAlarms(vibrateInAlarms);
         setSoundInAlarms(soundInAlarms);
     }
-    //private Boolean installed;
-    //private Boolean registered;
 
-
-    public Setting(Integer id, Boolean dataConnected, Long dailyTraffic, Boolean showAlarmAfterTerminate,
-                   int alarmType, Integer percentTrafficAlarm, Integer leftDaysAlarm, Boolean showAlarmAfterTerminateRes,
-                   int alarmTypeRes, Integer percentTrafficAlarmRes, Integer leftDaysAlarmRes, Boolean showNotification,
-                   Boolean showNotificationWhenDataIsOn, Boolean showNotificationInLockScreen, Boolean showUpDownSpeed,
-                   Boolean vibrateInAlarms, Boolean soundInAlarms) {
-        this(dataConnected, dailyTraffic, showAlarmAfterTerminate, alarmType, percentTrafficAlarm,
-             leftDaysAlarm, showAlarmAfterTerminateRes, alarmTypeRes, percentTrafficAlarmRes, leftDaysAlarmRes,
+    public Setting(Integer id, Boolean dataConnected, Long dailyTraffic, int alarmType, Integer percentTrafficAlarm,
+                   Integer leftDaysAlarm, int alarmTypeRes, Integer percentTrafficAlarmRes, Integer leftDaysAlarmRes,
+                   Boolean showNotification, Boolean showNotificationWhenDataIsOn, Boolean showNotificationInLockScreen,
+                   Boolean showUpDownSpeed, Boolean vibrateInAlarms, Boolean soundInAlarms) {
+        this(dataConnected, dailyTraffic, alarmType, percentTrafficAlarm,
+             leftDaysAlarm, alarmTypeRes, percentTrafficAlarmRes, leftDaysAlarmRes,
              showNotification, showNotificationWhenDataIsOn, showNotificationInLockScreen, showUpDownSpeed,
              vibrateInAlarms, soundInAlarms);
         this.id = id;
@@ -83,14 +72,6 @@ public class Setting {
 
     public void setDailyTraffic(Long dailyTraffic) {
         this.dailyTraffic = dailyTraffic;
-    }
-
-    public Boolean getShowAlarmAfterTerminate() {
-        return showAlarmAfterTerminate;
-    }
-
-    public void setShowAlarmAfterTerminate(Boolean showAlarmAfterTerminate) {
-        this.showAlarmAfterTerminate = showAlarmAfterTerminate;
     }
 
     public int getAlarmType() {
@@ -163,14 +144,6 @@ public class Setting {
 
     public void setShowNotificationInLockScreen(Boolean showNotificationInLockScreen) {
         this.showNotificationInLockScreen = showNotificationInLockScreen;
-    }
-
-    public Boolean getShowAlarmAfterTerminateRes() {
-        return showAlarmAfterTerminateRes;
-    }
-
-    public void setShowAlarmAfterTerminateRes(Boolean showAlarmAfterTerminateRes) {
-        this.showAlarmAfterTerminateRes = showAlarmAfterTerminateRes;
     }
 
     public Boolean getShowUpDownSpeed() {

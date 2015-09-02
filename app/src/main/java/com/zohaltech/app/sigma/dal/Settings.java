@@ -15,8 +15,6 @@ public class Settings {
     static final String Id = "Id";
     static final String DataConnected = "DataConnected";
     static final String DailyTraffic = "DailyTraffic";
-    static final String ShowAlarmAfterTerminate = "ShowAlarmAfterTerminate";
-    static final String ShowAlarmAfterTerminateRes = "ShowAlarmAfterTerminateRes";
     static final String AlarmType = "AlarmType";
     static final String PercentTrafficAlarm = "PercentTrafficAlarm";
     static final String LeftDaysAlarm = "LeftDaysAlarm";
@@ -34,8 +32,6 @@ public class Settings {
             Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
             DataConnected + " BOOLEAN NOT NULL, " +
             DailyTraffic + " BIGINT NOT NULL, " +
-            ShowAlarmAfterTerminate + " BOOLEAN NOT NULL, " +
-            ShowAlarmAfterTerminateRes + " BOOLEAN NOT NULL, " +
             AlarmType + " INTEGER NOT NULL, " +
             PercentTrafficAlarm + " INTEGER NOT NULL, " +
             LeftDaysAlarm + " INTEGER NOT NULL, " +
@@ -66,11 +62,9 @@ public class Settings {
                     Setting setting = new Setting(cursor.getInt(cursor.getColumnIndex(Id)),
                             cursor.getInt(cursor.getColumnIndex(DataConnected)) == 1,
                             cursor.getLong(cursor.getColumnIndex(DailyTraffic)),
-                            cursor.getInt(cursor.getColumnIndex(ShowAlarmAfterTerminate)) == 1,
                             cursor.getInt(cursor.getColumnIndex(AlarmType)),
                             cursor.getInt(cursor.getColumnIndex(PercentTrafficAlarm)),
                             cursor.getInt(cursor.getColumnIndex(LeftDaysAlarm)),
-                            cursor.getInt(cursor.getColumnIndex(ShowAlarmAfterTerminateRes)) == 1,
                             cursor.getInt(cursor.getColumnIndex(AlarmTypeRes)),
                             cursor.getInt(cursor.getColumnIndex(PercentTrafficAlarmRes)),
                             cursor.getInt(cursor.getColumnIndex(LeftDaysAlarmRes)),
@@ -94,37 +88,11 @@ public class Settings {
         return settings;
     }
 
-    //public static long insert(Setting setting) {
-    //    ContentValues values = new ContentValues();
-    //
-    //values.put(DataConnected, setting.getDataConnected() ? 1 : 0);
-    //values.put(DailyTraffic, setting.getDailyTraffic());
-    //values.put(ShowAlarmAfterTerminate, setting.getShowAlarmAfterTerminate() ? 1 : 0);
-    //values.put(ShowAlarmAfterTerminateRes, setting.getShowAlarmAfterTerminateRes() ? 1 : 0);
-    //values.put(AlarmType, setting.getAlarmType());
-    //values.put(PercentTrafficAlarm, setting.getPercentTrafficAlarm());
-    //values.put(LeftDaysAlarm, setting.getLeftDaysAlarm());
-    //values.put(AlarmTypeRes, setting.getAlarmTypeRes());
-    //values.put(PercentTrafficAlarmRes, setting.getPercentTrafficAlarmRes());
-    //values.put(LeftDaysAlarmRes, setting.getLeftDaysAlarmRes());
-    //values.put(ShowNotification, setting.getShowNotification() ? 1 : 0);
-    //values.put(ShowNotificationWhenDataIsOn, setting.getShowNotificationWhenDataIsOn() ? 1 : 0);
-    //values.put(ShowNotificationInLockScreen, setting.getShowNotificationInLockScreen() ? 1 : 0);
-    //values.put(ShowUpDownSpeed, setting.getShowUpDownSpeed() ? 1 : 0);
-    //values.put(VibrateInAlarms, setting.getVibrateInAlarms() ? 1 : 0);
-    //values.put(SoundInAlarms, setting.getSoundInAlarms() ? 1 : 0);
-    //
-    //    DataAccess da = new DataAccess();
-    //    return da.insert(TableName, values);
-    //}
-
     public static long update(Setting setting) {
         ContentValues values = new ContentValues();
 
         values.put(DataConnected, setting.getDataConnected() ? 1 : 0);
         values.put(DailyTraffic, setting.getDailyTraffic());
-        values.put(ShowAlarmAfterTerminate, setting.getShowAlarmAfterTerminate() ? 1 : 0);
-        values.put(ShowAlarmAfterTerminateRes, setting.getShowAlarmAfterTerminateRes() ? 1 : 0);
         values.put(AlarmType, setting.getAlarmType());
         values.put(PercentTrafficAlarm, setting.getPercentTrafficAlarm());
         values.put(LeftDaysAlarm, setting.getLeftDaysAlarm());

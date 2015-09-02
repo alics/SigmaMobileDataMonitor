@@ -162,7 +162,6 @@ public class PackageHistories {
             setting.setAlarmType(setting.getAlarmTypeRes());
             setting.setLeftDaysAlarm(setting.getLeftDaysAlarmRes());
             setting.setPercentTrafficAlarm(setting.getPercentTrafficAlarmRes());
-            setting.setShowAlarmAfterTerminate(setting.getShowAlarmAfterTerminateRes());
         }
         Settings.update(setting);
 

@@ -50,13 +50,10 @@ public class PackageAlarmReceiver extends BroadcastReceiver {
                     }
                 } else if (object.alarmType == AlarmObject.AlarmType.FINISH_TRAFFIC_ALARM ||
                            object.alarmType == AlarmObject.AlarmType.FINISH_VALIDATION_DATE_ALARM) {
-                    //todo : manage package termination alarm
-                    //if (setting.getShowAlarmAfterTerminate()) {
-                    //    Intent intent1 = new Intent(context, ApplicationAlarmActivity.class);
-                    //    intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    //    intent1.putExtra(ApplicationAlarmActivity.MESSAGES_KEY, object.getAlarmMessage());
-                    //    context.startActivity(intent1);
-                    //}
+                    Intent intent1 = new Intent(context, ApplicationAlarmActivity.class);
+                    intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent1.putExtra(ApplicationAlarmActivity.MESSAGES_KEY, object.getAlarmMessage());
+                    context.startActivity(intent1);
                 }
             }
         }

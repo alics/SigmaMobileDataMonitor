@@ -55,8 +55,6 @@ public class DataAccess extends SQLiteOpenHelper {
             ContentValues settingsValues = new ContentValues();
             settingsValues.put(Settings.DataConnected, 1);
             settingsValues.put(Settings.DailyTraffic, 0);
-            settingsValues.put(Settings.ShowAlarmAfterTerminate, 1);
-            settingsValues.put(Settings.ShowAlarmAfterTerminateRes, 1);
             settingsValues.put(Settings.AlarmType, 1);
             settingsValues.put(Settings.PercentTrafficAlarm, 85);
             settingsValues.put(Settings.LeftDaysAlarm, 1);

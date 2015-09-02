@@ -5,7 +5,7 @@
 
     <item
         android:id="@+id/action_done"
-        android:icon="@drawable/ic_check_white"
+        android:icon="@drawable/ic_done_white"
         android:orderInCategory="100"
         android:title="ذخیره تغییرات"
         app:showAsAction="always"/>
