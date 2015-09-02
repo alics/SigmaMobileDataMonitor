@@ -36,7 +36,11 @@ public final class PackageStatus {
 
         if (dataPackage != null) {
             status.setPrimaryTraffic(dataPackage.getPrimaryTraffic());
-            status.setUsedPrimaryTraffic(UsageLogs.getUsedPrimaryTrafficOfPackage(dataPackage, history));
+            if (history.getPrimaryPackageEndDateTime() == null || "".equals(history.getPrimaryPackageEndDateTime())) {
+                status.setUsedPrimaryTraffic(UsageLogs.getUsedPrimaryTrafficOfPackage(dataPackage, history));
+            } else {
+                status.setUsedPrimaryTraffic(dataPackage.getPrimaryTraffic());
+            }
 
             if (status.getUsedPrimaryTraffic() >= dataPackage.getPrimaryTraffic()) {
                 history.setPrimaryPackageEndDateTime(Helper.getCurrentDateTime());
@@ -62,6 +66,7 @@ public final class PackageStatus {
         Date packageActivationDate = Helper.getDateTime(history.getStartDateTime());
         Date currentDateTime = Helper.getDateTime(Helper.getCurrentDateTime());
         int diffDays = (int) ((currentDateTime.getTime() - packageActivationDate.getTime()) / (1000 * 60 * 60 * 24));
+        assert dataPackage != null;
         int leftDays = dataPackage.getPeriod() - diffDays;
 
         if (leftDays == 0) {
@@ -81,27 +86,42 @@ public final class PackageStatus {
         }
 
         DataPackage dataPackage = DataPackages.selectPackageById(history.getDataPackageId());
+        assert dataPackage != null;
+
         PackageHistory reservedPackageHistory = PackageHistories.getReservedPackage();
-        long usedPrimaryTraffic = UsageLogs.getUsedPrimaryTrafficOfPackage(dataPackage, history);
 
-        if (usedPrimaryTraffic >= dataPackage.getPrimaryTraffic()) {
-            String msg = "حجم اصلی بسته به پایان رس";
-//            if (reservedPackageHistory != null)
-//                msg += " و بسته رزور شده فعال شد";
-            alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.FINISH_PRIMARY_TRAFFIC_ALARM, msg));
-
-            history.setPrimaryPackageEndDateTime(Helper.getCurrentDateTime());
-            PackageHistories.update(history);
-            //PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.TRAFFIC_FINISHED);
-            //Helper.setMobileDataEnabled(false);
+        long usedPrimaryTraffic;
+        if (history.getPrimaryPackageEndDateTime() == null || "".equals(history.getPrimaryPackageEndDateTime())) {
+            usedPrimaryTraffic = UsageLogs.getUsedPrimaryTrafficOfPackage(dataPackage, history);
+        } else {
+            usedPrimaryTraffic = dataPackage.getPrimaryTraffic();
         }
 
         if (dataPackage.getSecondaryTraffic() != null && dataPackage.getSecondaryTraffic() != 0) {
             long usedSecondaryTraffic = UsageLogs.getUsedSecondaryTrafficOfPackage(dataPackage, history);
-
-            if (usedSecondaryTraffic >= dataPackage.getSecondaryTraffic()) {
-                String msg = "حجم شبانه بسته به پایان رسید";
+            if (usedSecondaryTraffic >= dataPackage.getSecondaryTraffic() &&
+                    usedPrimaryTraffic >= dataPackage.getPrimaryTraffic()) {
+                String msg = "حجم اصلی و شبانه به پایان رسید";
+                if (reservedPackageHistory != null)
+                    msg += " و بسته رزرو فعال شد";
+                else msg += " و بسته به پایان رسید";
+                alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.FINISH_TRAFFIC_ALARM, msg));
+                PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.TRAFFIC_FINISHED);
+            } else if (usedSecondaryTraffic >= dataPackage.getSecondaryTraffic()) {
+                String msg = "حجم شبانه بسته به پایان رسید و ترافیک مصرفی در ساعات شبانه، از حجم اصلی کاسته خواهد شد";
                 alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.FINISH_SECONDARY_TRAFFIC_ALARM, msg));
+            } else if (usedPrimaryTraffic >= dataPackage.getPrimaryTraffic()) {
+                String msg = "حجم اصلی بسته به پایان رسید و ترافیک مصرفی شما درساعات غیرشبانه به صورت تعرفه آزاد محاسبه خواهد شد";
+                alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.FINISH_PRIMARY_TRAFFIC_ALARM, msg));
+            }
+        } else {
+            if (usedPrimaryTraffic >= dataPackage.getPrimaryTraffic()) {
+                String msg = "حجم اصلی بسته به پایان رسید";
+                if (reservedPackageHistory != null)
+                    msg += " و بسته رزرو فعال شد";
+                else msg += " و بسته به پایان رسید";
+                alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.FINISH_PRIMARY_TRAFFIC_ALARM, msg));
+                PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.TRAFFIC_FINISHED);
             }
         }
 
@@ -123,7 +143,6 @@ public final class PackageStatus {
                 String msg = leftDays + " روز باقیمانده به اتمام بسته";
                 alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.REMINDED_DAYS_ALARM, msg));
             }
-
         } else if (setting.getAlarmType() == Setting.AlarmType.REMINDED_BYTES.ordinal()) {
             long trafficAlarm = Math.round(setting.getPercentTrafficAlarm() * 0.01 * dataPackage.getPrimaryTraffic());
             if (usedPrimaryTraffic >= trafficAlarm) {
@@ -136,9 +155,7 @@ public final class PackageStatus {
                 String msg = leftDays + " روز باقیمانده به اتمام بسته";
                 alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.REMINDED_DAYS_ALARM, msg));
             }
-
             long trafficAlarm = Math.round(setting.getPercentTrafficAlarm() * 0.01 * dataPackage.getPrimaryTraffic());
-            long reminded = dataPackage.getPrimaryTraffic() - usedPrimaryTraffic;
             if (usedPrimaryTraffic >= trafficAlarm) {
                 String msg = "بیشتر از " + setting.getPercentTrafficAlarm() + " درصد از حجم بسته مصرف شده است";
                 alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.REMINDED_TRAFFIC_ALARM, msg));

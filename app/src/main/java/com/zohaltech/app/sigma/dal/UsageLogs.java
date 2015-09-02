@@ -181,6 +181,12 @@ public class UsageLogs {
                 db.close();
         }
 
+        if (usedTraffic >= dataPackage.getPrimaryTraffic() &&
+                (history.getPrimaryPackageEndDateTime() == null ||
+                        history.getPrimaryPackageEndDateTime().equals(""))) {
+            history.setPrimaryPackageEndDateTime(Helper.getCurrentDateTime());
+            PackageHistories.update(history);
+        }
         return usedTraffic;
     }
 

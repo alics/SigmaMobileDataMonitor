@@ -2,6 +2,7 @@ package com.zohaltech.app.sigma.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.zohaltech.app.sigma.R;
@@ -18,10 +19,10 @@ import widgets.MyToast;
 
 public abstract class BazaarPaymentActivity extends EnhancedActivity {
 
-    private final String PAY_LOAD    = "SIGMA_ANDROID_APP";
-    //private final String TAG         = "SIGMA_TAG";
+    private final String PAY_LOAD = "SIGMA_ANDROID_APP";
+    private final String TAG = "SIGMA_TAG";
     private final String SKU_PREMIUM = "PREMIUM";
-    private final int    RC_REQUEST  = 10001;
+    private final int RC_REQUEST = 10001;
     private ProgressDialog progressDialog;
     private boolean mIsPremium = false;
     private IabHelper mHelper;
@@ -30,9 +31,9 @@ public abstract class BazaarPaymentActivity extends EnhancedActivity {
         public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
             //Log.i(TAG, "Query inventory finished.");
             if (result.isFailure()) {
-                //Log.i(TAG, "Failed to query inventory: " + result);
+                Log.i(TAG, "Failed to query inventory: " + result);
                 //complain("خطا در خرید از بازار");
-                return;
+
             } else {
                 //Log.i(TAG, "Query inventory was successful.");
                 // does the user have the premium upgrade?
