@@ -57,6 +57,32 @@
         android:orientation="horizontal">
 
         <widgets.MyTextView
+            android:id="@+id/txtPrimaryExpDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:paddingBottom="5dp"
+            android:text=" lskdjfhskdf lskdjfhsd flksdjfh slkdjfhsl kdjd6lfkj65shd16lf k4jsd1hf 1dslkjf1351"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/secondary_text"/>
+
+        <widgets.MyTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:text="تاریخ پایان حجم اصلی : "
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/secondary_text"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="horizontal">
+
+        <widgets.MyTextView
             android:id="@+id/txtSecondaryExpDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -71,7 +97,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="5dp"
-            android:text="تاریخ پایان بسته شبانه : "
+            android:text="تاریخ پایان حجم شبانه : "
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/secondary_text"/>
     </LinearLayout>
@@ -98,7 +124,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="5dp"
-            android:text="تاریخ پایان : "
+            android:text="تاریخ پایان بسته : "
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/secondary_text"/>
 
