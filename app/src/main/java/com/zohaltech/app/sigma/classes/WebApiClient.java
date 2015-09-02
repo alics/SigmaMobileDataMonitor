@@ -4,9 +4,7 @@ import android.os.Build;
 import android.util.Log;
 
 import com.zohaltech.app.sigma.R;
-import com.zohaltech.app.sigma.dal.Settings;
 import com.zohaltech.app.sigma.dal.SystemSettings;
-import com.zohaltech.app.sigma.entities.Setting;
 import com.zohaltech.app.sigma.entities.SystemSetting;
 
 import org.apache.http.HttpResponse;
@@ -41,9 +39,11 @@ public class WebApiClient {
                 try {
                     SystemSetting setting = SystemSettings.getCurrentSettings();
                     JSONObject jsonObject = new JSONObject();
+
                     if (action == PostAction.INSTALL) {
-                        if (setting.getInstalled() == false) {
+                        if (!setting.getInstalled()) {
                             if (ConnectionManager.getInternetStatus() == ConnectionManager.InternetStatus.Connected) {
+                                jsonObject.accumulate("SecurityKey", ConstantParams.getApiSecurityKey());
                                 jsonObject.accumulate("AppId", 1);
                                 jsonObject.accumulate("DeviceId", Helper.getDeviceId());
                                 jsonObject.accumulate("DeviceBrand", Build.MANUFACTURER);
@@ -59,8 +59,9 @@ public class WebApiClient {
                             }
                         }
                     } else {
-                        if (setting.getRegistered() == false) {
+                        if (!setting.getRegistered()) {
                             if (ConnectionManager.getInternetStatus() == ConnectionManager.InternetStatus.Connected) {
+                                jsonObject.accumulate("SecurityKey", ConstantParams.getApiSecurityKey());
                                 jsonObject.accumulate("AppId", 1);
                                 jsonObject.accumulate("DeviceId", Helper.getDeviceId());
                                 jsonObject.accumulate("DeviceBrand", Build.MANUFACTURER);
@@ -97,7 +98,7 @@ public class WebApiClient {
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
-            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+            // ** Alternative way to convert Person object to JSON string using Jackson Lib
             // ObjectMapper mapper = new ObjectMapper();
             // json = mapper.writeValueAsString(person);
             // 5. set json to StringEntity
