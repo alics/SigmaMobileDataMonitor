@@ -18,7 +18,7 @@ import java.io.InputStreamReader;
 public class DataAccess extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME    = "SIGMA";
-    public static final int    DATABASE_VERSION = 12;
+    public static final int    DATABASE_VERSION = 14;
 
     public DataAccess() {
         super(App.context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -67,7 +67,7 @@ public class DataAccess extends SQLiteOpenHelper {
             settingsValues.put(Settings.ShowUpDownSpeed, 0);
             settingsValues.put(Settings.VibrateInAlarms, 1);
             settingsValues.put(Settings.SoundInAlarms, 1);
-            long result = database.insert(Settings.TableName, null, settingsValues);
+            database.insert(Settings.TableName, null, settingsValues);
 
 
             ContentValues systemSettingsValues = new ContentValues();
@@ -77,7 +77,7 @@ public class DataAccess extends SQLiteOpenHelper {
             systemSettingsValues.put(SystemSettings.SecondaryTrafficFinishHasShown, 0);
             systemSettingsValues.put(SystemSettings.Installed, 0);
             systemSettingsValues.put(SystemSettings.Registered, 0);
-            long resulte = database.insert(SystemSettings.TableName, null, systemSettingsValues);
+            database.insert(SystemSettings.TableName, null, systemSettingsValues);
 
             LicenseStatus status = LicenseManager.getExistingLicense();
             if (status == null) {

@@ -19,14 +19,14 @@ import widgets.MyToast;
 
 public abstract class BazaarPaymentActivity extends EnhancedActivity {
 
-    private final String PAY_LOAD = "SIGMA_ANDROID_APP";
-    private final String TAG = "SIGMA_TAG";
+    private final String PAY_LOAD    = "SIGMA_ANDROID_APP";
+    private final String TAG         = "SIGMA_TAG";
     private final String SKU_PREMIUM = "PREMIUM";
-    private final int RC_REQUEST = 10001;
+    private final int    RC_REQUEST  = 10001;
+    String responseMessage = "ارتقای برنامه با مشکل مواجه شد";
     private ProgressDialog progressDialog;
     private boolean mIsPremium = false;
     private IabHelper mHelper;
-
     private IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
         public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
             //Log.i(TAG, "Query inventory finished.");
@@ -55,7 +55,10 @@ public abstract class BazaarPaymentActivity extends EnhancedActivity {
         public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
             if (result.isFailure()) {
                 //Log.e("PAYMENT", "Error purchasing: " + result);
-                complain("ارتقای برنامه با مشکل مواجه شد");
+                if ("".equals(responseMessage) == false) {
+                    complain(responseMessage);
+                    responseMessage = "ارتقای برنامه با مشکل مواجه شد";
+                }
             } else if (purchase.getSku().equals(SKU_PREMIUM)) {
                 if (!verifyDeveloperPayload(purchase)) {
                     //Log.e("PAYMENT", "Error purchasing. Authenticity verification failed.");
@@ -63,7 +66,7 @@ public abstract class BazaarPaymentActivity extends EnhancedActivity {
                 } else {
                     // give user access to premium content and update the UI
                     LicenseManager.registerLicense();
-                    MyToast.show("شما با موفقیت به نسخه کامل ارتقا یافتید", Toast.LENGTH_LONG);
+                    MyToast.show(responseMessage, Toast.LENGTH_LONG);
                     updateUiToPremiumVersion();
                     WebApiClient.sendUserData(WebApiClient.PostAction.REGISTER);
                 }
@@ -106,7 +109,22 @@ public abstract class BazaarPaymentActivity extends EnhancedActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         //Log.d(TAG, "onActivityResult(" + requestCode + "," + resultCode + "," + data);
-
+        if (data != null) {
+            if (data.getExtras() != null) {
+                int responseCode = data.getExtras().getInt("RESPONSE_CODE");
+                if (responseCode == 0) {
+                    responseMessage = "شما با موفقیت به نسخه کامل ارتقا یافتید";
+                } else if (responseCode == 1) {
+                    responseMessage = "";
+                } else if (responseCode == 6) {
+                    responseMessage = "خطا در هنگام انجام عملیات پرداخت";
+                } else if (responseCode == 7) {
+                    responseMessage = "خطا در خرید به دلیل اینکه این محصول در حال حاضر در «مالکیت» کاربر است";
+                }
+            }
+        } else {
+            responseMessage = "";
+        }
         // Pass on the activity result to the helper for handling
         if (!mHelper.handleActivityResult(requestCode, resultCode, data)) {
             super.onActivityResult(requestCode, resultCode, data);
@@ -155,7 +173,7 @@ public abstract class BazaarPaymentActivity extends EnhancedActivity {
         if (wait) {
             progressDialog = new ProgressDialog(this);
             progressDialog.setIndeterminate(true);
-            progressDialog.setMessage("لطفاً کمی صبر کنید");
+            progressDialog.setMessage("لطفاً کمی صبر کنید...");
             progressDialog.setCancelable(false);
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.show();

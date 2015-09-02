@@ -27,7 +27,6 @@ public class SystemSetting {
         this(leftDaysAlarmHasShown, trafficAlarmHasShown, primaryTrafficFinishHasShown,
              secondaryTrafficFinishHasShown, installed, registered);
         this.id = id;
-
     }
 
     public int getId() {
