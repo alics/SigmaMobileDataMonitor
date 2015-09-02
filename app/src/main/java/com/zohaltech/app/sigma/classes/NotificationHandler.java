@@ -71,7 +71,7 @@ public class NotificationHandler {
         }
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(context)
-                        .setSmallIcon(R.drawable.ic_warning_white)
+                        .setSmallIcon(R.drawable.ic_notification_white)
                         .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher))
                         .setContentTitle(title)
                         .setContentText(text)
