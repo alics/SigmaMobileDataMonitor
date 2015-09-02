@@ -23,11 +23,12 @@ public class HistoryAdapter extends ArrayAdapter<PackageHistory> {
 
     private static class ViewHolder {
 
-        TextView     txtPackageDesc;
-        TextView     txtActivateDate;
-        TextView     txtExpDate;
-        TextView     txtStatus;
-        TextView     txtSecondaryExpDate;
+        TextView txtPackageDesc;
+        TextView txtActivateDate;
+        TextView txtExpDate;
+        TextView txtStatus;
+        TextView txtPrimaryExpDate;
+        TextView txtSecondaryExpDate;
         LinearLayout layoutPackageHistory;
 
         public ViewHolder(View view) {
@@ -36,6 +37,7 @@ public class HistoryAdapter extends ArrayAdapter<PackageHistory> {
             txtExpDate = (TextView) view.findViewById(R.id.txtExpDate);
             txtStatus = (TextView) view.findViewById(R.id.txtStatus);
             txtSecondaryExpDate = (TextView) view.findViewById(R.id.txtSecondaryExpDate);
+            txtPrimaryExpDate = (TextView) view.findViewById(R.id.txtPrimaryExpDate);
             layoutPackageHistory = (LinearLayout) view.findViewById(R.id.layoutPackageHistory);
         }
 
@@ -43,14 +45,18 @@ public class HistoryAdapter extends ArrayAdapter<PackageHistory> {
             DataPackage dataPackage = DataPackages.selectPackageById(item.getDataPackageId());
             txtPackageDesc.setText(dataPackage.getTitle());
             String activationDate = item.getStartDateTime() != null && !item.getStartDateTime().isEmpty() ?
-                                    SolarCalendar.getShamsiDateTime(Helper.getDateTime(item.getStartDateTime())).substring(0, 16) : "بسته رزرو شده است و با پایان بسته فعلی فعال خواهد شد.";
+                    SolarCalendar.getShamsiDateTime(Helper.getDateTime(item.getStartDateTime())).substring(0, 16) : "بسته رزرو شده است و با پایان بسته فعلی فعال خواهد شد.";
             txtActivateDate.setText(activationDate);
             String expDate = item.getEndDateTime() != null && !item.getEndDateTime().isEmpty() ?
-                             SolarCalendar.getShamsiDateTime(Helper.getDateTime(item.getEndDateTime())).substring(0, 16) : "---";
+                    SolarCalendar.getShamsiDateTime(Helper.getDateTime(item.getEndDateTime())).substring(0, 16) : "---";
             txtExpDate.setText(expDate);
 
+            String primaryExpDate = item.getPrimaryPackageEndDateTime() != null && !item.getPrimaryPackageEndDateTime().isEmpty() ?
+                    SolarCalendar.getShamsiDateTime(Helper.getDateTime(item.getPrimaryPackageEndDateTime())).substring(0, 16) : "---";
+            txtPrimaryExpDate.setText(primaryExpDate);
+
             String secondaryExpDate = item.getSecondaryTrafficEndDateTime() != null && !item.getSecondaryTrafficEndDateTime().isEmpty() ?
-                             SolarCalendar.getShamsiDateTime(Helper.getDateTime(item.getSecondaryTrafficEndDateTime())).substring(0, 16) : "---";
+                    SolarCalendar.getShamsiDateTime(Helper.getDateTime(item.getSecondaryTrafficEndDateTime())).substring(0, 16) : "---";
             txtSecondaryExpDate.setText(secondaryExpDate);
             String status = "";
             if (item.getStatus() == PackageHistory.StatusEnum.ACTIVE.ordinal())
