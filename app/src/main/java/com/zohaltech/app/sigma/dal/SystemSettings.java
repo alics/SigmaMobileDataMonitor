@@ -13,25 +13,23 @@ import java.util.ArrayList;
 
 public class SystemSettings {
 
-    static final String TableName = "SystemSettings";
-    static final String Id = "Id";
-    static final String LeftDaysAlarmHasShown = "LeftDaysAlarmHasShown";
-    static final String TrafficAlarmHasShown = "TrafficAlarmHasShown";
-    static final String SecondaryTrafficAlarmHasShown = "SecondaryTrafficAlarmHasShown";
-    static final String PrimaryTrafficFinishHasShown = "PrimaryTrafficFinishHasShown";
+    static final String TableName                      = "SystemSettings";
+    static final String Id                             = "Id";
+    static final String LeftDaysAlarmHasShown          = "LeftDaysAlarmHasShown";
+    static final String TrafficAlarmHasShown           = "TrafficAlarmHasShown";
+    static final String PrimaryTrafficFinishHasShown   = "PrimaryTrafficFinishHasShown";
     static final String SecondaryTrafficFinishHasShown = "SecondaryTrafficFinishHasShown";
-    static final String Installed = "Installed";
-    static final String Registered = "Registered";
+    static final String Installed                      = "Installed";
+    static final String Registered                     = "Registered";
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
-            Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-            LeftDaysAlarmHasShown + " BOOLEAN NOT NULL, " +
-            TrafficAlarmHasShown + " BIGINT NOT NULL, " +
-            SecondaryTrafficAlarmHasShown + " BOOLEAN NOT NULL, " +
-            PrimaryTrafficFinishHasShown + " BOOLEAN NOT NULL, " +
-            SecondaryTrafficFinishHasShown + " INTEGER NOT NULL, " +
-            Installed + " BOOLEAN NOT NULL, " +
-            Registered + " BOOLEAN NOT NULL ); ";
+                                      Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                                      LeftDaysAlarmHasShown + " BOOLEAN NOT NULL, " +
+                                      TrafficAlarmHasShown + " BOOLEAN NOT NULL, " +
+                                      PrimaryTrafficFinishHasShown + " BOOLEAN NOT NULL, " +
+                                      SecondaryTrafficFinishHasShown + " BOOLEAN NOT NULL, " +
+                                      Installed + " BOOLEAN NOT NULL, " +
+                                      Registered + " BOOLEAN NOT NULL ); ";
 
     static final String DropTable = "Drop Table If Exists " + TableName;
 
@@ -47,13 +45,12 @@ public class SystemSettings {
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     SystemSetting systemSetting = new SystemSetting(cursor.getInt(cursor.getColumnIndex(Id)),
-                            cursor.getInt(cursor.getColumnIndex(LeftDaysAlarmHasShown)) == 1,
-                            cursor.getInt(cursor.getColumnIndex(TrafficAlarmHasShown)) == 1,
-                            cursor.getInt(cursor.getColumnIndex(SecondaryTrafficAlarmHasShown)) == 1,
-                            cursor.getInt(cursor.getColumnIndex(PrimaryTrafficFinishHasShown)) == 1,
-                            cursor.getInt(cursor.getColumnIndex(SecondaryTrafficFinishHasShown)) == 1,
-                            cursor.getInt(cursor.getColumnIndex(Installed)) == 1,
-                            cursor.getInt(cursor.getColumnIndex(Registered)) == 1);
+                                                                    cursor.getInt(cursor.getColumnIndex(LeftDaysAlarmHasShown)) == 1,
+                                                                    cursor.getInt(cursor.getColumnIndex(TrafficAlarmHasShown)) == 1,
+                                                                    cursor.getInt(cursor.getColumnIndex(PrimaryTrafficFinishHasShown)) == 1,
+                                                                    cursor.getInt(cursor.getColumnIndex(SecondaryTrafficFinishHasShown)) == 1,
+                                                                    cursor.getInt(cursor.getColumnIndex(Installed)) == 1,
+                                                                    cursor.getInt(cursor.getColumnIndex(Registered)) == 1);
                     settings.add(systemSetting);
                 } while (cursor.moveToNext());
             }
@@ -74,7 +71,6 @@ public class SystemSettings {
 
         values.put(LeftDaysAlarmHasShown, setting.getLeftDaysAlarmHasShown() ? 1 : 0);
         values.put(TrafficAlarmHasShown, setting.getTrafficAlarmHasShown() ? 1 : 0);
-        values.put(SecondaryTrafficAlarmHasShown, setting.getSecondaryTrafficAlarmHasShown() ? 1 : 0);
         values.put(PrimaryTrafficFinishHasShown, setting.getPrimaryTrafficFinishHasShown() ? 1 : 0);
         values.put(SecondaryTrafficFinishHasShown, setting.getSecondaryTrafficFinishHasShown() ? 1 : 0);
         values.put(Installed, setting.getInstalled() ? 1 : 0);
@@ -93,6 +89,6 @@ public class SystemSettings {
         ArrayList<SystemSetting> settings = select("", null);
         int count = settings.size();
 
-        return (count == 0) ? null : settings.get(count - 1);
+        return (count == 0) ? null : settings.get(0);
     }
 }

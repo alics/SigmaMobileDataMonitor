@@ -26,14 +26,9 @@ public class Settings {
     static final String ShowNotification = "ShowNotification";
     static final String ShowNotificationWhenDataIsOn = "ShowNotificationWhenDataIsOn";
     static final String ShowNotificationInLockScreen = "ShowNotificationInLockScreen";
-    static final String LeftDaysAlarmHasShown = "LeftDaysAlarmHasShown";
-    static final String TrafficAlarmHasShown = "TrafficAlarmHasShown";
-    static final String SecondaryTrafficAlarmHasShown = "SecondaryTrafficAlarmHasShown";
     static final String ShowUpDownSpeed = "ShowUpDownSpeed";
     static final String VibrateInAlarms = "VibrateInAlarms";
     static final String SoundInAlarms = "SoundInAlarms";
-    static final String Installed = "Installed";
-    static final String Registered = "Registered";
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
             Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
@@ -49,14 +44,9 @@ public class Settings {
             LeftDaysAlarmRes + " INTEGER NOT NULL, " +
             ShowNotification + " BOOLEAN NOT NULL, " +
             ShowNotificationWhenDataIsOn + " BOOLEAN NOT NULL, " +
-            LeftDaysAlarmHasShown + " BOOLEAN NOT NULL, " +
-            TrafficAlarmHasShown + " BOOLEAN NOT NULL, " +
-            SecondaryTrafficAlarmHasShown + " BOOLEAN NOT NULL, " +
             ShowUpDownSpeed + " BOOLEAN NOT NULL, " +
             VibrateInAlarms + " BOOLEAN NOT NULL, " +
             SoundInAlarms + " BOOLEAN NOT NULL, " +
-            Installed + " BOOLEAN NOT NULL, " +
-            Registered + " BOOLEAN NOT NULL, " +
             ShowNotificationInLockScreen + " BOOLEAN NOT NULL ); ";
 
     static final String DropTable = "Drop Table If Exists " + TableName;
@@ -88,13 +78,8 @@ public class Settings {
                             cursor.getInt(cursor.getColumnIndex(ShowNotificationWhenDataIsOn)) == 1,
                             cursor.getInt(cursor.getColumnIndex(ShowNotificationInLockScreen)) == 1,
                             cursor.getInt(cursor.getColumnIndex(ShowUpDownSpeed)) == 1,
-                            cursor.getInt(cursor.getColumnIndex(LeftDaysAlarmHasShown)) == 1,
-                            cursor.getInt(cursor.getColumnIndex(TrafficAlarmHasShown)) == 1,
-                            cursor.getInt(cursor.getColumnIndex(SecondaryTrafficAlarmHasShown)) == 1,
                             cursor.getInt(cursor.getColumnIndex(VibrateInAlarms)) == 1,
-                            cursor.getInt(cursor.getColumnIndex(SoundInAlarms)) == 1,
-                            cursor.getInt(cursor.getColumnIndex(Installed)) == 1,
-                            cursor.getInt(cursor.getColumnIndex(Registered)) == 1);
+                            cursor.getInt(cursor.getColumnIndex(SoundInAlarms)) == 1);
                     settings.add(setting);
                 } while (cursor.moveToNext());
             }
@@ -112,23 +97,22 @@ public class Settings {
     //public static long insert(Setting setting) {
     //    ContentValues values = new ContentValues();
     //
-    //    values.put(DataConnected, setting.getDataConnected() ? 1 : 0);
-    //    values.put(DailyTraffic, setting.getDailyTraffic());
-    //    values.put(ShowAlarmAfterTerminate, setting.getShowAlarmAfterTerminate() ? 1 : 0);
-    //    values.put(ShowAlarmAfterTerminateRes, setting.getShowAlarmAfterTerminateRes() ? 1 : 0);
-    //    values.put(AlarmType, setting.getAlarmType());
-    //    values.put(PercentTrafficAlarm, setting.getPercentTrafficAlarm());
-    //    values.put(LeftDaysAlarm, setting.getLeftDaysAlarm());
-    //    values.put(AlarmTypeRes, setting.getAlarmTypeRes());
-    //    values.put(PercentTrafficAlarmRes, setting.getPercentTrafficAlarmRes());
-    //    values.put(LeftDaysAlarmRes, setting.getLeftDaysAlarmRes());
-    //    values.put(ShowNotification, setting.getShowNotification() ? 1 : 0);
-    //    values.put(ShowNotificationWhenDataIsOn, setting.getShowNotificationWhenDataIsOn() ? 1 : 0);
-    //    values.put(ShowNotificationInLockScreen, setting.getShowNotificationInLockScreen() ? 1 : 0);
-    //    values.put(TrafficAlarmHasShown, setting.getTrafficAlarmHasShown() ? 1 : 0);
-    //    values.put(LeftDaysAlarmHasShown, setting.getLeftDaysAlarmHasShown() ? 1 : 0);
-    //    values.put(SecondaryTrafficAlarmHasShown, setting.getSecondaryTrafficAlarmHasShown() ? 1 : 0);
-    //    values.put(ShowUpDownSpeed, setting.getShowUpDownSpeed() ? 1 : 0);
+    //values.put(DataConnected, setting.getDataConnected() ? 1 : 0);
+    //values.put(DailyTraffic, setting.getDailyTraffic());
+    //values.put(ShowAlarmAfterTerminate, setting.getShowAlarmAfterTerminate() ? 1 : 0);
+    //values.put(ShowAlarmAfterTerminateRes, setting.getShowAlarmAfterTerminateRes() ? 1 : 0);
+    //values.put(AlarmType, setting.getAlarmType());
+    //values.put(PercentTrafficAlarm, setting.getPercentTrafficAlarm());
+    //values.put(LeftDaysAlarm, setting.getLeftDaysAlarm());
+    //values.put(AlarmTypeRes, setting.getAlarmTypeRes());
+    //values.put(PercentTrafficAlarmRes, setting.getPercentTrafficAlarmRes());
+    //values.put(LeftDaysAlarmRes, setting.getLeftDaysAlarmRes());
+    //values.put(ShowNotification, setting.getShowNotification() ? 1 : 0);
+    //values.put(ShowNotificationWhenDataIsOn, setting.getShowNotificationWhenDataIsOn() ? 1 : 0);
+    //values.put(ShowNotificationInLockScreen, setting.getShowNotificationInLockScreen() ? 1 : 0);
+    //values.put(ShowUpDownSpeed, setting.getShowUpDownSpeed() ? 1 : 0);
+    //values.put(VibrateInAlarms, setting.getVibrateInAlarms() ? 1 : 0);
+    //values.put(SoundInAlarms, setting.getSoundInAlarms() ? 1 : 0);
     //
     //    DataAccess da = new DataAccess();
     //    return da.insert(TableName, values);
@@ -150,14 +134,9 @@ public class Settings {
         values.put(ShowNotification, setting.getShowNotification() ? 1 : 0);
         values.put(ShowNotificationWhenDataIsOn, setting.getShowNotificationWhenDataIsOn() ? 1 : 0);
         values.put(ShowNotificationInLockScreen, setting.getShowNotificationInLockScreen() ? 1 : 0);
-        values.put(TrafficAlarmHasShown, setting.getTrafficAlarmHasShown() ? 1 : 0);
-        values.put(LeftDaysAlarmHasShown, setting.getLeftDaysAlarmHasShown() ? 1 : 0);
-        values.put(SecondaryTrafficAlarmHasShown, setting.getSecondaryTrafficAlarmHasShown() ? 1 : 0);
         values.put(ShowUpDownSpeed, setting.getShowUpDownSpeed() ? 1 : 0);
         values.put(VibrateInAlarms, setting.getVibrateInAlarms() ? 1 : 0);
         values.put(SoundInAlarms, setting.getSoundInAlarms() ? 1 : 0);
-        values.put(Installed, setting.getInstalled() ? 1 : 0);
-        values.put(Registered, setting.getRegistered() ? 1 : 0);
 
         DataAccess da = new DataAccess();
         return da.update(TableName, values, Id + " = ? ", new String[]{String.valueOf(setting.getId())});
@@ -172,6 +151,6 @@ public class Settings {
         ArrayList<Setting> settings = select("", null);
         int count = settings.size();
 
-        return (count == 0) ? null : settings.get(count - 1);
+        return (count == 0) ? null : settings.get(0);
     }
 }

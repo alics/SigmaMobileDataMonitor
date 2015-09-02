@@ -29,18 +29,10 @@ public abstract class EnhancedActivity extends AppCompatActivity {
 
     private void initialize() {
         Thread.setDefaultUncaughtExceptionHandler(new MyUncaughtExceptionHandler());
-        App.currentActivity = this;
 
         onCreated();
         onInitialized();
         onToolbarCreated();
-    }
-
-    @Override
-    public final void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
-
-        initialize();
     }
 
     private void onInitialized() {
@@ -56,6 +48,12 @@ public abstract class EnhancedActivity extends AppCompatActivity {
         toolbar.addView(txtToolbarTitle, 0);
 
         setSupportActionBar(toolbar);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        App.currentActivity = this;
     }
 
     @Override

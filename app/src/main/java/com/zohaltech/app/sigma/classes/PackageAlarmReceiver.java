@@ -19,7 +19,6 @@ public class PackageAlarmReceiver extends BroadcastReceiver {
 
             ArrayList<AlarmObject> objects = PackageStatus.getCurrentAlarms();
 
-            //Setting setting = Settings.getCurrentSettings();
             SystemSetting setting = SystemSettings.getCurrentSettings();
             for (AlarmObject object : objects) {
                 if (object.alarmType == AlarmObject.AlarmType.REMINDED_DAYS_ALARM) {
@@ -35,21 +34,13 @@ public class PackageAlarmReceiver extends BroadcastReceiver {
                         SystemSettings.update(setting);
                     }
                 } else if (object.alarmType == AlarmObject.AlarmType.FINISH_SECONDARY_TRAFFIC_ALARM) {
-                    if (setting.getSecondaryTrafficAlarmHasShown() == false) {
+                    if (setting.getSecondaryTrafficFinishHasShown() == false) {
                         NotificationHandler.displayAlarmNotification(context, 2, "هشدار " + context.getResources().getString(R.string.app_name), object.getAlarmMessage());
-                        setting.setSecondaryTrafficAlarmHasShown(true);
+                        setting.setSecondaryTrafficFinishHasShown(true);
                         SystemSettings.update(setting);
                     }
-                } else if (object.alarmType == AlarmObject.AlarmType.FINISH_TRAFFIC_ALARM ||
-                        object.alarmType == AlarmObject.AlarmType.FINISH_VALIDATION_DATE_ALARM) {
-//                    if (setting.getShowAlarmAfterTerminate()) {
-//                        Intent intent1 = new Intent(context, ApplicationAlarmActivity.class);
-//                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                        intent1.putExtra(ApplicationAlarmActivity.MESSAGES_KEY, object.getAlarmMessage());
-//                        context.startActivity(intent1);
-//                    }
-
-                    if (setting.getSecondaryTrafficFinishHasShown()) {
+                } else if (object.alarmType == AlarmObject.AlarmType.FINISH_PRIMARY_TRAFFIC_ALARM) {
+                    if (setting.getPrimaryTrafficFinishHasShown() == false) {
                         Intent intent1 = new Intent(context, ApplicationAlarmActivity.class);
                         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent1.putExtra(ApplicationAlarmActivity.MESSAGES_KEY, object.getAlarmMessage());
@@ -57,6 +48,15 @@ public class PackageAlarmReceiver extends BroadcastReceiver {
                         setting.setPrimaryTrafficFinishHasShown(true);
                         SystemSettings.update(setting);
                     }
+                } else if (object.alarmType == AlarmObject.AlarmType.FINISH_TRAFFIC_ALARM ||
+                           object.alarmType == AlarmObject.AlarmType.FINISH_VALIDATION_DATE_ALARM) {
+                    //todo : manage package termination alarm
+                    //if (setting.getShowAlarmAfterTerminate()) {
+                    //    Intent intent1 = new Intent(context, ApplicationAlarmActivity.class);
+                    //    intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    //    intent1.putExtra(ApplicationAlarmActivity.MESSAGES_KEY, object.getAlarmMessage());
+                    //    context.startActivity(intent1);
+                    //}
                 }
             }
         }

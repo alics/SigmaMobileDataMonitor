@@ -85,10 +85,10 @@ public final class PackageStatus {
         long usedPrimaryTraffic = UsageLogs.getUsedPrimaryTrafficOfPackage(dataPackage, history);
 
         if (usedPrimaryTraffic >= dataPackage.getPrimaryTraffic()) {
-            String msg = "اعتبار حجمی بسته به پایان رسید";
+            String msg = "حجم اصلی بسته به پایان رس";
 //            if (reservedPackageHistory != null)
 //                msg += " و بسته رزور شده فعال شد";
-            alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.FINISH_TRAFFIC_ALARM, msg));
+            alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.FINISH_PRIMARY_TRAFFIC_ALARM, msg));
 
             history.setPrimaryPackageEndDateTime(Helper.getCurrentDateTime());
             PackageHistories.update(history);
@@ -112,7 +112,7 @@ public final class PackageStatus {
         if (leftDays <= 0) {
             String msg = "مهلت اعتبار بسته به پایان رسید";
             if (reservedPackageHistory != null)
-                msg += " و بسته رزور شده فعال شد";
+                msg += " و بسته رزور فعال شد";
             alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.FINISH_VALIDATION_DATE_ALARM, msg));
             PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.PERIOD_FINISHED);
         }

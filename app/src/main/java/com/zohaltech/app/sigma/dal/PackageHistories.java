@@ -9,6 +9,7 @@ import com.zohaltech.app.sigma.classes.MyRuntimeException;
 import com.zohaltech.app.sigma.entities.DataPackage;
 import com.zohaltech.app.sigma.entities.PackageHistory;
 import com.zohaltech.app.sigma.entities.Setting;
+import com.zohaltech.app.sigma.entities.SystemSetting;
 
 import java.util.ArrayList;
 
@@ -163,9 +164,12 @@ public class PackageHistories {
             setting.setPercentTrafficAlarm(setting.getPercentTrafficAlarmRes());
             setting.setShowAlarmAfterTerminate(setting.getShowAlarmAfterTerminateRes());
         }
-        setting.setTrafficAlarmHasShown(false);
-        setting.setSecondaryTrafficAlarmHasShown(false);
-        setting.setLeftDaysAlarmHasShown(false);
         Settings.update(setting);
+
+        SystemSetting systemSetting = SystemSettings.getCurrentSettings();
+        systemSetting.setTrafficAlarmHasShown(false);
+        systemSetting.setSecondaryTrafficFinishHasShown(false);
+        systemSetting.setLeftDaysAlarmHasShown(false);
+        SystemSettings.update(systemSetting);
     }
 }

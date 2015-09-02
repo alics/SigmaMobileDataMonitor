@@ -17,8 +17,8 @@ import java.io.InputStreamReader;
 
 public class DataAccess extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "SIGMA";
-    public static final int DATABASE_VERSION = 5;
+    public static final String DATABASE_NAME    = "SIGMA";
+    public static final int    DATABASE_VERSION = 12;
 
     public DataAccess() {
         super(App.context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -66,33 +66,28 @@ public class DataAccess extends SQLiteOpenHelper {
             settingsValues.put(Settings.ShowNotification, 1);
             settingsValues.put(Settings.ShowNotificationWhenDataIsOn, 0);
             settingsValues.put(Settings.ShowNotificationInLockScreen, 1);
-            settingsValues.put(Settings.TrafficAlarmHasShown, 0);
-            settingsValues.put(Settings.SecondaryTrafficAlarmHasShown, 0);
             settingsValues.put(Settings.ShowUpDownSpeed, 0);
-            settingsValues.put(Settings.LeftDaysAlarmHasShown, 0);
             settingsValues.put(Settings.VibrateInAlarms, 1);
             settingsValues.put(Settings.SoundInAlarms, 1);
-            settingsValues.put(Settings.Installed, 0);
-            settingsValues.put(Settings.Registered, 0);
-            database.insert(Settings.TableName, null, settingsValues);
+            long result = database.insert(Settings.TableName, null, settingsValues);
 
 
             ContentValues systemSettingsValues = new ContentValues();
-            systemSettingsValues.put(SystemSettings.LeftDaysAlarmHasShown, 1);
+            systemSettingsValues.put(SystemSettings.LeftDaysAlarmHasShown, 0);
             systemSettingsValues.put(SystemSettings.TrafficAlarmHasShown, 0);
-            systemSettingsValues.put(SystemSettings.PrimaryTrafficFinishHasShown, 1);
-            systemSettingsValues.put(SystemSettings.SecondaryTrafficFinishHasShown, 1);
-            systemSettingsValues.put(SystemSettings.Installed, 1);
-            settingsValues.put(SystemSettings.Registered, 1);
-            database.insert(SystemSettings.TableName, null, systemSettingsValues);
+            systemSettingsValues.put(SystemSettings.PrimaryTrafficFinishHasShown, 0);
+            systemSettingsValues.put(SystemSettings.SecondaryTrafficFinishHasShown, 0);
+            systemSettingsValues.put(SystemSettings.Installed, 0);
+            systemSettingsValues.put(SystemSettings.Registered, 0);
+            long resulte = database.insert(SystemSettings.TableName, null, systemSettingsValues);
 
             LicenseStatus status = LicenseManager.getExistingLicense();
             if (status == null) {
                 LicenseManager.initializeLicenseFile(new LicenseStatus(BuildConfig.VERSION_CODE + "",
-                        Helper.getDeviceId(),
-                        Helper.getCurrentDate(),
-                        LicenseManager.Status.TESTING_TIME.ordinal(),
-                        1));
+                                                                       Helper.getDeviceId(),
+                                                                       Helper.getCurrentDate(),
+                                                                       LicenseManager.Status.TESTING_TIME.ordinal(),
+                                                                       1));
             }
         } catch (MyRuntimeException e) {
             e.printStackTrace();
@@ -102,12 +97,13 @@ public class DataAccess extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
         try {
+            database.execSQL(SystemSettings.DropTable);
+            database.execSQL(Settings.DropTable);
             database.execSQL(PackageHistories.DropTable);
             database.execSQL(DataPackages.DropTable);
-            database.execSQL(MobileOperators.DropTable);
             database.execSQL(UsageLogs.DropTable);
             database.execSQL(DailyTrafficHistories.DropTable);
-            database.execSQL(Settings.DropTable);
+            database.execSQL(MobileOperators.DropTable);
             onCreate(database);
         } catch (MyRuntimeException e) {
             e.printStackTrace();

@@ -77,18 +77,19 @@ public class NotificationHandler {
                         .setContentText(text)
                         .setShowWhen(true)
                         .setOngoing(false)
-                        //.setVibrate({10L,20L})
-                        //.setSound()
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                         .setVisibility(lockScreenVisibility)
                         .setColor(App.context.getResources().getColor(R.color.primary))
                         .setAutoCancel(true);
 
-        if (setting.getVibrateInAlarms()){
+        if (setting.getVibrateInAlarms() && setting.getSoundInAlarms() == false){
             builder.setDefaults(Notification.DEFAULT_VIBRATE);
         }
-        if (setting.getSoundInAlarms()){
+        else if (setting.getSoundInAlarms() && setting.getVibrateInAlarms() ==false){
             builder.setDefaults(Notification.DEFAULT_SOUND);
+        }
+        else if (setting.getSoundInAlarms() && setting.getVibrateInAlarms()){
+            builder.setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND);
         }
 
         Intent resultIntent = new Intent(context, DashboardActivity.class);

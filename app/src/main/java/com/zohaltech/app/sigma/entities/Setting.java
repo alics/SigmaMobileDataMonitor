@@ -3,37 +3,31 @@ package com.zohaltech.app.sigma.entities;
 
 public class Setting {
 
-    public enum AlarmType {REMINDED_BYTES, LEFT_DAY, BOTH, NONE}
-
     private Integer id;
     private Boolean dataConnected;
-    private Long dailyTraffic;
+    private Long    dailyTraffic;
     private Boolean showAlarmAfterTerminate;
     private Boolean showAlarmAfterTerminateRes;
-    private int alarmType;
+    private int     alarmType;
     private Integer percentTrafficAlarm;
     private Integer leftDaysAlarm;
-    private int alarmTypeRes;
+    private int     alarmTypeRes;
     private Integer percentTrafficAlarmRes;
     private Integer leftDaysAlarmRes;
     private Boolean showNotification;
     private Boolean showNotificationWhenDataIsOn;
     private Boolean showNotificationInLockScreen;
-    private Boolean leftDaysAlarmHasShown;
-    private Boolean trafficAlarmHasShown;
-    private Boolean secondaryTrafficAlarmHasShown;
+    //private Boolean leftDaysAlarmHasShown;
+    //private Boolean trafficAlarmHasShown;
+    //private Boolean secondaryTrafficAlarmHasShown;
     private Boolean showUpDownSpeed;
     private Boolean vibrateInAlarms;
     private Boolean soundInAlarms;
-    private Boolean installed;
-    private Boolean registered;
-
 
     public Setting(Boolean dataConnected, Long dailyTraffic, Boolean showAlarmAfterTerminate, int alarmType,
                    Integer percentTrafficAlarm, Integer leftDaysAlarm, Boolean showAlarmAfterTerminateRes, int alarmTypeRes,
                    Integer percentTrafficAlarmRes, Integer leftDaysAlarmRes, Boolean showNotification, Boolean showNotificationWhenDataIsOn,
-                   Boolean showNotificationInLockScreen, Boolean showUpDownSpeed, Boolean leftDaysAlarmHasShown, Boolean trafficAlarmHasShown,
-                   Boolean secondaryTrafficAlarmHasShown, Boolean vibrateInAlarms, Boolean soundInAlarms, Boolean installed, Boolean registered) {
+                   Boolean showNotificationInLockScreen, Boolean showUpDownSpeed, Boolean vibrateInAlarms, Boolean soundInAlarms) {
         setDataConnected(dataConnected);
         setDailyTraffic(dailyTraffic);
         setShowAlarmAfterTerminate(showAlarmAfterTerminate);
@@ -48,26 +42,22 @@ public class Setting {
         setShowNotificationWhenDataIsOn(showNotificationWhenDataIsOn);
         setShowNotificationInLockScreen(showNotificationInLockScreen);
         setShowUpDownSpeed(showUpDownSpeed);
-        setLeftDaysAlarmHasShown(leftDaysAlarmHasShown);
-        setTrafficAlarmHasShown(trafficAlarmHasShown);
-        setSecondaryTrafficAlarmHasShown(secondaryTrafficAlarmHasShown);
         setVibrateInAlarms(vibrateInAlarms);
         setSoundInAlarms(soundInAlarms);
-        setInstalled(installed);
-        setRegistered(registered);
     }
+    //private Boolean installed;
+    //private Boolean registered;
+
 
     public Setting(Integer id, Boolean dataConnected, Long dailyTraffic, Boolean showAlarmAfterTerminate,
                    int alarmType, Integer percentTrafficAlarm, Integer leftDaysAlarm, Boolean showAlarmAfterTerminateRes,
                    int alarmTypeRes, Integer percentTrafficAlarmRes, Integer leftDaysAlarmRes, Boolean showNotification,
                    Boolean showNotificationWhenDataIsOn, Boolean showNotificationInLockScreen, Boolean showUpDownSpeed,
-                   Boolean leftDaysAlarmHasShown, Boolean trafficAlarmHasShown, Boolean secondaryTrafficAlarmHasShown,
-                   Boolean vibrateInAlarms, Boolean soundInAlarms, Boolean installed, Boolean registered) {
+                   Boolean vibrateInAlarms, Boolean soundInAlarms) {
         this(dataConnected, dailyTraffic, showAlarmAfterTerminate, alarmType, percentTrafficAlarm,
-                leftDaysAlarm, showAlarmAfterTerminateRes, alarmTypeRes, percentTrafficAlarmRes, leftDaysAlarmRes,
-                showNotification, showNotificationWhenDataIsOn, showNotificationInLockScreen, showUpDownSpeed,
-                leftDaysAlarmHasShown, trafficAlarmHasShown, secondaryTrafficAlarmHasShown, vibrateInAlarms, soundInAlarms
-                ,installed, registered);
+             leftDaysAlarm, showAlarmAfterTerminateRes, alarmTypeRes, percentTrafficAlarmRes, leftDaysAlarmRes,
+             showNotification, showNotificationWhenDataIsOn, showNotificationInLockScreen, showUpDownSpeed,
+             vibrateInAlarms, soundInAlarms);
         this.id = id;
     }
 
@@ -183,30 +173,6 @@ public class Setting {
         this.showAlarmAfterTerminateRes = showAlarmAfterTerminateRes;
     }
 
-    public Boolean getLeftDaysAlarmHasShown() {
-        return leftDaysAlarmHasShown;
-    }
-
-    public void setLeftDaysAlarmHasShown(Boolean leftDaysAlarmHasShown) {
-        this.leftDaysAlarmHasShown = leftDaysAlarmHasShown;
-    }
-
-    public Boolean getTrafficAlarmHasShown() {
-        return trafficAlarmHasShown;
-    }
-
-    public void setTrafficAlarmHasShown(Boolean trafficAlarmHasShown) {
-        this.trafficAlarmHasShown = trafficAlarmHasShown;
-    }
-
-    public Boolean getSecondaryTrafficAlarmHasShown() {
-        return secondaryTrafficAlarmHasShown;
-    }
-
-    public void setSecondaryTrafficAlarmHasShown(Boolean secondaryTrafficAlarmHasShown) {
-        this.secondaryTrafficAlarmHasShown = secondaryTrafficAlarmHasShown;
-    }
-
     public Boolean getShowUpDownSpeed() {
         return showUpDownSpeed;
     }
@@ -231,19 +197,5 @@ public class Setting {
         this.soundInAlarms = soundInAlarms;
     }
 
-    public Boolean getInstalled() {
-        return installed;
-    }
-
-    public void setInstalled(Boolean installed) {
-        this.installed = installed;
-    }
-
-    public Boolean getRegistered() {
-        return registered;
-    }
-
-    public void setRegistered(Boolean registered) {
-        this.registered = registered;
-    }
+    public enum AlarmType {REMINDED_BYTES, LEFT_DAY, BOTH, NONE}
 }

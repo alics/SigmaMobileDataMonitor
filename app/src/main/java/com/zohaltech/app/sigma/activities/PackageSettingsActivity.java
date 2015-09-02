@@ -26,10 +26,12 @@ import com.zohaltech.app.sigma.dal.DataPackages;
 import com.zohaltech.app.sigma.dal.MobileOperators;
 import com.zohaltech.app.sigma.dal.PackageHistories;
 import com.zohaltech.app.sigma.dal.Settings;
+import com.zohaltech.app.sigma.dal.SystemSettings;
 import com.zohaltech.app.sigma.entities.DataPackage;
 import com.zohaltech.app.sigma.entities.MobileOperator;
 import com.zohaltech.app.sigma.entities.PackageHistory;
 import com.zohaltech.app.sigma.entities.Setting;
+import com.zohaltech.app.sigma.entities.SystemSetting;
 
 import java.util.ArrayList;
 
@@ -115,13 +117,13 @@ public class PackageSettingsActivity extends EnhancedActivity {
             } else {
                 spinnerOperators.setSelection(0);
             }
-            edtPackageValidPeriod.setText("10");
+            edtPackageValidPeriod.setText("30");
             edtPrimaryTraffic.setText("1024");
             edtSecondaryTraffic.setText("1024");
             btnSecondaryStartTime.setText("02:00");
             btnSecondaryEndTime.setText("07:00");
             edtTrafficAlarm.setText("85");
-            edtLeftDaysAlarm.setText("2");
+            edtLeftDaysAlarm.setText("1");
             switchTrafficAlarm.setChecked(true);
             switchLeftDaysAlarm.setChecked(true);
             switchAlarmAfterTerminate.setChecked(true);
@@ -143,13 +145,13 @@ public class PackageSettingsActivity extends EnhancedActivity {
                 setEditMode(false);
                 if (initMode.equals(MODE_SETTING_ACTIVE)) {
                     if (formMode.equals(FORM_MODE_NEW)) {
-                        loadNewPackageSettings();
+                        loadNewPackageSettings(dataPackage);
                     } else {
                         loadActivePackageSettings();
                     }
                 } else if (initMode.equals(MODE_SETTING_RESERVED)) {
                     if (formMode.equals(FORM_MODE_NEW)) {
-                        loadNewPackageSettings();
+                        loadNewPackageSettings(dataPackage);
                     } else {
                         loadReservedPackageSettings();
                     }
@@ -268,13 +270,15 @@ public class PackageSettingsActivity extends EnhancedActivity {
             setting.setAlarmType(Setting.AlarmType.NONE.ordinal());
 
         setting.setShowAlarmAfterTerminate(switchAlarmAfterTerminate.isChecked());
+        Settings.update(setting);
 
         if (resetAlarm) {
-            setting.setTrafficAlarmHasShown(false);
-            setting.setSecondaryTrafficAlarmHasShown(false);
-            setting.setLeftDaysAlarmHasShown(false);
+            SystemSetting systemSetting = SystemSettings.getCurrentSettings();
+            systemSetting.setTrafficAlarmHasShown(false);
+            systemSetting.setSecondaryTrafficFinishHasShown(false);
+            systemSetting.setLeftDaysAlarmHasShown(false);
+            SystemSettings.update(systemSetting);
         }
-        Settings.update(setting);
         return true;
     }
 
@@ -379,7 +383,6 @@ public class PackageSettingsActivity extends EnhancedActivity {
             switchTrafficAlarm.setChecked(false);
             edtTrafficAlarm.setVisibility(View.INVISIBLE);
             txtPercentTrafficAlarm.setVisibility(View.INVISIBLE);
-
             switchLeftDaysAlarm.setChecked(false);
             edtLeftDaysAlarm.setVisibility(View.INVISIBLE);
             txtLeftDaysAlarm.setVisibility(View.INVISIBLE);
@@ -387,9 +390,12 @@ public class PackageSettingsActivity extends EnhancedActivity {
         switchAlarmAfterTerminate.setChecked(setting.getShowAlarmAfterTerminateRes());
     }
 
-    private void loadNewPackageSettings() {
+    private void loadNewPackageSettings(DataPackage dataPackage) {
         switchLeftDaysAlarm.setChecked(true);
-        edtLeftDaysAlarm.setText("2");
+        edtLeftDaysAlarm.setText("1");
+        if (dataPackage.getPeriod() == 1){
+            switchLeftDaysAlarm.setChecked(false);
+        }
         switchTrafficAlarm.setChecked(true);
         edtTrafficAlarm.setText("85");
         switchAlarmAfterTerminate.setChecked(true);
@@ -397,9 +403,9 @@ public class PackageSettingsActivity extends EnhancedActivity {
 
     private void addCustomPackage() {
         customPackage = new DataPackage();
-        long secondaryTraffic = 0;
-        String secondaryTrafficStartTime = null;
-        String secondaryTrafficEndTime = null;
+        long secondaryTraffic;
+        String secondaryTrafficStartTime;
+        String secondaryTrafficEndTime;
 
         if (!Validator.validateEditText(edtPackageTitle, getString(R.string.package_title)))
             return;
@@ -421,14 +427,14 @@ public class PackageSettingsActivity extends EnhancedActivity {
             secondaryTraffic = TrafficUnitsUtil.MbToByte(Integer.valueOf(edtSecondaryTraffic.getText().toString()));
             customPackage.setSecondaryTraffic(secondaryTraffic);
             if (btnSecondaryStartTime.getText().toString().trim().length() == 0) {
-                MyToast.show("لطفا " + "بازه مصرف شبانه" + " را وارد کنید", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
+                MyToast.show("لطفا بازه مصرف شبانه را وارد کنید", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
                 return;
             } else {
                 secondaryTrafficStartTime = btnSecondaryStartTime.getText().toString();
                 customPackage.setSecondaryTrafficStartTime(secondaryTrafficStartTime);
             }
             if (btnSecondaryStartTime.getText().toString().trim().length() == 0) {
-                MyToast.show("لطفا " + "بازه مصرف شبانه" + " را وارد کنید", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
+                MyToast.show("لطفا بازه مصرف شبانه را وارد کنید", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
                 return;
             } else {
                 secondaryTrafficEndTime = btnSecondaryEndTime.getText().toString();
@@ -436,7 +442,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
             }
 
             if (secondaryTrafficStartTime.compareTo(secondaryTrafficEndTime) >= 0) {
-                MyToast.show("بازه انتهای مصرف شبانه باید بزرگتر از بازه ابتدای آن باشد.", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
+                MyToast.show("بازه انتهای مصرف شبانه باید بزرگتر از بازه ابتدای آن باشد", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
                 return;
             }
         }
@@ -454,7 +460,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
         customPackage.setCustom(true);
 
         if (PackageHistories.getActivePackage() != null) {
-            DialogManager.showConfirmationDialog(App.currentActivity, "فعالسازی بسته سفارشی", "با تأیید بسته سفارشی اطلاعات مربوط به بسته های فعال و رزرو شده از بین می رود، آیا انجام شود؟",
+            DialogManager.showConfirmationDialog(App.currentActivity, "فعالسازی بسته سفارشی", "با تأیید بسته سفارشی اطلاعات مربوط به بسته های فعال و رزرو از بین می رود، آیا انجام شود؟",
                                                  "بله", "خیر", null, new Runnable() {
                         @Override
                         public void run() {

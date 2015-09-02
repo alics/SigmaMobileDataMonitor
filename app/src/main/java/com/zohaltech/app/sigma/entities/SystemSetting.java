@@ -2,21 +2,19 @@ package com.zohaltech.app.sigma.entities;
 
 
 public class SystemSetting {
-    private int id;
+    private int     id;
     private Boolean leftDaysAlarmHasShown;
     private Boolean trafficAlarmHasShown;
-    private Boolean secondaryTrafficAlarmHasShown;
     private Boolean primaryTrafficFinishHasShown;
     private Boolean secondaryTrafficFinishHasShown;
     private Boolean installed;
     private Boolean registered;
 
 
-    public SystemSetting(Boolean leftDaysAlarmHasShown, Boolean trafficAlarmHasShown, Boolean secondaryTrafficAlarmHasShown,
-                         Boolean primaryTrafficFinishHasShown, Boolean secondaryTrafficFinishHasShown, Boolean installed, Boolean registered) {
+    public SystemSetting(Boolean leftDaysAlarmHasShown, Boolean trafficAlarmHasShown, Boolean primaryTrafficFinishHasShown,
+                         Boolean secondaryTrafficFinishHasShown, Boolean installed, Boolean registered) {
         setLeftDaysAlarmHasShown(leftDaysAlarmHasShown);
         setTrafficAlarmHasShown(trafficAlarmHasShown);
-        setSecondaryTrafficAlarmHasShown(secondaryTrafficAlarmHasShown);
         setPrimaryTrafficFinishHasShown(primaryTrafficFinishHasShown);
         setSecondaryTrafficFinishHasShown(secondaryTrafficFinishHasShown);
         setInstalled(installed);
@@ -24,10 +22,10 @@ public class SystemSetting {
 
     }
 
-    public SystemSetting(int id, Boolean leftDaysAlarmHasShown, Boolean trafficAlarmHasShown, Boolean secondaryTrafficAlarmHasShown,
-                         Boolean primaryTrafficFinishHasShown, Boolean secondaryTrafficFinishHasShown, Boolean installed, Boolean registered) {
-        this(leftDaysAlarmHasShown, trafficAlarmHasShown, secondaryTrafficAlarmHasShown, primaryTrafficFinishHasShown,
-                secondaryTrafficFinishHasShown, installed, registered);
+    public SystemSetting(int id, Boolean leftDaysAlarmHasShown, Boolean trafficAlarmHasShown, Boolean primaryTrafficFinishHasShown,
+                         Boolean secondaryTrafficFinishHasShown, Boolean installed, Boolean registered) {
+        this(leftDaysAlarmHasShown, trafficAlarmHasShown, primaryTrafficFinishHasShown,
+             secondaryTrafficFinishHasShown, installed, registered);
         this.id = id;
 
     }
@@ -54,14 +52,6 @@ public class SystemSetting {
 
     public void setTrafficAlarmHasShown(Boolean trafficAlarmHasShown) {
         this.trafficAlarmHasShown = trafficAlarmHasShown;
-    }
-
-    public Boolean getSecondaryTrafficAlarmHasShown() {
-        return secondaryTrafficAlarmHasShown;
-    }
-
-    public void setSecondaryTrafficAlarmHasShown(Boolean secondaryTrafficAlarmHasShown) {
-        this.secondaryTrafficAlarmHasShown = secondaryTrafficAlarmHasShown;
     }
 
     public Boolean getPrimaryTrafficFinishHasShown() {

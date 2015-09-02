@@ -5,7 +5,9 @@ import android.util.Log;
 
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.dal.Settings;
+import com.zohaltech.app.sigma.dal.SystemSettings;
 import com.zohaltech.app.sigma.entities.Setting;
+import com.zohaltech.app.sigma.entities.SystemSetting;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -37,7 +39,7 @@ public class WebApiClient {
             @Override
             public void run() {
                 try {
-                    Setting setting = Settings.getCurrentSettings();
+                    SystemSetting setting = SystemSettings.getCurrentSettings();
                     JSONObject jsonObject = new JSONObject();
                     if (action == PostAction.INSTALL) {
                         if (setting.getInstalled() == false) {
@@ -53,7 +55,7 @@ public class WebApiClient {
                                 setJsonObject(jsonObject);
                                 Boolean result = post(getJsonObject());
                                 setting.setInstalled(result);
-                                Settings.update(setting);
+                                SystemSettings.update(setting);
                             }
                         }
                     } else {
@@ -70,7 +72,7 @@ public class WebApiClient {
                                 setJsonObject(jsonObject);
                                 Boolean result = post(getJsonObject());
                                 setting.setRegistered(result);
-                                Settings.update(setting);
+                                SystemSettings.update(setting);
                             }
                         }
                     }

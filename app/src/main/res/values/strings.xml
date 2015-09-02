@@ -43,7 +43,7 @@
     <string name="left_days_alarm">هشدار روز باقیمانده</string>
     <string name="traffic_alarm">هشدار حجمی</string>
     <string name="package_title">عنوان بسته</string>
-    <string name="primary_traffic">حجم شبانه روزی</string>
+    <string name="primary_traffic">حجم اصلی</string>
     <string name="validation_period">مدت اعتبار</string>
     <string name="usage_report">گزارش مصرف</string>
     <string name="tutorial">راهنمای برنامه</string>
