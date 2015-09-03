@@ -50,7 +50,9 @@ public class ArcProgress extends ImageView {
 
     public void setProgress(int progress, String traffic) {
         this.progress = progress;
+        //this.progress = 34;
         this.traffic = traffic;
+        //this.traffic = "100.6MB/3GB";
         postInvalidate();
     }
 
@@ -73,7 +75,6 @@ public class ArcProgress extends ImageView {
         textPaint.setColor(color);
         textPaint.setAntiAlias(true);
         textPaint.setTextAlign(Align.CENTER);
-        textPaint.setTypeface(App.englishFont);
         textPaint.setStyle(Style.FILL_AND_STROKE);
     }
 
@@ -83,7 +84,7 @@ public class ArcProgress extends ImageView {
 
         int baseSize = getWidth() < getHeight() ? getWidth() : getHeight();
 
-        int textSize = baseSize / 4;
+        int textSize = baseSize / 3;
         int strokeWidth = baseSize / 25;
 
         RectF rect = new RectF();
@@ -101,12 +102,14 @@ public class ArcProgress extends ImageView {
         int sweepAngle = progress * SWEEP_ANGLE / 100;
         canvas.drawArc(rect, START_ANGLE, sweepAngle, false, arcForegroundPaint);
 
-        textPaint.setTextSize(textSize);
+        textPaint.setTypeface(App.englishFontBold);
+        textPaint.setTextSize(textSize - (textSize/4));
         textPaint.setShadowLayer(strokeWidth / 2, strokeWidth / 4, strokeWidth / 4, context.getResources().getColor(R.color.shadow));
         canvas.drawText(progress + "%", baseSize / 2, getHeight() / 2, textPaint);
 
-        textPaint.setTextSize(textSize / 2);
+        textPaint.setTypeface(App.englishFont);
+        textPaint.setTextSize(textSize / 3);
         textPaint.setShadowLayer(strokeWidth / 3, strokeWidth / 4, strokeWidth / 4, context.getResources().getColor(R.color.shadow));
-        canvas.drawText(traffic, baseSize / 2, getHeight() - (getHeight() / 6), textPaint);
+        canvas.drawText(traffic, baseSize / 2, getHeight() - (getHeight() / 7), textPaint);
     }
 }

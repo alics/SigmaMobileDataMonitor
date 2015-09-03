@@ -46,7 +46,9 @@ public class CircleProgress extends ImageView {
 
     public void setProgress(String value, String caption) {
         this.value = value;
+        //this.value = "1000.5";
         this.caption = caption;
+        //this.caption = "ساعت";
         postInvalidate();
     }
 
@@ -63,7 +65,7 @@ public class CircleProgress extends ImageView {
         textPaintValue.setColor(color);
         textPaintValue.setAntiAlias(true);
         textPaintValue.setTextAlign(Align.CENTER);
-        textPaintValue.setTypeface(App.englishFont);
+        textPaintValue.setTypeface(App.englishFontBold);
         textPaintValue.setStyle(Style.FILL_AND_STROKE);
 
         textPaintCaption = new Paint();
@@ -97,7 +99,7 @@ public class CircleProgress extends ImageView {
         textPaintValue.setShadowLayer(strokeWidth / 2, strokeWidth / 4, strokeWidth / 4, context.getResources().getColor(R.color.shadow));
         canvas.drawText(value, baseSize / 2, getHeight() / 2, textPaintValue);
 
-        textPaintCaption.setTextSize(textSize / 3);
+        textPaintCaption.setTextSize(textSize / 2);
         textPaintCaption.setShadowLayer(strokeWidth / 3, strokeWidth / 4, strokeWidth / 4, context.getResources().getColor(R.color.shadow));
         canvas.drawText(caption, baseSize / 2, getHeight() - (getHeight() / 6), textPaintCaption);
     }

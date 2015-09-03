@@ -7,7 +7,7 @@
     android:orientation="horizontal"
     android:padding="5dp">
 
-    <TextView
+    <widgets.LatinTextView
         android:id="@+id/txtTraffic"
         android:layout_width="0dp"
         android:layout_height="match_parent"

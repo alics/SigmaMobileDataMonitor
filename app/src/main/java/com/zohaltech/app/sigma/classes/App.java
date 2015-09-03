@@ -20,6 +20,7 @@ public class App extends Application {
     public static Activity          currentActivity;
     public static SharedPreferences preferences;
     public static Typeface          englishFont;
+    public static Typeface          englishFontBold;
     public static Typeface          persianFont;
     public static Typeface          persianFontBold;
     public static Handler           handler;
@@ -42,7 +43,8 @@ public class App extends Application {
         super.onCreate();
         context = getApplicationContext();
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        englishFont = Typeface.createFromAsset(context.getAssets(), "fonts/calibril.ttf");
+        englishFont = Typeface.createFromAsset(context.getAssets(), "fonts/exo.ttf");
+        englishFontBold = Typeface.createFromAsset(context.getAssets(), "fonts/exo.ttf");
         persianFont = Typeface.createFromAsset(context.getAssets(), "fonts/byekan.ttf");
         persianFontBold = Typeface.createFromAsset(context.getAssets(), "fonts/byekan.ttf");
         handler = new Handler();

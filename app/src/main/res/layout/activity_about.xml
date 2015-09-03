@@ -162,26 +162,26 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_zohal_tech"/>
 
-            <TextView
+            <widgets.LatinTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="www.zohaltech.com"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/white"/>
 
-            <TextView
+            <widgets.LatinTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="info@zohaltech.com"
                 android:textColor="@color/white"/>
 
-            <TextView
+            <widgets.LatinTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/copyright"
                 android:textColor="@color/white"/>
 
-            <TextView
+            <widgets.LatinTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/all_rights"
