@@ -140,26 +140,17 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="right"
                     android:orientation="vertical"
                     android:padding="10dp">
 
-                    <LinearLayout
+                    <widgets.MyTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
-                        android:gravity="right"
-                        android:orientation="horizontal">
-
-                        <widgets.MyTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-
-                            android:gravity="right"
-                            android:text="تنظیمات هشدارها"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textColor="@color/primary"/>
-
-                    </LinearLayout>
+                        android:text="تنظیمات هشدارها"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/primary"/>
 
                     <widgets.MySwitch
                         android:id="@+id/switchVibrateInAlarms"
@@ -187,6 +178,78 @@
                         android:gravity="right"
                         android:text=" پخش صدا برای هشدار"
                         android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <widgets.MyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:text="سیم کارت فعال"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/primary"/>
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:orientation="horizontal">
+
+                        <widgets.MyRadioButton
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text=" سیم 2"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+                        <widgets.MyRadioButton
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text=" سیم 1"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+                        <!--<widgets.MyCheckBox-->
+                        <!--android:id="@+id/chkLoan"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginLeft="10dp"-->
+                        <!--android:button="@null"-->
+                        <!--android:drawableRight="?android:attr/"-->
+                        <!--android:gravity="center|right"-->
+                        <!--android:text="وام"-->
+                        <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+                        <!--android:textColor="@color/darker_blue"/>-->
+
+                        <!--<LinearLayout-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="1dp"-->
+                        <!--android:layout_marginBottom="5dp"-->
+                        <!--android:layout_marginTop="5dp"-->
+                        <!--android:background="@android:drawable/divider_horizontal_bright"/>-->
+
+                    </RadioGroup>
 
                 </LinearLayout>
 

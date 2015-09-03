@@ -48,9 +48,9 @@ public class CircleProgress extends ImageView {
 
     public void setProgress(String value, String caption) {
         this.value = value;
-        //this.value = "1000.5";
+        //this.value = "7";
         this.caption = caption;
-        //this.caption = "ساعت";
+        //this.caption = "روز";
         postInvalidate();
     }
 

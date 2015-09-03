@@ -53,9 +53,9 @@ public class ArcProgress extends ImageView {
 
     public void setProgress(int progress, String traffic) {
         this.progress = progress;
-        //this.progress = 34;
+        //this.progress = 85;
         this.traffic = traffic;
-        //this.traffic = "100.6MB/3GB";
+        //this.traffic = "2.5GB/3GB";
         postInvalidate();
     }
 

@@ -91,7 +91,9 @@ public class TrafficUsageFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
             totalPrimaryTraffic = status.getPrimaryTraffic();
+            //totalPrimaryTraffic = 3221225472L;
             usedPrimaryTraffic =  status.getUsedPrimaryTraffic() <= totalPrimaryTraffic ? status.getUsedPrimaryTraffic() : totalPrimaryTraffic;
+            //usedPrimaryTraffic =  2738041652L;
             strPrimaryTraffic = TrafficUnitsUtil.getArcTraffic(usedPrimaryTraffic, totalPrimaryTraffic).replace(" ","");
         }
 
@@ -148,7 +150,9 @@ public class TrafficUsageFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
             totalSecondaryTraffic = status.getSecondaryTraffic();
+            //totalSecondaryTraffic = 3221225472L;
             usedSecondaryTraffic =  status.getUsedSecondaryTraffic() <= totalSecondaryTraffic ? status.getUsedSecondaryTraffic() : totalSecondaryTraffic;
+            //usedSecondaryTraffic =  2093796557L;
             strSecondaryTraffic = TrafficUnitsUtil.getArcTraffic(usedSecondaryTraffic, totalSecondaryTraffic).replace(" ","");
             txtSecondaryCaption.setText(status.getSecondaryCaption());
         }

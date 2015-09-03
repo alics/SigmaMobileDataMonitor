@@ -165,7 +165,7 @@ public abstract class BazaarPaymentActivity extends EnhancedActivity {
             //Log.e(TAG, "Error : " + e.getMessage());
             setWaitScreen(false);
             updateUiToTrialVersion();
-            MyToast.show("لطفا آخرین نسخه بازار را نصب کنید", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
+            MyToast.show("خطا در ارتباط با بازار، لطفا بعدا دوباره تلاش کنید", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
         }
     }
 
