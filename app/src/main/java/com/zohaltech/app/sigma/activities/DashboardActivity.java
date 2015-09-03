@@ -16,6 +16,7 @@ import com.zohaltech.app.sigma.classes.App;
 import com.zohaltech.app.sigma.classes.DialogManager;
 import com.zohaltech.app.sigma.classes.LicenseManager;
 import com.zohaltech.app.sigma.classes.NotificationHandler;
+import com.zohaltech.app.sigma.classes.TelephonyInfo;
 import com.zohaltech.app.sigma.classes.WebApiClient;
 import com.zohaltech.app.sigma.dal.DataAccess;
 

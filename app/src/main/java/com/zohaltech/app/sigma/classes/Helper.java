@@ -13,8 +13,6 @@ import android.telephony.TelephonyManager;
 
 import com.zohaltech.app.sigma.entities.DataPackage;
 
-import org.json.JSONException;
-
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -145,6 +143,14 @@ public final class Helper {
             e.printStackTrace();
         }
         return operator;
+    }
+
+    public static Boolean isDualSim() {
+        TelephonyInfo telephonyInfo = TelephonyInfo.getInstance(App.context);
+        String sim1 = telephonyInfo.getSim1();
+        String sim2 = telephonyInfo.getSim2();
+
+        return !(sim2 == null || sim2.equals(sim1));
     }
 
     public static BigDecimal round(float d, int decimalPlace) {
