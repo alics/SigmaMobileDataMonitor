@@ -19,7 +19,9 @@ public class CircleProgress extends ImageView {
     private static final int START_ANGLE = 90;
     private static final int SWEEP_ANGLE = 360;
     Context context;
-    private Paint arcBackgroundPaint;
+
+    RectF rect;
+
     private Paint arcForegroundPaint;
     private Paint textPaintValue;
     private Paint textPaintCaption;
@@ -54,6 +56,8 @@ public class CircleProgress extends ImageView {
 
     private void initialize() {
 
+        rect = new RectF();
+
         int color = Color.argb(230, 255, 255, 255);
 
         arcForegroundPaint = new Paint();
@@ -83,13 +87,9 @@ public class CircleProgress extends ImageView {
         int baseSize = getWidth() < getHeight() ? getWidth() : getHeight();
 
         int textSize = baseSize / 4;
-        int strokeWidth = baseSize / 25;
+        float strokeWidth = (float)baseSize / 25;
 
-        RectF rect = new RectF();
-        rect.left = strokeWidth;
-        rect.right = baseSize - strokeWidth;
-        rect.top = strokeWidth;
-        rect.bottom = baseSize - strokeWidth;
+        rect.set(strokeWidth, strokeWidth, baseSize - strokeWidth, baseSize - strokeWidth);
 
         arcForegroundPaint.setStrokeWidth(strokeWidth);
 

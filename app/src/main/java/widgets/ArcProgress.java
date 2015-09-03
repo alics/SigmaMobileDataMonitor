@@ -19,6 +19,9 @@ public class ArcProgress extends ImageView {
     private static final int START_ANGLE = 150;
     private static final int SWEEP_ANGLE = 240;
     Context context;
+
+    RectF rect;
+
     private Paint arcForegroundPaint;
     private Paint arcBackgroundPaint;
     private Paint textPaint;
@@ -57,6 +60,9 @@ public class ArcProgress extends ImageView {
     }
 
     private void initialize() {
+
+        rect = new RectF();
+
         int color = Color.argb(230, 255, 255, 255);
 
         arcBackgroundPaint = new Paint();
@@ -85,13 +91,9 @@ public class ArcProgress extends ImageView {
         int baseSize = getWidth() < getHeight() ? getWidth() : getHeight();
 
         int textSize = baseSize / 3;
-        int strokeWidth = baseSize / 25;
+        float strokeWidth = (float)baseSize / 25;
 
-        RectF rect = new RectF();
-        rect.left = strokeWidth;
-        rect.right = baseSize - strokeWidth;
-        rect.top = strokeWidth;
-        rect.bottom = baseSize - strokeWidth;
+        rect.set(strokeWidth, strokeWidth, baseSize - strokeWidth, baseSize - strokeWidth);
 
         arcForegroundPaint.setStrokeWidth(strokeWidth);
         arcBackgroundPaint.setStrokeWidth(strokeWidth);

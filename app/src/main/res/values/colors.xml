@@ -5,16 +5,16 @@
     <color name="secondary_text">#727272</color>
     <color name="grey">#676767</color>
     <color name="shadow">#67000000</color>
-    <color name="primary">#009688</color>
-    <color name="primary_dark">#00796b</color>
-    <color name="primary_light">#b2dfdb</color>
-    <color name="primary_lighter">#78b2dfdb</color>
+    <!--<color name="primary">#009688</color>-->
+    <!--<color name="primary_dark">#00796b</color>-->
+    <!--<color name="primary_light">#b2dfdb</color>-->
+    <!--<color name="primary_lighter">#78b2dfdb</color>-->
     <color name="accent">#E91E63</color>
     <color name="accent_dark">#ffbc2055</color>
 
-
-
-    <color name="s">#64D448</color>
-
+    <color name="primary">#075e54</color>
+    <color name="primary_dark">#054d44</color>
+    <color name="primary_light">#83afaa</color>
+    <color name="primary_lighter">#3283afaa</color>
 
 </resources>
