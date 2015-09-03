@@ -77,6 +77,7 @@ public class DataAccess extends SQLiteOpenHelper {
             systemSettingsValues.put(SystemSettings.SecondaryTrafficFinishHasShown, 0);
             systemSettingsValues.put(SystemSettings.Installed, 0);
             systemSettingsValues.put(SystemSettings.Registered, 0);
+            systemSettingsValues.put(SystemSettings.ActiveSim, 0);
             database.insert(SystemSettings.TableName, null, systemSettingsValues);
 
             LicenseStatus status = LicenseManager.getExistingLicense();

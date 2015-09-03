@@ -46,26 +46,25 @@ public final class TelephonyInfo {
             TelephonyManager telephonyManager = ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE));
 
             telephonyInfo.sim1 = telephonyManager.getDeviceId();
-            ;
             telephonyInfo.sim2 = null;
 
+//            try {
+//                telephonyInfo.sim1 = getDeviceIdBySlot(context, "getDeviceIdGemini", 0);
+//
+//                String f=getDeviceIdBySlot(context, "getSimOperatorName", 0);
+//                telephonyInfo.sim2 = getDeviceIdBySlot(context, "getDeviceIdGemini", 1);
+//            } catch (GeminiMethodNotFoundException e) {
+//                e.printStackTrace();
+
             try {
-                telephonyInfo.sim1 = getDeviceIdBySlot(context, "getDeviceIdGemini", 0);
-
-                String f=getDeviceIdBySlot(context, "getSimOperatorName", 0);
-                telephonyInfo.sim2 = getDeviceIdBySlot(context, "getDeviceIdGemini", 1);
-            } catch (GeminiMethodNotFoundException e) {
-                e.printStackTrace();
-
-                try {
-                    telephonyInfo.sim1 = getDeviceIdBySlot(context, "getDeviceId", 0);
-                    String f=getDeviceIdBySlot(context, "getSimOperatorName", 0);
-                    telephonyInfo.sim2 = getDeviceIdBySlot(context, "getDeviceId", 1);
-                } catch (GeminiMethodNotFoundException e1) {
-                    //Call here for next manufacturer's predicted method name if you wish
-                    e1.printStackTrace();
-                }
+                telephonyInfo.sim1 = getDeviceIdBySlot(context, "getDeviceId", 0);
+                String f = getDeviceIdBySlot(context, "getSimOperatorName", 0);
+                telephonyInfo.sim2 = getDeviceIdBySlot(context, "getDeviceId", 1);
+            } catch (GeminiMethodNotFoundException e1) {
+                //Call here for next manufacturer's predicted method name if you wish
+                e1.printStackTrace();
             }
+            // }
 
             telephonyInfo.isSIM1Ready = telephonyManager.getSimState() == TelephonyManager.SIM_STATE_READY;
             telephonyInfo.isSIM2Ready = false;

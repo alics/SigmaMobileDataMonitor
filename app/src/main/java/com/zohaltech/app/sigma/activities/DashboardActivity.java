@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
+import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +21,8 @@ import com.zohaltech.app.sigma.classes.NotificationHandler;
 import com.zohaltech.app.sigma.classes.TelephonyInfo;
 import com.zohaltech.app.sigma.classes.WebApiClient;
 import com.zohaltech.app.sigma.dal.DataAccess;
+
+import java.util.List;
 
 import widgets.MyToast;
 import widgets.MyViewPagerIndicator;
