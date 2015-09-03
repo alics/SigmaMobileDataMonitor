@@ -9,23 +9,24 @@ public class SystemSetting {
     private Boolean secondaryTrafficFinishHasShown;
     private Boolean installed;
     private Boolean registered;
-
+    private int activeSim;
 
     public SystemSetting(Boolean leftDaysAlarmHasShown, Boolean trafficAlarmHasShown, Boolean primaryTrafficFinishHasShown,
-                         Boolean secondaryTrafficFinishHasShown, Boolean installed, Boolean registered) {
+                         Boolean secondaryTrafficFinishHasShown, Boolean installed, Boolean registered, int activeSim) {
         setLeftDaysAlarmHasShown(leftDaysAlarmHasShown);
         setTrafficAlarmHasShown(trafficAlarmHasShown);
         setPrimaryTrafficFinishHasShown(primaryTrafficFinishHasShown);
         setSecondaryTrafficFinishHasShown(secondaryTrafficFinishHasShown);
         setInstalled(installed);
         setRegistered(registered);
+        setActiveSim(activeSim);
 
     }
 
     public SystemSetting(int id, Boolean leftDaysAlarmHasShown, Boolean trafficAlarmHasShown, Boolean primaryTrafficFinishHasShown,
-                         Boolean secondaryTrafficFinishHasShown, Boolean installed, Boolean registered) {
+                         Boolean secondaryTrafficFinishHasShown, Boolean installed, Boolean registered,int activeSim) {
         this(leftDaysAlarmHasShown, trafficAlarmHasShown, primaryTrafficFinishHasShown,
-             secondaryTrafficFinishHasShown, installed, registered);
+             secondaryTrafficFinishHasShown, installed, registered,activeSim);
         this.id = id;
     }
 
@@ -83,5 +84,13 @@ public class SystemSetting {
 
     public void setRegistered(Boolean registered) {
         this.registered = registered;
+    }
+
+    public int getActiveSim() {
+        return activeSim;
+    }
+
+    public void setActiveSim(int activeSim) {
+        this.activeSim = activeSim;
     }
 }
