@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Vibrator;
 import android.support.v4.app.FragmentActivity;
@@ -67,66 +65,13 @@ public final class Helper {
         return date;
     }
 
-
     public static void runUssd(FragmentActivity activity, DataPackage dataPackage) {
         String code = String.format("%s%s", dataPackage.getUssdCode().substring(0, dataPackage.getUssdCode().length() - 1), Uri.encode("#"));
         Intent callIntent = new Intent(Intent.ACTION_CALL);
         callIntent.setData(Uri.parse("tel:" + code));
         activity.startActivityForResult(callIntent, dataPackage.getId());
     }
-
-    public static boolean getConnectivityStatus() {
-        ConnectivityManager cm = (ConnectivityManager) App.context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        return activeNetwork != null && (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE);
-    }
-
-    //public static void setMobileDataEnabled(boolean enabled) {
-    //    try {
-    //        //if (Build.VERSION.SDK_INT == Build.VERSION_CODES.FROYO) {
-    //        try {
-    //            Method dataConnSwitchMethod;
-    //            Class telephonyManagerClass;
-    //            Object ITelephonyStub;
-    //            Class ITelephonyClass;
-    //            TelephonyManager telephonyManager = (TelephonyManager) App.context.getSystemService(Context.TELEPHONY_SERVICE);
-    //
-    //            telephonyManagerClass = Class.forName(telephonyManager.getClass().getName());
-    //            Method getITelephonyMethod = telephonyManagerClass.getDeclaredMethod("getITelephony");
-    //            getITelephonyMethod.setAccessible(true);
-    //            ITelephonyStub = getITelephonyMethod.invoke(telephonyManager);
-    //            ITelephonyClass = Class.forName(ITelephonyStub.getClass().getName());
-    //
-    //            if (enabled) {
-    //                dataConnSwitchMethod = ITelephonyClass.getDeclaredMethod("enableDataConnectivity");
-    //            } else {
-    //                dataConnSwitchMethod = ITelephonyClass.getDeclaredMethod("disableDataConnectivity");
-    //            }
-    //            dataConnSwitchMethod.setAccessible(true);
-    //            dataConnSwitchMethod.invoke(ITelephonyStub);
-    //        } catch (Exception e) {
-    //            e.printStackTrace();
-    //        }
-    //        //} else {
-    //        try {
-    //            final ConnectivityManager conman = (ConnectivityManager) App.context.getSystemService(Context.CONNECTIVITY_SERVICE);
-    //            final Class conmanClass = Class.forName(conman.getClass().getName());
-    //            final Field connectivityManagerField = conmanClass.getDeclaredField("mService");
-    //            connectivityManagerField.setAccessible(true);
-    //            final Object connectivityManager = connectivityManagerField.get(conman);
-    //            final Class connectivityManagerClass = Class.forName(connectivityManager.getClass().getName());
-    //            final Method setMobileDataEnabledMethod = connectivityManagerClass.getDeclaredMethod("setMobileDataEnabled", Boolean.TYPE);
-    //            setMobileDataEnabledMethod.setAccessible(true);
-    //            setMobileDataEnabledMethod.invoke(connectivityManager, enabled);
-    //        } catch (Exception e) {
-    //            e.printStackTrace();
-    //        }
-    //        //}
-    //    } catch (Exception e) {
-    //        e.printStackTrace();
-    //    }
-    //}
-
+    
     public static Operator getOperator() {
         Operator operator = Operator.NO_SIM;
         try {
@@ -190,78 +135,4 @@ public final class Helper {
         RIGHTELL,
         NO_SIM
     }
-
-    //    public static void share(String message)
-    //    {
-    //        Intent intent = new Intent(Intent.ACTION_SEND);
-    //        intent.setType("text/plain");
-    //        intent.putExtra(Intent.EXTRA_TEXT, message);
-    //        G.currentActivity.startActivity(Intent.createChooser(intent, "اشتراک گذاری"));
-    //    }
-
-    //    public static Bitmap decodeScaledBitmapFromSdCard(String filePath, int reqWidth, int reqHeight)
-    //    {
-    //
-    //        // First decode with inJustDecodeBounds=true to check dimensions
-    //        final BitmapFactory.Options options = new BitmapFactory.Options();
-    //        options.inJustDecodeBounds = true;
-    //        BitmapFactory.decodeFile(filePath, options);
-    //
-    //        // Calculate inSampleSize
-    //        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-    //
-    //        // Decode bitmap with inSampleSize set
-    //        options.inJustDecodeBounds = false;
-    //        return BitmapFactory.decodeFile(filePath, options);
-    //    }
-    //
-    //    private static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight)
-    //    {
-    //        // Raw height and width of image
-    //        final int height = options.outHeight;
-    //        final int width = options.outWidth;
-    //        int inSampleSize = 1;
-    //
-    //        if (height > reqHeight || width > reqWidth)
-    //        {
-    //
-    //            final int halfHeight = height / 2;
-    //            final int halfWidth = width / 2;
-    //
-    //            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
-    //            // height and width larger than the requested height and width.
-    //            while ((halfHeight / inSampleSize) > reqHeight
-    //                    && (halfWidth / inSampleSize) > reqWidth)
-    //            {
-    //                inSampleSize *= 2;
-    //            }
-    //        }
-    //
-    //        return inSampleSize;
-    //    }
-    //
-    //    private static String formatNumber(String number, char[] digits)
-    //    {
-    //        if (digits == arabicDigits)
-    //            return number;
-    //
-    //        StringBuilder sb = new StringBuilder();
-    //        for (char chr : number.toCharArray())
-    //        {
-    //            if (Character.isDigit(chr))
-    //            {
-    //                sb.append(digits[Integer.parseInt(chr + "")]);
-    //            }
-    //            else
-    //            {
-    //                sb.append(chr);
-    //            }
-    //        }
-    //        return sb.toString();
-    //    }
-    //
-    //    public static String formatNumberToPersianDigits(String number)
-    //    {
-    //        return formatNumber(number, persianDigits);
-    //    }
 }
