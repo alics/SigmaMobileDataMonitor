@@ -37,7 +37,7 @@ public class LatinTextView extends AppCompatTextView {
     @Override
     public void setTypeface(Typeface tf, int style) {
         if (style == Typeface.BOLD) {
-            super.setTypeface(App.englishFont);
+            super.setTypeface(App.englishFontBold);
         } else {
             super.setTypeface(App.englishFont);
         }
