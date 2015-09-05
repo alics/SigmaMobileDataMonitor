@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -14,13 +15,15 @@ import com.zohaltech.app.sigma.classes.App;
 
 import widgets.Slide;
 
-public class TutorialPagerAdapter extends PagerAdapter {
+public class IntroductionPagerAdapter extends PagerAdapter {
     Context        context;
+    int count;
     String[]       texts;
     int[]          images;
     LayoutInflater inflater;
 
-    public TutorialPagerAdapter(Context context, String[] texts, int[] images) {
+    public IntroductionPagerAdapter(Context context,int count, String[] texts, int[] images) {
+        this.count = count;
         this.context = context;
         this.texts = texts;
         this.images = images;
@@ -28,7 +31,7 @@ public class TutorialPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return count;
     }
 
     @Override
@@ -38,7 +41,7 @@ public class TutorialPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        View itemView = App.inflater.inflate(R.layout.pager_tutorial_item, container, false);
+        View itemView = App.inflater.inflate(R.layout.pager_adapter_introduction, container, false);
         // Declare Variables
         TextView txtTutorial = (TextView) itemView.findViewById(R.id.txtTutorial);
         ImageView imgTutorial = (ImageView) itemView.findViewById(R.id.imgTutorial);
@@ -62,6 +65,6 @@ public class TutorialPagerAdapter extends PagerAdapter {
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         // Remove viewpager_item.xml from ViewPager
-        container.removeView((RelativeLayout) object);
+        container.removeView((LinearLayout) object);
     }
 }

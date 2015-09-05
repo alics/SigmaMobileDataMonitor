@@ -12,20 +12,21 @@ import android.widget.TextView;
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.adapters.ReportAdapter;
 import com.zohaltech.app.sigma.classes.App;
-import com.zohaltech.app.sigma.classes.SigmaDataService;
 import com.zohaltech.app.sigma.classes.Helper;
+import com.zohaltech.app.sigma.classes.SigmaDataService;
 import com.zohaltech.app.sigma.classes.TrafficUnitsUtil;
 import com.zohaltech.app.sigma.dal.DailyTrafficHistories;
 import com.zohaltech.app.sigma.entities.TrafficMonitor;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class ReportActivity extends EnhancedActivity {
 
-    ListView lstTraffics;
-    TextView txtTotalTraffic;
-    ArrayList<TrafficMonitor> trafficMonitors = new ArrayList<>();
-    ReportAdapter adapter;
+    ListView                  lstTraffics;
+    TextView                  txtTotalTraffic;
+    ArrayList<TrafficMonitor> trafficMonitors;
+    ReportAdapter             adapter;
     private BroadcastReceiver broadcastReceiver;
 
     private long todayUsage;
@@ -54,6 +55,15 @@ public class ReportActivity extends EnhancedActivity {
         txtTotalTraffic = (TextView) findViewById(R.id.txtTotalTraffic);
 
         trafficMonitors = DailyTrafficHistories.getMonthlyTraffic();
+        //trafficMonitors = new ArrayList<>();
+        //for (int i = 0; i < 29; i++) {
+        //    Random r = new Random();
+        //    int Low = 10;
+        //    int High = 100*1024*1024;
+        //    int sumReceivedSent = r.nextInt(High - Low) + Low;
+        //    TrafficMonitor trafficMonitor = new TrafficMonitor((long)sumReceivedSent, Helper.addDay(i - 29));
+        //    trafficMonitors.add(0, trafficMonitor);
+        //}
         setTodayUsage(App.preferences.getLong(SigmaDataService.TODAY_USAGE_BYTES, 0));
         trafficMonitors.add(0, new TrafficMonitor(getTodayUsage(), Helper.getCurrentDate()));
 
