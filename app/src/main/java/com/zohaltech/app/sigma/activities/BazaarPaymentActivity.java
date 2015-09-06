@@ -9,6 +9,7 @@ import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.classes.App;
 import com.zohaltech.app.sigma.classes.ConstantParams;
 import com.zohaltech.app.sigma.classes.LicenseManager;
+import com.zohaltech.app.sigma.classes.MyRuntimeException;
 import com.zohaltech.app.sigma.classes.WebApiClient;
 import com.zohaltech.app.sigma.util.IabHelper;
 import com.zohaltech.app.sigma.util.IabResult;
@@ -93,8 +94,9 @@ public abstract class BazaarPaymentActivity extends EnhancedActivity {
                         mHelper.queryInventoryAsync(mGotInventoryListener);
                     }
                 });
-            } catch (Exception e) {
+            } catch (MyRuntimeException e) {
                 //Log.e(TAG, "برنامه بازار نصب نیست");
+                e.printStackTrace();
             }
         }
     }
@@ -161,8 +163,9 @@ public abstract class BazaarPaymentActivity extends EnhancedActivity {
         setWaitScreen(true);
         try {
             mHelper.launchPurchaseFlow(App.currentActivity, SKU_PREMIUM, RC_REQUEST, mPurchaseFinishedListener, PAY_LOAD);
-        } catch (Exception e) {
+        } catch (MyRuntimeException e) {
             //Log.e(TAG, "Error : " + e.getMessage());
+            e.printStackTrace();
             setWaitScreen(false);
             updateUiToTrialVersion();
             MyToast.show("خطا در ارتباط با بازار، لطفا بعدا دوباره تلاش کنید", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);

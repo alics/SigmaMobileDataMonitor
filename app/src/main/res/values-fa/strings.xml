@@ -1,3 +1,55 @@
 <resources>
     <string name="app_name_launcher">سیگما</string>
+    <string name="app_name">سیگما</string>
+    <string name="press_back_again_to_exit">برای خروج دوباره دکمه بازگشت را فشار دهید</string>
+    <string name="speed">"Speed: "</string>
+    <string name="down">"Down: "</string>
+    <string name="up">"  Up: "</string>
+    <string name="today">"Today: "</string>
+    <string name="slide_left"><![CDATA[<<<<<]]></string>
+
+    <string name="copyright">Copyright © 2015 ZohalTech</string>
+    <string name="all_rights">All Rights Reserved</string>
+    <string name="share_title">اشتراک گذاری با دوستان</string>
+    <string name="feedback_subject">بازخورد سیگما</string>
+    <string name="feedback_title">ارسال انتقادات و پیشنهادات</string>
+    <string name="could_not_open_market" formatted="false">%s یافت نشد، لطفا %s را نصب کنید!</string>
+    <string name="sharing_message" formatted="false">اگه میخوای روی مصرف اینترنت موبایلت کنترل داشته باشی و در هزینه هات صرفه جویی کنی، پیشنهاد میکنم حتما \"%s\" رو نصب کنی، از این آدرس دانلودش کن :\n%s</string>
+
+    <string name="disclaimer">"لطفا توجه داشته باشید در مواردی که برنامه به اجبار توسط  کاربر بسته شده است و یا به طور ناگهانی دستگاه خاموش شده باشد، سیگما ممکن است میزان پهنای باند استفاده شده را به اشتباه نشان دهد.
+درصورتی که هنگام نصب، تاریخ دستگاه صحیح نبوده و یا بعد از نصب، تاریخ دستگاه تغییر داده شود، گزارش های سیگما و اعلان های مربوط به اتمام اعتبار یا حجم بسته با مشکل مواجه خواهند شد.
+با پاک کردن کردن داده های مربوط به برنامه کارکرد و گزارش های آن دچار اختلال خواهند شد.
+در صورت رخ دادن موارد یاد شده، توسعه دهندگان مسئول هیچ گونه خسارت یا عدم کارکرد درست استفاده از این برنامه نیستند."</string>
+
+    <string name="doosh">sys</string>
+    <string name="cs"><![CDATA[hdg@a7dt62$3ejh&]]></string>
+    <string name="topol">/.vps/</string>
+    <string name="sdj">f77995466a906864</string>
+    <string name="mongol">a052108fcc1c4fc5</string>
+    <string name="goon">7sc450he388f1c2c</string>
+    <string name="buy_full_vesion">ارتقا به نسخه کامل</string>
+    <string name="buy_description">مدت استفاده آزمایشی از برنامه به پایان رسیده است، آیا مایل به خریداری نسخه کامل هستید؟</string>
+    <string name="buy_like">خوشم اومد، میخرم</string>
+    <string name="buy_sora">شاید بعدا!</string>
+    <string name="about">درباره</string>
+    <string name="version">"نسخه "</string>
+    <string name="settings">تنظیمات</string>
+    <string name="package_history">سوابق بسته ها</string>
+    <string name="not_register_active_package">بسته فعالی ثبت نشده است.</string>
+    <string name="not_register_reserve_package">بسته رزروی ثبت نشده است.</string>
+    <string name="package_management">مدیریت بسته</string>
+    <string name="purchase_package">خرید بسته</string>
+    <string name="custom_package">بسته سفارشی</string>
+    <string name="reserved_package">بسته رزرو</string>
+    <string name="active_package">بسته فعال</string>
+    <string name="left_days_alarm">هشدار روز باقیمانده</string>
+    <string name="traffic_alarm">هشدار حجمی</string>
+    <string name="package_title">عنوان بسته</string>
+    <string name="primary_traffic">حجم اصلی</string>
+    <string name="validation_period">مدت اعتبار</string>
+    <string name="usage_report">گزارش مصرف</string>
+    <string name="tutorial">راهنمای برنامه</string>
+    <string name="bare_sala">MIHNMA0GCSqGSIb3DQEBAQUAA4G7ADCBtwKBrwDEZZ4jpPHrnb/I+16h4DRUB0u13UCme31/0Jz+b4enw1xUmMmvlduzZUTruV1fM8bH14gEBMvOIt+g7u0AhejrfYXavhE/R3JrNq+TuZTrKuO73MpO1aaeiuYmsuA1wcN7fP5akffu/1HSqAj4s0F7fArJRZeiGnEb7ApTBFlGLg/o4groUZZwF3f1abFEcC9wM+HfGuiUZdKDTKkT3XyVzPcsvnrjMODiPeFsTH8CAwEAAQ==</string>
+    <string name="host_name">http://zohaltech.com/api/app/post</string>
+    <string name="jan">8F2CF4F0C905</string>
 </resources>
