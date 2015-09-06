@@ -35,7 +35,7 @@ public final class DialogManager {
                 final Dialog dialog = new Dialog(context);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.dialog_confirmation);
-                dialog.setCanceledOnTouchOutside(true);
+                dialog.setCanceledOnTouchOutside(false);
                 dialog.setCancelable(true);
                 TextView txtCaption = (TextView) dialog.findViewById(R.id.txtCaption);
                 TextView txtMessage = (TextView) dialog.findViewById(R.id.txtMessage);
@@ -65,6 +65,39 @@ public final class DialogManager {
         });
     }
 
+    public static void showNotificationDialog(
+            final Context context
+            , final String caption
+            , final String message
+            , final String positiveButtonText) {
+        App.handler.post(new Runnable() {
+            @Override
+            public void run() {
+                final Dialog dialog = new Dialog(context);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.dialog_confirmation);
+                dialog.setCanceledOnTouchOutside(false);
+                dialog.setCancelable(true);
+                TextView txtCaption = (TextView) dialog.findViewById(R.id.txtCaption);
+                TextView txtMessage = (TextView) dialog.findViewById(R.id.txtMessage);
+                Button positiveButton = (Button) dialog.findViewById(R.id.positiveButton);
+                Button negativeButton = (Button) dialog.findViewById(R.id.negativeButton);
+                negativeButton.setVisibility(View.GONE);
+                txtCaption.setText(caption);
+                txtMessage.setText(message);
+                positiveButton.setText(positiveButtonText);
+
+                positiveButton.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
+    }
+
     public static void showChoiceDialog(
             Context context
             , final String caption
@@ -80,7 +113,7 @@ public final class DialogManager {
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_confirmation);
-        dialog.setCanceledOnTouchOutside(true);
+        dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(true);
         TextView txtCaption = (TextView) dialog.findViewById(R.id.txtCaption);
         TextView txtMessage = (TextView) dialog.findViewById(R.id.txtMessage);

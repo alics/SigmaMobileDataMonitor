@@ -4,8 +4,6 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
-import android.telephony.SubscriptionInfo;
-import android.telephony.SubscriptionManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,20 +13,19 @@ import android.widget.Toast;
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.adapters.UsagePagerAdapter;
 import com.zohaltech.app.sigma.classes.App;
+import com.zohaltech.app.sigma.classes.ConstantParams;
 import com.zohaltech.app.sigma.classes.DialogManager;
+import com.zohaltech.app.sigma.classes.Helper;
 import com.zohaltech.app.sigma.classes.LicenseManager;
-import com.zohaltech.app.sigma.classes.NotificationHandler;
-import com.zohaltech.app.sigma.classes.TelephonyInfo;
 import com.zohaltech.app.sigma.classes.WebApiClient;
 import com.zohaltech.app.sigma.dal.DataAccess;
-
-import java.util.List;
 
 import widgets.MyToast;
 import widgets.MyViewPagerIndicator;
 
 public class DashboardActivity extends BazaarPaymentActivity {
 
+    private static final String DUAL_SIM_SHOWN = "DUAL_SIM_SHOWN";
     ViewPager            pagerUsages;
     MyViewPagerIndicator indicator;
     Button               btnPackageManagement;
@@ -43,7 +40,7 @@ public class DashboardActivity extends BazaarPaymentActivity {
 
     @Override
     void onCreated() {
-    
+
         super.onCreated();
 
         DataAccess da = new DataAccess();
@@ -51,6 +48,13 @@ public class DashboardActivity extends BazaarPaymentActivity {
         da.close();
 
         setContentView(R.layout.activity_dashboard);
+
+        if (App.uiPreferences.getBoolean(IntroductionActivity.INTRO_SHOWN, false) == false) {
+            Intent intent = new Intent(this, IntroductionActivity.class);
+            intent.putExtra(IntroductionActivity.CALL_FROM, IntroductionActivity.FROM_DASHBOARD);
+            startActivity(intent);
+            finish();
+        }
 
         startTime = System.currentTimeMillis() - 5000;
 
@@ -142,6 +146,11 @@ public class DashboardActivity extends BazaarPaymentActivity {
         if (LicenseManager.getLicenseStatus() == LicenseManager.Status.EXPIRED) {
             showPaymentDialog();
         }
+
+        if (App.uiPreferences.getBoolean(DUAL_SIM_SHOWN, false) == false && Helper.isDualSim()) {
+            DialogManager.showNotificationDialog(this, "دستگاه دو سیم کارته", "دستگاه شما دو سیم کارته است و برای استفاده از سیگما، سیم کارتی که اینترنت فعال دارد، میبایست روی \"سیم یک\" قرار داده شود.", "خُب");
+        }
+        App.preferences.edit().putBoolean(DUAL_SIM_SHOWN, true);
     }
 
     private void showPaymentDialog() {

@@ -19,6 +19,7 @@ public class App extends Application {
     public static Context           context;
     public static Activity          currentActivity;
     public static SharedPreferences preferences;
+    public static SharedPreferences uiPreferences;
     public static Typeface          englishFont;
     public static Typeface          englishFontBold;
     public static Typeface          persianFont;
@@ -43,6 +44,7 @@ public class App extends Application {
         super.onCreate();
         context = getApplicationContext();
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        uiPreferences = getSharedPreferences("ui", MODE_PRIVATE);
         englishFont = Typeface.createFromAsset(context.getAssets(), "fonts/exo.ttf");
         englishFontBold = Typeface.createFromAsset(context.getAssets(), "fonts/exo.ttf");
         persianFont = Typeface.createFromAsset(context.getAssets(), "fonts/byekan.ttf");

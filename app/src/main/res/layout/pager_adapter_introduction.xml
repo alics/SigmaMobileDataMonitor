@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <widgets.MyTextView
-        android:id="@+id/txtTutorial"
+        android:id="@+id/txtIntro"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="10dp"
@@ -17,17 +17,59 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/secondary_text"/>
 
-        <ImageView
-            android:id="@+id/imgTutorial"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="4"/>
+    <ImageView
+        android:id="@+id/imgIntro"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"/>
 
-        <widgets.Slide
-            android:id="@+id/slide"
+    <widgets.Slide
+        android:id="@+id/slide"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"/>
+
+    <LinearLayout
+        android:id="@+id/layoutPurchase"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:orientation="vertical">
+
+        <widgets.MyTextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_margin="10dp"
             android:layout_weight="1"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:text="استفاده از سیگما با تمامی امکانات، به مدت یک هفته رایگان است و پس از آن میبایست از طریق پرداخت درون برنامه ای، نسخه کامل و بدون محدودیت را خریداری نمایید."
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/secondary_text"/>
+
+        <widgets.MyButton
+            android:id="@+id/btnBuyNow"
+            style="@style/BorderlessButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/btn_dialog_ok"
+            android:text="همین الان نسخه کامل رو میخرم"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/white"/>
+
+        <widgets.MyButton
+            android:id="@+id/btnGoToApp"
+            style="@style/BorderlessButton"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_dialog_cancel"
+            android:text="بذار ببینم به درد میخوره یا نه!"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
 
 </LinearLayout>

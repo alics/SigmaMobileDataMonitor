@@ -138,6 +138,7 @@ public class GlobalSettingsActivity extends BazaarPaymentActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(App.currentActivity, IntroductionActivity.class);
+                intent.putExtra(IntroductionActivity.CALL_FROM, IntroductionActivity.FROM_GLOBAL_SETTINGS);
                 startActivity(intent);
                 //MyToast.show("بعدا بهت میگم " + getString(R.string.app_name) + " چیه", Toast.LENGTH_SHORT);
             }

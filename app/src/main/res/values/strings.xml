@@ -13,7 +13,8 @@
     <string name="feedback_subject">بازخورد سیگما</string>
     <string name="feedback_title">ارسال انتقادات و پیشنهادات</string>
     <string name="could_not_open_market" formatted="false">%s یافت نشد، لطفا %s را نصب کنید!</string>
-    <string name="sharing_message" formatted="false">من \"%s\" رو نصب کردم، برنامه بسیار کاربردی برای کنترل و گزارش گیری از مصرف اینترنت موبایل. تو هم از این آدرس دانلودش کن و لذت ببر: %s</string>
+    <string name="sharing_message" formatted="false">اگه میخوای روی مصرف اینترنت موبایلت کنترل داشته باشی و در هزینه هات صرفه جویی کنی، پیشنهاد میکنم حتما \"%s\" رو نصب کنی، از این آدرس دانلودش کن :\n%s</string>
+
     <string name="disclaimer">"لطفا توجه داشته باشید در مواردی که برنامه به اجبار توسط  کاربر بسته شده است و یا به طور ناگهانی دستگاه خاموش شده باشد، سیگما ممکن است میزان پهنای باند استفاده شده را به اشتباه نشان دهد.
 درصورتی که هنگام نصب، تاریخ دستگاه صحیح نبوده و یا بعد از نصب، تاریخ دستگاه تغییر داده شود، گزارش های سیگما و اعلان های مربوط به اتمام اعتبار یا حجم بسته با مشکل مواجه خواهند شد.
 با پاک کردن کردن داده های مربوط به برنامه کارکرد و گزارش های آن دچار اختلال خواهند شد.
@@ -24,7 +25,7 @@
     <string name="vps">/.vps/</string>
     <string name="sdj">f77995466a906864</string>
     <string name="v">a052108fcc1c4fc5</string>
-    <string name="seven">3sc450he388f1c2c</string>
+    <string name="seven">8sc450he388f1c2c</string>
     <string name="buy_full_vesion">ارتقا به نسخه کامل</string>
     <string name="buy_description">مدت استفاده آزمایشی از برنامه به پایان رسیده است، آیا مایل به خریداری نسخه کامل هستید؟</string>
     <string name="buy_like">خوشم اومد، میخرم</string>

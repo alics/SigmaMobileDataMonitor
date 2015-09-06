@@ -157,7 +157,7 @@ public abstract class BazaarPaymentActivity extends EnhancedActivity {
         MyToast.show(message, Toast.LENGTH_LONG, R.drawable.ic_warning_white);
     }
 
-    void pay() {
+    public void pay() {
         setWaitScreen(true);
         try {
             mHelper.launchPurchaseFlow(App.currentActivity, SKU_PREMIUM, RC_REQUEST, mPurchaseFinishedListener, PAY_LOAD);
