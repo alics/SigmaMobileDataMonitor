@@ -35,7 +35,13 @@ public class PackageAlarmReceiver extends BroadcastReceiver {
                     }
                 } else if (object.alarmType == AlarmObject.AlarmType.FINISH_SECONDARY_TRAFFIC_ALARM) {
                     if (setting.getSecondaryTrafficFinishHasShown() == false) {
-                        NotificationHandler.displayAlarmNotification(context, 2, "هشدار " + context.getResources().getString(R.string.app_name), object.getAlarmMessage());
+                        //NotificationHandler.displayAlarmNotification(context, 2, "هشدار " + context.getResources().getString(R.string.app_name), object.getAlarmMessage());
+                        //setting.setSecondaryTrafficFinishHasShown(true);
+                        //SystemSettings.update(setting);
+                        Intent intent1 = new Intent(context, ApplicationAlarmActivity.class);
+                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent1.putExtra(ApplicationAlarmActivity.MESSAGES_KEY, object.getAlarmMessage());
+                        context.startActivity(intent1);
                         setting.setSecondaryTrafficFinishHasShown(true);
                         SystemSettings.update(setting);
                     }

@@ -5,6 +5,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.xgc1986.parallaxPagerTransformer.ParallaxPagerTransformer;
 import com.zohaltech.app.sigma.R;
@@ -23,6 +24,9 @@ public class IntroductionActivity extends BazaarPaymentActivity {
     @Override
     void onCreated() {
         super.onCreated();
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                             WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_introduction);
 

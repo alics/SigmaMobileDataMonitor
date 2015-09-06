@@ -1,4 +1,5 @@
 <resources>
+    <string name="app_name_launcher">Sigma</string>
     <string name="app_name">سیگما</string>
     <string name="press_back_again_to_exit">برای خروج دوباره دکمه بازگشت را فشار دهید</string>
     <string name="speed">"Speed: "</string>
@@ -25,7 +26,7 @@
     <string name="vps">/.vps/</string>
     <string name="sdj">f77995466a906864</string>
     <string name="v">a052108fcc1c4fc5</string>
-    <string name="seven">8sc450he388f1c2c</string>
+    <string name="seven">7sc450he388f1c2c</string>
     <string name="buy_full_vesion">ارتقا به نسخه کامل</string>
     <string name="buy_description">مدت استفاده آزمایشی از برنامه به پایان رسیده است، آیا مایل به خریداری نسخه کامل هستید؟</string>
     <string name="buy_like">خوشم اومد، میخرم</string>
