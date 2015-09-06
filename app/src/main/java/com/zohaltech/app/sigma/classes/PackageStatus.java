@@ -110,8 +110,8 @@ public final class PackageStatus {
             } else if (usedSecondaryTraffic >= dataPackage.getSecondaryTraffic()) {
                 String msg = "حجم شبانه بسته به پایان رسید و ترافیک مصرفی در ساعات شبانه، از حجم اصلی کاسته خواهد شد.";
                 alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.FINISH_SECONDARY_TRAFFIC_ALARM, msg));
-            } else if (usedPrimaryTraffic >= dataPackage.getPrimaryTraffic()) {
-                String msg = "حجم اصلی بسته به پایان رسید و ترافیک مصرفی شما درساعات غیرشبانه به صورت تعرفه آزاد محاسبه خواهد شد.";
+            } else if (usedPrimaryTraffic >= dataPackage.getPrimaryTraffic() && dataPackage.getPrimaryTraffic() != 0) {
+                String msg = "حجم اصلی بسته به پایان رسید، در صورت تمام شدن بسته از سوی اپراتور، هم اکنون به فعال کردن بسته جدید اقدام نمایید.";
                 alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.FINISH_PRIMARY_TRAFFIC_ALARM, msg));
             }
         } else {

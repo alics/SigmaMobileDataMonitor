@@ -107,7 +107,7 @@ public class DataPackages {
     }
 
     public static ArrayList<DataPackage> selectPackagesByOperatorAndPeriod(int operatorId, int period) {
-        String whereClause = " WHERE " + OperatorId + " = " + operatorId + " AND " + Period + " = " + period + " AND " + Custom + " = " + 0;
+        String whereClause = " WHERE " + OperatorId + " = " + operatorId + " AND " + Period + " = " + period + " AND " + Custom + " = " + 0 + " ORDER BY " + PrimaryTraffic;
         return select(whereClause, null);
     }
 
