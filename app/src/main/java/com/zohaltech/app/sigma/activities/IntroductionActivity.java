@@ -1,6 +1,7 @@
 package com.zohaltech.app.sigma.activities;
 
 
+import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
@@ -10,6 +11,7 @@ import android.view.WindowManager;
 import com.xgc1986.parallaxPagerTransformer.ParallaxPagerTransformer;
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.adapters.IntroductionPagerAdapter;
+import com.zohaltech.app.sigma.classes.App;
 
 public class IntroductionActivity extends BazaarPaymentActivity {
     public static final String INTRO_SHOWN = "INTRO_SHOWN";
@@ -73,6 +75,8 @@ public class IntroductionActivity extends BazaarPaymentActivity {
 
     @Override
     void updateUiToPremiumVersion() {
+        Intent intent = new Intent(App.currentActivity, DashboardActivity.class);
+        startActivity(intent);
         finish();
     }
 
