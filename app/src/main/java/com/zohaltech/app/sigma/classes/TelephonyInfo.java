@@ -1,6 +1,5 @@
 package com.zohaltech.app.sigma.classes;
 
-
 import android.content.Context;
 import android.telephony.TelephonyManager;
 
@@ -9,33 +8,17 @@ import java.lang.reflect.Method;
 public final class TelephonyInfo {
 
     private static TelephonyInfo telephonyInfo;
-    private String sim1;
-    private String sim2;
-    private boolean isSIM1Ready;
-    private boolean isSIM2Ready;
-
-    public String getSim1() {
-        return sim1;
-    }
-
-    public String getSim2() {
-        return sim2;
-    }
-
-    public boolean isSIM1Ready() {
-        return isSIM1Ready;
-    }
-
-    public boolean isSIM2Ready() {
-        return isSIM2Ready;
-    }
-
-    public boolean isDualSIM() {
-        return sim2 != null;
-    }
+    private        String        imsiSIM1;
+    private        String        imsiSIM2;
+    private        boolean       isSIM1Ready;
+    private        boolean       isSIM2Ready;
 
     private TelephonyInfo() {
     }
+
+    /*public static void setImsiSIM1(String imsiSIM1) {
+        TelephonyInfo.imsiSIM1 = imsiSIM1;
+    }*/
 
     public static TelephonyInfo getInstance(Context context) {
 
@@ -45,26 +28,24 @@ public final class TelephonyInfo {
 
             TelephonyManager telephonyManager = ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE));
 
-            telephonyInfo.sim1 = telephonyManager.getDeviceId();
-            telephonyInfo.sim2 = null;
-
-//            try {
-//                telephonyInfo.sim1 = getDeviceIdBySlot(context, "getDeviceIdGemini", 0);
-//
-//                String f=getDeviceIdBySlot(context, "getSimOperatorName", 0);
-//                telephonyInfo.sim2 = getDeviceIdBySlot(context, "getDeviceIdGemini", 1);
-//            } catch (GeminiMethodNotFoundException e) {
-//                e.printStackTrace();
+            telephonyInfo.imsiSIM1 = telephonyManager.getDeviceId();
+            ;
+            telephonyInfo.imsiSIM2 = null;
 
             try {
-                telephonyInfo.sim1 = getDeviceIdBySlot(context, "getDeviceId", 0);
-                String f = getDeviceIdBySlot(context, "getSimOperatorName", 0);
-                telephonyInfo.sim2 = getDeviceIdBySlot(context, "getDeviceId", 1);
-            } catch (GeminiMethodNotFoundException e1) {
-                //Call here for next manufacturer's predicted method name if you wish
-                e1.printStackTrace();
+                telephonyInfo.imsiSIM1 = getDeviceIdBySlot(context, "getDeviceIdGemini", 0);
+                telephonyInfo.imsiSIM2 = getDeviceIdBySlot(context, "getDeviceIdGemini", 1);
+            } catch (GeminiMethodNotFoundException e) {
+                e.printStackTrace();
+
+                try {
+                    telephonyInfo.imsiSIM1 = getDeviceIdBySlot(context, "getDeviceId", 0);
+                    telephonyInfo.imsiSIM2 = getDeviceIdBySlot(context, "getDeviceId", 1);
+                } catch (GeminiMethodNotFoundException e1) {
+                    //Call here for next manufacturer's predicted method name if you wish
+                    e1.printStackTrace();
+                }
             }
-            // }
 
             telephonyInfo.isSIM1Ready = telephonyManager.getSimState() == TelephonyManager.SIM_STATE_READY;
             telephonyInfo.isSIM2Ready = false;
@@ -88,6 +69,10 @@ public final class TelephonyInfo {
 
         return telephonyInfo;
     }
+
+    /*public static void setImsiSIM2(String imsiSIM2) {
+        TelephonyInfo.imsiSIM2 = imsiSIM2;
+    }*/
 
     private static String getDeviceIdBySlot(Context context, String predictedMethodName, int slotID) throws GeminiMethodNotFoundException {
 
@@ -119,6 +104,10 @@ public final class TelephonyInfo {
         return imsi;
     }
 
+    /*public static void setSIM1Ready(boolean isSIM1Ready) {
+        TelephonyInfo.isSIM1Ready = isSIM1Ready;
+    }*/
+
     private static boolean getSIMStateBySlot(Context context, String predictedMethodName, int slotID) throws GeminiMethodNotFoundException {
 
         boolean isReady = false;
@@ -149,6 +138,30 @@ public final class TelephonyInfo {
         }
 
         return isReady;
+    }
+
+    /*public static void setSIM2Ready(boolean isSIM2Ready) {
+        TelephonyInfo.isSIM2Ready = isSIM2Ready;
+    }*/
+
+    public String getImsiSIM1() {
+        return imsiSIM1;
+    }
+
+    public String getImsiSIM2() {
+        return imsiSIM2;
+    }
+
+    public boolean isSIM1Ready() {
+        return isSIM1Ready;
+    }
+
+    public boolean isSIM2Ready() {
+        return isSIM2Ready;
+    }
+
+    public boolean isDualSIM() {
+        return imsiSIM2 != null;
     }
 
     private static class GeminiMethodNotFoundException extends Exception {

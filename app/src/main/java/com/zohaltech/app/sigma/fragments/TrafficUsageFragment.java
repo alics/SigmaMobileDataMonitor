@@ -20,10 +20,13 @@ import widgets.ArcProgress;
 
 public class TrafficUsageFragment extends Fragment {
 
-    ArcProgress progressPrimaryUsage;
-    ArcProgress progressSecondaryUsage;
-    TextView    txtSecondary;
-    TextView    txtSecondaryCaption;
+    ArcProgress  progressPrimaryUsage;
+    TextView     txtPrimaryTitle;
+    TextView     txtPrimaryCaption;
+    LinearLayout layoutSecondary;
+    ArcProgress  progressSecondaryUsage;
+    TextView     txtSecondary;
+    TextView     txtSecondaryCaption;
 
     //long   usedPrimaryTraffic;
     //long   totalPrimaryTraffic;
@@ -45,6 +48,9 @@ public class TrafficUsageFragment extends Fragment {
         int size1 = (App.screenWidth) / 2;
         int size2 = (App.screenWidth) / 4;
         progressPrimaryUsage = (ArcProgress) view.findViewById(R.id.progressPrimaryUsage);
+        txtPrimaryTitle = (TextView) view.findViewById(R.id.txtPrimaryTitle);
+        txtPrimaryCaption = (TextView) view.findViewById(R.id.txtPrimaryCaption);
+        layoutSecondary = (LinearLayout) view.findViewById(R.id.layoutSecondary);
         progressSecondaryUsage = (ArcProgress) view.findViewById(R.id.progressSecondaryUsage);
         txtSecondary = (TextView) view.findViewById(R.id.txtSecondary);
         txtSecondaryCaption = (TextView) view.findViewById(R.id.txtSecondaryCaption);
@@ -67,12 +73,22 @@ public class TrafficUsageFragment extends Fragment {
 
     public void updateUI() {
         PackageStatus status = PackageStatus.getCurrentStatus();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            new PrimaryProgressTask(status).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            new SecondaryTrafficTask(status).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        if ((status.getPrimaryTraffic() != 0 && status.getSecondaryTraffic() == 0) || (status.getPrimaryTraffic() == 0 && status.getSecondaryTraffic() != 0)) {
+            layoutSecondary.setVisibility(View.GONE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                new PrimaryProgressTask(status).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            } else {
+                new PrimaryProgressTask(status).execute();
+            }
         } else {
-            new PrimaryProgressTask(status).execute();
-            new SecondaryTrafficTask(status).execute();
+            layoutSecondary.setVisibility(View.VISIBLE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                new PrimaryProgressTask(status).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new SecondaryTrafficTask(status).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            } else {
+                new PrimaryProgressTask(status).execute();
+                new SecondaryTrafficTask(status).execute();
+            }
         }
     }
 
@@ -90,11 +106,25 @@ public class TrafficUsageFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            totalPrimaryTraffic = status.getPrimaryTraffic();
-            //totalPrimaryTraffic = 3221225472L;
-            usedPrimaryTraffic =  status.getUsedPrimaryTraffic() <= totalPrimaryTraffic ? status.getUsedPrimaryTraffic() : totalPrimaryTraffic;
-            //usedPrimaryTraffic =  2738041652L;
-            strPrimaryTraffic = TrafficUnitsUtil.getArcTraffic(usedPrimaryTraffic, totalPrimaryTraffic).replace(" ","");
+            if (status.getPrimaryTraffic() == 0 && status.getSecondaryTraffic() != 0) {
+                totalPrimaryTraffic = status.getSecondaryTraffic();
+                //totalPrimaryTraffic = 3221225472L;
+                usedPrimaryTraffic = status.getUsedSecondaryTraffic() <= totalPrimaryTraffic ? status.getUsedSecondaryTraffic() : totalPrimaryTraffic;
+                //usedPrimaryTraffic =  2738041652L;
+                strPrimaryTraffic = TrafficUnitsUtil.getArcTraffic(usedPrimaryTraffic, totalPrimaryTraffic).replace(" ", "");
+                txtPrimaryTitle.setText("حجم شبانه");
+                txtPrimaryCaption.setVisibility(View.VISIBLE);
+                txtPrimaryCaption.setText(status.getSecondaryCaption());
+            } else {
+                totalPrimaryTraffic = status.getPrimaryTraffic();
+                //totalPrimaryTraffic = 3221225472L;
+                usedPrimaryTraffic = status.getUsedPrimaryTraffic() <= totalPrimaryTraffic ? status.getUsedPrimaryTraffic() : totalPrimaryTraffic;
+                //usedPrimaryTraffic =  2738041652L;
+                strPrimaryTraffic = TrafficUnitsUtil.getArcTraffic(usedPrimaryTraffic, totalPrimaryTraffic).replace(" ", "");
+                txtPrimaryTitle.setText("حجم اصلی");
+                txtPrimaryCaption.setVisibility(View.GONE);
+                txtPrimaryCaption.setText("");
+            }
         }
 
         @Override
@@ -151,9 +181,9 @@ public class TrafficUsageFragment extends Fragment {
             super.onPreExecute();
             totalSecondaryTraffic = status.getSecondaryTraffic();
             //totalSecondaryTraffic = 3221225472L;
-            usedSecondaryTraffic =  status.getUsedSecondaryTraffic() <= totalSecondaryTraffic ? status.getUsedSecondaryTraffic() : totalSecondaryTraffic;
+            usedSecondaryTraffic = status.getUsedSecondaryTraffic() <= totalSecondaryTraffic ? status.getUsedSecondaryTraffic() : totalSecondaryTraffic;
             //usedSecondaryTraffic =  2093796557L;
-            strSecondaryTraffic = TrafficUnitsUtil.getArcTraffic(usedSecondaryTraffic, totalSecondaryTraffic).replace(" ","");
+            strSecondaryTraffic = TrafficUnitsUtil.getArcTraffic(usedSecondaryTraffic, totalSecondaryTraffic).replace(" ", "");
             txtSecondaryCaption.setText(status.getSecondaryCaption());
         }
 

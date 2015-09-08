@@ -19,6 +19,7 @@
             android:scaleType="centerInside"/>
 
         <widgets.MyTextView
+            android:id="@+id/txtPrimaryTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -26,9 +27,20 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/white"/>
 
+        <widgets.MyTextView
+            android:id="@+id/txtPrimaryCaption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="02:00 تا 14:00"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/white"/>
+
+
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layoutSecondary"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
