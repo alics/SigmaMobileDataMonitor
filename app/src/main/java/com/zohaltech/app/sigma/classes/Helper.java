@@ -92,6 +92,7 @@ public final class Helper {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return operator;
     }
 
