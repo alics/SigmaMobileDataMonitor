@@ -90,15 +90,21 @@ public final class PackageStatus {
 
         PackageHistory reservedPackageHistory = PackageHistories.getReservedPackage();
 
-        long usedPrimaryTraffic;
-        if (history.getPrimaryPackageEndDateTime() == null || "".equals(history.getPrimaryPackageEndDateTime())) {
-            usedPrimaryTraffic = UsageLogs.getUsedPrimaryTrafficOfPackage(dataPackage, history);
-        } else {
-            usedPrimaryTraffic = dataPackage.getPrimaryTraffic();
-        }
+//        long usedPrimaryTraffic;
+//        if (history.getPrimaryPackageEndDateTime() == null || "".equals(history.getPrimaryPackageEndDateTime())) {
+//            usedPrimaryTraffic = UsageLogs.getUsedPrimaryTrafficOfPackage(dataPackage, history);
+//        } else {
+//            usedPrimaryTraffic = dataPackage.getPrimaryTraffic();
+//        }
+//        long usedSecondaryTraffic;
+//        if (history.getSecondaryTrafficEndDateTime() == null || "".equals(history.getSecondaryTrafficEndDateTime())) {
+//            usedSecondaryTraffic = UsageLogs.getUsedSecondaryTrafficOfPackage(dataPackage, history);
+//        } else {
+//            usedSecondaryTraffic = dataPackage.getSecondaryTraffic();
+//        }
 
-        if (dataPackage.getSecondaryTraffic() != null && dataPackage.getSecondaryTraffic() != 0) {
-            long usedSecondaryTraffic = UsageLogs.getUsedSecondaryTrafficOfPackage(dataPackage, history);
+        if (dataPackage.getSecondaryTraffic() != 0 && dataPackage.getPrimaryTraffic() != 0) {
+            //long usedSecondaryTraffic = UsageLogs.getUsedSecondaryTrafficOfPackage(dataPackage, history);
             if (usedSecondaryTraffic >= dataPackage.getSecondaryTraffic() &&
                     usedPrimaryTraffic >= dataPackage.getPrimaryTraffic()) {
                 String msg = "حجم اصلی و شبانه تمام شد";
@@ -114,14 +120,22 @@ public final class PackageStatus {
                 String msg = "حجم اصلی بسته به پایان رسید، در صورت تمام شدن بسته از سوی اپراتور، هم اکنون به فعال کردن بسته جدید اقدام نمایید.";
                 alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.FINISH_PRIMARY_TRAFFIC_ALARM, msg));
             }
-        } else {
-            if (usedPrimaryTraffic >= dataPackage.getPrimaryTraffic() &&
-                    dataPackage.getPrimaryTraffic() != 0) {
+        } else if (dataPackage.getSecondaryTraffic() != 0 && dataPackage.getPrimaryTraffic() == 0) {
+            if (usedPrimaryTraffic >= dataPackage.getPrimaryTraffic() && dataPackage.getPrimaryTraffic() != 0) {
                 String msg = "حجم اصلی تمام شد";
                 if (reservedPackageHistory != null)
                     msg += " و بسته رزرو فعال گردید.";
                 else msg += " و بسته به پایان رسید.";
                 alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.FINISH_PRIMARY_TRAFFIC_ALARM, msg));
+                PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.TRAFFIC_FINISHED);
+            }
+        }else {//if (dataPackage.getSecondaryTraffic() == 0 && dataPackage.getPrimaryTraffic() != 0) {
+            if (usedSecondaryTraffic >= dataPackage.getSecondaryTraffic() && dataPackage.getPrimaryTraffic() != 0) {
+                String msg = "حجم شبانه تمام شد";
+                if (reservedPackageHistory != null)
+                    msg += " و بسته رزرو فعال گردید.";
+                else msg += " و بسته به پایان رسید.";
+                alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.FINISH_SECONDARY_TRAFFIC_ALARM, msg));
                 PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.TRAFFIC_FINISHED);
             }
         }
