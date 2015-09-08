@@ -39,40 +39,40 @@ import widgets.MyToast;
 
 public class PackageSettingsActivity extends EnhancedActivity {
 
-    public static final String INIT_MODE_KEY = "INIT_MODE";
-    public static final String MODE_INSERT_CUSTOM = "INSERT_CUSTOM";
-    public static final String MODE_SETTING_ACTIVE = "SETTING_ACTIVE";
+    public static final String INIT_MODE_KEY         = "INIT_MODE";
+    public static final String MODE_INSERT_CUSTOM    = "INSERT_CUSTOM";
+    public static final String MODE_SETTING_ACTIVE   = "SETTING_ACTIVE";
     public static final String MODE_SETTING_RESERVED = "SETTING_RESERVED";
-    public static final String PACKAGE_ID_KEY = "PACKAGE_ID";
-    public static final String FORM_MODE_KEY = "FORM_MODE";
-    public static final String FORM_MODE_NEW = "FORM_MODE_NEW";
-    public static final String FORM_MODE_EDIT = "FORM_MODE_EDIT";
+    public static final String PACKAGE_ID_KEY        = "PACKAGE_ID";
+    public static final String FORM_MODE_KEY         = "FORM_MODE";
+    public static final String FORM_MODE_NEW         = "FORM_MODE_NEW";
+    public static final String FORM_MODE_EDIT        = "FORM_MODE_EDIT";
 
-    EditText edtPackageTitle;
-    TextView txtPackageTitle;
+    EditText         edtPackageTitle;
+    TextView         txtPackageTitle;
     AppCompatSpinner spinnerOperators;
-    TextView txtOperator;
-    EditText edtPackageValidPeriod;
-    TextView txtPackageValidPeriod;
-    EditText edtPrimaryTraffic;
-    TextView txtPrimaryTraffic;
-    EditText edtSecondaryTraffic;
-    TextView txtSecondaryTraffic;
-    Button btnSecondaryStartTime;
-    TextView txtSecondaryStartTime;
-    Button btnSecondaryEndTime;
-    TextView txtSecondaryEndTime;
-    EditText edtTrafficAlarm;
-    SwitchCompat switchTrafficAlarm;
-    TextView txtPercentTrafficAlarm;
-    EditText edtLeftDaysAlarm;
-    TextView txtLeftDaysAlarm;
-    SwitchCompat switchLeftDaysAlarm;
-    DataPackage dataPackage;
-    DataPackage customPackage;
-    String initMode;
-    Setting setting;
-    String formMode;
+    TextView         txtOperator;
+    EditText         edtPackageValidPeriod;
+    TextView         txtPackageValidPeriod;
+    EditText         edtPrimaryTraffic;
+    TextView         txtPrimaryTraffic;
+    EditText         edtSecondaryTraffic;
+    TextView         txtSecondaryTraffic;
+    Button           btnSecondaryStartTime;
+    TextView         txtSecondaryStartTime;
+    Button           btnSecondaryEndTime;
+    TextView         txtSecondaryEndTime;
+    EditText         edtTrafficAlarm;
+    SwitchCompat     switchTrafficAlarm;
+    TextView         txtPercentTrafficAlarm;
+    EditText         edtLeftDaysAlarm;
+    TextView         txtLeftDaysAlarm;
+    SwitchCompat     switchLeftDaysAlarm;
+    DataPackage      dataPackage;
+    DataPackage      customPackage;
+    String           initMode;
+    Setting          setting;
+    String           formMode;
 
     @Override
     void onCreated() {
@@ -230,8 +230,8 @@ public class PackageSettingsActivity extends EnhancedActivity {
         setting = Settings.getCurrentSettings();
 
         int validPeriod = edtPackageValidPeriod.getVisibility() == View.GONE ?
-                Integer.valueOf(txtPackageValidPeriod.getText().toString()) :
-                Integer.valueOf(edtPackageValidPeriod.getText().toString());
+                          Integer.valueOf(txtPackageValidPeriod.getText().toString()) :
+                          Integer.valueOf(edtPackageValidPeriod.getText().toString());
 
         if (trafficAlarm && leftDaysAlarm) {
             if (!Validator.validateEditText(edtLeftDaysAlarm, getString(R.string.left_days_alarm)))
@@ -284,8 +284,8 @@ public class PackageSettingsActivity extends EnhancedActivity {
         Boolean leftDaysAlarm = switchLeftDaysAlarm.isChecked();
 
         int validPeriod = edtPackageValidPeriod.getVisibility() == View.GONE ?
-                Integer.valueOf(txtPackageValidPeriod.getText().toString()) :
-                Integer.valueOf(edtPackageValidPeriod.getText().toString());
+                          Integer.valueOf(txtPackageValidPeriod.getText().toString()) :
+                          Integer.valueOf(edtPackageValidPeriod.getText().toString());
 
         setting = Settings.getCurrentSettings();
 
@@ -396,35 +396,30 @@ public class PackageSettingsActivity extends EnhancedActivity {
 
     private void addCustomPackage() {
         customPackage = new DataPackage();
-        long secondaryTraffic;
         String secondaryTrafficStartTime;
         String secondaryTrafficEndTime;
 
         if (!Validator.validateEditText(edtPackageTitle, getString(R.string.package_title)))
             return;
-        if (!Validator.validateEditText(edtPrimaryTraffic, getString(R.string.primary_traffic)))
-            return;
+        //if (!Validator.validateEditText(edtPrimaryTraffic, getString(R.string.primary_traffic)))
+        //    return;
         if (!Validator.validateEditText(edtPackageValidPeriod, getString(R.string.validation_period)))
             return;
 
-        if (edtPrimaryTraffic.getText().toString().equals("0") &&
-                (edtSecondaryTraffic.getText().toString().equals("0") ||
-                        edtSecondaryTraffic.getText().length() == 0)) {
+        if ((edtPrimaryTraffic.getText().toString().equals("0") || edtPrimaryTraffic.getText().length() == 0) &&
+            (edtSecondaryTraffic.getText().toString().equals("0") || edtSecondaryTraffic.getText().length() == 0)) {
             MyToast.show("حجم اصلی و شبانه همزمان نمی توانند صفر باشند.", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
             return;
         }
 
         if (switchLeftDaysAlarm.isChecked() &&
-                Integer.valueOf(edtLeftDaysAlarm.getText().toString()) >=
-                        Integer.valueOf(edtPackageValidPeriod.getText().toString())) {
+            Integer.valueOf(edtLeftDaysAlarm.getText().toString()) >=
+            Integer.valueOf(edtPackageValidPeriod.getText().toString())) {
             MyToast.show("هشدار روز باقیمانده باید از مدت اعتبار بسته کمتر باشد", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
             return;
         }
 
-        if (edtSecondaryTraffic.getText().toString().trim().length() > 0 &&
-                !edtSecondaryTraffic.getText().toString().equals("0")) {
-            secondaryTraffic = TrafficUnitsUtil.MbToByte(Integer.valueOf(edtSecondaryTraffic.getText().toString()));
-            customPackage.setSecondaryTraffic(secondaryTraffic);
+        if (edtSecondaryTraffic.getText().toString().trim().length() > 0 && !edtSecondaryTraffic.getText().toString().equals("0")) {
             if (btnSecondaryStartTime.getText().toString().trim().length() == 0) {
                 MyToast.show("لطفا بازه مصرف شبانه را وارد کنید", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
                 return;
@@ -453,14 +448,16 @@ public class PackageSettingsActivity extends EnhancedActivity {
         int period = Integer.valueOf(edtPackageValidPeriod.getText().toString());
         customPackage.setPeriod(period);
         customPackage.setPrice(0);
-        Long primaryTraffic = TrafficUnitsUtil.MbToByte(Integer.valueOf(edtPrimaryTraffic.getText().toString()));
+        Long primaryTraffic = TrafficUnitsUtil.MbToByte(edtPrimaryTraffic.getText().length() > 0 ? Integer.valueOf(edtPrimaryTraffic.getText().toString()) : 0);
         customPackage.setPrimaryTraffic(primaryTraffic);
+        Long secondaryTraffic = TrafficUnitsUtil.MbToByte(edtSecondaryTraffic.getText().length() > 0?Integer.valueOf(edtSecondaryTraffic.getText().toString()):0);
+        customPackage.setSecondaryTraffic(secondaryTraffic);
         customPackage.setUssdCode(null);
         customPackage.setCustom(true);
 
         if (PackageHistories.getActivePackage() != null) {
             DialogManager.showConfirmationDialog(App.currentActivity, "فعالسازی بسته سفارشی", "با تأیید بسته سفارشی اطلاعات مربوط به بسته های فعال و رزرو از بین می رود، آیا انجام شود؟",
-                    "بله", "خیر", null, new Runnable() {
+                                                 "بله", "خیر", null, new Runnable() {
                         @Override
                         public void run() {
                             activate();
@@ -481,12 +478,12 @@ public class PackageSettingsActivity extends EnhancedActivity {
         boolean saveRes = saveActivePackageSettings(false);
         if (result != -1 && saveRes) {
             PackageHistories.insert(new PackageHistory(Integer.valueOf(result + ""),
-                    Helper.getCurrentDateTime(),
-                    null,
-                    null,
-                    null,
-                    null,
-                    PackageHistory.StatusEnum.ACTIVE.ordinal()));
+                                                       Helper.getCurrentDateTime(),
+                                                       null,
+                                                       null,
+                                                       null,
+                                                       null,
+                                                       PackageHistory.StatusEnum.ACTIVE.ordinal()));
             finish();
         }
     }
