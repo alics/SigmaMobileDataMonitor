@@ -407,6 +407,11 @@ public class PackageSettingsActivity extends EnhancedActivity {
         if (!Validator.validateEditText(edtPackageValidPeriod, getString(R.string.validation_period)))
             return;
 
+        if(edtPrimaryTraffic.getText().toString().equals("0") &&
+           edtSecondaryTraffic.getText().toString().equals("0")){
+            MyToast.show("حجم اصلی و شبانه همزمان نمی توانند صفر باشند.", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
+            return;
+        }
 
         if (switchLeftDaysAlarm.isChecked() &&
             Integer.valueOf(edtLeftDaysAlarm.getText().toString()) >=
