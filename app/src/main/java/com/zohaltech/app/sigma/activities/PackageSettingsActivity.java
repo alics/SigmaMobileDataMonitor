@@ -406,7 +406,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
             return;
         if (!Validator.validateEditText(edtPackageValidPeriod, getString(R.string.validation_period)))
             return;
-
+        //if ()
 
         if (switchLeftDaysAlarm.isChecked() &&
             Integer.valueOf(edtLeftDaysAlarm.getText().toString()) >=

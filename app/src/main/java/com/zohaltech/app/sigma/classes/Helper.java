@@ -67,7 +67,12 @@ public final class Helper {
 
     public static void runUssd(FragmentActivity activity, DataPackage dataPackage) {
         String code = String.format("%s%s", dataPackage.getUssdCode().substring(0, dataPackage.getUssdCode().length() - 1), Uri.encode("#"));
-        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        Intent callIntent;
+        if (Helper.isDualSim()) {
+            callIntent = new Intent(Intent.ACTION_DIAL);
+        } else {
+            callIntent = new Intent(Intent.ACTION_CALL);
+        }
         callIntent.setData(Uri.parse("tel:" + code));
         activity.startActivityForResult(callIntent, dataPackage.getId());
     }
@@ -92,9 +97,8 @@ public final class Helper {
 
     public static Boolean isDualSim() {
         TelephonyInfo telephonyInfo = TelephonyInfo.getInstance(App.context);
-        String sim1 = telephonyInfo.getSim1();
-        String sim2 = telephonyInfo.getSim2();
-
+        String sim1 = telephonyInfo.getImsiSIM1();
+        String sim2 = telephonyInfo.getImsiSIM2();
         return !(sim2 == null || sim2.equals(sim1));
     }
 

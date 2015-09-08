@@ -147,10 +147,10 @@ public class DashboardActivity extends BazaarPaymentActivity {
             showPaymentDialog();
         }
 
-        if (App.uiPreferences.getBoolean(DUAL_SIM_SHOWN, false) == false && Helper.isDualSim()) {
-            DialogManager.showNotificationDialog(this, "دستگاه دو سیم کارته", "دستگاه شما دو سیم کارته است و برای استفاده از سیگما، سیم کارتی که اینترنت فعال دارد، میبایست روی \"سیم یک\" قرار داده شود.", "خُب");
-        }
-        App.preferences.edit().putBoolean(DUAL_SIM_SHOWN, true);
+        //if (App.uiPreferences.getBoolean(DUAL_SIM_SHOWN, false) == false && Helper.isDualSim()) {
+        //    DialogManager.showNotificationDialog(this, "دستگاه دو سیم کارته", "دستگاه شما دو سیم کارته است و برای استفاده از سیگما، سیم کارتی که اینترنت فعال دارد، میبایست روی \"سیم یک\" قرار داده شود.", "خُب");
+        //}
+        //App.preferences.edit().putBoolean(DUAL_SIM_SHOWN, true);
     }
 
     private void showPaymentDialog() {

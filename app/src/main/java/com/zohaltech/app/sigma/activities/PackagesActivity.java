@@ -159,7 +159,7 @@ public class PackagesActivity extends EnhancedActivity {
                                 }
                             });
                 }
-            }, 2000);
+            }, 1000);
         }
     }
 }
