@@ -115,7 +115,8 @@ public final class PackageStatus {
                 alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.FINISH_PRIMARY_TRAFFIC_ALARM, msg));
             }
         } else {
-            if (usedPrimaryTraffic >= dataPackage.getPrimaryTraffic()) {
+            if (usedPrimaryTraffic >= dataPackage.getPrimaryTraffic() &&
+                    dataPackage.getPrimaryTraffic() != 0) {
                 String msg = "حجم اصلی تمام شد";
                 if (reservedPackageHistory != null)
                     msg += " و بسته رزرو فعال گردید.";
