@@ -43,8 +43,8 @@
             android:layout_height="0dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="استفاده از سیگما با تمامی امکانات، به مدت یک هفته رایگان است و پس از آن میبایست از طریق پرداخت درون برنامه ای، نسخه کامل و بدون محدودیت را خریداری نمایید."
+            android:gravity="right"
+            android:text="استفاده از سیگما با تمامی امکانات، به مدت یک هفته رایگان است و پس از آن بخش های خرید بسته و مدیریت بسته غیرفعال خواهند شد و میبایست از طریق پرداخت درون برنامه ای، نسخه کامل و بدون محدودیت را خریداری نمایید."
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/secondary_text"/>
 

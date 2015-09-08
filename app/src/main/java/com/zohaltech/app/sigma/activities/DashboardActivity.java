@@ -13,9 +13,7 @@ import android.widget.Toast;
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.adapters.UsagePagerAdapter;
 import com.zohaltech.app.sigma.classes.App;
-import com.zohaltech.app.sigma.classes.ConstantParams;
 import com.zohaltech.app.sigma.classes.DialogManager;
-import com.zohaltech.app.sigma.classes.Helper;
 import com.zohaltech.app.sigma.classes.LicenseManager;
 import com.zohaltech.app.sigma.classes.WebApiClient;
 import com.zohaltech.app.sigma.dal.DataAccess;
@@ -25,7 +23,8 @@ import widgets.MyViewPagerIndicator;
 
 public class DashboardActivity extends BazaarPaymentActivity {
 
-    private static final String DUAL_SIM_SHOWN = "DUAL_SIM_SHOWN";
+    //private static final String DUAL_SIM_SHOWN        = "DUAL_SIM_SHOWN";
+    private static final String EXPIRED_MESSAGE_SHOWN = "EXPIRED_MESSAGE_SHOWN";
     ViewPager            pagerUsages;
     MyViewPagerIndicator indicator;
     Button               btnPackageManagement;
@@ -37,6 +36,7 @@ public class DashboardActivity extends BazaarPaymentActivity {
     UsagePagerAdapter usagePagerAdapter;
 
     long startTime;
+    String paymentDialogMessage;
 
     @Override
     void onCreated() {
@@ -86,16 +86,26 @@ public class DashboardActivity extends BazaarPaymentActivity {
         btnPackageManagement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(App.currentActivity, ManagementActivity.class);
-                startActivity(myIntent);
+                if (LicenseManager.getLicenseStatus() != LicenseManager.Status.EXPIRED) {
+                    Intent myIntent = new Intent(App.currentActivity, ManagementActivity.class);
+                    startActivity(myIntent);
+                } else {
+                    paymentDialogMessage = "برای استفاده از این قسمت میبایست به نسخه کامل ارتقا دهید، آیا مایل به خریداری نسخه کامل هستید؟";
+                    showPaymentDialog();
+                }
             }
         });
 
         btnPurchasePackage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(App.currentActivity, PackagesActivity.class);
-                startActivity(intent);
+                if (LicenseManager.getLicenseStatus() != LicenseManager.Status.EXPIRED) {
+                    Intent intent = new Intent(App.currentActivity, PackagesActivity.class);
+                    startActivity(intent);
+                } else {
+                    paymentDialogMessage = "برای استفاده از این قسمت میبایست به نسخه کامل ارتقا دهید، آیا مایل به خریداری نسخه کامل هستید؟";
+                    showPaymentDialog();
+                }
             }
         });
 
@@ -143,8 +153,10 @@ public class DashboardActivity extends BazaarPaymentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (LicenseManager.getLicenseStatus() == LicenseManager.Status.EXPIRED) {
+        if (App.uiPreferences.getBoolean(EXPIRED_MESSAGE_SHOWN, false) == false && LicenseManager.getLicenseStatus() == LicenseManager.Status.EXPIRED) {
+            paymentDialogMessage = getString(R.string.buy_description);
             showPaymentDialog();
+            App.uiPreferences.edit().putBoolean(EXPIRED_MESSAGE_SHOWN, true).commit();
         }
 
         //if (App.uiPreferences.getBoolean(DUAL_SIM_SHOWN, false) == false && Helper.isDualSim()) {
@@ -157,7 +169,7 @@ public class DashboardActivity extends BazaarPaymentActivity {
         destroyPaymentDialog();
         paymentDialog = DialogManager.getPopupDialog(App.currentActivity,
                                                      getString(R.string.buy_full_vesion),
-                                                     getString(R.string.buy_description),
+                                                     paymentDialogMessage,
                                                      getString(R.string.buy_like),
                                                      getString(R.string.buy_sora),
                                                      null,
@@ -170,7 +182,8 @@ public class DashboardActivity extends BazaarPaymentActivity {
                                                      new Runnable() {
                                                          @Override
                                                          public void run() {
-                                                             finish();
+                                                             //finish();
+                                                             paymentDialog.dismiss();
                                                          }
                                                      });
         paymentDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
