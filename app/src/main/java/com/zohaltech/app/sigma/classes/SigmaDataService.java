@@ -17,19 +17,18 @@ import java.util.concurrent.TimeUnit;
 
 public class SigmaDataService extends Service {
 
-    public static final  String  TODAY_USAGE_BYTES     = "TODAY_USAGE_BYTES";
-    public static final  String  TODAY_USAGE_ACTION    = "TODAY_USAGE_ACTION";
-    public static final  String  APPLICATION_ALARM_ACTION = "APPLICATION_ALARM_ACTION";
-    private static final String  LAST_RECEIVED_BYTES   = "LAST_RECEIVED_BYTES";
-    private static final String  LAST_SENT_BYTES       = "LAST_SENT_BYTES";
-    private static final String  TODAY_USAGE_DATE      = "TODAY_USAGE_DATE";
-    private static final String  ONE_MINUTE_USED_BYTES = "ONE_MINUTE_USED_BYTES";
-    private static final int     USAGE_LOG_INTERVAL    = 60;
-    private static       boolean firstTime             = true;
-    private static       int     usageLogInterval      = 0;
+    public static final  String TODAY_USAGE_BYTES        = "TODAY_USAGE_BYTES";
+    public static final  String TODAY_USAGE_ACTION       = "TODAY_USAGE_ACTION";
+    public static final  String APPLICATION_ALARM_ACTION = "APPLICATION_ALARM_ACTION";
+    private static final String LAST_RECEIVED_BYTES      = "LAST_RECEIVED_BYTES";
+    private static final String LAST_SENT_BYTES          = "LAST_SENT_BYTES";
+    private static final String TODAY_USAGE_DATE         = "TODAY_USAGE_DATE";
+    private static final String ONE_MINUTE_USED_BYTES    = "ONE_MINUTE_USED_BYTES";
+    private static final int    USAGE_LOG_INTERVAL       = 60;
+    private static       int    usageLogInterval         = 0;
     private static ScheduledExecutorService executorService;
-
-    private Runnable runnable = new Runnable() {
+    private boolean  firstTime = true;
+    private Runnable runnable  = new Runnable() {
         @Override
         public void run() {
             long currentReceivedBytes = android.net.TrafficStats.getMobileRxBytes();
@@ -47,6 +46,11 @@ public class SigmaDataService extends Service {
                 }
                 receivedBytes = currentReceivedBytes - App.preferences.getLong(LAST_RECEIVED_BYTES, 0);
                 sentBytes = currentSentBytes - App.preferences.getLong(LAST_SENT_BYTES, 0);
+                if (receivedBytes < 0 || sentBytes < 0) {
+                    receivedBytes = receivedBytes >= 0 ? receivedBytes : 0;
+                    sentBytes = sentBytes >= 0 ? sentBytes : 0;
+                    firstTime = true;
+                }
                 App.preferences.edit().putLong(LAST_RECEIVED_BYTES, currentReceivedBytes).apply();
                 App.preferences.edit().putLong(LAST_SENT_BYTES, currentSentBytes).apply();
             }
