@@ -130,6 +130,6 @@ public class DataPackage {
     }
 
     public String getPackageDescription() {
-        return getTitle() + "\n" + getPrice() + " تومان\n" + getUssdCode();
+        return getTitle() + "\n" + getPrice() + " تومان";
     }
 }
