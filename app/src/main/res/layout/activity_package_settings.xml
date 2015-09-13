@@ -69,7 +69,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="عنوان بسته : "
-                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="@color/primary_text"/>
 
                     </LinearLayout>
 
@@ -108,7 +109,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:text="اپراتور : "
-                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="@color/primary_text"/>
 
                     </LinearLayout>
 
@@ -156,7 +158,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="مدت اعتبار : "
-                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="@color/primary_text"/>
 
                     </LinearLayout>
 
@@ -202,7 +205,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="حجم اصلی : "
-                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="@color/primary_text"/>
 
                     </LinearLayout>
 
@@ -248,7 +252,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="حجم شبانه : "
-                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="@color/primary_text"/>
 
                     </LinearLayout>
 
@@ -309,7 +314,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="بازه مصرف شبانه : "
-                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="@color/primary_text"/>
 
                     </LinearLayout>
 
