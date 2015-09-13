@@ -65,8 +65,9 @@ public class AboutActivity extends EnhancedActivity {
         btnRate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
+                Intent intent = new Intent(Intent.ACTION_EDIT);
                 intent.setData(Uri.parse(marketUri));
+                intent.setPackage("com.farsitel.bazaar");
                 if (!myStartActivity(intent)) {
                     intent.setData(Uri.parse(marketWebsiteUri));
                     if (!myStartActivity(intent)) {
