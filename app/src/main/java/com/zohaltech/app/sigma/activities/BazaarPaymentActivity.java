@@ -93,7 +93,7 @@ public abstract class BazaarPaymentActivity extends EnhancedActivity {
                         // Hooray, IAB is fully set up!
                         mHelper.queryInventoryAsync(mGotInventoryListener);
                     }
-                });
+                },IabHelper.MARKET_BAZAAR);
             } catch (MyRuntimeException e) {
                 //Log.e(TAG, "برنامه بازار نصب نیست");
                 e.printStackTrace();

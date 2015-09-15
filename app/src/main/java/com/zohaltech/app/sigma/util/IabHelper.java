@@ -150,6 +150,19 @@ public class IabHelper {
     public static final String GET_SKU_DETAILS_ITEM_LIST      = "ITEM_ID_LIST";
     public static final String GET_SKU_DETAILS_ITEM_TYPE_LIST = "ITEM_TYPE_LIST";
 
+    //markets
+    public static final int MARKET_CANDO	= 1;
+    public static final int MARKET_BAZAAR	= 2;
+    public static final int MARKET_PLAY		= 3;
+
+    //market params
+    static final String CANDO_SERVICE_ACTION	= "com.ada.market.service.payment.BIND";
+    static final String CANDO_NAMESPACE			= "com.ada.market";
+    static final String BAZAAR_SERVICE_ACTION	= "ir.cafebazaar.pardakht.InAppBillingService.BIND";
+    static final String BAZAAR_NAMESPACE		= "com.farsitel.bazaar";
+    static final String PLAY_SERVICE_ACTION		= "com.android.vending.billing.InAppBillingService.BIND";
+    static final String PLAY_NAMESPACE			= "com.android.vending";
+
     /**
      * Creates an instance. After creation, it will not yet be ready to use. You must perform
      * setup by calling {@link #startSetup} and wait for setup to complete. This constructor does not
@@ -201,7 +214,7 @@ public class IabHelper {
      *
      * @param listener The listener to notify when the setup process is complete.
      */
-    public void startSetup(final OnIabSetupFinishedListener listener) {
+    public void startSetup(final OnIabSetupFinishedListener listener, int market ) {
         // If already set up, can't do it again.
         checkNotDisposed();
         if (mSetupDone)
