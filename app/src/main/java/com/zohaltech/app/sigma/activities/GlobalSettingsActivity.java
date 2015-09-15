@@ -15,7 +15,7 @@ import com.zohaltech.app.sigma.classes.LicenseManager;
 import com.zohaltech.app.sigma.dal.Settings;
 import com.zohaltech.app.sigma.entities.Setting;
 
-public class GlobalSettingsActivity extends BazaarPaymentActivity {
+public class GlobalSettingsActivity extends PaymentActivity {
 
     SwitchCompat switchShowNotification;
     SwitchCompat switchShowNotificationWhenDataIsOn;

@@ -16,6 +16,10 @@ import java.util.Locale;
 
 public class App extends Application {
 
+    public static final int MARKET_BAZAAR = 0;
+    public static final int MARKET_CANDO  = 1;
+    public static final int MARKET_PLAY   = 2;
+
     public static Context           context;
     public static Activity          currentActivity;
     public static SharedPreferences preferences;
@@ -30,6 +34,15 @@ public class App extends Application {
     public static int               screenHeight;
     public static Locale            locale;
     public static KeyguardManager   keyguardManager;
+    public static int               market;
+    public static String            marketName;
+    public static String            marketPackage;
+    public static String            marketAction;
+    public static String            marketUri;
+    public static String            marketWebsiteUri;
+    public static String            marketPollUri;
+    public static String            marketPollIntent;
+    public static String            marketPublicKey;
 
     public static void setAppLocal() {
         locale = new Locale("en");
@@ -54,6 +67,35 @@ public class App extends Application {
         screenWidth = getResources().getDisplayMetrics().widthPixels;
         screenHeight = getResources().getDisplayMetrics().heightPixels;
         keyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+
+        //todo : set market here and in manifest
+        market = MARKET_BAZAAR;
+        marketName = "بازار";
+        marketPackage = "com.farsitel.bazaar";
+        marketAction = "ir.cafebazaar.pardakht.InAppBillingService.BIND";
+        marketUri = "bazaar://details?id=" + getPackageName();
+        marketWebsiteUri = "http://cafebazaar.ir/app/" + getPackageName();
+        marketPollUri = "bazaar://details?id=" + getPackageName();
+        marketPollIntent = Intent.ACTION_EDIT;
+        marketPublicKey = ConstantParams.getBazaarPublicKey();
+
+        //market = MARKET_CANDO;
+        //marketName = "کندو";
+        //marketPackage = "com.ada.market";
+        //marketAction = "com.ada.market.service.payment.BIND";
+        //marketUri = "cando://details?id=" + getPackageName();
+        //marketWebsiteUri = "http://cando.asr24.com/app.jsp?package=" + getPackageName();
+        //marketPollUri = "cando://leave-review?id=" + getPackageName();
+        //marketPollIntent = Intent.ACTION_VIEW;
+        //marketPublicKey = ConstantParams.getCandoPublicKey();
+
+        //market = MARKET_PLAY;
+        //marketName = "Google Play";
+        //marketPackage = "com.android.vending";
+        //marketAction = "com.android.vending.billing.InAppBillingService.BIND";
+        //marketUri = "market://details?id=" + getPackageName();
+        //marketWebsiteUri = "" + getPackageName();
+        //marketPollIntent = Intent.ACTION_EDIT;
 
         AlarmHandler.start(context);
 

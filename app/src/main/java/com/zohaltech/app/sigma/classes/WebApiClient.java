@@ -52,6 +52,7 @@ public class WebApiClient {
                                 jsonObject.accumulate("ApiVersion", Build.VERSION.SDK_INT);
                                 jsonObject.accumulate("OperatorId", Helper.getOperator().ordinal());
                                 jsonObject.accumulate("IsPurchased", false);
+                                jsonObject.accumulate("MarketId", App.market);
                                 setJsonObject(jsonObject);
                                 Boolean result = post(getJsonObject());
                                 setting.setInstalled(result);
@@ -70,6 +71,7 @@ public class WebApiClient {
                                 jsonObject.accumulate("ApiVersion", Build.VERSION.SDK_INT);
                                 jsonObject.accumulate("OperatorId", Helper.getOperator().ordinal());
                                 jsonObject.accumulate("IsPurchased", true);
+                                jsonObject.accumulate("MarketId", App.market);
                                 setJsonObject(jsonObject);
                                 Boolean result = post(getJsonObject());
                                 setting.setRegistered(result);
@@ -92,7 +94,7 @@ public class WebApiClient {
             HttpClient httpclient = new DefaultHttpClient();
             // 2. make POST request to the given URL
             HttpPost httpPost = new HttpPost(HOST_URL);
-            String json = "";
+            String json;
             // 3. build jsonObject
             //JSONObject jsonObject = getJsonObject();
 

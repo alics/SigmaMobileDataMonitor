@@ -1,2 +1,6 @@
 Version 1.07 :
 - fix rating method
+- set notification priority to high
+- add cando payment
+- fix in app payment for whom has no market
+- fix payment dialog when back pressed

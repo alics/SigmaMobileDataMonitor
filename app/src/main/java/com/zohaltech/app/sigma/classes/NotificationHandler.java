@@ -5,7 +5,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 
@@ -31,7 +30,7 @@ public class NotificationHandler {
     }
 
     public static Notification getDataUsageNotification(Context context, int iconId, String title, String text) {
-        int priority = NotificationCompat.PRIORITY_DEFAULT;
+        int priority = NotificationCompat.PRIORITY_HIGH;
         int visibility = NotificationCompat.VISIBILITY_PUBLIC;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             if (!Settings.getCurrentSettings().getShowNotificationInLockScreen()) {
@@ -72,7 +71,7 @@ public class NotificationHandler {
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(R.drawable.ic_notification_white)
-                        //.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher))
+                                //.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher))
                         .setContentTitle(title)
                         .setContentText(text)
                         .setShowWhen(true)
@@ -82,13 +81,11 @@ public class NotificationHandler {
                         .setColor(App.context.getResources().getColor(R.color.primary))
                         .setAutoCancel(true);
 
-        if (setting.getVibrateInAlarms() && setting.getSoundInAlarms() == false){
+        if (setting.getVibrateInAlarms() && setting.getSoundInAlarms() == false) {
             builder.setDefaults(Notification.DEFAULT_VIBRATE);
-        }
-        else if (setting.getSoundInAlarms() && setting.getVibrateInAlarms() ==false){
+        } else if (setting.getSoundInAlarms() && setting.getVibrateInAlarms() == false) {
             builder.setDefaults(Notification.DEFAULT_SOUND);
-        }
-        else if (setting.getSoundInAlarms() && setting.getVibrateInAlarms()){
+        } else if (setting.getSoundInAlarms() && setting.getVibrateInAlarms()) {
             builder.setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND);
         }
 

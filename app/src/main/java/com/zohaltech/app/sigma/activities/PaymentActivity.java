@@ -7,7 +7,6 @@ import android.widget.Toast;
 
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.classes.App;
-import com.zohaltech.app.sigma.classes.ConstantParams;
 import com.zohaltech.app.sigma.classes.LicenseManager;
 import com.zohaltech.app.sigma.classes.MyRuntimeException;
 import com.zohaltech.app.sigma.classes.WebApiClient;
@@ -18,7 +17,7 @@ import com.zohaltech.app.sigma.util.Purchase;
 
 import widgets.MyToast;
 
-public abstract class BazaarPaymentActivity extends EnhancedActivity {
+public abstract class PaymentActivity extends EnhancedActivity {
 
     private final String PAY_LOAD    = "SIGMA_ANDROID_APP";
     private final String TAG         = "SIGMA_TAG";
@@ -28,12 +27,13 @@ public abstract class BazaarPaymentActivity extends EnhancedActivity {
     private ProgressDialog progressDialog;
     private boolean mIsPremium = false;
     private IabHelper mHelper;
+
     private IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
         public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
             //Log.i(TAG, "Query inventory finished.");
             if (result.isFailure()) {
                 Log.i(TAG, "Failed to query inventory: " + result);
-                //complain("خطا در خرید از بازار");
+                //complain("خطا در خرید از " + App.marketName);
 
             } else {
                 //Log.i(TAG, "Query inventory was successful.");
@@ -63,7 +63,7 @@ public abstract class BazaarPaymentActivity extends EnhancedActivity {
             } else if (purchase.getSku().equals(SKU_PREMIUM)) {
                 if (!verifyDeveloperPayload(purchase)) {
                     //Log.e("PAYMENT", "Error purchasing. Authenticity verification failed.");
-                    complain("خطا در ورود به حساب کاربری بازار");
+                    complain("خطا در ورود به حساب کاربری " + App.marketName);
                 } else {
                     // give user access to premium content and update the UI
                     LicenseManager.registerLicense();
@@ -80,7 +80,7 @@ public abstract class BazaarPaymentActivity extends EnhancedActivity {
     void onCreated() {
         if (LicenseManager.getLicenseStatus() != LicenseManager.Status.REGISTERED) {
             try {
-                mHelper = new IabHelper(App.currentActivity, ConstantParams.getBase64EncodedPublicKey());
+                mHelper = new IabHelper(this, App.marketPublicKey);
                 //Log.d(TAG, "Starting setup.");
                 mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
                     public void onIabSetupFinished(IabResult result) {
@@ -93,9 +93,9 @@ public abstract class BazaarPaymentActivity extends EnhancedActivity {
                         // Hooray, IAB is fully set up!
                         mHelper.queryInventoryAsync(mGotInventoryListener);
                     }
-                },IabHelper.MARKET_BAZAAR);
+                });
             } catch (MyRuntimeException e) {
-                //Log.e(TAG, "برنامه بازار نصب نیست");
+                //Log.e(TAG, "برنامه " + App.marketName + " نصب نیست");
                 e.printStackTrace();
             }
         }
@@ -162,13 +162,13 @@ public abstract class BazaarPaymentActivity extends EnhancedActivity {
     public void pay() {
         setWaitScreen(true);
         try {
-            mHelper.launchPurchaseFlow(App.currentActivity, SKU_PREMIUM, RC_REQUEST, mPurchaseFinishedListener, PAY_LOAD);
-        } catch (MyRuntimeException e) {
+            mHelper.launchPurchaseFlow(this, SKU_PREMIUM, RC_REQUEST, mPurchaseFinishedListener, PAY_LOAD);
+        } catch (MyRuntimeException | IllegalStateException e) {
             //Log.e(TAG, "Error : " + e.getMessage());
             e.printStackTrace();
             setWaitScreen(false);
             updateUiToTrialVersion();
-            MyToast.show("خطا در ارتباط با بازار، لطفا بعدا دوباره تلاش کنید", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
+            MyToast.show("خطا در ارتباط با " + App.marketName + "، لطفا بعدا دوباره تلاش کنید", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
         }
     }
 

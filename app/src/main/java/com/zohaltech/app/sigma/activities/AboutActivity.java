@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.zohaltech.app.sigma.BuildConfig;
 import com.zohaltech.app.sigma.R;
+import com.zohaltech.app.sigma.classes.App;
 import com.zohaltech.app.sigma.classes.Helper;
 
 import widgets.MyToast;
@@ -34,9 +35,7 @@ public class AboutActivity extends EnhancedActivity {
         btnRate = (Button) findViewById(R.id.btnRate);
         layoutWebsite = (LinearLayout) findViewById(R.id.layoutWebsite);
 
-        final String marketWebsiteUri = "http://cafebazaar.ir/app/" + getPackageName();
         final String email = "info@zohaltech.com";
-        final String marketUri = "bazaar://details?id=" + getPackageName();
 
         txtVersion.setText(getString(R.string.version) + BuildConfig.VERSION_NAME);
 
@@ -46,7 +45,7 @@ public class AboutActivity extends EnhancedActivity {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 String message = String.format(getResources().getString(R.string.sharing_message),
                                                getResources().getString(R.string.app_name),
-                                               marketWebsiteUri);
+                                               App.marketWebsiteUri);
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_TEXT, message);
                 startActivity(Intent.createChooser(intent, getResources().getString(R.string.share_title)));
@@ -65,13 +64,13 @@ public class AboutActivity extends EnhancedActivity {
         btnRate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_EDIT);
-                intent.setData(Uri.parse(marketUri));
-                intent.setPackage("com.farsitel.bazaar");
+                Intent intent = new Intent(App.marketPollIntent);
+                intent.setData(Uri.parse(App.marketPollUri));
+                intent.setPackage(App.marketPackage);
                 if (!myStartActivity(intent)) {
-                    intent.setData(Uri.parse(marketWebsiteUri));
+                    intent.setData(Uri.parse(App.marketWebsiteUri));
                     if (!myStartActivity(intent)) {
-                        MyToast.show(String.format(getResources().getString(R.string.could_not_open_market), "بازار", "بازار"), Toast.LENGTH_SHORT);
+                        MyToast.show(String.format(getResources().getString(R.string.could_not_open_market), App.marketName, App.marketName), Toast.LENGTH_SHORT);
                     }
                 }
             }

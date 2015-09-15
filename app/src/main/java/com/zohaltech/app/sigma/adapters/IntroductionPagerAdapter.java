@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zohaltech.app.sigma.R;
-import com.zohaltech.app.sigma.activities.BazaarPaymentActivity;
+import com.zohaltech.app.sigma.activities.PaymentActivity;
 import com.zohaltech.app.sigma.activities.DashboardActivity;
 import com.zohaltech.app.sigma.activities.IntroductionActivity;
 import com.zohaltech.app.sigma.classes.App;
@@ -71,7 +71,7 @@ public class IntroductionPagerAdapter extends PagerAdapter {
                     public void onClick(View v) {
                         App.uiPreferences.edit().putBoolean(IntroductionActivity.INTRO_SHOWN, true).commit();
                         if (LicenseManager.getLicenseStatus() != LicenseManager.Status.REGISTERED) {
-                            ((BazaarPaymentActivity) App.currentActivity).pay();
+                            ((PaymentActivity) App.currentActivity).pay();
                         } else {
                             Intent intent = new Intent(App.currentActivity, DashboardActivity.class);
                             App.currentActivity.startActivity(intent);

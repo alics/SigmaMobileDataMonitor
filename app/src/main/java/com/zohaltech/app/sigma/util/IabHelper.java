@@ -28,14 +28,17 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.text.TextUtils;
 import android.util.Log;
-
+import android.widget.Toast;
 
 import com.android.vending.billing.IInAppBillingService;
+import com.zohaltech.app.sigma.classes.App;
 
 import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import widgets.MyToast;
 
 
 /**
@@ -73,7 +76,7 @@ import java.util.List;
 public class IabHelper {
     // Is debug logging enabled?
     boolean mDebugLog = false;
-    String  mDebugTag = "IabHelper";
+    String mDebugTag = "IabHelper";
 
     // Is setup done?
     boolean mSetupDone = false;
@@ -97,7 +100,7 @@ public class IabHelper {
 
     // Connection to the service
     IInAppBillingService mService;
-    ServiceConnection    mServiceConn;
+    ServiceConnection mServiceConn;
 
     // The request code used to launch purchase flow
     int mRequestCode;
@@ -109,59 +112,46 @@ public class IabHelper {
     String mSignatureBase64 = null;
 
     // Billing response codes
-    public static final int BILLING_RESPONSE_RESULT_OK                  = 0;
-    public static final int BILLING_RESPONSE_RESULT_USER_CANCELED       = 1;
+    public static final int BILLING_RESPONSE_RESULT_OK = 0;
+    public static final int BILLING_RESPONSE_RESULT_USER_CANCELED = 1;
     public static final int BILLING_RESPONSE_RESULT_BILLING_UNAVAILABLE = 3;
-    public static final int BILLING_RESPONSE_RESULT_ITEM_UNAVAILABLE    = 4;
-    public static final int BILLING_RESPONSE_RESULT_DEVELOPER_ERROR     = 5;
-    public static final int BILLING_RESPONSE_RESULT_ERROR               = 6;
-    public static final int BILLING_RESPONSE_RESULT_ITEM_ALREADY_OWNED  = 7;
-    public static final int BILLING_RESPONSE_RESULT_ITEM_NOT_OWNED      = 8;
+    public static final int BILLING_RESPONSE_RESULT_ITEM_UNAVAILABLE = 4;
+    public static final int BILLING_RESPONSE_RESULT_DEVELOPER_ERROR = 5;
+    public static final int BILLING_RESPONSE_RESULT_ERROR = 6;
+    public static final int BILLING_RESPONSE_RESULT_ITEM_ALREADY_OWNED = 7;
+    public static final int BILLING_RESPONSE_RESULT_ITEM_NOT_OWNED = 8;
 
     // IAB Helper error codes
-    public static final int IABHELPER_ERROR_BASE                  = -1000;
-    public static final int IABHELPER_REMOTE_EXCEPTION            = -1001;
-    public static final int IABHELPER_BAD_RESPONSE                = -1002;
-    public static final int IABHELPER_VERIFICATION_FAILED         = -1003;
-    public static final int IABHELPER_SEND_INTENT_FAILED          = -1004;
-    public static final int IABHELPER_USER_CANCELLED              = -1005;
-    public static final int IABHELPER_UNKNOWN_PURCHASE_RESPONSE   = -1006;
-    public static final int IABHELPER_MISSING_TOKEN               = -1007;
-    public static final int IABHELPER_UNKNOWN_ERROR               = -1008;
+    public static final int IABHELPER_ERROR_BASE = -1000;
+    public static final int IABHELPER_REMOTE_EXCEPTION = -1001;
+    public static final int IABHELPER_BAD_RESPONSE = -1002;
+    public static final int IABHELPER_VERIFICATION_FAILED = -1003;
+    public static final int IABHELPER_SEND_INTENT_FAILED = -1004;
+    public static final int IABHELPER_USER_CANCELLED = -1005;
+    public static final int IABHELPER_UNKNOWN_PURCHASE_RESPONSE = -1006;
+    public static final int IABHELPER_MISSING_TOKEN = -1007;
+    public static final int IABHELPER_UNKNOWN_ERROR = -1008;
     public static final int IABHELPER_SUBSCRIPTIONS_NOT_AVAILABLE = -1009;
-    public static final int IABHELPER_INVALID_CONSUMPTION         = -1010;
+    public static final int IABHELPER_INVALID_CONSUMPTION = -1010;
 
     // Keys for the responses from InAppBillingService
-    public static final String RESPONSE_CODE                     = "RESPONSE_CODE";
-    public static final String RESPONSE_GET_SKU_DETAILS_LIST     = "DETAILS_LIST";
-    public static final String RESPONSE_BUY_INTENT               = "BUY_INTENT";
-    public static final String RESPONSE_INAPP_PURCHASE_DATA      = "INAPP_PURCHASE_DATA";
-    public static final String RESPONSE_INAPP_SIGNATURE          = "INAPP_DATA_SIGNATURE";
-    public static final String RESPONSE_INAPP_ITEM_LIST          = "INAPP_PURCHASE_ITEM_LIST";
+    public static final String RESPONSE_CODE = "RESPONSE_CODE";
+    public static final String RESPONSE_GET_SKU_DETAILS_LIST = "DETAILS_LIST";
+    public static final String RESPONSE_BUY_INTENT = "BUY_INTENT";
+    public static final String RESPONSE_INAPP_PURCHASE_DATA = "INAPP_PURCHASE_DATA";
+    public static final String RESPONSE_INAPP_SIGNATURE = "INAPP_DATA_SIGNATURE";
+    public static final String RESPONSE_INAPP_ITEM_LIST = "INAPP_PURCHASE_ITEM_LIST";
     public static final String RESPONSE_INAPP_PURCHASE_DATA_LIST = "INAPP_PURCHASE_DATA_LIST";
-    public static final String RESPONSE_INAPP_SIGNATURE_LIST     = "INAPP_DATA_SIGNATURE_LIST";
-    public static final String INAPP_CONTINUATION_TOKEN          = "INAPP_CONTINUATION_TOKEN";
+    public static final String RESPONSE_INAPP_SIGNATURE_LIST = "INAPP_DATA_SIGNATURE_LIST";
+    public static final String INAPP_CONTINUATION_TOKEN = "INAPP_CONTINUATION_TOKEN";
 
     // Item types
     public static final String ITEM_TYPE_INAPP = "inapp";
-    public static final String ITEM_TYPE_SUBS  = "subs";
+    public static final String ITEM_TYPE_SUBS = "subs";
 
     // some fields on the getSkuDetails response bundle
-    public static final String GET_SKU_DETAILS_ITEM_LIST      = "ITEM_ID_LIST";
+    public static final String GET_SKU_DETAILS_ITEM_LIST = "ITEM_ID_LIST";
     public static final String GET_SKU_DETAILS_ITEM_TYPE_LIST = "ITEM_TYPE_LIST";
-
-    //markets
-    public static final int MARKET_CANDO	= 1;
-    public static final int MARKET_BAZAAR	= 2;
-    public static final int MARKET_PLAY		= 3;
-
-    //market params
-    static final String CANDO_SERVICE_ACTION	= "com.ada.market.service.payment.BIND";
-    static final String CANDO_NAMESPACE			= "com.ada.market";
-    static final String BAZAAR_SERVICE_ACTION	= "ir.cafebazaar.pardakht.InAppBillingService.BIND";
-    static final String BAZAAR_NAMESPACE		= "com.farsitel.bazaar";
-    static final String PLAY_SERVICE_ACTION		= "com.android.vending.billing.InAppBillingService.BIND";
-    static final String PLAY_NAMESPACE			= "com.android.vending";
 
     /**
      * Creates an instance. After creation, it will not yet be ready to use. You must perform
@@ -214,11 +204,10 @@ public class IabHelper {
      *
      * @param listener The listener to notify when the setup process is complete.
      */
-    public void startSetup(final OnIabSetupFinishedListener listener, int market ) {
+    public void startSetup(final OnIabSetupFinishedListener listener) {
         // If already set up, can't do it again.
         checkNotDisposed();
-        if (mSetupDone)
-            throw new IllegalStateException("IAB helper is already set up.");
+        if (mSetupDone) throw new IllegalStateException("IAB helper is already set up.");
 
         // Connection to IAB service
         logDebug("Starting in-app billing setup.");
@@ -231,8 +220,7 @@ public class IabHelper {
 
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
-                if (mDisposed)
-                    return;
+                if (mDisposed) return;
                 logDebug("Billing service connected.");
                 mService = IInAppBillingService.Stub.asInterface(service);
                 String packageName = mContext.getPackageName();
@@ -278,8 +266,15 @@ public class IabHelper {
             }
         };
 
-        Intent serviceIntent = new Intent("ir.cafebazaar.pardakht.InAppBillingService.BIND");
-        serviceIntent.setPackage("com.farsitel.bazaar");
+        Intent serviceIntent = new Intent(App.marketAction);
+        serviceIntent.setPackage(App.marketPackage);
+
+        if(mContext.getPackageManager().queryIntentServices(serviceIntent, 0) == null){
+            //Log.d(TAG, "Market not found.");
+            //MyToast.show("لطفا برای پرداخت درون برنامه ای، " + App.marketName + " را نصب کنید", Toast.LENGTH_LONG);
+            return;
+        }
+
         if (!mContext.getPackageManager().queryIntentServices(serviceIntent, 0).isEmpty()) {
             // service available to handle that Intent
             mContext.bindService(serviceIntent, mServiceConn, Context.BIND_AUTO_CREATE);
@@ -416,8 +411,9 @@ public class IabHelper {
             mPurchasingItemType = itemType;
             act.startIntentSenderForResult(pendingIntent.getIntentSender(),
                                            requestCode, new Intent(),
-                                           Integer.valueOf(0), Integer.valueOf(0),
-                                           Integer.valueOf(0));
+                                           0,
+                                           0,
+                                           0);
         }
         catch (SendIntentException e) {
             logError("SendIntentException while launching purchase flow for sku " + sku);
@@ -541,7 +537,7 @@ public class IabHelper {
     /**
      * Queries the inventory. This will query all owned items from the server, as well as
      * information on additional skus, if specified. This method may block or take long to execute.
-     * Do not call from a UI thread. For that, use the non-blocking version {@link #refreshInventoryAsync}.
+     * Do not call from a UI thread. For that, use the non-blocking version {refreshInventoryAsync}.
      *
      * @param querySkuDetails if true, SKU details (price, description, etc) will be queried as well
      *     as purchase information.
@@ -746,7 +742,7 @@ public class IabHelper {
     }
 
     /**
-     * Same as {@link consumeAsync}, but for multiple items at once.
+     * Same as {consumeAsync}, but for multiple items at once.
      * @param purchases The list of PurchaseInfo objects representing the purchases to consume.
      * @param listener The listener to notify when the consumption operation finishes.
      */

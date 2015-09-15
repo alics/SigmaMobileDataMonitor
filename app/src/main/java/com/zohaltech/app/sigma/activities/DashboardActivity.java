@@ -21,7 +21,7 @@ import com.zohaltech.app.sigma.dal.DataAccess;
 import widgets.MyToast;
 import widgets.MyViewPagerIndicator;
 
-public class DashboardActivity extends BazaarPaymentActivity {
+public class DashboardActivity extends PaymentActivity {
 
     //private static final String DUAL_SIM_SHOWN        = "DUAL_SIM_SHOWN";
     private static final String EXPIRED_MESSAGE_SHOWN = "EXPIRED_MESSAGE_SHOWN";
@@ -182,16 +182,9 @@ public class DashboardActivity extends BazaarPaymentActivity {
                                                      new Runnable() {
                                                          @Override
                                                          public void run() {
-                                                             //finish();
                                                              paymentDialog.dismiss();
                                                          }
                                                      });
-        paymentDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                finish();
-            }
-        });
         paymentDialog.show();
     }
 
