@@ -1,6 +1,7 @@
 package com.zohaltech.app.sigma.dal;
 
 import android.content.ContentValues;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -18,7 +19,8 @@ import java.io.InputStreamReader;
 public class DataAccess extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME    = "SIGMA";
-    public static final int    DATABASE_VERSION = 9;
+    //public static final int    DATABASE_VERSION = 9; //published in versions 1.06, 1.07
+    public static final int    DATABASE_VERSION = 10; //published in versions 1.08
 
     public DataAccess() {
         super(App.context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -96,15 +98,47 @@ public class DataAccess extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
         try {
-            database.execSQL(SystemSettings.DropTable);
-            database.execSQL(Settings.DropTable);
-            database.execSQL(PackageHistories.DropTable);
-            database.execSQL(DataPackages.DropTable);
-            database.execSQL(UsageLogs.DropTable);
-            database.execSQL(DailyTrafficHistories.DropTable);
-            database.execSQL(MobileOperators.DropTable);
-            onCreate(database);
+            if (oldVersion < 9) {
+                database.execSQL(SystemSettings.DropTable);
+                database.execSQL(Settings.DropTable);
+                database.execSQL(PackageHistories.DropTable);
+                database.execSQL(DataPackages.DropTable);
+                database.execSQL(UsageLogs.DropTable);
+                database.execSQL(DailyTrafficHistories.DropTable);
+                database.execSQL(MobileOperators.DropTable);
+                onCreate(database);
+            } else if (oldVersion == 9) {
+                version9to10(database);
+                //version10to11(database);
+                //version11to12(database);
+                //version12to13(database);
+            } else if (oldVersion == 10) {
+                //version10to11(database);
+                //version11to12(database);
+                //version12to13(database);
+            }
         } catch (MyRuntimeException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void version9to10(SQLiteDatabase database) {
+        try {
+            database.execSQL("UPDATE " + DataPackages.TableName + " SET " + DataPackages.Price + " = 10000 WHERE " + DataPackages.UssdCode + " = '*100*233#'");
+            database.execSQL("UPDATE " + DataPackages.TableName + " SET " + DataPackages.Custom + " = 1 WHERE " + DataPackages.UssdCode + " = '*100*234#'");
+            ContentValues values = new ContentValues();
+            values.put(DataPackages.OperatorId, 1);
+            values.put(DataPackages.Title, "آلفا+(نسل 3) 30 روزه 4 گیگابایت + (4 گیگابایت هدیه شبانه 2 الی 7 بامداد)");
+            values.put(DataPackages.Period, 30);
+            values.put(DataPackages.Price, 17000);
+            values.put(DataPackages.PrimaryTraffic, 4294967296L);
+            values.put(DataPackages.SecondaryTraffic, 4294967296L);
+            values.put(DataPackages.SecondaryTrafficStartTime, "02:00");
+            values.put(DataPackages.SecondaryTrafficEndTime, "07:00");
+            values.put(DataPackages.UssdCode, "*100*234#");
+            values.put(DataPackages.Custom, 0);
+            database.insert(DataPackages.TableName, null, values);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

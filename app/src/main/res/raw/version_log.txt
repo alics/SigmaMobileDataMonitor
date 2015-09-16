@@ -4,3 +4,6 @@ Version 1.07 :
 - add cando payment
 - fix in app payment for whom has no market
 - fix payment dialog when back pressed
+
+Version 1.08 :
+- mci new packages

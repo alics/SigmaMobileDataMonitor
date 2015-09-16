@@ -18,7 +18,8 @@ public class App extends Application {
 
     public static final int MARKET_BAZAAR = 0;
     public static final int MARKET_CANDO  = 1;
-    public static final int MARKET_PLAY   = 2;
+    public static final int MARKET_MYKET  = 2;
+    public static final int MARKET_PLAY   = 3;
 
     public static Context           context;
     public static Activity          currentActivity;
@@ -38,7 +39,7 @@ public class App extends Application {
     public static String            marketName;
     public static String            marketPackage;
     public static String            marketAction;
-    public static String            marketUri;
+    //public static String            marketUri;
     public static String            marketWebsiteUri;
     public static String            marketPollUri;
     public static String            marketPollIntent;
@@ -73,7 +74,7 @@ public class App extends Application {
         marketName = "بازار";
         marketPackage = "com.farsitel.bazaar";
         marketAction = "ir.cafebazaar.pardakht.InAppBillingService.BIND";
-        marketUri = "bazaar://details?id=" + getPackageName();
+        //marketUri = "bazaar://details?id=" + getPackageName();
         marketWebsiteUri = "http://cafebazaar.ir/app/" + getPackageName();
         marketPollUri = "bazaar://details?id=" + getPackageName();
         marketPollIntent = Intent.ACTION_EDIT;
@@ -83,11 +84,21 @@ public class App extends Application {
         //marketName = "کندو";
         //marketPackage = "com.ada.market";
         //marketAction = "com.ada.market.service.payment.BIND";
-        //marketUri = "cando://details?id=" + getPackageName();
+        ////marketUri = "cando://details?id=" + getPackageName();
         //marketWebsiteUri = "http://cando.asr24.com/app.jsp?package=" + getPackageName();
         //marketPollUri = "cando://leave-review?id=" + getPackageName();
         //marketPollIntent = Intent.ACTION_VIEW;
         //marketPublicKey = ConstantParams.getCandoPublicKey();
+
+        //market = MARKET_MYKET;
+        //marketName = "مایکت";
+        //marketPackage = "ir.mservices.market";
+        //marketAction = "ir.mservices.market.InAppBillingService.BIND";
+        ////marketUri = "myket://application/#Intent;scheme=myket;package= + getPackageName() + ;end";
+        //marketWebsiteUri = "http://myket.ir/Appdetail.aspx?id=" + getPackageName();
+        //marketPollUri = "myket://comment/#Intent;scheme=comment;package=" + getPackageName() + ";end";
+        //marketPollIntent = Intent.ACTION_VIEW;
+        //marketPublicKey = ConstantParams.getMyketPublicKey();
 
         //market = MARKET_PLAY;
         //marketName = "Google Play";

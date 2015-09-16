@@ -14,6 +14,7 @@ public final class ConstantParams {
     private static String seven           = App.context.getString(R.string.goon);
     private static String bazaarPublicKey = App.context.getString(R.string.bare_sala);
     private static String candoPublicKey  = App.context.getString(R.string.nice_ass);
+    private static String myketPublicKey  = App.context.getString(R.string.doozlu_bala);
     private static String playPublicKey   = App.context.getString(R.string.bare_sala);
 
     public static String getLicenseFilePath() {
@@ -46,6 +47,10 @@ public final class ConstantParams {
 
     public static String getCandoPublicKey() {
         return candoPublicKey;
+    }
+
+    public static String getMyketPublicKey() {
+        return myketPublicKey;
     }
 
     public static String getPlayPublicKey() {

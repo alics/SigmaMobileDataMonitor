@@ -14,6 +14,7 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
 
     <uses-permission android:name="com.farsitel.bazaar.permission.PAY_THROUGH_BAZAAR"/>
+    <!--<uses-permission android:name="ir.mservices.market.BILLING" />-->
 
     <application
         android:name=".classes.App"
