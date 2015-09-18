@@ -55,9 +55,11 @@ public class HistoryAdapter extends ArrayAdapter<PackageHistory> {
                     SolarCalendar.getShamsiDateTime(Helper.getDateTime(item.getPrimaryPackageEndDateTime())).substring(0, 16) : "---";
             txtPrimaryExpDate.setText(primaryExpDate);
 
-            String secondaryExpDate = item.getSecondaryTrafficEndDateTime() != null && !item.getSecondaryTrafficEndDateTime().isEmpty() ?
-                    SolarCalendar.getShamsiDateTime(Helper.getDateTime(item.getSecondaryTrafficEndDateTime())).substring(0, 16) : "---";
-            txtSecondaryExpDate.setText(secondaryExpDate);
+            if (dataPackage.getSecondaryTraffic() != 0) {
+                String secondaryExpDate = item.getSecondaryTrafficEndDateTime() != null && !item.getSecondaryTrafficEndDateTime().isEmpty() ?
+                        SolarCalendar.getShamsiDateTime(Helper.getDateTime(item.getSecondaryTrafficEndDateTime())).substring(0, 16) : "---";
+                txtSecondaryExpDate.setText(secondaryExpDate);
+            } else txtSecondaryExpDate.setVisibility(View.GONE);
             String status = "";
             if (item.getStatus() == PackageHistory.StatusEnum.ACTIVE.ordinal())
                 status = "فعال";
