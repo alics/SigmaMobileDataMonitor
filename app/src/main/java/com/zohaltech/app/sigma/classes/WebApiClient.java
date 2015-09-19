@@ -3,6 +3,7 @@ package com.zohaltech.app.sigma.classes;
 import android.os.Build;
 import android.util.Log;
 
+import com.zohaltech.app.sigma.BuildConfig;
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.dal.SystemSettings;
 import com.zohaltech.app.sigma.entities.SystemSetting;
@@ -53,6 +54,7 @@ public class WebApiClient {
                                 jsonObject.accumulate("OperatorId", Helper.getOperator().ordinal());
                                 jsonObject.accumulate("IsPurchased", false);
                                 jsonObject.accumulate("MarketId", App.market);
+                                jsonObject.accumulate("AppVersion", BuildConfig.VERSION_CODE);
                                 setJsonObject(jsonObject);
                                 Boolean result = post(getJsonObject());
                                 setting.setInstalled(result);
@@ -72,6 +74,7 @@ public class WebApiClient {
                                 jsonObject.accumulate("OperatorId", Helper.getOperator().ordinal());
                                 jsonObject.accumulate("IsPurchased", true);
                                 jsonObject.accumulate("MarketId", App.market);
+                                jsonObject.accumulate("AppVersion", BuildConfig.VERSION_CODE);
                                 setJsonObject(jsonObject);
                                 Boolean result = post(getJsonObject());
                                 setting.setRegistered(result);

@@ -7,3 +7,8 @@ Version 1.07 :
 
 Version 1.08 :
 - mci new packages
+
+Version 1.09 :
+- fix histories display for only primary and only secondary data packages
+- add AppVersion to webservice
+- change market ids
