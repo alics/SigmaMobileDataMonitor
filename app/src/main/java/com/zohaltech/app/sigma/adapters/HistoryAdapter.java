@@ -70,7 +70,7 @@ public class HistoryAdapter extends ArrayAdapter<PackageHistory> {
                 txtSecondaryExpDate.setText(secondaryExpDate);
             } else {
                 txtSecondaryExpDate.setVisibility(View.GONE);
-                txtSecondaryExpDate.setVisibility(View.GONE);
+                txtSecondaryExpDateTitle.setVisibility(View.GONE);
             }
             String status = "";
             if (item.getStatus() == PackageHistory.StatusEnum.ACTIVE.ordinal())
