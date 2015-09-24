@@ -58,7 +58,12 @@ public class LicenseManager {
 
     public static Status getLicenseStatus() {
         LicenseStatus status = LicenseModifier.getLicenceFile();
+
         if (status == null || status.getStatus() == Status.EXPIRED.ordinal()) {
+            return Status.EXPIRED;
+        } else if (!status.getDeviceId().equals(Helper.getDeviceId())) {
+            status.setStatus(Status.EXPIRED.ordinal());
+            LicenseModifier.updateLicenseFile(status);
             return Status.EXPIRED;
         } else if (status.getStatus() == Status.REGISTERED.ordinal()) {
             return Status.REGISTERED;
@@ -71,10 +76,10 @@ public class LicenseManager {
         LicenseStatus status = LicenseModifier.getLicenceFile();
         if (status == null) {
             status = new LicenseStatus(BuildConfig.VERSION_CODE + "",
-                                       Helper.getDeviceId(),
-                                       Helper.getCurrentDate(),
-                                       Status.REGISTERED.ordinal(),
-                                       1);
+                    Helper.getDeviceId(),
+                    Helper.getCurrentDate(),
+                    Status.REGISTERED.ordinal(),
+                    1);
             LicenseModifier.initializeLicenseFile(status);
         }
         status.setStatus(Status.REGISTERED.ordinal());
