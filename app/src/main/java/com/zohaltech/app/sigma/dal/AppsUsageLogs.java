@@ -81,9 +81,9 @@ public class AppsUsageLogs {
         return da.update(TableName, values, Id + " =? ", new String[]{String.valueOf(log.getId())});
     }
 
-    public static long delete(MobileOperator operator) {
+    public static long delete(AppsUsageLog log) {
         DataAccess db = new DataAccess();
-        return db.delete(TableName, Id + " =? ", new String[]{String.valueOf(operator.getId())});
+        return db.delete(TableName, Id + " =? ", new String[]{String.valueOf(log.getId())});
     }
 
     public static AppsUsageLog getAppById(long id) {
