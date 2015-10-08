@@ -2,35 +2,35 @@ package com.zohaltech.app.sigma.entities;
 
 
 public class AppsUsageLog {
-    private Long id;
-    private int appId;
+    private Integer id;
+    private Integer appId;
     private Long trafficBytes;
     private String logDateTime;
 
-    public AppsUsageLog(int appId, Long trafficBytes, String logDateTime) {
+    public AppsUsageLog(Integer appId, Long trafficBytes, String logDateTime) {
         setAppId(appId);
         setTrafficBytes(trafficBytes);
         setLogDateTime(logDateTime);
     }
 
-    public AppsUsageLog(Long id, int appId, Long trafficBytes, String logDateTime) {
+    public AppsUsageLog(Integer id, Integer appId, Long trafficBytes, String logDateTime) {
         this(appId, trafficBytes, logDateTime);
         this.id = id;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getAppId() {
+    public Integer getAppId() {
         return appId;
     }
 
-    public void setAppId(int appId) {
+    public void setAppId(Integer appId) {
         this.appId = appId;
     }
 

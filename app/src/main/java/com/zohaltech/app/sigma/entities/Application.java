@@ -2,12 +2,12 @@ package com.zohaltech.app.sigma.entities;
 
 
 public class Application {
-    private long id;
+    private Integer id;
     private int uid;
     private String appName;
     private String packageName;
 
-    public Application(long id, int uid, String appName, String packageName) {
+    public Application(Integer id, int uid, String appName, String packageName) {
         this(uid, appName, packageName);
         this.id = id;
     }
@@ -18,11 +18,11 @@ public class Application {
         setPackageName(packageName);
     }
 
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

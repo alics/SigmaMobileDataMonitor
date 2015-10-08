@@ -39,7 +39,7 @@ public class AppsUsageLogs {
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     AppsUsageLog log = new AppsUsageLog(cursor.getLong(cursor.getColumnIndex(Id)),
-                            cursor.getInt(cursor.getColumnIndex(AppId)),
+                            cursor.getLong(cursor.getColumnIndex(AppId)),
                             cursor.getLong(cursor.getColumnIndex(TrafficBytes)),
                             cursor.getString(cursor.getColumnIndex(LogDateTime)));
 

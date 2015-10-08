@@ -29,7 +29,7 @@ public class Applications {
             cursor = db.rawQuery(query, selectionArgs);
             if (cursor != null && cursor.moveToFirst()) {
                 do {
-                    Application app = new Application(cursor.getLong(cursor.getColumnIndex(Id)),
+                    Application app = new Application(cursor.getInt(cursor.getColumnIndex(Id)),
                             cursor.getInt(cursor.getColumnIndex(Uid)),
                             cursor.getString(cursor.getColumnIndex(AppName)),
                             cursor.getString(cursor.getColumnIndex(PackageName)));
@@ -81,6 +81,14 @@ public class Applications {
         String whereClause = " WHERE " + Id + " = " + id;
         ArrayList<Application> applications = new ArrayList<>();
         applications = select(whereClause, null);
+        int count = applications.size();
+
+        return (count == 0) ? null : applications.get(count - 1);
+    }
+
+    public static Application getAppByUid(int uid) {
+        String whereClause = " WHERE " + Uid + " = " + uid;
+        ArrayList<Application> applications = select(whereClause, null);
         int count = applications.size();
 
         return (count == 0) ? null : applications.get(count - 1);
