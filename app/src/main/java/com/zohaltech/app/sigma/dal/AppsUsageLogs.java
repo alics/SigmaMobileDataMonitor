@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.zohaltech.app.sigma.classes.MyRuntimeException;
 import com.zohaltech.app.sigma.entities.AppsUsageLog;
-import com.zohaltech.app.sigma.entities.MobileOperator;
 
 import java.util.ArrayList;
 
@@ -19,7 +18,7 @@ public class AppsUsageLogs {
 
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
-            Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+            Id + " BIGINT PRIMARY KEY AUTOINCREMENT NOT NULL, " +
             AppId + " INTEGER REFERENCES " + Applications.TableName + " (" + DataPackages.Id + "), " +
             TrafficBytes + " CHAR(19)  ," +
             LogDateTime + " CHAR(19)   )";
@@ -39,7 +38,7 @@ public class AppsUsageLogs {
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     AppsUsageLog log = new AppsUsageLog(cursor.getLong(cursor.getColumnIndex(Id)),
-                            cursor.getLong(cursor.getColumnIndex(AppId)),
+                            cursor.getInt(cursor.getColumnIndex(AppId)),
                             cursor.getLong(cursor.getColumnIndex(TrafficBytes)),
                             cursor.getString(cursor.getColumnIndex(LogDateTime)));
 
