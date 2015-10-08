@@ -223,6 +223,4 @@ public class DashboardActivity extends PaymentActivity {
             super.onBackPressed();
         }
     }
-
-
 }

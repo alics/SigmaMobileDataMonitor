@@ -36,7 +36,13 @@ public class LicenseManager {
         }
 
         int checkCount = status.getCheckCount();
-        if (checkCount > Integer.valueOf(ConstantParams.getSeven().substring(0, 1))) {
+        int trialDays;
+        if (Integer.valueOf(status.getAppVersion()) < BuildConfig.VERSION_CODE ){
+            trialDays = Integer.valueOf(ConstantParams.getSeven().substring(0, 1));
+        } else{
+            trialDays = Integer.valueOf(ConstantParams.getTwo().substring(0, 1));
+        }
+        if (checkCount > trialDays) {
             status.setStatus(Status.EXPIRED.ordinal());
             LicenseModifier.updateLicenseFile(status);
             return false;

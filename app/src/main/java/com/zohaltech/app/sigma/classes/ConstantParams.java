@@ -12,6 +12,7 @@ public final class ConstantParams {
     private static String secretKey       = App.context.getString(R.string.sdj);
     private static String iv              = App.context.getString(R.string.mongol);
     private static String seven           = App.context.getString(R.string.goon);
+    private static String two           = App.context.getString(R.string.ayri_goon);
     private static String bazaarPublicKey = App.context.getString(R.string.bare_sala);
     private static String candoPublicKey  = App.context.getString(R.string.nice_ass);
     private static String myketPublicKey  = App.context.getString(R.string.doozlu_bala);
@@ -39,6 +40,10 @@ public final class ConstantParams {
 
     public static String getSeven() {
         return seven;
+    }
+
+    public static String getTwo() {
+        return two;
     }
 
     public static String getBazaarPublicKey() {

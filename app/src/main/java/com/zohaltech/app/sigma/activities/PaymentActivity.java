@@ -44,6 +44,7 @@ public abstract class PaymentActivity extends EnhancedActivity {
                 if (mIsPremium) {
                     LicenseManager.registerLicense();
                     updateUiToPremiumVersion();
+                    WebApiClient.sendUserData(WebApiClient.PostAction.REGISTER);
                     setWaitScreen(false);
                 }
                 //Log.i(TAG, "User is " + (mIsPremium ? "PREMIUM" : "NOT PREMIUM"));

@@ -1,7 +1,7 @@
 Version 1.07 :
 - fix rating method
 - set notification priority to high
-- add cando payment
+- add general payment activity
 - fix in app payment for whom has no market
 - fix payment dialog when back pressed
 
@@ -11,4 +11,6 @@ Version 1.08 :
 Version 1.09 :
 - fix histories display for only primary and only secondary data packages
 - add AppVersion to webservice
-- change market ids
+- change trial version to 2 days
+- add products about activity
+- fix webapi register for purchased accounts

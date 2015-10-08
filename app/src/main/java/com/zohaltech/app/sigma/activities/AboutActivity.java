@@ -21,6 +21,7 @@ public class AboutActivity extends EnhancedActivity {
 
     TextView txtVersion;
     Button   btnShare;
+    Button   btnProducts;
     Button   btnFeedback;
     Button   btnRate;
     LinearLayout layoutWebsite;
@@ -31,6 +32,7 @@ public class AboutActivity extends EnhancedActivity {
 
         txtVersion = (TextView) findViewById(R.id.txtVersion);
         btnShare = (Button) findViewById(R.id.btnShare);
+        btnProducts = (Button) findViewById(R.id.btnProducts);
         btnFeedback = (Button) findViewById(R.id.btnFeedback);
         btnRate = (Button) findViewById(R.id.btnRate);
         layoutWebsite = (LinearLayout) findViewById(R.id.layoutWebsite);
@@ -52,12 +54,26 @@ public class AboutActivity extends EnhancedActivity {
             }
         });
 
+        btnProducts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(App.marketDeveloperUri));
+                if (!myStartActivity(intent)) {
+                    MyToast.show(getString(R.string.could_not_open_market), Toast.LENGTH_SHORT);
+                }
+            }
+        });
+
         btnFeedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", email, null));
                 intent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.feedback_subject));
                 startActivity(Intent.createChooser(intent, getResources().getString(R.string.feedback_title)));
+                //Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "[Email_Address]", null));
+                //intent.putExtra(Intent.EXTRA_SUBJECT, "An Email From Myket!");
+                //startActivity(Intent.createChooser(intent, "ارسال ایمیل"));
             }
         });
 
