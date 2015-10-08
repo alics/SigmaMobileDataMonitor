@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.classes.App;
+import com.zohaltech.app.sigma.classes.DataUsageMeter;
 import com.zohaltech.app.sigma.classes.SigmaDataService;
 import com.zohaltech.app.sigma.classes.TrafficUnitsUtil;
 
@@ -40,7 +41,7 @@ public class TodayUsageFragment extends Fragment {
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                long usage = intent.getLongExtra(SigmaDataService.TODAY_USAGE_BYTES, 0);
+                long usage = intent.getLongExtra(DataUsageMeter.TODAY_USAGE_BYTES, 0);
                 updateUI(usage);
             }
         };
@@ -58,13 +59,13 @@ public class TodayUsageFragment extends Fragment {
         int size = (App.screenWidth) / 2;
         progressTodayUsage = (CircleProgress) view.findViewById(R.id.progressTodayUsage);
         progressTodayUsage.setLayoutParams(new LinearLayout.LayoutParams(size, size));
-        updateUI(App.preferences.getLong(SigmaDataService.TODAY_USAGE_BYTES, 0));
+        updateUI(App.preferences.getLong(DataUsageMeter.TODAY_USAGE_BYTES, 0));
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        getActivity().registerReceiver(broadcastReceiver, new IntentFilter(SigmaDataService.TODAY_USAGE_ACTION));
+        getActivity().registerReceiver(broadcastReceiver, new IntentFilter(DataUsageMeter.TODAY_USAGE_ACTION));
     }
 
     @Override

@@ -15,7 +15,7 @@ public class PackageAlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, Intent intent) {
-        if (intent.getAction().equals(SigmaDataService.APPLICATION_ALARM_ACTION)) {
+        if (intent.getAction().equals(DataUsageMeter.APPLICATION_ALARM_ACTION)) {
 
             ArrayList<AlarmObject> objects = PackageStatus.getCurrentAlarms();
 

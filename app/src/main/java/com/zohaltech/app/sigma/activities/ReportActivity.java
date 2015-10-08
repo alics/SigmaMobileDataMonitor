@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.adapters.ReportAdapter;
 import com.zohaltech.app.sigma.classes.App;
+import com.zohaltech.app.sigma.classes.DataUsageMeter;
 import com.zohaltech.app.sigma.classes.Helper;
 import com.zohaltech.app.sigma.classes.SigmaDataService;
 import com.zohaltech.app.sigma.classes.TrafficUnitsUtil;
@@ -46,7 +47,7 @@ public class ReportActivity extends EnhancedActivity {
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                long usage = intent.getLongExtra(SigmaDataService.TODAY_USAGE_BYTES, 0);
+                long usage = intent.getLongExtra(DataUsageMeter.TODAY_USAGE_BYTES, 0);
                 updateUI(usage);
             }
         };
@@ -64,7 +65,7 @@ public class ReportActivity extends EnhancedActivity {
         //    TrafficMonitor trafficMonitor = new TrafficMonitor((long)sumReceivedSent, Helper.addDay(i - 29));
         //    trafficMonitors.add(0, trafficMonitor);
         //}
-        setTodayUsage(App.preferences.getLong(SigmaDataService.TODAY_USAGE_BYTES, 0));
+        setTodayUsage(App.preferences.getLong(DataUsageMeter.TODAY_USAGE_BYTES, 0));
         trafficMonitors.add(0, new TrafficMonitor(getTodayUsage(), Helper.getCurrentDate()));
 
         adapter = new ReportAdapter(trafficMonitors);
@@ -107,7 +108,7 @@ public class ReportActivity extends EnhancedActivity {
     @Override
     public void onStart() {
         super.onStart();
-        registerReceiver(broadcastReceiver, new IntentFilter(SigmaDataService.TODAY_USAGE_ACTION));
+        registerReceiver(broadcastReceiver, new IntentFilter(DataUsageMeter.TODAY_USAGE_ACTION));
     }
 
     @Override
