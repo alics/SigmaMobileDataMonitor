@@ -36,7 +36,6 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/white"/>
 
-
     </LinearLayout>
 
     <LinearLayout

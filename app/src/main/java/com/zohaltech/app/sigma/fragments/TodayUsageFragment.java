@@ -15,14 +15,14 @@ import android.widget.LinearLayout;
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.classes.App;
 import com.zohaltech.app.sigma.classes.DataUsageMeter;
-import com.zohaltech.app.sigma.classes.SigmaDataService;
 import com.zohaltech.app.sigma.classes.TrafficUnitsUtil;
 
 import widgets.CircleProgress;
 
 public class TodayUsageFragment extends Fragment {
 
-    CircleProgress progressTodayUsage;
+    CircleProgress progressTodayUsageMobile;
+    CircleProgress progressTodayUsageWifi;
     private BroadcastReceiver broadcastReceiver;
 
     private long todayUsage;
@@ -56,9 +56,11 @@ public class TodayUsageFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        int size = (App.screenWidth) / 2;
-        progressTodayUsage = (CircleProgress) view.findViewById(R.id.progressTodayUsage);
-        progressTodayUsage.setLayoutParams(new LinearLayout.LayoutParams(size, size));
+        int size = (App.screenWidth) / 3;
+        progressTodayUsageMobile = (CircleProgress) view.findViewById(R.id.progressTodayUsageMobile);
+        progressTodayUsageWifi = (CircleProgress) view.findViewById(R.id.progressTodayUsageWifi);
+        progressTodayUsageMobile.setLayoutParams(new LinearLayout.LayoutParams(size, size));
+        progressTodayUsageWifi.setLayoutParams(new LinearLayout.LayoutParams(size, size));
         updateUI(App.preferences.getLong(DataUsageMeter.TODAY_USAGE_BYTES, 0));
     }
 
@@ -80,7 +82,7 @@ public class TodayUsageFragment extends Fragment {
             public void run() {
                 setTodayUsage(bytes);
                 TrafficUnitsUtil trafficDisplay = TrafficUnitsUtil.getTodayTraffic(getTodayUsage());
-                progressTodayUsage.setProgress(trafficDisplay.getValue(), trafficDisplay.getPostfix());
+                progressTodayUsageMobile.setProgress(trafficDisplay.getValue(), trafficDisplay.getPostfix());
             }
         });
     }
