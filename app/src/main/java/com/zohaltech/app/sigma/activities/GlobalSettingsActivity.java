@@ -18,7 +18,8 @@ import com.zohaltech.app.sigma.entities.Setting;
 public class GlobalSettingsActivity extends PaymentActivity {
 
     SwitchCompat switchShowNotification;
-    SwitchCompat switchShowNotificationWhenDataIsOn;
+    SwitchCompat switchShowNotificationWhenDataOrWifiIsOn;
+    SwitchCompat switchShowWifiUsage;
     SwitchCompat switchShowDownUpSpeed;
     LinearLayout layoutLockScreen;
     SwitchCompat switchShowNotificationInLockScreen;
@@ -37,7 +38,8 @@ public class GlobalSettingsActivity extends PaymentActivity {
         setContentView(R.layout.activity_global_settings);
 
         switchShowNotification = (SwitchCompat) findViewById(R.id.switchShowNotification);
-        switchShowNotificationWhenDataIsOn = (SwitchCompat) findViewById(R.id.switchShowNotificationWhenDataIsOn);
+        switchShowNotificationWhenDataOrWifiIsOn = (SwitchCompat) findViewById(R.id.switchShowNotificationWhenDataOrWifiIsOn);
+        switchShowWifiUsage = (SwitchCompat) findViewById(R.id.switchShowWifiUsage);
         switchShowDownUpSpeed = (SwitchCompat) findViewById(R.id.switchShowDownUpSpeed);
         switchVibrateInAlarms = (SwitchCompat) findViewById(R.id.switchVibrateInAlarms);
         switchSoundInAlarms = (SwitchCompat) findViewById(R.id.switchSoundInAlarms);
@@ -54,7 +56,8 @@ public class GlobalSettingsActivity extends PaymentActivity {
 
         Setting setting = Settings.getCurrentSettings();
         switchShowNotification.setChecked(setting.getShowNotification());
-        switchShowNotificationWhenDataIsOn.setChecked(setting.getShowNotificationWhenDataOrWifiIsOn());
+        switchShowNotificationWhenDataOrWifiIsOn.setChecked(setting.getShowNotificationWhenDataOrWifiIsOn());
+        switchShowWifiUsage.setChecked(setting.getShowWifiUsage());
         switchShowNotificationInLockScreen.setChecked(setting.getShowNotificationInLockScreen());
         switchShowDownUpSpeed.setChecked(setting.getShowUpDownSpeed());
         switchVibrateInAlarms.setChecked(setting.getVibrateInAlarms());
@@ -65,7 +68,8 @@ public class GlobalSettingsActivity extends PaymentActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 switchShowDownUpSpeed.setEnabled(isChecked);
                 switchShowNotificationInLockScreen.setEnabled(isChecked);
-                switchShowNotificationWhenDataIsOn.setEnabled(isChecked);
+                switchShowNotificationWhenDataOrWifiIsOn.setEnabled(isChecked);
+                switchShowWifiUsage.setEnabled(isChecked);
 
                 Setting setting = Settings.getCurrentSettings();
                 setting.setShowNotification(isChecked);
@@ -73,12 +77,21 @@ public class GlobalSettingsActivity extends PaymentActivity {
             }
         });
 
-        switchShowNotificationWhenDataIsOn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        switchShowNotificationWhenDataOrWifiIsOn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 ConnectionManager.setDataOrWifiConnectedStatus();
                 Setting setting = Settings.getCurrentSettings();
                 setting.setShowNotificationWhenDataOrWifiIsOn(isChecked);
+                Settings.update(setting);
+            }
+        });
+
+        switchShowWifiUsage.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Setting setting = Settings.getCurrentSettings();
+                setting.setShowWifiUsage(isChecked);
                 Settings.update(setting);
             }
         });

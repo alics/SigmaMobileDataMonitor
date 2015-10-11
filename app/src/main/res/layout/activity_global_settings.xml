@@ -76,13 +76,30 @@
                         android:background="@android:drawable/divider_horizontal_bright"/>
 
                     <widgets.MySwitch
-                        android:id="@+id/switchShowNotificationWhenDataIsOn"
+                        android:id="@+id/switchShowNotificationWhenDataOrWifiIsOn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:layout_marginTop="5dp"
                         android:gravity="right"
-                        android:text=" نمایش فقط وقتی که دیتا روشن باشد "
+                        android:text=" نمایش فقط وقتی که دیتا یا وای فای روشن باشد "
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@android:drawable/divider_horizontal_bright"/>
+
+                    <widgets.MySwitch
+                        android:id="@+id/switchShowWifiUsage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:gravity="right"
+                        android:text=" نمایش مصرف اینترنت وای فای "
                         android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                     <LinearLayout

@@ -12,7 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="2"
-        android:gravity="center|center"
+        android:gravity="center"
         android:text="100MB"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/secondary_text"/>
@@ -22,22 +22,17 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="2"
-        android:gravity="center|center"
+        android:gravity="center"
         android:text="100MB"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/secondary_text"/>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.7"/>
 
     <widgets.MyTextView
         android:id="@+id/txtDate"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="2"
-        android:gravity="left|center"
+        android:gravity="center"
         android:text="1394/05/03"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/secondary_text"/>
