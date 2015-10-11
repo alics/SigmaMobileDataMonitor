@@ -49,7 +49,7 @@ public class DataUsageMeter
             long sentBytesMobile = 0;
 
             // Wifi
-            long currentUsageBytesWifi = android.net.TrafficStats.getTotalRxBytes() - currentSentBytesMobile;
+            long currentUsageBytesWifi = android.net.TrafficStats.getTotalRxBytes() - currentUsageBytesMobile;
             long currentSentBytesWifi = android.net.TrafficStats.getTotalTxBytes() - currentSentBytesMobile;
             long receivedBytesWifi = 0;
             long sentBytesWifi = 0;
