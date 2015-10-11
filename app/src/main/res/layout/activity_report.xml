@@ -12,6 +12,48 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/primary"
+        android:padding="5dp">
+
+        <widgets.MyTextView
+            android:id="@+id/txtTrafficWifi"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="موبایل"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/white"/>
+
+        <widgets.MyTextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="وای فای"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/white"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.7"/>
+
+        <widgets.MyTextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="left|center"
+            android:text="تاریخ        "
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+
     <ListView
         android:id="@+id/lstTraffics"
         android:layout_width="match_parent"
@@ -24,37 +66,6 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/primary"/>
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="?actionBarSize"-->
-    <!--android:orientation="horizontal">-->
-
-    <!--<widgets.LatinTextView-->
-    <!--android:id="@+id/txtTotalTraffic"-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_weight="3"-->
-    <!--android:gravity="right|center"-->
-    <!--android:text="0MB"-->
-    <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
-    <!--android:textColor="@color/primary_text"/>-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_weight="2"/>-->
-
-    <!--<widgets.MyTextView-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_weight="3"-->
-    <!--android:gravity="left|center"-->
-    <!--android:text="مجموع       "-->
-    <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
-    <!--android:textColor="@color/primary_text"/>-->
-
-    <!--</LinearLayout>-->
 
     <LinearLayout
         android:id="@+id/layoutReport"
@@ -87,7 +98,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="0.7"/>
 
         <widgets.MyTextView
             android:id="@+id/txtDate"
