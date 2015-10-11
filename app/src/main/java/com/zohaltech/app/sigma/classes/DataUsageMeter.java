@@ -207,12 +207,12 @@ public class DataUsageMeter
                 showNotification = false;
             }
 
-            Boolean isWifi = ConnectionManager.getConnectivityStatus() == ConnectionManager.TYPE_WIFI;
-            String title = service.getString(R.string.speed) + TrafficUnitsUtil.getTransferRate(isWifi ? receivedBytesWifi + sentBytesWifi : receivedBytesMobile + sentBytesMobile);
+            String title = service.getString(R.string.speed) +
+                    TrafficUnitsUtil.getTransferRate(showWifi ? receivedBytesWifi + sentBytesWifi + receivedBytesMobile + sentBytesMobile : receivedBytesMobile + sentBytesMobile);
             if (setting.getShowUpDownSpeed())
             {
-                title = service.getString(R.string.down) + TrafficUnitsUtil.getTransferRate(isWifi ? receivedBytesWifi : receivedBytesMobile)
-                        + service.getString(R.string.up) + TrafficUnitsUtil.getTransferRate(isWifi ? sentBytesWifi : sentBytesMobile);
+                title = service.getString(R.string.down) + TrafficUnitsUtil.getTransferRate(showWifi ? receivedBytesWifi + receivedBytesMobile : receivedBytesMobile)
+                        + service.getString(R.string.up) + TrafficUnitsUtil.getTransferRate(showWifi ? sentBytesWifi + sentBytesMobile : sentBytesMobile);
             }
 
             if (showNotification)
