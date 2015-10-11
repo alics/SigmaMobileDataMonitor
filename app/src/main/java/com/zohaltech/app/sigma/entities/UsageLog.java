@@ -5,18 +5,18 @@ public class UsageLog
 
     private Integer id;
     private Long trafficBytes;
-    private Long wifiTrafficBytes;
+    private Long trafficBytesWifi;
     private String logDateTime;
 
-    public UsageLog(Long trafficBytes, Long wifiTrafficBytes)
+    public UsageLog(Long trafficBytes, Long trafficBytesWifi)
     {
         setTrafficBytes(trafficBytes);
-        setWifiTrafficBytes(wifiTrafficBytes);
+        setTrafficBytesWifi(trafficBytesWifi);
     }
 
-    public UsageLog(Integer id, Long trafficBytes, Long wifiTrafficBytes, String logDateTime)
+    public UsageLog(Integer id, Long trafficBytes, Long trafficBytesWifi, String logDateTime)
     {
-        this(trafficBytes, wifiTrafficBytes);
+        this(trafficBytes, trafficBytesWifi);
         setId(id);
         setLogDateTime(logDateTime);
     }
@@ -41,14 +41,14 @@ public class UsageLog
         this.trafficBytes = trafficBytes;
     }
 
-    public Long getWifiTrafficBytes()
+    public Long getTrafficBytesWifi()
     {
-        return wifiTrafficBytes;
+        return trafficBytesWifi;
     }
 
-    public void setWifiTrafficBytes(Long wifiTrafficBytes)
+    public void setTrafficBytesWifi(Long trafficBytesWifi)
     {
-        this.wifiTrafficBytes = wifiTrafficBytes;
+        this.trafficBytesWifi = trafficBytesWifi;
     }
 
     public String getLogDateTime()

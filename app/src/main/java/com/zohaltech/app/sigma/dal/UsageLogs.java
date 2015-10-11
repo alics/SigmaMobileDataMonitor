@@ -20,13 +20,13 @@ public class UsageLogs
     static final String TableName = "UsageLogs";
     static final String Id = "Id";
     static final String TrafficBytes = "TrafficBytes";
-    static final String WifiTrafficBytes = "WifiTrafficBytes";
+    static final String TrafficBytesWifi = "TrafficBytesWifi";
     static final String LogDateTime = "LogDateTime";
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
             Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
             TrafficBytes + " BIGINT NOT NULL, " +
-            WifiTrafficBytes + " BIGINT NOT NULL, " +
+            TrafficBytesWifi + " BIGINT NOT NULL, " +
             LogDateTime + " CHAR(19) );";
 
     static final String DropTable = "Drop Table If Exists " + TableName;
@@ -48,7 +48,7 @@ public class UsageLogs
                 {
                     UsageLog log = new UsageLog(cursor.getInt(cursor.getColumnIndex(Id)),
                             cursor.getLong(cursor.getColumnIndex(TrafficBytes)),
-                            cursor.getLong(cursor.getColumnIndex(WifiTrafficBytes)),
+                            cursor.getLong(cursor.getColumnIndex(TrafficBytesWifi)),
                             cursor.getString(cursor.getColumnIndex(LogDateTime)));
                     logList.add(log);
                 } while (cursor.moveToNext());
@@ -83,7 +83,7 @@ public class UsageLogs
         {
             ContentValues values = new ContentValues();
             values.put(TrafficBytes, 0);
-            values.put(WifiTrafficBytes, 0);
+            values.put(TrafficBytesWifi, 0);
             values.put(LogDateTime, Helper.addDay(-1));
             DataAccess da = new DataAccess();
             da.insert(TableName, values);
@@ -95,7 +95,7 @@ public class UsageLogs
         {
             ContentValues values = new ContentValues();
             values.put(TrafficBytes, usageLog.getTrafficBytes());
-            values.put(WifiTrafficBytes, usageLog.getWifiTrafficBytes());
+            values.put(TrafficBytesWifi, usageLog.getTrafficBytesWifi());
             values.put(LogDateTime, currentDateTime);
 
             DataAccess da = new DataAccess();
@@ -110,7 +110,7 @@ public class UsageLogs
         ContentValues values = new ContentValues();
 
         values.put(TrafficBytes, usageLog.getTrafficBytes());
-        values.put(WifiTrafficBytes, usageLog.getWifiTrafficBytes());
+        values.put(TrafficBytesWifi, usageLog.getTrafficBytesWifi());
         values.put(LogDateTime, usageLog.getLogDateTime());
 
         DataAccess da = new DataAccess();

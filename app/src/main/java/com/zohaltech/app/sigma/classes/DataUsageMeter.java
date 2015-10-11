@@ -35,7 +35,8 @@ public class DataUsageMeter
     private static final int USAGE_LOG_INTERVAL = 60;
     private static int usageLogInterval = 0;
     private static ScheduledExecutorService executorService;
-    private boolean firstTime = true;
+    private boolean firstTimeMobile = true;
+    private boolean firstTimeWifi = true;
     private Service service;
     private Runnable runnable = new Runnable()
     {
@@ -54,44 +55,66 @@ public class DataUsageMeter
             long receivedBytesWifi = 0;
             long sentBytesWifi = 0;
 
+            // Mobile
             if (currentUsageBytesMobile + currentSentBytesMobile == 0)
             {
-                firstTime = true;
+                firstTimeMobile = true;
             }
             else
             {
-                if (firstTime)
+                if (firstTimeMobile)
                 {
-                    firstTime = false;
+                    firstTimeMobile = false;
                     App.preferences.edit().putLong(LAST_RECEIVED_BYTES, currentUsageBytesMobile).apply();
                     App.preferences.edit().putLong(LAST_SENT_BYTES, currentSentBytesMobile).apply();
-
-                    App.preferences.edit().putLong(LAST_RECEIVED_BYTES_WIFI, currentUsageBytesWifi).apply();
-                    App.preferences.edit().putLong(LAST_SENT_BYTES_WIFI, currentSentBytesWifi).apply();
                 }
 
                 receivedBytesMobile = currentUsageBytesMobile - App.preferences.getLong(LAST_RECEIVED_BYTES, 0);
                 sentBytesMobile = currentSentBytesMobile - App.preferences.getLong(LAST_SENT_BYTES, 0);
 
-                receivedBytesWifi = currentUsageBytesWifi - App.preferences.getLong(LAST_RECEIVED_BYTES_WIFI, 0);
-                sentBytesWifi = currentSentBytesWifi - App.preferences.getLong(LAST_SENT_BYTES_WIFI, 0);
-
                 if (receivedBytesMobile < 0 || sentBytesMobile < 0)
                 {
                     receivedBytesMobile = receivedBytesMobile >= 0 ? receivedBytesMobile : 0;
                     sentBytesMobile = sentBytesMobile >= 0 ? sentBytesMobile : 0;
-                    firstTime = true;
+                    firstTimeMobile = true;
                 }
 
                 App.preferences.edit().putLong(LAST_RECEIVED_BYTES, currentUsageBytesMobile).apply();
                 App.preferences.edit().putLong(LAST_SENT_BYTES, currentSentBytesMobile).apply();
+            }
+
+            final long oneMinuteUsedBytesMobile = App.preferences.getLong(ONE_MINUTE_USED_BYTES, 0) + receivedBytesMobile + sentBytesMobile;
+            App.preferences.edit().putLong(ONE_MINUTE_USED_BYTES, oneMinuteUsedBytesMobile).apply();
+
+
+            // Wifi
+            if (currentUsageBytesWifi + currentSentBytesWifi == 0)
+            {
+                firstTimeWifi = true;
+            }
+            else
+            {
+                if (firstTimeWifi)
+                {
+                    firstTimeWifi = false;
+
+                    App.preferences.edit().putLong(LAST_RECEIVED_BYTES_WIFI, currentUsageBytesWifi).apply();
+                    App.preferences.edit().putLong(LAST_SENT_BYTES_WIFI, currentSentBytesWifi).apply();
+                }
+
+                receivedBytesWifi = currentUsageBytesWifi - App.preferences.getLong(LAST_RECEIVED_BYTES_WIFI, 0);
+                sentBytesWifi = currentSentBytesWifi - App.preferences.getLong(LAST_SENT_BYTES_WIFI, 0);
+
+                if (receivedBytesWifi < 0 || sentBytesWifi < 0)
+                {
+                    receivedBytesWifi = receivedBytesWifi >= 0 ? receivedBytesWifi : 0;
+                    sentBytesWifi = sentBytesWifi >= 0 ? sentBytesWifi : 0;
+                    firstTimeMobile = true;
+                }
 
                 App.preferences.edit().putLong(LAST_RECEIVED_BYTES_WIFI, currentUsageBytesWifi).apply();
                 App.preferences.edit().putLong(LAST_SENT_BYTES_WIFI, currentSentBytesWifi).apply();
             }
-
-            final long oneMinuteUsedBytes = App.preferences.getLong(ONE_MINUTE_USED_BYTES, 0) + receivedBytesMobile + sentBytesMobile;
-            App.preferences.edit().putLong(ONE_MINUTE_USED_BYTES, oneMinuteUsedBytes).apply();
 
             final long oneMinuteUsedBytesWifi = App.preferences.getLong(ONE_MINUTE_USED_BYTES_WIFI, 0) + receivedBytesWifi + sentBytesWifi;
             App.preferences.edit().putLong(ONE_MINUTE_USED_BYTES_WIFI, oneMinuteUsedBytesWifi).apply();
@@ -107,7 +130,7 @@ public class DataUsageMeter
                         App.preferences.edit().putLong(ONE_MINUTE_USED_BYTES_WIFI, 0).apply();
                         try
                         {
-                            UsageLogs.insert(new UsageLog(oneMinuteUsedBytes, oneMinuteUsedBytesWifi));
+                            UsageLogs.insert(new UsageLog(oneMinuteUsedBytesMobile, oneMinuteUsedBytesWifi));
                         }
                         catch (Exception e)
                         {
@@ -134,8 +157,8 @@ public class DataUsageMeter
 
             App.preferences.edit().putString(TODAY_USAGE_DATE, currentDate).apply();
 
-            Boolean isWifi = ConnectionManager.getConnectivityStatus() == ConnectionManager.TYPE_WIFI;
-            long sumReceivedSent = isWifi ? (receivedBytesWifi + sentBytesWifi) / 1024 : (receivedBytesMobile + sentBytesMobile) / 1024;
+            Boolean showWifi = true;
+            long sumReceivedSent = (receivedBytesWifi + sentBytesWifi + (showWifi ? receivedBytesMobile + sentBytesMobile : 0)) / 1024;
 
             int iconId = R.drawable.wkb000;
             if (sumReceivedSent < 1000)
@@ -183,6 +206,7 @@ public class DataUsageMeter
                 showNotification = false;
             }
 
+            Boolean isWifi = ConnectionManager.getConnectivityStatus() == ConnectionManager.TYPE_WIFI;
             String title = service.getString(R.string.speed) + TrafficUnitsUtil.getTransferRate(isWifi ? receivedBytesWifi + sentBytesWifi : receivedBytesMobile + sentBytesMobile);
             if (setting.getShowUpDownSpeed())
             {

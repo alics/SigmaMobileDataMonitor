@@ -6,19 +6,19 @@ public class DailyTrafficHistory
 
     private Integer id;
     private Long traffic;
-    private Long wifiTraffic;
+    private Long trafficWifi;
     private String logDate;
 
-    public DailyTrafficHistory(Long traffic,Long wifiTraffic, String logDate)
+    public DailyTrafficHistory(Long traffic,Long trafficWifi, String logDate)
     {
         setTraffic(traffic);
-        setWifiTraffic(wifiTraffic);
+        setTrafficWifi(trafficWifi);
         setLogDate(logDate);
     }
 
-    public DailyTrafficHistory(Integer id, Long traffic,Long wifiTraffic, String logDate)
+    public DailyTrafficHistory(Integer id, Long traffic,Long trafficWifi, String logDate)
     {
-        this(traffic,wifiTraffic, logDate);
+        this(traffic,trafficWifi, logDate);
         this.id = id;
     }
 
@@ -42,14 +42,14 @@ public class DailyTrafficHistory
         this.traffic = traffic;
     }
 
-    public Long getWifiTraffic()
+    public Long getTrafficWifi()
     {
-        return wifiTraffic;
+        return trafficWifi;
     }
 
-    public void setWifiTraffic(Long wifiTraffic)
+    public void setTrafficWifi(Long trafficWifi)
     {
-        this.wifiTraffic = wifiTraffic;
+        this.trafficWifi = trafficWifi;
     }
 
     public String getLogDate()

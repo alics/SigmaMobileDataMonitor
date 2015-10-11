@@ -12,7 +12,6 @@ import com.zohaltech.app.sigma.classes.Helper;
 import com.zohaltech.app.sigma.classes.LicenseManager;
 import com.zohaltech.app.sigma.classes.LicenseStatus;
 import com.zohaltech.app.sigma.classes.MyRuntimeException;
-import com.zohaltech.app.sigma.entities.UsageLog;
 
 import java.io.InputStreamReader;
 
@@ -49,7 +48,7 @@ public class DataAccess extends SQLiteOpenHelper
             //prevent first daily history usage to be null
             ContentValues usageLogValues = new ContentValues();
             usageLogValues.put(UsageLogs.TrafficBytes, 0);
-            usageLogValues.put(UsageLogs.WifiTrafficBytes, 0);
+            usageLogValues.put(UsageLogs.TrafficBytesWifi, 0);
             usageLogValues.put(UsageLogs.LogDateTime, Helper.getCurrentDateTime());
             database.insert(UsageLogs.TableName, null, usageLogValues);
 
@@ -58,7 +57,7 @@ public class DataAccess extends SQLiteOpenHelper
             {
                 trafficHistoryValues.put(DailyTrafficHistories.LogDate, Helper.addDay(i - 29));
                 trafficHistoryValues.put(DailyTrafficHistories.Traffic, 0);
-                trafficHistoryValues.put(DailyTrafficHistories.WifiTraffic, 0);
+                trafficHistoryValues.put(DailyTrafficHistories.TrafficWifi, 0);
                 database.insert(DailyTrafficHistories.TableName, null, trafficHistoryValues);
             }
 
@@ -172,8 +171,8 @@ public class DataAccess extends SQLiteOpenHelper
     {
         try
         {
-            database.execSQL("ALTER TABLE " + UsageLogs.TableName + " ADD COLUMN " + UsageLogs.WifiTrafficBytes + " BIGINT");
-            database.execSQL("ALTER TABLE " + DailyTrafficHistories.TableName + " ADD COLUMN " + DailyTrafficHistories.WifiTraffic + " BIGINT");
+            database.execSQL("ALTER TABLE " + UsageLogs.TableName + " ADD COLUMN " + UsageLogs.TrafficBytesWifi + " BIGINT");
+            database.execSQL("ALTER TABLE " + DailyTrafficHistories.TableName + " ADD COLUMN " + DailyTrafficHistories.TrafficWifi + " BIGINT");
         }
         catch (SQLException e)
         {

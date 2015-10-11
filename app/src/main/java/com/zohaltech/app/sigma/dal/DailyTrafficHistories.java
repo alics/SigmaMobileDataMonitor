@@ -3,7 +3,6 @@ package com.zohaltech.app.sigma.dal;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.DrawFilter;
 
 import com.zohaltech.app.sigma.classes.Helper;
 import com.zohaltech.app.sigma.classes.MyRuntimeException;
@@ -18,14 +17,14 @@ public class DailyTrafficHistories
     static final String TableName = "DailyTrafficHistories";
     static final String Id = "Id";
     static final String Traffic = "Traffic";
-    static final String WifiTraffic = "WifiTraffic";
+    static final String TrafficWifi = "TrafficWifi";
     static final String LogDate = "LogDate";
 
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
             Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
             Traffic + " BIGINT  NOT NULL," +
-            WifiTraffic + " BIGINT  NOT NULL," +
+            TrafficWifi + " BIGINT  NOT NULL," +
             LogDate + " CHAR(10)  NOT NULL); ";
 
     static final String DropTable = "Drop Table If Exists " + TableName;
@@ -40,7 +39,7 @@ public class DailyTrafficHistories
         ContentValues values = new ContentValues();
 
         values.put(Traffic, trafficHistory.getTraffic());
-        values.put(WifiTraffic, trafficHistory.getWifiTraffic());
+        values.put(TrafficWifi, trafficHistory.getTrafficWifi());
         values.put(LogDate, trafficHistory.getLogDate());
 
         DataAccess da = new DataAccess();
@@ -52,7 +51,7 @@ public class DailyTrafficHistories
         ContentValues values = new ContentValues();
 
         values.put(Traffic, trafficHistory.getTraffic());
-        values.put(WifiTraffic, trafficHistory.getWifiTraffic());
+        values.put(TrafficWifi, trafficHistory.getTrafficWifi());
         values.put(LogDate, trafficHistory.getLogDate());
 
         DataAccess da = new DataAccess();
@@ -82,7 +81,7 @@ public class DailyTrafficHistories
                 {
                     DailyTrafficHistory history = new DailyTrafficHistory(cursor.getInt(cursor.getColumnIndex(Id)),
                             cursor.getLong(cursor.getColumnIndex(Traffic)),
-                            cursor.getLong(cursor.getColumnIndex(WifiTraffic)),
+                            cursor.getLong(cursor.getColumnIndex(TrafficWifi)),
                             cursor.getString(cursor.getColumnIndex(LogDate)));
                     histories.add(history);
                 } while (cursor.moveToNext());
@@ -144,7 +143,7 @@ public class DailyTrafficHistories
 
         try
         {
-            String query = "SELECT  SUM(" + Traffic + ") total,SUM(" + WifiTraffic + ") totalWifi, SUBSTR(" + LogDate + ",0,11) date FROM (" +
+            String query = "SELECT  SUM(" + Traffic + ") total,SUM(" + TrafficWifi + ") totalWifi, SUBSTR(" + LogDate + ",0,11) date FROM (" +
                     " SELECT  *  FROM " + TableName +
                     " ORDER BY " + Id + " DESC) t" +
                     " GROUP BY SUBSTR(" + LogDate + ", 0, 11)" +
