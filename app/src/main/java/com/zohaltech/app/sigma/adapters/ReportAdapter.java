@@ -43,11 +43,13 @@ public class ReportAdapter extends ArrayAdapter<TrafficMonitor> {
         LinearLayout layoutReport;
         TextView     txtDate;
         TextView     txtTraffic;
+        TextView     txtTrafficWifi;
 
         public ViewHolder(View view) {
             layoutReport = (LinearLayout) view.findViewById(R.id.layoutReport);
             txtDate = (TextView) view.findViewById(R.id.txtDate);
             txtTraffic = (TextView) view.findViewById(R.id.txtTraffic);
+            txtTrafficWifi = (TextView) view.findViewById(R.id.txtTrafficWifi);
         }
 
         public void fill(final ArrayAdapter<TrafficMonitor> adapter, final TrafficMonitor item, final int position) {
@@ -60,6 +62,7 @@ public class ReportAdapter extends ArrayAdapter<TrafficMonitor> {
             String date = item.getDate().equals(Helper.getCurrentDate()) ? "امروز        " : SolarCalendar.getShamsiDate(Helper.getDate(item.getDate()));
             txtDate.setText(date);
             txtTraffic.setText(TrafficUnitsUtil.getUsedTrafficWithPoint(item.getTotalTraffic()));
+            txtTrafficWifi.setText(TrafficUnitsUtil.getUsedTrafficWithPoint(item.getTotalTrafficWifi()));
         }
     }
 }

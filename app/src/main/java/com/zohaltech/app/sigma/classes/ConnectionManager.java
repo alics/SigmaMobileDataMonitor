@@ -59,7 +59,7 @@ public class ConnectionManager {
 
     public static void setDataConnectedStatus() {
         Setting setting = Settings.getCurrentSettings();
-        if (ConnectionManager.getConnectivityStatus() == ConnectionManager.TYPE_MOBILE) {
+        if (ConnectionManager.getConnectivityStatus() != ConnectionManager.TYPE_NOT_CONNECTED) {
             setting.setDataConnected(true);
         } else {
             setting.setDataConnected(false);

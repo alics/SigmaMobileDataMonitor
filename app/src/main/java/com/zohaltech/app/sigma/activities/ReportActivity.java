@@ -14,46 +14,64 @@ import com.zohaltech.app.sigma.adapters.ReportAdapter;
 import com.zohaltech.app.sigma.classes.App;
 import com.zohaltech.app.sigma.classes.DataUsageMeter;
 import com.zohaltech.app.sigma.classes.Helper;
-import com.zohaltech.app.sigma.classes.SigmaDataService;
 import com.zohaltech.app.sigma.classes.TrafficUnitsUtil;
 import com.zohaltech.app.sigma.dal.DailyTrafficHistories;
 import com.zohaltech.app.sigma.entities.TrafficMonitor;
 
 import java.util.ArrayList;
-import java.util.Random;
 
-public class ReportActivity extends EnhancedActivity {
+public class ReportActivity extends EnhancedActivity
+{
 
-    ListView                  lstTraffics;
-    TextView                  txtTotalTraffic;
+    ListView lstTraffics;
+    TextView txtTotalTraffic;
+    TextView txtTotalTrafficWifi;
     ArrayList<TrafficMonitor> trafficMonitors;
-    ReportAdapter             adapter;
+    ReportAdapter adapter;
     private BroadcastReceiver broadcastReceiver;
 
     private long todayUsage;
+    private long todayUsageWifi;
 
-    public long getTodayUsage() {
+    public long getTodayUsage()
+    {
         return todayUsage;
     }
 
-    public void setTodayUsage(long todayUsage) {
+    public void setTodayUsage(long todayUsage)
+    {
         this.todayUsage = todayUsage;
     }
 
+    public long getTodayUsageWifi()
+    {
+        return todayUsageWifi;
+    }
+
+    public void setTodayUsageWifi(long todayUsageWifi)
+    {
+        this.todayUsageWifi = todayUsageWifi;
+    }
+
     @Override
-    void onCreated() {
+    void onCreated()
+    {
         setContentView(R.layout.activity_report);
 
-        broadcastReceiver = new BroadcastReceiver() {
+        broadcastReceiver = new BroadcastReceiver()
+        {
             @Override
-            public void onReceive(Context context, Intent intent) {
+            public void onReceive(Context context, Intent intent)
+            {
                 long usage = intent.getLongExtra(DataUsageMeter.TODAY_USAGE_BYTES, 0);
-                updateUI(usage);
+                long usageWifi = intent.getLongExtra(DataUsageMeter.TODAY_USAGE_BYTES_WIFI, 0);
+                updateUI(usage, usageWifi);
             }
         };
 
         lstTraffics = (ListView) findViewById(R.id.lstTraffics);
         txtTotalTraffic = (TextView) findViewById(R.id.txtTotalTraffic);
+        txtTotalTrafficWifi = (TextView) findViewById(R.id.txtTotalTrafficWifi);
 
         trafficMonitors = DailyTrafficHistories.getMonthlyTraffic();
         //trafficMonitors = new ArrayList<>();
@@ -66,7 +84,8 @@ public class ReportActivity extends EnhancedActivity {
         //    trafficMonitors.add(0, trafficMonitor);
         //}
         setTodayUsage(App.preferences.getLong(DataUsageMeter.TODAY_USAGE_BYTES, 0));
-        trafficMonitors.add(0, new TrafficMonitor(getTodayUsage(), Helper.getCurrentDate()));
+        setTodayUsageWifi(App.preferences.getLong(DataUsageMeter.TODAY_USAGE_BYTES, 0));
+        trafficMonitors.add(0, new TrafficMonitor(getTodayUsage(), getTodayUsageWifi(), Helper.getCurrentDate()));
 
         adapter = new ReportAdapter(trafficMonitors);
         lstTraffics.setAdapter(adapter);
@@ -74,48 +93,62 @@ public class ReportActivity extends EnhancedActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         int id = item.getItemId();
-        if (id == android.R.id.home) {
+        if (id == android.R.id.home)
+        {
             onBackPressed();
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
-    void onToolbarCreated() {
+    void onToolbarCreated()
+    {
         txtToolbarTitle.setText(getString(R.string.usage_report));
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
-    private void populateSummery() {
+    private void populateSummery()
+    {
         long sum = 0;
-        for (TrafficMonitor trafficMonitor : trafficMonitors) {
+        long sumWifi = 0;
+        for (TrafficMonitor trafficMonitor : trafficMonitors)
+        {
             sum += trafficMonitor.getTotalTraffic();
+            sumWifi += trafficMonitor.getTotalTrafficWifi();
         }
         txtTotalTraffic.setText(TrafficUnitsUtil.getUsedTrafficWithPoint(sum));
+        txtTotalTrafficWifi.setText(TrafficUnitsUtil.getUsedTrafficWithPoint(sumWifi));
     }
 
-    private void updateUI(long usage) {
+    private void updateUI(long usage, long usageWifi)
+    {
         setTodayUsage(usage);
+        setTodayUsageWifi(usageWifi);
         trafficMonitors.get(0).setTotalTraffic(getTodayUsage());
+        trafficMonitors.get(0).setTotalTrafficWifi(getTodayUsageWifi());
         populateSummery();
         adapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onStart() {
+    public void onStart()
+    {
         super.onStart();
         registerReceiver(broadcastReceiver, new IntentFilter(DataUsageMeter.TODAY_USAGE_ACTION));
     }
 
     @Override
-    public void onStop() {
+    public void onStop()
+    {
         super.onStop();
         unregisterReceiver(broadcastReceiver);
     }
+
 }
 
 

@@ -45,8 +45,6 @@ public class DashboardActivity extends PaymentActivity {
 
         super.onCreated();
 
-        TotalUidStats.proceed();
-
         DataAccess da = new DataAccess();
         da.getReadableDB();
         da.close();
