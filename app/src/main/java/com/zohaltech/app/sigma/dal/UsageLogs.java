@@ -164,7 +164,9 @@ public class UsageLogs
         try
         {
             String logDate = "SUBSTR(" + LogDateTime + ", 1, 10)";
-            String query = " SELECT SUM(" + TrafficBytes + ") SumTraffic," + logDate + " date FROM " + TableName +
+            String query = " SELECT SUM(" + TrafficBytes + ") SumTraffic," +
+                    "               SUM(" + TrafficBytes + ") SumTrafficWifi," +
+                    logDate + " date FROM " + TableName +
                     " WHERE " + logDate + " > " +
                     " (SELECT MAX(" + DailyTrafficHistories.LogDate + ") FROM " + DailyTrafficHistories.TableName + ")" +
                     " AND " + logDate + " <> '" + Helper.getCurrentDate() + "'" +
@@ -176,7 +178,7 @@ public class UsageLogs
                 do
                 {
                     long sumData = cursor.getLong(cursor.getColumnIndex("SumTraffic"));
-                    long sumWifi = cursor.getLong(cursor.getColumnIndex("SumTraffic"));
+                    long sumWifi = cursor.getLong(cursor.getColumnIndex("SumTrafficWifi"));
                     String date = cursor.getString(cursor.getColumnIndex("date"));
                     DailyTrafficHistory history = new DailyTrafficHistory(sumData, sumWifi, date);
                     DailyTrafficHistories.insert(history);

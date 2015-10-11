@@ -22,7 +22,8 @@ public class Settings {
     static final String PercentTrafficAlarmRes = "PercentTrafficAlarmRes";
     static final String LeftDaysAlarmRes = "LeftDaysAlarmRes";
     static final String ShowNotification = "ShowNotification";
-    static final String ShowNotificationWhenDataIsOn = "ShowNotificationWhenDataIsOn";
+    static final String ShowNotificationWhenDataOrWifiIsOn = "ShowNotificationWhenDataIsOn";
+    static final String ShowWifiUsage = "ShowWifiUsage";
     static final String ShowNotificationInLockScreen = "ShowNotificationInLockScreen";
     static final String ShowUpDownSpeed = "ShowUpDownSpeed";
     static final String VibrateInAlarms = "VibrateInAlarms";
@@ -39,7 +40,8 @@ public class Settings {
             PercentTrafficAlarmRes + " INTEGER NOT NULL, " +
             LeftDaysAlarmRes + " INTEGER NOT NULL, " +
             ShowNotification + " BOOLEAN NOT NULL, " +
-            ShowNotificationWhenDataIsOn + " BOOLEAN NOT NULL, " +
+            ShowNotificationWhenDataOrWifiIsOn + " BOOLEAN NOT NULL, " +
+            ShowWifiUsage + " BOOLEAN NOT NULL, " +
             ShowUpDownSpeed + " BOOLEAN NOT NULL, " +
             VibrateInAlarms + " BOOLEAN NOT NULL, " +
             SoundInAlarms + " BOOLEAN NOT NULL, " +
@@ -69,7 +71,8 @@ public class Settings {
                             cursor.getInt(cursor.getColumnIndex(PercentTrafficAlarmRes)),
                             cursor.getInt(cursor.getColumnIndex(LeftDaysAlarmRes)),
                             cursor.getInt(cursor.getColumnIndex(ShowNotification)) == 1,
-                            cursor.getInt(cursor.getColumnIndex(ShowNotificationWhenDataIsOn)) == 1,
+                            cursor.getInt(cursor.getColumnIndex(ShowNotificationWhenDataOrWifiIsOn)) == 1,
+                            cursor.getInt(cursor.getColumnIndex(ShowWifiUsage)) == 1,
                             cursor.getInt(cursor.getColumnIndex(ShowNotificationInLockScreen)) == 1,
                             cursor.getInt(cursor.getColumnIndex(ShowUpDownSpeed)) == 1,
                             cursor.getInt(cursor.getColumnIndex(VibrateInAlarms)) == 1,
@@ -100,7 +103,8 @@ public class Settings {
         values.put(PercentTrafficAlarmRes, setting.getPercentTrafficAlarmRes());
         values.put(LeftDaysAlarmRes, setting.getLeftDaysAlarmRes());
         values.put(ShowNotification, setting.getShowNotification() ? 1 : 0);
-        values.put(ShowNotificationWhenDataIsOn, setting.getShowNotificationWhenDataIsOn() ? 1 : 0);
+        values.put(ShowNotificationWhenDataOrWifiIsOn, setting.getShowNotificationWhenDataOrWifiIsOn() ? 1 : 0);
+        values.put(ShowWifiUsage, setting.getShowWifiUsage() ? 1 : 0);
         values.put(ShowNotificationInLockScreen, setting.getShowNotificationInLockScreen() ? 1 : 0);
         values.put(ShowUpDownSpeed, setting.getShowUpDownSpeed() ? 1 : 0);
         values.put(VibrateInAlarms, setting.getVibrateInAlarms() ? 1 : 0);

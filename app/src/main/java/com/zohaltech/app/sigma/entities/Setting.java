@@ -1,19 +1,21 @@
 package com.zohaltech.app.sigma.entities;
 
 
-public class Setting {
+public class Setting
+{
 
     private Integer id;
     private Boolean dataConnected;
-    private Long    dailyTraffic;
-    private int     alarmType;
+    private Long dailyTraffic;
+    private int alarmType;
     private Integer percentTrafficAlarm;
     private Integer leftDaysAlarm;
-    private int     alarmTypeRes;
+    private int alarmTypeRes;
     private Integer percentTrafficAlarmRes;
     private Integer leftDaysAlarmRes;
     private Boolean showNotification;
-    private Boolean showNotificationWhenDataIsOn;
+    private Boolean showNotificationWhenDataOrWifiIsOn;
+    private Boolean showWifiUsage;
     private Boolean showNotificationInLockScreen;
     private Boolean showUpDownSpeed;
     private Boolean vibrateInAlarms;
@@ -21,8 +23,9 @@ public class Setting {
 
     public Setting(Boolean dataConnected, Long dailyTraffic, int alarmType, Integer percentTrafficAlarm, Integer leftDaysAlarm,
                    int alarmTypeRes, Integer percentTrafficAlarmRes, Integer leftDaysAlarmRes, Boolean showNotification,
-                   Boolean showNotificationWhenDataIsOn, Boolean showNotificationInLockScreen, Boolean showUpDownSpeed,
-                   Boolean vibrateInAlarms, Boolean soundInAlarms) {
+                   Boolean showNotificationWhenDataIsOn,Boolean showWifiUsage, Boolean showNotificationInLockScreen, Boolean showUpDownSpeed,
+                   Boolean vibrateInAlarms, Boolean soundInAlarms)
+    {
         setDataConnected(dataConnected);
         setDailyTraffic(dailyTraffic);
         setAlarmType(alarmType);
@@ -32,7 +35,8 @@ public class Setting {
         setPercentTrafficAlarmRes(percentTrafficAlarmRes);
         setLeftDaysAlarmRes(leftDaysAlarmRes);
         setShowNotification(showNotification);
-        setShowNotificationWhenDataIsOn(showNotificationWhenDataIsOn);
+        setShowNotificationWhenDataOrWifiIsOn(showNotificationWhenDataIsOn);
+        setShowWifiUsage(showWifiUsage);
         setShowNotificationInLockScreen(showNotificationInLockScreen);
         setShowUpDownSpeed(showUpDownSpeed);
         setVibrateInAlarms(vibrateInAlarms);
@@ -41,134 +45,178 @@ public class Setting {
 
     public Setting(Integer id, Boolean dataConnected, Long dailyTraffic, int alarmType, Integer percentTrafficAlarm,
                    Integer leftDaysAlarm, int alarmTypeRes, Integer percentTrafficAlarmRes, Integer leftDaysAlarmRes,
-                   Boolean showNotification, Boolean showNotificationWhenDataIsOn, Boolean showNotificationInLockScreen,
-                   Boolean showUpDownSpeed, Boolean vibrateInAlarms, Boolean soundInAlarms) {
+                   Boolean showNotification, Boolean showNotificationWhenDataIsOn,Boolean showWifiUsage, Boolean showNotificationInLockScreen,
+                   Boolean showUpDownSpeed, Boolean vibrateInAlarms, Boolean soundInAlarms)
+    {
         this(dataConnected, dailyTraffic, alarmType, percentTrafficAlarm,
-             leftDaysAlarm, alarmTypeRes, percentTrafficAlarmRes, leftDaysAlarmRes,
-             showNotification, showNotificationWhenDataIsOn, showNotificationInLockScreen, showUpDownSpeed,
-             vibrateInAlarms, soundInAlarms);
+                leftDaysAlarm, alarmTypeRes, percentTrafficAlarmRes, leftDaysAlarmRes,
+                showNotification, showNotificationWhenDataIsOn,showWifiUsage, showNotificationInLockScreen, showUpDownSpeed,
+                vibrateInAlarms, soundInAlarms);
         this.id = id;
     }
 
-    public Integer getId() {
+    public Integer getId()
+    {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Integer id)
+    {
         this.id = id;
     }
 
-    public Boolean getDataConnected() {
+    public Boolean getDataConnected()
+    {
         return dataConnected;
     }
 
-    public void setDataConnected(Boolean dataConnected) {
+    public void setDataConnected(Boolean dataConnected)
+    {
         this.dataConnected = dataConnected;
     }
 
-    public Long getDailyTraffic() {
+    public Long getDailyTraffic()
+    {
         return dailyTraffic;
     }
 
-    public void setDailyTraffic(Long dailyTraffic) {
+    public void setDailyTraffic(Long dailyTraffic)
+    {
         this.dailyTraffic = dailyTraffic;
     }
 
-    public int getAlarmType() {
+    public int getAlarmType()
+    {
         return alarmType;
     }
 
-    public void setAlarmType(int alarmType) {
+    public void setAlarmType(int alarmType)
+    {
         this.alarmType = alarmType;
     }
 
-    public Integer getPercentTrafficAlarm() {
+    public Integer getPercentTrafficAlarm()
+    {
         return percentTrafficAlarm;
     }
 
-    public void setPercentTrafficAlarm(Integer percentTrafficAlarm) {
+    public void setPercentTrafficAlarm(Integer percentTrafficAlarm)
+    {
         this.percentTrafficAlarm = percentTrafficAlarm;
     }
 
-    public Integer getLeftDaysAlarm() {
+    public Integer getLeftDaysAlarm()
+    {
         return leftDaysAlarm;
     }
 
-    public void setLeftDaysAlarm(Integer leftDaysAlarm) {
+    public void setLeftDaysAlarm(Integer leftDaysAlarm)
+    {
         this.leftDaysAlarm = leftDaysAlarm;
     }
 
-    public int getAlarmTypeRes() {
+    public int getAlarmTypeRes()
+    {
         return alarmTypeRes;
     }
 
-    public void setAlarmTypeRes(int alarmTypeRes) {
+    public void setAlarmTypeRes(int alarmTypeRes)
+    {
         this.alarmTypeRes = alarmTypeRes;
     }
 
-    public Integer getPercentTrafficAlarmRes() {
+    public Integer getPercentTrafficAlarmRes()
+    {
         return percentTrafficAlarmRes;
     }
 
-    public void setPercentTrafficAlarmRes(Integer percentTrafficAlarmRes) {
+    public void setPercentTrafficAlarmRes(Integer percentTrafficAlarmRes)
+    {
         this.percentTrafficAlarmRes = percentTrafficAlarmRes;
     }
 
-    public Integer getLeftDaysAlarmRes() {
+    public Integer getLeftDaysAlarmRes()
+    {
         return leftDaysAlarmRes;
     }
 
-    public void setLeftDaysAlarmRes(Integer leftDaysAlarmRes) {
+    public void setLeftDaysAlarmRes(Integer leftDaysAlarmRes)
+    {
         this.leftDaysAlarmRes = leftDaysAlarmRes;
     }
 
-    public Boolean getShowNotification() {
+    public Boolean getShowNotification()
+    {
         return showNotification;
     }
 
-    public void setShowNotification(Boolean showNotification) {
+    public void setShowNotification(Boolean showNotification)
+    {
         this.showNotification = showNotification;
     }
 
-    public Boolean getShowNotificationWhenDataIsOn() {
-        return showNotificationWhenDataIsOn;
+    public Boolean getShowNotificationWhenDataOrWifiIsOn()
+    {
+        return showNotificationWhenDataOrWifiIsOn;
     }
 
-    public void setShowNotificationWhenDataIsOn(Boolean showNotificationWhenDataIsOn) {
-        this.showNotificationWhenDataIsOn = showNotificationWhenDataIsOn;
+    public void setShowNotificationWhenDataOrWifiIsOn(Boolean showNotificationWhenDataOrWifiIsOn)
+    {
+        this.showNotificationWhenDataOrWifiIsOn = showNotificationWhenDataOrWifiIsOn;
     }
 
-    public Boolean getShowNotificationInLockScreen() {
+    public Boolean getShowNotificationInLockScreen()
+    {
         return showNotificationInLockScreen;
     }
 
-    public void setShowNotificationInLockScreen(Boolean showNotificationInLockScreen) {
+    public void setShowNotificationInLockScreen(Boolean showNotificationInLockScreen)
+    {
         this.showNotificationInLockScreen = showNotificationInLockScreen;
     }
 
-    public Boolean getShowUpDownSpeed() {
+    public Boolean getShowUpDownSpeed()
+    {
         return showUpDownSpeed;
     }
 
-    public void setShowUpDownSpeed(Boolean showUpDownSpeed) {
+    public void setShowUpDownSpeed(Boolean showUpDownSpeed)
+    {
         this.showUpDownSpeed = showUpDownSpeed;
     }
 
-    public Boolean getVibrateInAlarms() {
+    public Boolean getVibrateInAlarms()
+    {
         return vibrateInAlarms;
     }
 
-    public void setVibrateInAlarms(Boolean vibrateInAlarms) {
+    public void setVibrateInAlarms(Boolean vibrateInAlarms)
+    {
         this.vibrateInAlarms = vibrateInAlarms;
     }
 
-    public Boolean getSoundInAlarms() {
+    public Boolean getSoundInAlarms()
+    {
         return soundInAlarms;
     }
 
-    public void setSoundInAlarms(Boolean soundInAlarms) {
+    public void setSoundInAlarms(Boolean soundInAlarms)
+    {
         this.soundInAlarms = soundInAlarms;
     }
 
-    public enum AlarmType {REMINDED_BYTES, LEFT_DAY, BOTH, NONE}
+    public Boolean getShowWifiUsage()
+    {
+        return showWifiUsage;
+    }
+
+    public void setShowWifiUsage(Boolean showWifiUsage)
+    {
+        this.showWifiUsage = showWifiUsage;
+    }
+
+    public enum AlarmType
+    {
+        REMINDED_BYTES, LEFT_DAY, BOTH, NONE
+    }
 }

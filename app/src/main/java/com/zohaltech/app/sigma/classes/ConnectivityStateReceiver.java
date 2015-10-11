@@ -8,7 +8,7 @@ public class ConnectivityStateReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        ConnectionManager.setDataConnectedStatus();
+        ConnectionManager.setDataOrWifiConnectedStatus();
         WebApiClient.sendUserData(WebApiClient.PostAction.INSTALL);
     }
 }

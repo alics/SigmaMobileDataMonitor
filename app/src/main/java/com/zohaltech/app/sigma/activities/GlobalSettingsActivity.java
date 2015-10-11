@@ -54,7 +54,7 @@ public class GlobalSettingsActivity extends PaymentActivity {
 
         Setting setting = Settings.getCurrentSettings();
         switchShowNotification.setChecked(setting.getShowNotification());
-        switchShowNotificationWhenDataIsOn.setChecked(setting.getShowNotificationWhenDataIsOn());
+        switchShowNotificationWhenDataIsOn.setChecked(setting.getShowNotificationWhenDataOrWifiIsOn());
         switchShowNotificationInLockScreen.setChecked(setting.getShowNotificationInLockScreen());
         switchShowDownUpSpeed.setChecked(setting.getShowUpDownSpeed());
         switchVibrateInAlarms.setChecked(setting.getVibrateInAlarms());
@@ -76,9 +76,9 @@ public class GlobalSettingsActivity extends PaymentActivity {
         switchShowNotificationWhenDataIsOn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                ConnectionManager.setDataConnectedStatus();
+                ConnectionManager.setDataOrWifiConnectedStatus();
                 Setting setting = Settings.getCurrentSettings();
-                setting.setShowNotificationWhenDataIsOn(isChecked);
+                setting.setShowNotificationWhenDataOrWifiIsOn(isChecked);
                 Settings.update(setting);
             }
         });

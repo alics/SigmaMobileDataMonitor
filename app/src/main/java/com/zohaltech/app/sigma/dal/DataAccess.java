@@ -72,7 +72,8 @@ public class DataAccess extends SQLiteOpenHelper
             settingsValues.put(Settings.PercentTrafficAlarmRes, 85);
             settingsValues.put(Settings.LeftDaysAlarmRes, 1);
             settingsValues.put(Settings.ShowNotification, 1);
-            settingsValues.put(Settings.ShowNotificationWhenDataIsOn, 0);
+            settingsValues.put(Settings.ShowNotificationWhenDataOrWifiIsOn, 0);
+            settingsValues.put(Settings.ShowWifiUsage, 1);
             settingsValues.put(Settings.ShowNotificationInLockScreen, 1);
             settingsValues.put(Settings.ShowUpDownSpeed, 0);
             settingsValues.put(Settings.VibrateInAlarms, 1);
@@ -173,6 +174,8 @@ public class DataAccess extends SQLiteOpenHelper
         {
             database.execSQL("ALTER TABLE " + UsageLogs.TableName + " ADD COLUMN " + UsageLogs.TrafficBytesWifi + " BIGINT");
             database.execSQL("ALTER TABLE " + DailyTrafficHistories.TableName + " ADD COLUMN " + DailyTrafficHistories.TrafficWifi + " BIGINT");
+            database.execSQL("ALTER TABLE " + Settings.TableName + " ADD COLUMN " + Settings.ShowWifiUsage + " BOOLEAN");
+            database.execSQL("UPDATE " + Settings.TableName + " SET " + Settings.ShowWifiUsage + " = 1");
         }
         catch (SQLException e)
         {

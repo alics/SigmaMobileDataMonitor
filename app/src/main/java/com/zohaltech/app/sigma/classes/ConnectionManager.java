@@ -57,7 +57,7 @@ public class ConnectionManager {
         return result;
     }
 
-    public static void setDataConnectedStatus() {
+    public static void setDataOrWifiConnectedStatus() {
         Setting setting = Settings.getCurrentSettings();
         if (ConnectionManager.getConnectivityStatus() != ConnectionManager.TYPE_NOT_CONNECTED) {
             setting.setDataConnected(true);

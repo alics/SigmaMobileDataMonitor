@@ -157,8 +157,10 @@ public class DataUsageMeter
 
             App.preferences.edit().putString(TODAY_USAGE_DATE, currentDate).apply();
 
-            Boolean showWifi = true;
-            long sumReceivedSent = (receivedBytesWifi + sentBytesWifi + (showWifi ? receivedBytesMobile + sentBytesMobile : 0)) / 1024;
+            Setting setting = Settings.getCurrentSettings();
+
+            Boolean showWifi = setting.getShowWifiUsage();
+            long sumReceivedSent = (receivedBytesMobile + sentBytesMobile + (showWifi ? receivedBytesWifi + sentBytesWifi : 0)) / 1024;
 
             int iconId = R.drawable.wkb000;
             if (sumReceivedSent < 1000)
@@ -186,13 +188,12 @@ public class DataUsageMeter
             }
 
             String todayUsage = "Mobile: " + TrafficUnitsUtil.getUsedTrafficWithPoint(App.preferences.getLong(TODAY_USAGE_BYTES, 0)) +
-                    "   Wifi: " + TrafficUnitsUtil.getUsedTrafficWithPoint(App.preferences.getLong(TODAY_USAGE_BYTES_WIFI, 0));
+                    (showWifi ? "   Wifi: " + TrafficUnitsUtil.getUsedTrafficWithPoint(App.preferences.getLong(TODAY_USAGE_BYTES_WIFI, 0)) : "");
 
-            Setting setting = Settings.getCurrentSettings();
             boolean showNotification;
             if (setting.getShowNotification())
             {
-                if (setting.getShowNotificationWhenDataIsOn())
+                if (setting.getShowNotificationWhenDataOrWifiIsOn())
                 {
                     showNotification = setting.getDataConnected();
                 }
