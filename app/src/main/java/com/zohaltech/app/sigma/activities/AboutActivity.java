@@ -15,6 +15,8 @@ import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.classes.App;
 import com.zohaltech.app.sigma.classes.Helper;
 
+
+
 import widgets.MyToast;
 
 public class AboutActivity extends EnhancedActivity {

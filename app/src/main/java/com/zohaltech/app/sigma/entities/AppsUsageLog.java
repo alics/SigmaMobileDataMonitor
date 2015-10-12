@@ -5,16 +5,22 @@ public class AppsUsageLog {
     private Long id;
     private Integer appId;
     private Long trafficBytes;
+    private Long trafficBytesWifi;
+
+
+
     private String logDateTime;
 
-    public AppsUsageLog(Integer appId, Long trafficBytes, String logDateTime) {
+    public AppsUsageLog(Integer appId, Long trafficBytes,Long trafficBytesWifi, String logDateTime) {
         setAppId(appId);
         setTrafficBytes(trafficBytes);
         setLogDateTime(logDateTime);
+        setTrafficBytesWifi(trafficBytesWifi);
+
     }
 
-    public AppsUsageLog(Long id, Integer appId, Long trafficBytes, String logDateTime) {
-        this(appId, trafficBytes, logDateTime);
+    public AppsUsageLog(Long id, Integer appId, Long trafficBytes,Long trafficBytesWifi, String logDateTime) {
+        this(appId, trafficBytes,trafficBytesWifi, logDateTime);
         this.id = id;
     }
 
@@ -49,4 +55,13 @@ public class AppsUsageLog {
     public void setLogDateTime(String logDateTime) {
         this.logDateTime = logDateTime;
     }
-}
+
+    public Long getTrafficBytesWifi() {
+        return trafficBytesWifi;
+    }
+
+    public void setTrafficBytesWifi(Long trafficBytesWifi) {
+        this.trafficBytesWifi = trafficBytesWifi;
+    }
+
+  }

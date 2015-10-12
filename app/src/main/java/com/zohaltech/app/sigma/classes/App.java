@@ -45,6 +45,7 @@ public class App extends Application {
     public static String            marketPollUri;
     public static String            marketPollIntent;
     public static String            marketPublicKey;
+    public static int               connectivityType;
 
     public static void setAppLocal() {
         locale = new Locale("en");
@@ -69,6 +70,7 @@ public class App extends Application {
         screenWidth = getResources().getDisplayMetrics().widthPixels;
         screenHeight = getResources().getDisplayMetrics().heightPixels;
         keyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+        connectivityType = ConnectionManager.getConnectivityStatus();
 
         //todo : set market here and in manifest
         market = MARKET_BAZAAR;

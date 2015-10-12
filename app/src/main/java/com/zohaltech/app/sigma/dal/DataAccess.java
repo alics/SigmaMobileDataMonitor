@@ -40,6 +40,8 @@ public class DataAccess extends SQLiteOpenHelper
             database.execSQL(PackageHistories.CreateTable);
             database.execSQL(Settings.CreateTable);
             database.execSQL(SystemSettings.CreateTable);
+            database.execSQL(Applications.CreateTable);
+            database.execSQL(AppsUsageLogs.CreateTable);
 
 
             insertDataFromAsset(database, MobileOperators.TableName, "data/operators.csv", ';');
@@ -176,6 +178,10 @@ public class DataAccess extends SQLiteOpenHelper
             database.execSQL("ALTER TABLE " + DailyTrafficHistories.TableName + " ADD COLUMN " + DailyTrafficHistories.TrafficWifi + " BIGINT");
             database.execSQL("ALTER TABLE " + Settings.TableName + " ADD COLUMN " + Settings.ShowWifiUsage + " BOOLEAN");
             database.execSQL("UPDATE " + Settings.TableName + " SET " + Settings.ShowWifiUsage + " = 1");
+
+            database.execSQL(Applications.CreateTable);
+            database.execSQL(AppsUsageLogs.CreateTable);
+
         }
         catch (SQLException e)
         {

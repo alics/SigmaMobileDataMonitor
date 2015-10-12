@@ -1,9 +1,7 @@
 package com.zohaltech.app.sigma.activities;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.TrafficStats;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,9 +12,9 @@ import android.widget.Toast;
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.adapters.UsagePagerAdapter;
 import com.zohaltech.app.sigma.classes.App;
+import com.zohaltech.app.sigma.classes.AppDataUsageMeter;
 import com.zohaltech.app.sigma.classes.DialogManager;
 import com.zohaltech.app.sigma.classes.LicenseManager;
-import com.zohaltech.app.sigma.classes.TotalUidStats;
 import com.zohaltech.app.sigma.classes.WebApiClient;
 import com.zohaltech.app.sigma.dal.DataAccess;
 
@@ -48,6 +46,11 @@ public class DashboardActivity extends PaymentActivity {
         DataAccess da = new DataAccess();
         da.getReadableDB();
         da.close();
+
+        AppDataUsageMeter.takeSnapshot();
+
+        AppDataUsageMeter.takeSnapshot();
+
 
         setContentView(R.layout.activity_dashboard);
 

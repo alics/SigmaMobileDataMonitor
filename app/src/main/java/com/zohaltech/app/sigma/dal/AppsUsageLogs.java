@@ -14,14 +14,16 @@ public class AppsUsageLogs {
     static final String Id = "Id";
     static final String AppId = "AppId";
     static final String TrafficBytes = "TrafficBytes";
+    static final String TrafficBytesWifi = "TrafficBytesWifi";
     static final String LogDateTime = "LogDateTime";
 
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
-            Id + " BIGINT PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+            Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
             AppId + " INTEGER REFERENCES " + Applications.TableName + " (" + DataPackages.Id + "), " +
             TrafficBytes + " CHAR(19)  ," +
-            LogDateTime + " CHAR(19)   )";
+            TrafficBytesWifi + " CHAR(19)  ," +
+            LogDateTime + " CHAR(19)   );";
 
     static final String DropTable = "Drop Table If Exists " + TableName;
 
@@ -40,6 +42,7 @@ public class AppsUsageLogs {
                     AppsUsageLog log = new AppsUsageLog(cursor.getLong(cursor.getColumnIndex(Id)),
                             cursor.getInt(cursor.getColumnIndex(AppId)),
                             cursor.getLong(cursor.getColumnIndex(TrafficBytes)),
+                            cursor.getLong(cursor.getColumnIndex(TrafficBytesWifi)),
                             cursor.getString(cursor.getColumnIndex(LogDateTime)));
 
                     usageLogs.add(log);
@@ -64,6 +67,7 @@ public class AppsUsageLogs {
         ContentValues values = new ContentValues();
         values.put(AppId, log.getAppId());
         values.put(TrafficBytes, log.getTrafficBytes());
+        values.put(TrafficBytesWifi, log.getTrafficBytesWifi());
         values.put(LogDateTime, log.getLogDateTime());
 
         DataAccess da = new DataAccess();
@@ -74,6 +78,7 @@ public class AppsUsageLogs {
         ContentValues values = new ContentValues();
         values.put(AppId, log.getAppId());
         values.put(TrafficBytes, log.getTrafficBytes());
+        values.put(TrafficBytesWifi, log.getTrafficBytesWifi());
         values.put(LogDateTime, log.getLogDateTime());
 
         DataAccess da = new DataAccess();

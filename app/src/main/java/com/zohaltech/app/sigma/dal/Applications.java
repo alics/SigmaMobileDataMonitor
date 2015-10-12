@@ -11,12 +11,17 @@ import com.zohaltech.app.sigma.entities.MobileOperator;
 import java.util.ArrayList;
 
 public class Applications {
-    static final String TableName = "Applications";
-    static final String Id = "Id";
-    static final String Uid = "Uid";
-    static final String AppName = "AppName";
+    static final String TableName   = "Applications";
+    static final String Id          = "Id";
+    static final String Uid         = "Uid";
+    static final String AppName     = "AppName";
     static final String PackageName = "PackageName";
 
+    static final String CreateTable = "CREATE TABLE " + TableName + " (" +
+                                      Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                                      Uid + " INTEGER  ," +
+                                      AppName + " VARCHAR(30)  ," +
+                                      PackageName + " VARCHAR(50)   );";
 
     private static ArrayList<Application> select(String whereClause, String[] selectionArgs) {
         ArrayList<Application> applications = new ArrayList<>();
@@ -30,10 +35,9 @@ public class Applications {
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     Application app = new Application(cursor.getInt(cursor.getColumnIndex(Id)),
-                            cursor.getInt(cursor.getColumnIndex(Uid)),
-                            cursor.getString(cursor.getColumnIndex(AppName)),
-                            cursor.getString(cursor.getColumnIndex(PackageName)));
-
+                                                      cursor.getInt(cursor.getColumnIndex(Uid)),
+                                                      cursor.getString(cursor.getColumnIndex(AppName)),
+                                                      cursor.getString(cursor.getColumnIndex(PackageName)));
                     applications.add(app);
                 } while (cursor.moveToNext());
             }
