@@ -34,7 +34,7 @@ public class ReportAdapter extends ArrayAdapter<TrafficMonitor> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.fill(this, item, position);
+        holder.fill( item, position);
         return convertView;
     }
 
@@ -52,7 +52,7 @@ public class ReportAdapter extends ArrayAdapter<TrafficMonitor> {
             txtTrafficWifi = (TextView) view.findViewById(R.id.txtTrafficWifi);
         }
 
-        public void fill(final ArrayAdapter<TrafficMonitor> adapter, final TrafficMonitor item, final int position) {
+        public void fill(final TrafficMonitor item, final int position) {
             if (position % 2 == 1) {
                 layoutReport.setBackgroundResource(R.color.primary_lighter);
             }

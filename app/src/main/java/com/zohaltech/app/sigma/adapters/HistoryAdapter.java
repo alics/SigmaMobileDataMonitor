@@ -45,7 +45,7 @@ public class HistoryAdapter extends ArrayAdapter<PackageHistory> {
             layoutPackageHistory = (LinearLayout) view.findViewById(R.id.layoutPackageHistory);
         }
 
-        public void fill(final ArrayAdapter<PackageHistory> adapter, final PackageHistory item, final int position) {
+        public void fill(final PackageHistory item, final int position) {
             DataPackage dataPackage = DataPackages.selectPackageById(item.getDataPackageId());
             txtPackageDesc.setText(dataPackage.getTitle());
             String activationDate = item.getStartDateTime() != null && !item.getStartDateTime().isEmpty() ?
@@ -100,7 +100,7 @@ public class HistoryAdapter extends ArrayAdapter<PackageHistory> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.fill(this, item, position);
+        holder.fill( item, position);
         return convertView;
     }
 }
