@@ -9,7 +9,6 @@ import com.zohaltech.app.sigma.fragments.TodayUsageFragment;
 import com.zohaltech.app.sigma.fragments.TrafficUsageFragment;
 
 public class UsagePagerAdapter extends FragmentPagerAdapter {
-
     public UsagePagerAdapter(FragmentManager fm) {
         super(fm);
     }

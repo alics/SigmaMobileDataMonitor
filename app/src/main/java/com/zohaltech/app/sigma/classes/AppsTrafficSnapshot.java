@@ -17,13 +17,16 @@ public class AppsTrafficSnapshot {
         switch (status) {
             case 1:
                 connectivityType = AppsTrafficRecord.ConnectivityType.WIFI;
+                break;
             case 2:
                 connectivityType = AppsTrafficRecord.ConnectivityType.DATA;
+                break;
             case 0:
                 if (App.connectivityType == 1)
                     connectivityType = AppsTrafficRecord.ConnectivityType.WIFI;
                 else
                     connectivityType = AppsTrafficRecord.ConnectivityType.DATA;
+                break;
         }
         final PackageManager pm = App.context.getPackageManager();
         for (ApplicationInfo info : pm.getInstalledApplications(PackageManager.GET_META_DATA)) {
@@ -39,7 +42,10 @@ public class AppsTrafficSnapshot {
             if (previousSnapshot != null) {
                 previousRecord = previousSnapshot.apps.get(info.uid);
             }
-            apps.put(info.uid, new AppsTrafficRecord(info.uid, appId, appName, info.packageName, connectivityType, previousRecord));
+
+            AppsTrafficRecord record = new AppsTrafficRecord(info.uid, appId, appName, info.packageName, connectivityType, previousRecord);
+            if (record.rx + record.tx != 0)
+                apps.put(info.uid, record);
         }
     }
 }
