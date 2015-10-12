@@ -1,35 +1,34 @@
 package com.zohaltech.app.sigma.activities;
 
-
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.zohaltech.app.sigma.R;
-import com.zohaltech.app.sigma.adapters.ReportAdapter;
-import com.zohaltech.app.sigma.dal.DailyTrafficHistories;
+import com.zohaltech.app.sigma.adapters.AppsTrafficReportAdapter;
+import com.zohaltech.app.sigma.dal.AppsUsageLogs;
 import com.zohaltech.app.sigma.entities.AppsTrafficMonitor;
-import com.zohaltech.app.sigma.entities.TrafficMonitor;
 
 import java.util.ArrayList;
 
 public class AppsTrafficReportActivity extends EnhancedActivity {
-
     ListView                      lstAppsTraffic;
     TextView                      txtTotalTraffic;
     TextView                      txtTotalTrafficWifi;
     ArrayList<AppsTrafficMonitor> appsTrafficMonitors;
-    ReportAdapter                 adapter;
-
+    AppsTrafficReportAdapter      adapter;
 
     @Override
     void onCreated() {
-        setContentView(R.layout.activity_report);
+        setContentView(R.layout.activity_apps_traffic_report);
 
         lstAppsTraffic = (ListView) findViewById(R.id.lstAppsTraffic);
         txtTotalTraffic = (TextView) findViewById(R.id.txtTotalTraffic);
         txtTotalTrafficWifi = (TextView) findViewById(R.id.txtTotalTrafficWifi);
 
+        appsTrafficMonitors = AppsUsageLogs.getAppsTrafficReport();
+        adapter = new AppsTrafficReportAdapter(appsTrafficMonitors);
+        lstAppsTraffic.setAdapter(adapter);
     }
 
     @Override
@@ -44,21 +43,17 @@ public class AppsTrafficReportActivity extends EnhancedActivity {
     @Override
     void onToolbarCreated() {
         txtToolbarTitle.setText("گزارش مصرف برنامه ها");
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
-
     @Override
     public void onStart() {
         super.onStart();
-
     }
 
     @Override
     public void onStop() {
         super.onStop();
-
     }
 }

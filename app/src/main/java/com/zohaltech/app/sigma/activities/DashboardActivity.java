@@ -47,9 +47,9 @@ public class DashboardActivity extends PaymentActivity {
         da.getReadableDB();
         da.close();
 
-        AppDataUsageMeter.takeSnapshot();
-
-        AppDataUsageMeter.takeSnapshot();
+        //AppDataUsageMeter.takeSnapshot();
+        //
+        //AppDataUsageMeter.takeSnapshot();
 
 
         setContentView(R.layout.activity_dashboard);

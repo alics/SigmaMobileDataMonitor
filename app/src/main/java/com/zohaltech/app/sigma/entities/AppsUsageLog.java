@@ -1,14 +1,10 @@
 package com.zohaltech.app.sigma.entities;
 
-
 public class AppsUsageLog {
     private Long id;
     private Integer appId;
     private Long trafficBytes;
     private Long trafficBytesWifi;
-
-
-
     private String logDateTime;
 
     public AppsUsageLog(Integer appId, Long trafficBytes,Long trafficBytesWifi, String logDateTime) {
@@ -16,7 +12,6 @@ public class AppsUsageLog {
         setTrafficBytes(trafficBytes);
         setLogDateTime(logDateTime);
         setTrafficBytesWifi(trafficBytesWifi);
-
     }
 
     public AppsUsageLog(Long id, Integer appId, Long trafficBytes,Long trafficBytesWifi, String logDateTime) {
@@ -63,5 +58,4 @@ public class AppsUsageLog {
     public void setTrafficBytesWifi(Long trafficBytesWifi) {
         this.trafficBytesWifi = trafficBytesWifi;
     }
-
   }

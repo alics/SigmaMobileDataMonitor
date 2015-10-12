@@ -13,8 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 public class AppDataUsageMeter {
     private static ScheduledExecutorService executorService;
-    private static Service                  service;
-    private static AppsTrafficSnapshot latest   = null;
+    private static AppsTrafficSnapshot latest = null;
 
     public static Runnable runnable = new Runnable() {
         @Override
@@ -38,41 +37,34 @@ public class AppDataUsageMeter {
             //AppsTrafficRecord previous_rec = (previous == null ? null : previous.apps.get(uid));
             emitLog(latest_rec);
         }
-
-       service.stopForeground(true);
     }
 
     private static void emitLog(AppsTrafficRecord latest_rec) {
         if (latest_rec.rx > 0 || latest_rec.tx > 0) {
             if (latest_rec.connectivityType == AppsTrafficRecord.ConnectivityType.WIFI) {
-                Long wifiBytes = (latest_rec.rx + latest_rec.tx)-latest_rec.sumWifi ;
+                Long wifiBytes = (latest_rec.rx + latest_rec.tx) - latest_rec.sumWifi;
                 AppsUsageLog log = new AppsUsageLog(latest_rec.appId, 0L, wifiBytes, Helper.getCurrentDateTime());
                 AppsUsageLogs.insert(log);
             } else {
 
-                Long dataBytes = (latest_rec.rx + latest_rec.tx)-latest_rec.sumData ;
+                Long dataBytes = (latest_rec.rx + latest_rec.tx) - latest_rec.sumData;
                 AppsUsageLog log = new AppsUsageLog(latest_rec.appId, dataBytes, 0L, Helper.getCurrentDateTime());
                 AppsUsageLogs.insert(log);
             }
         }
     }
 
-    public AppDataUsageMeter(Service service) {
-        this.service = service;
-    }
-
     public void execute() {
         if (executorService == null) {
             executorService = Executors.newSingleThreadScheduledExecutor();
         }
-        executorService.scheduleAtFixedRate(runnable, 0L, 6000L, TimeUnit.MILLISECONDS);
+        executorService.scheduleAtFixedRate(runnable, 0L, 60000L, TimeUnit.MILLISECONDS);
     }
 
     public void shutdown() {
         if (executorService != null) {
             executorService.shutdown();
             executorService = null;
-            NotificationHandler.cancelNotification(1);
         }
     }
 }

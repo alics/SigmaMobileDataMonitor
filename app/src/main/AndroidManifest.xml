@@ -43,6 +43,7 @@
             android:name=".classes.ConnectivityStateReceiver">
             <intent-filter android:priority="999">
                 <action android:name="android.net.wifi.STATE_CHANGE"/>
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED"/>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
             </intent-filter>
         </receiver>
@@ -56,6 +57,11 @@
 
         <service
             android:name=".classes.SigmaDataService"
+            android:enabled="true"
+            android:exported="false"
+            android:process=":data_usage"/>
+        <service
+            android:name=".classes.SigmaAppsService"
             android:enabled="true"
             android:exported="false"
             android:process=":data_usage"/>
@@ -92,6 +98,9 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.IntroductionActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activities.AppsTrafficReportActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.ApplicationAlarmActivity"

@@ -118,8 +118,11 @@ public class App extends Application {
 
         setAppLocal();
 
-        Intent service = new Intent(context, SigmaDataService.class);
-        context.startService(service);
+        Intent dataService = new Intent(context, SigmaDataService.class);
+        context.startService(dataService);
+
+        Intent appsService = new Intent(context, SigmaAppsService.class);
+        context.startService(appsService);
     }
 
     @Override
