@@ -25,15 +25,24 @@ public class TodayUsageFragment extends Fragment {
     CircleProgress progressTodayUsageWifi;
     private BroadcastReceiver broadcastReceiver;
 
-    private long todayUsage;
-
-    public long getTodayUsage() {
-        return todayUsage;
-    }
-
-    public void setTodayUsage(long todayUsage) {
-        this.todayUsage = todayUsage;
-    }
+//    private long todayUsageMobile;
+//    private long todayUsageWifi;
+//
+//    public long getTodayUsageMobile() {
+//        return todayUsageMobile;
+//    }
+//
+//    public void setTodayUsageMobile(long todayUsageMobile) {
+//        this.todayUsageMobile = todayUsageMobile;
+//    }
+//
+//    public long getTodayUsageWifi() {
+//        return todayUsageWifi;
+//    }
+//
+//    public void setTodayUsageWifi(long todayUsageWifi) {
+//        this.todayUsageWifi = todayUsageWifi;
+//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,8 +50,10 @@ public class TodayUsageFragment extends Fragment {
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                long usage = intent.getLongExtra(DataUsageMeter.TODAY_USAGE_BYTES, 0);
-                updateUI(usage);
+                long usageMobile = intent.getLongExtra(DataUsageMeter.TODAY_USAGE_BYTES, 0);
+                updateUIMobile(usageMobile);
+                long usageWifi = intent.getLongExtra(DataUsageMeter.TODAY_USAGE_BYTES_WIFI, 0);
+                updateUIWifi(usageWifi);
             }
         };
     }
@@ -61,7 +72,8 @@ public class TodayUsageFragment extends Fragment {
         progressTodayUsageWifi = (CircleProgress) view.findViewById(R.id.progressTodayUsageWifi);
         progressTodayUsageMobile.setLayoutParams(new LinearLayout.LayoutParams(size, size));
         progressTodayUsageWifi.setLayoutParams(new LinearLayout.LayoutParams(size, size));
-        updateUI(App.preferences.getLong(DataUsageMeter.TODAY_USAGE_BYTES, 0));
+        updateUIMobile(App.preferences.getLong(DataUsageMeter.TODAY_USAGE_BYTES, 0));
+        updateUIWifi(App.preferences.getLong(DataUsageMeter.TODAY_USAGE_BYTES_WIFI, 0));
     }
 
     @Override
@@ -76,13 +88,22 @@ public class TodayUsageFragment extends Fragment {
         getActivity().unregisterReceiver(broadcastReceiver);
     }
 
-    public void updateUI(final long bytes) {
+    public void updateUIMobile(final long bytes) {
         App.handler.post(new Runnable() {
             @Override
             public void run() {
-                setTodayUsage(bytes);
-                TrafficUnitsUtil trafficDisplay = TrafficUnitsUtil.getTodayTraffic(getTodayUsage());
+                TrafficUnitsUtil trafficDisplay = TrafficUnitsUtil.getTodayTraffic(bytes);
                 progressTodayUsageMobile.setProgress(trafficDisplay.getValue(), trafficDisplay.getPostfix());
+            }
+        });
+    }
+
+    public void updateUIWifi(final long bytes) {
+        App.handler.post(new Runnable() {
+            @Override
+            public void run() {
+                TrafficUnitsUtil trafficDisplay = TrafficUnitsUtil.getTodayTraffic(bytes);
+                progressTodayUsageWifi.setProgress(trafficDisplay.getValue(), trafficDisplay.getPostfix());
             }
         });
     }
