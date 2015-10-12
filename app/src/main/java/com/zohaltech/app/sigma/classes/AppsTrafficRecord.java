@@ -24,9 +24,9 @@ public class AppsTrafficRecord {
 
         if (previousRecord != null) {
             if (previousRecord.connectivityType == ConnectivityType.WIFI) {
-                sumWifi = sumWifi + previousRecord.rx + previousRecord.tx;
+                sumWifi = (sumWifi + previousRecord.rx + previousRecord.tx) - sumData;
             } else {
-                sumData = sumData + previousRecord.rx + previousRecord.tx;
+                sumData = (sumData + previousRecord.rx + previousRecord.tx)-sumWifi;
             }
         }
 
