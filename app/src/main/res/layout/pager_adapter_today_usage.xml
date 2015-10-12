@@ -8,8 +8,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:background="@color/primary"
         android:orientation="horizontal">
 
@@ -26,13 +25,21 @@
                 android:layout_height="96dp"
                 android:scaleType="centerInside"/>
 
-            <widgets.MyTextView
-                android:layout_width="match_parent"
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:gravity="center"-->
+                <!--android:text="Mobile"-->
+                <!--android:drawableTop="@drawable/ic_mobile_white"-->
+                <!--android:textColor="@color/white"/>-->
+
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:text="موبایل"
-                android:textColor="@color/white"/>
+                android:src="@drawable/ic_mobile_white"/>
+
 
         </LinearLayout>
 
@@ -49,13 +56,20 @@
                 android:layout_height="96dp"
                 android:scaleType="centerInside"/>
 
-            <widgets.MyTextView
-                android:layout_width="match_parent"
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:gravity="center"-->
+                <!--android:text="WiFi"-->
+                <!--android:drawableTop="@drawable/ic_wifi_white"-->
+                <!--android:textColor="@color/white"/>-->
+
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:text="وای فای"
-                android:textColor="@color/white"/>
+                android:src="@drawable/ic_wifi_white"/>
 
         </LinearLayout>
 
@@ -73,6 +87,7 @@
         android:gravity="center"
         android:text="حجم مصرفی امروز"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:layout_marginTop="10dp"/>
 
 </LinearLayout>
