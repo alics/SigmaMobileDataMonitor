@@ -1,8 +1,6 @@
 package com.zohaltech.app.sigma.classes;
 
 
-import android.app.Service;
-
 import com.zohaltech.app.sigma.dal.AppsUsageLogs;
 import com.zohaltech.app.sigma.entities.AppsUsageLog;
 
@@ -42,13 +40,13 @@ public class AppDataUsageMeter {
     private static void emitLog(AppsTrafficRecord latest_rec) {
         if (latest_rec.rx > 0 || latest_rec.tx > 0) {
             if (latest_rec.connectivityType == AppsTrafficRecord.ConnectivityType.WIFI) {
-                Long wifiBytes = (latest_rec.rx + latest_rec.tx) - latest_rec.sumWifi;
-                AppsUsageLog log = new AppsUsageLog(latest_rec.appId, 0L, wifiBytes, Helper.getCurrentDateTime());
+
+                AppsUsageLog log = new AppsUsageLog(latest_rec.appId, 0L, latest_rec.sumBytes, Helper.getCurrentDateTime());
                 AppsUsageLogs.insert(log);
             } else {
 
-                Long dataBytes = (latest_rec.rx + latest_rec.tx) - latest_rec.sumData;
-                AppsUsageLog log = new AppsUsageLog(latest_rec.appId, dataBytes, 0L, Helper.getCurrentDateTime());
+                //  Long dataBytes = (latest_rec.rx + latest_rec.tx) - (latest_rec.sumWifi+ latest_rec.sumData);
+                AppsUsageLog log = new AppsUsageLog(latest_rec.appId, latest_rec.sumBytes, 0L, Helper.getCurrentDateTime());
                 AppsUsageLogs.insert(log);
             }
         }

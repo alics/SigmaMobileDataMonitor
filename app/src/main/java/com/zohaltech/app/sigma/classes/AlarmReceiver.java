@@ -11,7 +11,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         Intent dataService = new Intent(context, SigmaDataService.class);
         startWakefulService(context, dataService);
 
-        Intent appsService = new Intent(context, SigmaAppsService.class);
-        startWakefulService(context, appsService);
+        //Intent appsService = new Intent(context, SigmaAppsService.class);
+        //startWakefulService(context, appsService);
     }
 }

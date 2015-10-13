@@ -13,14 +13,14 @@ public class SigmaAppsService extends Service {
         super.onCreate();
         Thread.setDefaultUncaughtExceptionHandler(new MyUncaughtExceptionHandler());
 
-        appDataUsageMeter = new AppDataUsageMeter();
-        appDataUsageMeter.execute();
+        //appDataUsageMeter = new AppDataUsageMeter();
+       // appDataUsageMeter.execute();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        appDataUsageMeter.shutdown();
+        //appDataUsageMeter.shutdown();
     }
 
     @Override

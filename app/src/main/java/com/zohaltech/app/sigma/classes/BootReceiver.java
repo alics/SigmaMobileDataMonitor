@@ -12,7 +12,7 @@ public class BootReceiver extends BroadcastReceiver {
         context.startService(dataService);
         AlarmHandler.start(context);
 
-        Intent appsService = new Intent(context, SigmaAppsService.class);
-        context.startService(appsService);
+        //Intent appsService = new Intent(context, SigmaAppsService.class);
+        //context.startService(appsService);
     }
 }

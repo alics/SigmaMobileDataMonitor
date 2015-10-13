@@ -3,6 +3,7 @@ package com.zohaltech.app.sigma.classes;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 
 import com.zohaltech.app.sigma.dal.Settings;
 import com.zohaltech.app.sigma.entities.Setting;
@@ -18,7 +19,7 @@ public class ConnectionManager {
 
     public static int getConnectivityStatus() {
         ConnectivityManager cm = (ConnectivityManager) App.context.getSystemService(Context.CONNECTIVITY_SERVICE);
-
+        //WifiManager wifiManager = ((WifiManager)App.context.getSystemService(Context.WIFI_SERVICE));
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         if (activeNetwork != null) {
             if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI)

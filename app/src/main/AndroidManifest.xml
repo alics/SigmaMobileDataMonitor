@@ -60,11 +60,11 @@
             android:enabled="true"
             android:exported="false"
             android:process=":data_usage"/>
-        <service
-            android:name=".classes.SigmaAppsService"
-            android:enabled="true"
-            android:exported="false"
-            android:process=":data_usage"/>
+        <!--<service-->
+            <!--android:name=".classes.SigmaAppsService"-->
+            <!--android:enabled="true"-->
+            <!--android:exported="false"-->
+            <!--android:process=":data_usage"/>-->
 
         <activity
             android:name=".activities.DashboardActivity"
