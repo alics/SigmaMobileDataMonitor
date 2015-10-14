@@ -76,7 +76,7 @@ public final class Helper {
         callIntent.setData(Uri.parse("tel:" + code));
         activity.startActivityForResult(callIntent, dataPackage.getId());
     }
-    
+
     public static Operator getOperator() {
         Operator operator = Operator.NO_SIM;
         try {

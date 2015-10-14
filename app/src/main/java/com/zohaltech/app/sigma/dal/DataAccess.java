@@ -21,7 +21,8 @@ public class DataAccess extends SQLiteOpenHelper
 
     public static final String DATABASE_NAME = "SIGMA";
     //public static final int    DATABASE_VERSION = 9; //published in versions 1.06, 1.07
-    public static final int DATABASE_VERSION = 11; //published in versions 1.08
+//    public static final int DATABASE_VERSION = 10; //published in versions 1.08
+    public static final int DATABASE_VERSION = 11; //published in versions 1.09
 
     public DataAccess()
     {
@@ -42,7 +43,6 @@ public class DataAccess extends SQLiteOpenHelper
             database.execSQL(SystemSettings.CreateTable);
             database.execSQL(Applications.CreateTable);
             database.execSQL(AppsUsageLogs.CreateTable);
-
 
             insertDataFromAsset(database, MobileOperators.TableName, "data/operators.csv", ';');
             insertDataFromAsset(database, DataPackages.TableName, "data/packages.csv", ';');
