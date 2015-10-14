@@ -11,64 +11,84 @@ import com.zohaltech.app.sigma.entities.Setting;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class ConnectionManager {
+public class ConnectionManager
+{
 
     public static int TYPE_NOT_CONNECTED = 0;
-    public static int TYPE_WIFI          = 1;
-    public static int TYPE_MOBILE        = 2;
+    public static int TYPE_WIFI = 1;
+    public static int TYPE_MOBILE = 2;
+    public static int TYPE_VPN = 3;
 
-    public static int getConnectivityStatus() {
+    public static int getConnectivityStatus()
+    {
         ConnectivityManager cm = (ConnectivityManager) App.context.getSystemService(Context.CONNECTIVITY_SERVICE);
         //WifiManager wifiManager = ((WifiManager)App.context.getSystemService(Context.WIFI_SERVICE));
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        if (activeNetwork != null) {
+        if (activeNetwork != null)
+        {
             if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI)
                 return TYPE_WIFI;
             if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE)
                 return TYPE_MOBILE;
+            if (activeNetwork.getType() == ConnectivityManager.TYPE_VPN)
+                return TYPE_VPN;
         }
         return TYPE_NOT_CONNECTED;
     }
 
-    private static boolean isNetworkAvailable() {
+    private static boolean isNetworkAvailable()
+    {
         ConnectivityManager connectivityManager = (ConnectivityManager) App.context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null;
     }
 
-    public static InternetStatus getInternetStatus() {
+    public static InternetStatus getInternetStatus()
+    {
         InternetStatus result = InternetStatus.NotConnected;
-        if (isNetworkAvailable()) {
-            try {
+        if (isNetworkAvailable())
+        {
+            try
+            {
                 HttpURLConnection urlc = (HttpURLConnection) (new URL("http://clients3.google.com/generate_204").openConnection());
                 urlc.setRequestProperty("User-Agent", "Android");
                 urlc.setRequestProperty("Connection", "close");
                 urlc.setConnectTimeout(1500);
                 urlc.connect();
                 if (urlc.getResponseCode() == 204 &&
-                    urlc.getContentLength() == 0) {
+                        urlc.getContentLength() == 0)
+                {
                     result = InternetStatus.Connected;
-                } else {
+                }
+                else
+                {
                     result = InternetStatus.NotConnected;
                 }
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 result = InternetStatus.Error;
             }
         }
         return result;
     }
 
-    public static void setDataOrWifiConnectedStatus() {
+    public static void setDataOrWifiConnectedStatus()
+    {
         Setting setting = Settings.getCurrentSettings();
-        if (ConnectionManager.getConnectivityStatus() != ConnectionManager.TYPE_NOT_CONNECTED) {
+        if (ConnectionManager.getConnectivityStatus() != ConnectionManager.TYPE_NOT_CONNECTED)
+        {
             setting.setDataConnected(true);
-        } else {
+        }
+        else
+        {
             setting.setDataConnected(false);
         }
         Settings.update(setting);
     }
 
-    public enum InternetStatus {
+    public enum InternetStatus
+    {
         Connected,
         NotConnected,
         Error

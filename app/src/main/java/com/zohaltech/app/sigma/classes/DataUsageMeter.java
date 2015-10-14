@@ -49,13 +49,6 @@ public class DataUsageMeter
             long receivedBytesMobile = 0;
             long sentBytesMobile = 0;
 
-            // Wifi
-            long currentUsageBytesWifi = android.net.TrafficStats.getTotalRxBytes() - currentUsageBytesMobile;
-            long currentSentBytesWifi = android.net.TrafficStats.getTotalTxBytes() - currentSentBytesMobile;
-            long receivedBytesWifi = 0;
-            long sentBytesWifi = 0;
-
-            // Mobile
             if (currentUsageBytesMobile + currentSentBytesMobile == 0)
             {
                 firstTimeMobile = true;
@@ -88,6 +81,12 @@ public class DataUsageMeter
 
 
             // Wifi
+
+            long currentUsageBytesWifi = WifiStats.getTotalBytes(WifiStats.RxBytes) - currentUsageBytesMobile;
+            long currentSentBytesWifi = WifiStats.getTotalBytes(WifiStats.TxBytes) - currentSentBytesMobile;
+            long receivedBytesWifi = 0;
+            long sentBytesWifi = 0;
+
             if (currentUsageBytesWifi + currentSentBytesWifi == 0)
             {
                 firstTimeWifi = true;
