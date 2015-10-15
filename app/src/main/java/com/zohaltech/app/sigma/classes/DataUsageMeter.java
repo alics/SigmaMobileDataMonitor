@@ -202,7 +202,7 @@ public class DataUsageMeter
             }
 
             String todayUsage = "Mobile: " + TrafficUnitsUtil.getUsedTrafficWithPoint(App.preferences.getLong(TODAY_USAGE_BYTES, 0)) +
-                    (showWifi ? "   Wifi: " + TrafficUnitsUtil.getUsedTrafficWithPoint(App.preferences.getLong(TODAY_USAGE_BYTES_WIFI, 0)) : "");
+                    (showWifi ? "   WiFi: " + TrafficUnitsUtil.getUsedTrafficWithPoint(App.preferences.getLong(TODAY_USAGE_BYTES_WIFI, 0)) : "");
 
             boolean showNotification;
             if (setting.getShowNotification())

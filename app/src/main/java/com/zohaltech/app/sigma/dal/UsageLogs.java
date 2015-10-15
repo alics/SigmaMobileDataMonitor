@@ -14,9 +14,7 @@ import com.zohaltech.app.sigma.entities.UsageLog;
 
 import java.util.ArrayList;
 
-public class UsageLogs
-{
-
+public class UsageLogs {
     static final String TableName = "UsageLogs";
     static final String Id = "Id";
     static final String TrafficBytes = "TrafficBytes";
@@ -31,21 +29,17 @@ public class UsageLogs
 
     static final String DropTable = "Drop Table If Exists " + TableName;
 
-    private static ArrayList<UsageLog> select(String whereClause, String[] selectionArgs)
-    {
+    private static ArrayList<UsageLog> select(String whereClause, String[] selectionArgs) {
         ArrayList<UsageLog> logList = new ArrayList<>();
         DataAccess da = new DataAccess();
         SQLiteDatabase db = da.getReadableDB();
         Cursor cursor = null;
 
-        try
-        {
+        try {
             String query = "Select * From " + TableName + " " + whereClause;
             cursor = db.rawQuery(query, selectionArgs);
-            if (cursor != null && cursor.moveToFirst())
-            {
-                do
-                {
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
                     UsageLog log = new UsageLog(cursor.getInt(cursor.getColumnIndex(Id)),
                             cursor.getLong(cursor.getColumnIndex(TrafficBytes)),
                             cursor.getLong(cursor.getColumnIndex(TrafficBytesWifi)),
@@ -53,13 +47,9 @@ public class UsageLogs
                     logList.add(log);
                 } while (cursor.moveToNext());
             }
-        }
-        catch (MyRuntimeException e)
-        {
+        } catch (MyRuntimeException e) {
             e.printStackTrace();
-        }
-        finally
-        {
+        } finally {
             if (cursor != null && !cursor.isClosed())
                 cursor.close();
             if (db != null && db.isOpen())
@@ -68,19 +58,16 @@ public class UsageLogs
         return logList;
     }
 
-    public static ArrayList<UsageLog> select()
-    {
+    public static ArrayList<UsageLog> select() {
         return select("", null);
     }
 
-    public static long insert(UsageLog usageLog)
-    {
+    public static long insert(UsageLog usageLog) {
         String maxUsageLogDate = getMaxDateTime().substring(0, 10);
         String currentDateTime = Helper.getCurrentDateTime();
         String currentDate = Helper.getCurrentDate();
 
-        if (!Helper.addDay(-1).equals(DailyTrafficHistories.getMaxDate()) && currentDate.compareTo(maxUsageLogDate) > 0)
-        {
+        if (!Helper.addDay(-1).equals(DailyTrafficHistories.getMaxDate()) && currentDate.compareTo(maxUsageLogDate) > 0) {
             ContentValues values = new ContentValues();
             values.put(TrafficBytes, 0);
             values.put(TrafficBytesWifi, 0);
@@ -91,8 +78,7 @@ public class UsageLogs
             integrateSumUsedTrafficPerDay();
         }
 
-        if (usageLog.getTrafficBytes() != 0)
-        {
+        if (usageLog.getTrafficBytes() != 0) {
             ContentValues values = new ContentValues();
             values.put(TrafficBytes, usageLog.getTrafficBytes());
             values.put(TrafficBytesWifi, usageLog.getTrafficBytesWifi());
@@ -105,8 +91,7 @@ public class UsageLogs
         return 0;
     }
 
-    public static long update(UsageLog usageLog)
-    {
+    public static long update(UsageLog usageLog) {
         ContentValues values = new ContentValues();
 
         values.put(TrafficBytes, usageLog.getTrafficBytes());
@@ -117,36 +102,27 @@ public class UsageLogs
         return da.update(TableName, values, Id + " =? ", new String[]{String.valueOf(usageLog.getId())});
     }
 
-    public static long delete(UsageLog usageLog)
-    {
+    public static long delete(UsageLog usageLog) {
         DataAccess db = new DataAccess();
         return db.delete(TableName, Id + " =? ", new String[]{String.valueOf(usageLog.getId())});
     }
 
-    private static String getMaxDateTime()
-    {
+    private static String getMaxDateTime() {
         String maxLogDate = null;
         DataAccess da = new DataAccess();
         SQLiteDatabase db = da.getReadableDB();
         Cursor cursor = null;
-        try
-        {
+        try {
             String query = "SELECT MAX(" + LogDateTime + ") MaxLogDate FROM " + TableName;
             cursor = db.rawQuery(query, null);
-            if (cursor != null && cursor.moveToFirst())
-            {
-                do
-                {
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
                     maxLogDate = cursor.getString(cursor.getColumnIndex("MaxLogDate"));
                 } while (cursor.moveToNext());
             }
-        }
-        catch (MyRuntimeException e)
-        {
+        } catch (MyRuntimeException e) {
             e.printStackTrace();
-        }
-        finally
-        {
+        } finally {
             if (cursor != null && !cursor.isClosed())
                 cursor.close();
             if (db != null && db.isOpen())
@@ -155,14 +131,12 @@ public class UsageLogs
         return maxLogDate;
     }
 
-    public static void integrateSumUsedTrafficPerDay()
-    {
+    public static void integrateSumUsedTrafficPerDay() {
         LicenseManager.validateLicense();
         DataAccess da = new DataAccess();
         SQLiteDatabase db = da.getReadableDB();
         Cursor cursor = null;
-        try
-        {
+        try {
             String logDate = "SUBSTR(" + LogDateTime + ", 1, 10)";
             String query = " SELECT SUM(" + TrafficBytes + ") SumTraffic," +
                     "               SUM(" + TrafficBytes + ") SumTrafficWifi," +
@@ -173,10 +147,8 @@ public class UsageLogs
                     " GROUP BY " + logDate;
 
             cursor = db.rawQuery(query, null);
-            if (cursor != null && cursor.moveToFirst())
-            {
-                do
-                {
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
                     long sumData = cursor.getLong(cursor.getColumnIndex("SumTraffic"));
                     long sumWifi = cursor.getLong(cursor.getColumnIndex("SumTrafficWifi"));
                     String date = cursor.getString(cursor.getColumnIndex("date"));
@@ -184,13 +156,9 @@ public class UsageLogs
                     DailyTrafficHistories.insert(history);
                 } while (cursor.moveToNext());
             }
-        }
-        catch (MyRuntimeException e)
-        {
+        } catch (MyRuntimeException e) {
             e.printStackTrace();
-        }
-        finally
-        {
+        } finally {
             if (cursor != null && !cursor.isClosed())
                 cursor.close();
             if (db != null && db.isOpen())
@@ -199,30 +167,22 @@ public class UsageLogs
     }
 
 
-    public static long getUsedPrimaryTrafficOfPackage(DataPackage dataPackage, PackageHistory history)
-    {
+    public static long getUsedPrimaryTrafficOfPackage(DataPackage dataPackage, PackageHistory history) {
         long usedTraffic = 0;
         DataAccess da = new DataAccess();
         SQLiteDatabase db = da.getReadableDB();
         Cursor cursor = null;
-        try
-        {
+        try {
             String query = generateQueryForPrimaryTraffic(dataPackage, history);
             cursor = db.rawQuery(query, null);
-            if (cursor != null && cursor.moveToFirst())
-            {
-                do
-                {
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
                     usedTraffic = cursor.getLong(cursor.getColumnIndex("SumTraffic"));
                 } while (cursor.moveToNext());
             }
-        }
-        catch (MyRuntimeException e)
-        {
+        } catch (MyRuntimeException e) {
             e.printStackTrace();
-        }
-        finally
-        {
+        } finally {
             if (cursor != null && !cursor.isClosed())
                 cursor.close();
             if (db != null && db.isOpen())
@@ -231,21 +191,18 @@ public class UsageLogs
 
         if (usedTraffic >= dataPackage.getPrimaryTraffic() &&
                 (history.getPrimaryPackageEndDateTime() == null ||
-                        history.getPrimaryPackageEndDateTime().equals("")))
-        {
+                        history.getPrimaryPackageEndDateTime().equals(""))) {
             history.setPrimaryPackageEndDateTime(Helper.getCurrentDateTime());
             PackageHistories.update(history);
         }
         return usedTraffic;
     }
 
-    private static String generateQueryForPrimaryTraffic(DataPackage dataPackage, PackageHistory history)
-    {
+    private static String generateQueryForPrimaryTraffic(DataPackage dataPackage, PackageHistory history) {
         if (dataPackage.getSecondaryTraffic() == null || dataPackage.getSecondaryTraffic() == 0)
             return "SELECT SUM(" + TrafficBytes + ") SumTraffic FROM " + TableName + " WHERE " + LogDateTime + " > '" + history.getStartDateTime() + "'";
 
-        if (history.getSecondaryTrafficEndDateTime() == null || "".equals(history.getSecondaryTrafficEndDateTime()))
-        {
+        if (history.getSecondaryTrafficEndDateTime() == null || "".equals(history.getSecondaryTrafficEndDateTime())) {
             return " SELECT SUM(" + TrafficBytes + ") SumTraffic FROM " + TableName + " WHERE " + LogDateTime + " > '" + history.getStartDateTime() + "'" +
                     " AND SUBSTR(" + LogDateTime + ", 12, 5) NOT BETWEEN '" + dataPackage.getSecondaryTrafficStartTime() + "' AND '" + dataPackage.getSecondaryTrafficEndTime() + "'";
         }
@@ -256,14 +213,12 @@ public class UsageLogs
         //               " (SELECT IFNULL(SUM(" + TrafficBytes + "), 0) FROM " + TableName + " WHERE " + LogDateTime + " BETWEEN '" + history.getStartDateTime() + "' AND '" + history.getSecondaryTrafficEndDateTime() + "') AS SumTraffic";
     }
 
-    public static long getUsedSecondaryTrafficOfPackage(DataPackage dataPackage, PackageHistory history)
-    {
+    public static long getUsedSecondaryTrafficOfPackage(DataPackage dataPackage, PackageHistory history) {
         long usedTraffic = 0;
         DataAccess da = new DataAccess();
         SQLiteDatabase db = da.getReadableDB();
         Cursor cursor = null;
-        try
-        {
+        try {
             String query = "SELECT SUM(TrafficBytes) SumTraffic FROM " + TableName +
                     " WHERE " + LogDateTime + " >= '" + history.getStartDateTime() + "' AND" +
                     " SUBSTR(" + LogDateTime + ",12,5) BETWEEN '" + dataPackage.getSecondaryTrafficStartTime() +
@@ -271,20 +226,14 @@ public class UsageLogs
 
 
             cursor = db.rawQuery(query, null);
-            if (cursor != null && cursor.moveToFirst())
-            {
-                do
-                {
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
                     usedTraffic = cursor.getLong(cursor.getColumnIndex("SumTraffic"));
                 } while (cursor.moveToNext());
             }
-        }
-        catch (MyRuntimeException e)
-        {
+        } catch (MyRuntimeException e) {
             e.printStackTrace();
-        }
-        finally
-        {
+        } finally {
             if (cursor != null && !cursor.isClosed())
                 cursor.close();
             if (db != null && db.isOpen())
@@ -292,8 +241,7 @@ public class UsageLogs
         }
         if (usedTraffic >= dataPackage.getSecondaryTraffic() &&
                 (history.getSecondaryTrafficEndDateTime() == null ||
-                        history.getSecondaryTrafficEndDateTime().equals("")))
-        {
+                        history.getSecondaryTrafficEndDateTime().equals(""))) {
             history.setSecondaryTrafficEndDateTime(Helper.getCurrentDateTime());
             PackageHistories.update(history);
 
@@ -302,8 +250,7 @@ public class UsageLogs
         return usedTraffic;
     }
 
-    public static void deleteLogs(String date)
-    {
+    public static void deleteLogs(String date) {
         DataAccess db = new DataAccess();
         db.delete(TableName, LogDateTime + " < '" + date + "'", null);
     }
