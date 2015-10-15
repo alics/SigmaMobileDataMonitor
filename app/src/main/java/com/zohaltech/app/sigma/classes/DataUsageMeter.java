@@ -90,23 +90,38 @@ public class DataUsageMeter
             int connectionStatus = ConnectionManager.getConnectivityStatus();
             if (connectionStatus != ConnectionManager.TYPE_WIFI)
             {
-                long currentUsageBytesTether = WifiStats.getTotalBytes(WifiStats.RxBytes) - currentUsageBytesMobile - App.preferences.getLong(LAST_RECEIVED_BYTES_WIFI, 0);
-                long currentSentBytesTether = WifiStats.getTotalBytes(WifiStats.TxBytes) - currentSentBytesMobile - App.preferences.getLong(LAST_SENT_BYTES_WIFI, 0);
+                long currentUsageBytesTether = WifiStats.getTotalBytes(WifiStats.RxBytes);
+                long currentSentBytesTether = WifiStats.getTotalBytes(WifiStats.TxBytes);
+
+                if (!firstTimeWifi)
+                {
+                    currentUsageBytesTether = WifiStats.getTotalBytes(WifiStats.RxBytes) - App.preferences.getLong(LAST_RECEIVED_BYTES_WIFI, 0);
+                    currentSentBytesTether = WifiStats.getTotalBytes(WifiStats.TxBytes) - App.preferences.getLong(LAST_SENT_BYTES_WIFI, 0);
+                }
 
                 App.preferences.edit().putLong(LAST_RECEIVED_BYTES_TETHER, currentUsageBytesTether).apply();
                 App.preferences.edit().putLong(LAST_SENT_BYTES_TETHER, currentSentBytesTether).apply();
+
+                firstTimeTether = false;
             }
             else
             {
-                long currentUsageBytesWifi = WifiStats.getTotalBytes(WifiStats.RxBytes) - currentUsageBytesMobile - App.preferences.getLong(LAST_RECEIVED_BYTES_TETHER, 0);
-                long currentSentBytesWifi = WifiStats.getTotalBytes(WifiStats.TxBytes) - currentSentBytesMobile - App.preferences.getLong(LAST_SENT_BYTES_TETHER, 0);
+                long currentUsageBytesWifi = WifiStats.getTotalBytes(WifiStats.RxBytes);
+                long currentSentBytesWifi = WifiStats.getTotalBytes(WifiStats.TxBytes);
 
                 if (currentUsageBytesWifi + currentSentBytesWifi == 0)
                 {
                     firstTimeWifi = true;
+                    firstTimeTether = true;
                 }
                 else
                 {
+                    if (!firstTimeTether)
+                    {
+                        currentUsageBytesWifi -= App.preferences.getLong(LAST_RECEIVED_BYTES_TETHER, 0);
+                        currentSentBytesWifi -= App.preferences.getLong(LAST_SENT_BYTES_TETHER, 0);
+                    }
+
                     if (firstTimeWifi)
                     {
                         firstTimeWifi = false;
@@ -123,6 +138,7 @@ public class DataUsageMeter
                         receivedBytesWifi = receivedBytesWifi >= 0 ? receivedBytesWifi : 0;
                         sentBytesWifi = sentBytesWifi >= 0 ? sentBytesWifi : 0;
                         firstTimeWifi = true;
+                        firstTimeTether = true;
                     }
 
                     App.preferences.edit().putLong(LAST_RECEIVED_BYTES_WIFI, currentUsageBytesWifi).apply();
