@@ -93,16 +93,31 @@ public class DataUsageMeter
                 long currentUsageBytesTether = WifiStats.getTotalBytes(WifiStats.RxBytes);
                 long currentSentBytesTether = WifiStats.getTotalBytes(WifiStats.TxBytes);
 
-                if (!firstTimeWifi)
+                if (currentSentBytesTether + currentSentBytesTether == 0)
                 {
-                    currentUsageBytesTether = WifiStats.getTotalBytes(WifiStats.RxBytes) - App.preferences.getLong(LAST_RECEIVED_BYTES_WIFI, 0);
-                    currentSentBytesTether = WifiStats.getTotalBytes(WifiStats.TxBytes) - App.preferences.getLong(LAST_SENT_BYTES_WIFI, 0);
+                    firstTimeTether = true;
                 }
+                else
+                {
+                    if (!firstTimeWifi)
+                    {
+                        currentUsageBytesTether = WifiStats.getTotalBytes(WifiStats.RxBytes) - App.preferences.getLong(LAST_RECEIVED_BYTES_WIFI, 0);
+                        currentSentBytesTether = WifiStats.getTotalBytes(WifiStats.TxBytes) - App.preferences.getLong(LAST_SENT_BYTES_WIFI, 0);
+                    }
 
-                firstTimeTether = false;
+                    firstTimeTether = false;
 
-                App.preferences.edit().putLong(LAST_RECEIVED_BYTES_TETHER, currentUsageBytesTether).apply();
-                App.preferences.edit().putLong(LAST_SENT_BYTES_TETHER, currentSentBytesTether).apply();
+                    long receivedBytesTether = currentUsageBytesTether - App.preferences.getLong(LAST_RECEIVED_BYTES_TETHER, 0);
+                    long sentBytesTether = currentSentBytesTether - App.preferences.getLong(LAST_SENT_BYTES_TETHER, 0);
+
+                    if (receivedBytesTether < 0 || sentBytesTether < 0)
+                    {
+                        firstTimeTether = true;
+                    }
+
+                    App.preferences.edit().putLong(LAST_RECEIVED_BYTES_TETHER, currentUsageBytesTether).apply();
+                    App.preferences.edit().putLong(LAST_SENT_BYTES_TETHER, currentSentBytesTether).apply();
+                }
             }
             else
             {
