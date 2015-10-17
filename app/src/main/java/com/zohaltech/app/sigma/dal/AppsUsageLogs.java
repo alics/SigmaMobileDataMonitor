@@ -28,7 +28,6 @@ public class AppsUsageLogs {
 
     static final String DropTable = "Drop Table If Exists " + TableName;
 
-
     private static ArrayList<AppsUsageLog> select(String whereClause, String[] selectionArgs) {
         ArrayList<AppsUsageLog> usageLogs = new ArrayList<>();
         DataAccess da = new DataAccess();
