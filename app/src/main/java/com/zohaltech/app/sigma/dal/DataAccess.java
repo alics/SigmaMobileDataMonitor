@@ -1,6 +1,9 @@
 package com.zohaltech.app.sigma.dal;
 
 import android.content.ContentValues;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -14,26 +17,23 @@ import com.zohaltech.app.sigma.classes.LicenseStatus;
 import com.zohaltech.app.sigma.classes.MyRuntimeException;
 
 import java.io.InputStreamReader;
+import java.util.Iterator;
 
 
-public class DataAccess extends SQLiteOpenHelper
-{
+public class DataAccess extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "SIGMA";
     //public static final int    DATABASE_VERSION = 9; //published in versions 1.06, 1.07
 //    public static final int DATABASE_VERSION = 10; //published in versions 1.08
     public static final int DATABASE_VERSION = 11; //published in versions 1.09
 
-    public DataAccess()
-    {
+    public DataAccess() {
         super(App.context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
-    public void onCreate(SQLiteDatabase database)
-    {
-        try
-        {
+    public void onCreate(SQLiteDatabase database) {
+        try {
             database.execSQL(MobileOperators.CreateTable);
             database.execSQL(DailyTrafficHistories.CreateTable);
             database.execSQL(UsageLogs.CreateTable);
@@ -55,8 +55,7 @@ public class DataAccess extends SQLiteOpenHelper
             database.insert(UsageLogs.TableName, null, usageLogValues);
 
             ContentValues trafficHistoryValues = new ContentValues();
-            for (int i = 0; i < 29; i++)
-            {
+            for (int i = 0; i < 29; i++) {
                 trafficHistoryValues.put(DailyTrafficHistories.LogDate, Helper.addDay(i - 29));
                 trafficHistoryValues.put(DailyTrafficHistories.Traffic, 0);
                 trafficHistoryValues.put(DailyTrafficHistories.TrafficWifi, 0);
@@ -93,29 +92,25 @@ public class DataAccess extends SQLiteOpenHelper
             systemSettingsValues.put(SystemSettings.ActiveSim, 0);
             database.insert(SystemSettings.TableName, null, systemSettingsValues);
 
+            insertHasInternetAccessApplications(database);
+
             LicenseStatus status = LicenseManager.getExistingLicense();
-            if (status == null)
-            {
+            if (status == null) {
                 LicenseManager.initializeLicenseFile(new LicenseStatus(BuildConfig.VERSION_CODE + "",
                         Helper.getDeviceId(),
                         Helper.getCurrentDate(),
                         LicenseManager.Status.TESTING_TIME.ordinal(),
                         1));
             }
-        }
-        catch (MyRuntimeException e)
-        {
+        } catch (MyRuntimeException e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion)
-    {
-        try
-        {
-            if (oldVersion < 9)
-            {
+    public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
+        try {
+            if (oldVersion < 9) {
                 database.execSQL(SystemSettings.DropTable);
                 database.execSQL(Settings.DropTable);
                 database.execSQL(PackageHistories.DropTable);
@@ -124,31 +119,23 @@ public class DataAccess extends SQLiteOpenHelper
                 database.execSQL(DailyTrafficHistories.DropTable);
                 database.execSQL(MobileOperators.DropTable);
                 onCreate(database);
-            }
-            else if (oldVersion == 9)
-            {
+            } else if (oldVersion == 9) {
                 version9to10(database);
                 version10to11(database);
                 //version11to12(database);
                 //version12to13(database);
-            }
-            else if (oldVersion == 10)
-            {
+            } else if (oldVersion == 10) {
                 version10to11(database);
                 //version11to12(database);
                 //version12to13(database);
             }
-        }
-        catch (MyRuntimeException e)
-        {
+        } catch (MyRuntimeException e) {
             e.printStackTrace();
         }
     }
 
-    private void version9to10(SQLiteDatabase database)
-    {
-        try
-        {
+    private void version9to10(SQLiteDatabase database) {
+        try {
             database.execSQL("UPDATE " + DataPackages.TableName + " SET " + DataPackages.Price + " = 10000 WHERE " + DataPackages.UssdCode + " = '*100*233#'");
             database.execSQL("UPDATE " + DataPackages.TableName + " SET " + DataPackages.Custom + " = 1 WHERE " + DataPackages.UssdCode + " = '*100*234#'");
             ContentValues values = new ContentValues();
@@ -163,17 +150,13 @@ public class DataAccess extends SQLiteOpenHelper
             values.put(DataPackages.UssdCode, "*100*234#");
             values.put(DataPackages.Custom, 0);
             database.insert(DataPackages.TableName, null, values);
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private void version10to11(SQLiteDatabase database)
-    {
-        try
-        {
+    private void version10to11(SQLiteDatabase database) {
+        try {
             database.execSQL("ALTER TABLE " + UsageLogs.TableName + " ADD COLUMN " + UsageLogs.TrafficBytesWifi + " BIGINT");
             database.execSQL("ALTER TABLE " + DailyTrafficHistories.TableName + " ADD COLUMN " + DailyTrafficHistories.TrafficWifi + " BIGINT");
             database.execSQL("ALTER TABLE " + Settings.TableName + " ADD COLUMN " + Settings.ShowWifiUsage + " BOOLEAN");
@@ -182,100 +165,109 @@ public class DataAccess extends SQLiteOpenHelper
             database.execSQL(Applications.CreateTable);
             database.execSQL(AppsUsageLogs.CreateTable);
 
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public synchronized void close()
-    {
+    public synchronized void close() {
         super.close();
     }
 
-    public SQLiteDatabase getReadableDB()
-    {
+    public SQLiteDatabase getReadableDB() {
         return this.getReadableDatabase();
     }
 
-    public SQLiteDatabase getWritableDB()
-    {
+    public SQLiteDatabase getWritableDB() {
         return this.getWritableDatabase();
     }
 
-    public long insert(String table, ContentValues values)
-    {
+    public long insert(String table, ContentValues values) {
         long result = 0;
-        try
-        {
+        try {
             SQLiteDatabase db = this.getWritableDB();
             result = db.insert(table, null, values);
             db.close();
-        }
-        catch (MyRuntimeException e)
-        {
+        } catch (MyRuntimeException e) {
             e.printStackTrace();
         }
         return result;
     }
 
-    public long update(String table, ContentValues values, String whereClause, String[] selectionArgs)
-    {
+    public long update(String table, ContentValues values, String whereClause, String[] selectionArgs) {
         long result = 0;
-        try
-        {
+        try {
             SQLiteDatabase db = this.getWritableDB();
             result = db.update(table, values, whereClause, selectionArgs);
             db.close();
-        }
-        catch (MyRuntimeException e)
-        {
+        } catch (MyRuntimeException e) {
             e.printStackTrace();
         }
         return result;
     }
 
-    public long delete(String table, String whereClause, String[] selectionArgs)
-    {
+    public long delete(String table, String whereClause, String[] selectionArgs) {
         long result = 0;
-        try
-        {
+        try {
             SQLiteDatabase db = this.getWritableDB();
             result = db.delete(table, whereClause, selectionArgs);
             db.close();
-        }
-        catch (MyRuntimeException e)
-        {
+        } catch (MyRuntimeException e) {
             e.printStackTrace();
         }
         return result;
     }
 
-    private void insertDataFromAsset(SQLiteDatabase db, String tableName, String filePathFromAsset, char delimiter)
-    {
+    private void insertDataFromAsset(SQLiteDatabase db, String tableName, String filePathFromAsset, char delimiter) {
         InputStreamReader isr;
-        try
-        {
+        try {
             isr = new InputStreamReader(App.context.getAssets().open(filePathFromAsset), "UTF-8");
 
             CsvReader csvReader = new CsvReader(isr, delimiter);
             csvReader.readHeaders();
-            while (csvReader.readRecord())
-            {
+            while (csvReader.readRecord()) {
                 ContentValues values = new ContentValues();
-                for (int i = 0; i < csvReader.getHeaderCount(); i++)
-                {
+                for (int i = 0; i < csvReader.getHeaderCount(); i++) {
                     values.put(csvReader.getHeader(i), csvReader.get(csvReader.getHeader(i)));
                 }
                 db.insert(tableName, null, values);
             }
             csvReader.close();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void insertHasInternetAccessApplications(SQLiteDatabase database) {
+        PackageManager pm = App.context.getPackageManager();
+        Iterator iterator = pm.getInstalledPackages(12288).iterator();
+        PackageInfo packageInfo;
+
+        while (iterator.hasNext()) {
+            packageInfo = (PackageInfo) iterator.next();
+            String[] permissions = packageInfo.requestedPermissions;
+
+            if (permissions != null && hasInternetAccess(permissions)) {
+                ApplicationInfo info = packageInfo.applicationInfo;
+                String appName = pm.getApplicationLabel(info).toString();
+
+                ContentValues appsValues = new ContentValues();
+                appsValues.put(Applications.AppName, appName);
+                appsValues.put(Applications.PackageName, info.packageName);
+                appsValues.put(Applications.Uid, info.uid);
+
+                database.insert(Applications.TableName, null, appsValues);
+            }
+        }
+    }
+
+    private Boolean hasInternetAccess(String[] permissions) {
+        for (String permission : permissions) {
+            if ("android.permission.INTERNET".equals(permission)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
