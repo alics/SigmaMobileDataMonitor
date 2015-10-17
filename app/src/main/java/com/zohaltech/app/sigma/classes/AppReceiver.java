@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import widgets.MyToast;
 
-public class AppListener extends BroadcastReceiver {
+public class AppReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         ApplicationInfo applicationInfo;

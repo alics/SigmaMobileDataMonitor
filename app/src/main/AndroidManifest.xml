@@ -5,7 +5,6 @@
 
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <!--<uses-permission android:name="android.permission.WAKE_LOCK"/>-->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -55,8 +54,8 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name =".classes.AppListener">
-            <intent-filter>
+        <receiver android:name =".classes.AppReceiver">
+            <intent-filter android:priority="999">
                 <action android:name="android.intent.action.PACKAGE_REMOVED"/>
                 <action android:name="android.intent.action.PACKAGE_ADDED"/>
                 <data android:scheme="package"/>
@@ -68,11 +67,6 @@
             android:enabled="true"
             android:exported="false"
             android:process=":data_usage"/>
-        <!--<service-->
-            <!--android:name=".classes.SigmaAppsService"-->
-            <!--android:enabled="true"-->
-            <!--android:exported="false"-->
-            <!--android:process=":data_usage"/>-->
 
         <activity
             android:name=".activities.DashboardActivity"
