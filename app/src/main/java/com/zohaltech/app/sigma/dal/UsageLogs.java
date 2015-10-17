@@ -139,7 +139,7 @@ public class UsageLogs {
         try {
             String logDate = "SUBSTR(" + LogDateTime + ", 1, 10)";
             String query = " SELECT SUM(" + TrafficBytes + ") SumTraffic," +
-                    "               SUM(" + TrafficBytes + ") SumTrafficWifi," +
+                    "               SUM(" + TrafficBytesWifi + ") SumTrafficWifi," +
                     logDate + " date FROM " + TableName +
                     " WHERE " + logDate + " > " +
                     " (SELECT MAX(" + DailyTrafficHistories.LogDate + ") FROM " + DailyTrafficHistories.TableName + ")" +
