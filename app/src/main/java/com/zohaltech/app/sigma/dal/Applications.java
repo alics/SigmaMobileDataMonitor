@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class Applications {
     static final String TableName   = "Applications";
     static final String Id          = "Id";
-    static final String Uid         = "Uid";
+    static final String Uid         = "UniqueId";
     static final String AppName     = "AppName";
     static final String PackageName = "PackageName";
 
