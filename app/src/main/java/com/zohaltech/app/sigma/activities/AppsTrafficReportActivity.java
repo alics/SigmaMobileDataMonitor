@@ -6,17 +6,18 @@ import android.widget.TextView;
 
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.adapters.AppsTrafficReportAdapter;
+import com.zohaltech.app.sigma.classes.TrafficUnitsUtil;
 import com.zohaltech.app.sigma.dal.AppsUsageLogs;
 import com.zohaltech.app.sigma.entities.AppsTrafficMonitor;
 
 import java.util.ArrayList;
 
 public class AppsTrafficReportActivity extends EnhancedActivity {
-    ListView                      lstAppsTraffic;
-    TextView                      txtTotalTraffic;
-    TextView                      txtTotalTrafficWifi;
+    ListView lstAppsTraffic;
+    TextView txtTotalTraffic;
+    TextView txtTotalTrafficWifi;
     ArrayList<AppsTrafficMonitor> appsTrafficMonitors;
-    AppsTrafficReportAdapter      adapter;
+    AppsTrafficReportAdapter adapter;
 
     @Override
     void onCreated() {
@@ -29,6 +30,19 @@ public class AppsTrafficReportActivity extends EnhancedActivity {
         appsTrafficMonitors = AppsUsageLogs.getAppsTrafficReport();
         adapter = new AppsTrafficReportAdapter(appsTrafficMonitors);
         lstAppsTraffic.setAdapter(adapter);
+
+        populateSummery();
+    }
+
+    private void populateSummery() {
+        long sum = 0;
+        long sumWifi = 0;
+        for (AppsTrafficMonitor trafficMonitor : appsTrafficMonitors) {
+            sum += trafficMonitor.getTotalTrafficData();
+            sumWifi += trafficMonitor.getTotalTrafficWifi();
+        }
+        txtTotalTraffic.setText(TrafficUnitsUtil.getUsedTrafficWithPoint(sum));
+        txtTotalTrafficWifi.setText(TrafficUnitsUtil.getUsedTrafficWithPoint(sumWifi));
     }
 
     @Override

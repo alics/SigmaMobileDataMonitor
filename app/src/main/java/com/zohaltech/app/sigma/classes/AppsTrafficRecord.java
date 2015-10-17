@@ -6,13 +6,13 @@ import android.net.TrafficStats;
 public class AppsTrafficRecord {
     public enum ConnectivityType {DATA, WIFI}
 
-    long tx       = 0;
-    long rx       = 0;
-    long wifi     = 0;
-    long data     = 0;
+    long tx = 0;
+    long rx = 0;
+//    long firstTx = 0;
+//    long firstRx = 0;
     long sumBytes = 0;
     Integer appId;
-    String appName     = null;
+    String appName = null;
     String packageName = null;
     ConnectivityType connectivityType;
 
@@ -25,8 +25,12 @@ public class AppsTrafficRecord {
 
         if (previousRecord != null) {
             sumBytes = (tx - previousRecord.tx) + (rx - previousRecord.rx);
+//            firstTx=previousRecord.firstTx;
+//            firstRx=previousRecord.firstRx;
         } else {
-            sumBytes = tx + rx;
+//            firstTx = TrafficStats.getUidTxBytes(uid);
+//            firstRx = TrafficStats.getUidRxBytes(uid);
+            sumBytes = 0;
         }
 
 

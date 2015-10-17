@@ -20,8 +20,7 @@ import com.zohaltech.app.sigma.entities.TrafficMonitor;
 
 import java.util.ArrayList;
 
-public class ReportActivity extends EnhancedActivity
-{
+public class ReportActivity extends EnhancedActivity {
 
     ListView lstTraffics;
     TextView txtTotalTraffic;
@@ -33,36 +32,29 @@ public class ReportActivity extends EnhancedActivity
     private long todayUsage;
     private long todayUsageWifi;
 
-    public long getTodayUsage()
-    {
+    public long getTodayUsage() {
         return todayUsage;
     }
 
-    public void setTodayUsage(long todayUsage)
-    {
+    public void setTodayUsage(long todayUsage) {
         this.todayUsage = todayUsage;
     }
 
-    public long getTodayUsageWifi()
-    {
+    public long getTodayUsageWifi() {
         return todayUsageWifi;
     }
 
-    public void setTodayUsageWifi(long todayUsageWifi)
-    {
+    public void setTodayUsageWifi(long todayUsageWifi) {
         this.todayUsageWifi = todayUsageWifi;
     }
 
     @Override
-    void onCreated()
-    {
+    void onCreated() {
         setContentView(R.layout.activity_report);
 
-        broadcastReceiver = new BroadcastReceiver()
-        {
+        broadcastReceiver = new BroadcastReceiver() {
             @Override
-            public void onReceive(Context context, Intent intent)
-            {
+            public void onReceive(Context context, Intent intent) {
                 long usage = intent.getLongExtra(DataUsageMeter.TODAY_USAGE_BYTES, 0);
                 long usageWifi = intent.getLongExtra(DataUsageMeter.TODAY_USAGE_BYTES_WIFI, 0);
                 updateUI(usage, usageWifi);
@@ -93,31 +85,26 @@ public class ReportActivity extends EnhancedActivity
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
+    public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == android.R.id.home)
-        {
+        if (id == android.R.id.home) {
             onBackPressed();
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
-    void onToolbarCreated()
-    {
+    void onToolbarCreated() {
         txtToolbarTitle.setText(getString(R.string.usage_report));
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
-    private void populateSummery()
-    {
+    private void populateSummery() {
         long sum = 0;
         long sumWifi = 0;
-        for (TrafficMonitor trafficMonitor : trafficMonitors)
-        {
+        for (TrafficMonitor trafficMonitor : trafficMonitors) {
             sum += trafficMonitor.getTotalTraffic();
             sumWifi += trafficMonitor.getTotalTrafficWifi();
         }
@@ -125,8 +112,7 @@ public class ReportActivity extends EnhancedActivity
         txtTotalTrafficWifi.setText(TrafficUnitsUtil.getUsedTrafficWithPoint(sumWifi));
     }
 
-    private void updateUI(long usage, long usageWifi)
-    {
+    private void updateUI(long usage, long usageWifi) {
         setTodayUsage(usage);
         setTodayUsageWifi(usageWifi);
         trafficMonitors.get(0).setTotalTraffic(getTodayUsage());
@@ -136,15 +122,13 @@ public class ReportActivity extends EnhancedActivity
     }
 
     @Override
-    public void onStart()
-    {
+    public void onStart() {
         super.onStart();
         registerReceiver(broadcastReceiver, new IntentFilter(DataUsageMeter.TODAY_USAGE_ACTION));
     }
 
     @Override
-    public void onStop()
-    {
+    public void onStop() {
         super.onStop();
         unregisterReceiver(broadcastReceiver);
     }

@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 public class AppDataUsageMeter {
     private static ScheduledExecutorService executorService;
-    private static AppsTrafficSnapshot latest = null;
+    private static AppsTrafficSnapshot latest;
 
     public static Runnable runnable = new Runnable() {
         @Override
@@ -43,7 +43,7 @@ public class AppDataUsageMeter {
 
                 AppsUsageLog log = new AppsUsageLog(latest_rec.appId, 0L, latest_rec.sumBytes, Helper.getCurrentDateTime());
                 AppsUsageLogs.insert(log);
-            } else {
+            } else if (latest_rec.connectivityType == AppsTrafficRecord.ConnectivityType.DATA) {
 
                 //  Long dataBytes = (latest_rec.rx + latest_rec.tx) - (latest_rec.sumWifi+ latest_rec.sumData);
                 AppsUsageLog log = new AppsUsageLog(latest_rec.appId, latest_rec.sumBytes, 0L, Helper.getCurrentDateTime());
