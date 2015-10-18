@@ -23,7 +23,7 @@ public class Applications {
                                       Uid + " INTEGER  ," +
                                       AppName + " VARCHAR(30)  ," +
                                       PackageName + " VARCHAR(50) , " +
-                                      Removed + "BOOLEAN NOT NULL  ); ";
+                                      Removed + " BOOLEAN NOT NULL  ); ";
 
     private static ArrayList<Application> select(String whereClause, String[] selectionArgs) {
         ArrayList<Application> applications = new ArrayList<>();
