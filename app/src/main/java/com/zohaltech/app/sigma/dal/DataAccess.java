@@ -22,10 +22,10 @@ import java.util.Iterator;
 
 public class DataAccess extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "SIGMA";
+    public static final String DATABASE_NAME    = "SIGMA";
     //public static final int    DATABASE_VERSION = 9; //published in versions 1.06, 1.07
-//    public static final int DATABASE_VERSION = 10; //published in versions 1.08
-    public static final int DATABASE_VERSION = 11; //published in versions 1.09
+    //    public static final int DATABASE_VERSION = 10; //published in versions 1.08
+    public static final int    DATABASE_VERSION = 11; //published in versions 1.09
 
     public DataAccess() {
         super(App.context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -97,10 +97,10 @@ public class DataAccess extends SQLiteOpenHelper {
             LicenseStatus status = LicenseManager.getExistingLicense();
             if (status == null) {
                 LicenseManager.initializeLicenseFile(new LicenseStatus(BuildConfig.VERSION_CODE + "",
-                        Helper.getDeviceId(),
-                        Helper.getCurrentDate(),
-                        LicenseManager.Status.TESTING_TIME.ordinal(),
-                        1));
+                                                                       Helper.getDeviceId(),
+                                                                       Helper.getCurrentDate(),
+                                                                       LicenseManager.Status.TESTING_TIME.ordinal(),
+                                                                       1));
             }
         } catch (MyRuntimeException e) {
             e.printStackTrace();
@@ -256,6 +256,7 @@ public class DataAccess extends SQLiteOpenHelper {
                 appsValues.put(Applications.AppName, appName);
                 appsValues.put(Applications.PackageName, info.packageName);
                 appsValues.put(Applications.Uid, info.uid);
+                appsValues.put(Applications.Removed, 0);
 
                 database.insert(Applications.TableName, null, appsValues);
             }

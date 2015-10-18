@@ -10,10 +10,18 @@ public class ConnectivityStateReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         ConnectionManager.setDataOrWifiConnectedStatus();
         WebApiClient.sendUserData(WebApiClient.PostAction.INSTALL);
-        App.connectivityType = ConnectionManager.getConnectivityStatus();
 
-        //todo : moshkel darad, Sigma is running in notification
-        AppDataUsageMeter.runnable.run();
+        if (ConnectionManager.getConnectivityStatus() == ConnectionManager.TYPE_WIFI ||
+            ConnectionManager.getConnectivityStatus() == ConnectionManager.TYPE_MOBILE) {
+            //todo : moshkel darad, Sigma is running in notification
+            //AppDataUsageMeter.runnable.run();
+            AppDataUsageMeter.takeSnapshot();
+            App.connectivityType = ConnectionManager.getConnectivityStatus();
+        }
+        //App.connectivityType = ConnectionManager.getConnectivityStatus();
+        //
+        ////todo : moshkel darad, Sigma is running in notification
+        //AppDataUsageMeter.runnable.run();
         //new Thread(new Runnable() {
         //    @Override
         //    public void run() {

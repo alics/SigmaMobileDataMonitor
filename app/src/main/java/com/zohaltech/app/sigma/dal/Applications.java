@@ -16,12 +16,14 @@ public class Applications {
     static final String Uid         = "UniqueId";
     static final String AppName     = "AppName";
     static final String PackageName = "PackageName";
+    static final String Removed     = "Removed";
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
                                       Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                                       Uid + " INTEGER  ," +
                                       AppName + " VARCHAR(30)  ," +
-                                      PackageName + " VARCHAR(50)   );";
+                                      PackageName + " VARCHAR(50) , " +
+                                      Removed + "BOOLEAN NOT NULL  ); ";
 
     private static ArrayList<Application> select(String whereClause, String[] selectionArgs) {
         ArrayList<Application> applications = new ArrayList<>();
@@ -37,7 +39,8 @@ public class Applications {
                     Application app = new Application(cursor.getInt(cursor.getColumnIndex(Id)),
                                                       cursor.getInt(cursor.getColumnIndex(Uid)),
                                                       cursor.getString(cursor.getColumnIndex(AppName)),
-                                                      cursor.getString(cursor.getColumnIndex(PackageName)));
+                                                      cursor.getString(cursor.getColumnIndex(PackageName)),
+                                                      cursor.getInt(cursor.getColumnIndex(Removed)) == 1);
                     applications.add(app);
                 } while (cursor.moveToNext());
             }
@@ -61,6 +64,7 @@ public class Applications {
         values.put(Uid, application.getUid());
         values.put(AppName, application.getAppName());
         values.put(PackageName, application.getPackageName());
+        values.put(Removed, application.getRemoved());
 
         DataAccess da = new DataAccess();
         return da.insert(TableName, values);
@@ -71,6 +75,7 @@ public class Applications {
         values.put(Uid, application.getUid());
         values.put(AppName, application.getAppName());
         values.put(PackageName, application.getPackageName());
+        values.put(Removed, application.getRemoved());
 
         DataAccess da = new DataAccess();
         return da.update(TableName, values, Id + " =? ", new String[]{String.valueOf(application.getId())});
@@ -92,6 +97,14 @@ public class Applications {
 
     public static Application getAppByUid(int uid) {
         String whereClause = " WHERE " + Uid + " = " + uid;
+        ArrayList<Application> applications = select(whereClause, null);
+        int count = applications.size();
+
+        return (count == 0) ? null : applications.get(count - 1);
+    }
+
+    public static Application getAppByPackage(String packageName) {
+        String whereClause = " WHERE " + PackageName + " = '" + packageName + "'";
         ArrayList<Application> applications = select(whereClause, null);
         int count = applications.size();
 
