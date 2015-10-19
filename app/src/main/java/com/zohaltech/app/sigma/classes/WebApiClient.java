@@ -1,40 +1,22 @@
 package com.zohaltech.app.sigma.classes;
 
 import android.os.Build;
-import android.util.Log;
 
 import com.zohaltech.app.sigma.BuildConfig;
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.dal.SystemSettings;
 import com.zohaltech.app.sigma.entities.SystemSetting;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 public class WebApiClient {
 
     private static final String HOST_URL = App.context.getString(R.string.host_name);
-
-    public enum PostAction {
-        INSTALL,
-        REGISTER
-    }
 
     public static void sendUserData(final PostAction action, final String token) {
         Thread thread = new Thread(new Runnable() {
@@ -122,5 +104,10 @@ public class WebApiClient {
             }
         }
         return false;
+    }
+
+    public enum PostAction {
+        INSTALL,
+        REGISTER
     }
 }
