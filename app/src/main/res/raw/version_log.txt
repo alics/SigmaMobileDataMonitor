@@ -12,5 +12,26 @@ Version 1.09 :
 - fix histories display for only primary and only secondary data packages
 - add AppVersion to webservice
 - change trial version to 2 days
-- add products about activity
+- add products to about activity
+- update webapi to new api
 - fix webapi register for purchased accounts
+- reset for report statistics
+- clear for package histories
+- wifi usage and report added
+-
+
+//todo : add sikimioooom
+//todo : add buy/activate for each data package
+//todo : revise data packages and edit they names
+//todo : change introduction images
+//todo : take screenshots for markets
+//todo : change description and write change log in markets
+//todo : change sigma name to 3g/4g in markets
+//todo : remove everything about applications(db, service, integration, report, ...)
+//todo : go to about page when click on about
+//todo : add change log dialog
+//todo : use card view where needed(e.g. for app reports, data packages)
+//later
+//todo : add section for user packages
+//todo : home screen widget
+//todo : operator services (estelam, laghve reserve,...)

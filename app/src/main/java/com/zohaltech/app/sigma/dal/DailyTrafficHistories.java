@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.zohaltech.app.sigma.classes.Helper;
 import com.zohaltech.app.sigma.classes.MyRuntimeException;
 import com.zohaltech.app.sigma.entities.DailyTrafficHistory;
 import com.zohaltech.app.sigma.entities.TrafficMonitor;
@@ -144,5 +143,21 @@ public class DailyTrafficHistories {
                 db.close();
         }
         return trafficMonitors;
+    }
+
+    public static void reset(boolean mobile, boolean wifi) {
+        DataAccess da = new DataAccess();
+        SQLiteDatabase db = da.getWritableDB();
+        db.execSQL("delete from " + TableName + " where cast((strftime('%s',date()) - strftime('%s',replace(" + LogDate + ", '/', '-'))) AS real)/60/60/24 < 0");
+        ContentValues values = new ContentValues();
+        if (mobile && wifi) {
+            values.put(Traffic, 0);
+            values.put(TrafficWifi, 0);
+        } else if (mobile) {
+            values.put(Traffic, 0);
+        } else if (wifi) {
+            values.put(TrafficWifi, 0);
+        }
+        da.update(TableName, values, "", null);
     }
 }

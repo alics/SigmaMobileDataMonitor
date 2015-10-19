@@ -15,7 +15,6 @@ import android.widget.LinearLayout;
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.classes.App;
 import com.zohaltech.app.sigma.classes.DataUsageMeter;
-import com.zohaltech.app.sigma.classes.SigmaDataService;
 import com.zohaltech.app.sigma.classes.PackageStatus;
 import com.zohaltech.app.sigma.classes.RemainingTimeObject;
 

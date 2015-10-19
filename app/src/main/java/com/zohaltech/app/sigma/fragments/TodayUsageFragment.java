@@ -4,7 +4,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -25,24 +28,24 @@ public class TodayUsageFragment extends Fragment {
     CircleProgress progressTodayUsageWifi;
     private BroadcastReceiver broadcastReceiver;
 
-//    private long todayUsageMobile;
-//    private long todayUsageWifi;
-//
-//    public long getTodayUsageMobile() {
-//        return todayUsageMobile;
-//    }
-//
-//    public void setTodayUsageMobile(long todayUsageMobile) {
-//        this.todayUsageMobile = todayUsageMobile;
-//    }
-//
-//    public long getTodayUsageWifi() {
-//        return todayUsageWifi;
-//    }
-//
-//    public void setTodayUsageWifi(long todayUsageWifi) {
-//        this.todayUsageWifi = todayUsageWifi;
-//    }
+    //    private long todayUsageMobile;
+    //    private long todayUsageWifi;
+    //
+    //    public long getTodayUsageMobile() {
+    //        return todayUsageMobile;
+    //    }
+    //
+    //    public void setTodayUsageMobile(long todayUsageMobile) {
+    //        this.todayUsageMobile = todayUsageMobile;
+    //    }
+    //
+    //    public long getTodayUsageWifi() {
+    //        return todayUsageWifi;
+    //    }
+    //
+    //    public void setTodayUsageWifi(long todayUsageWifi) {
+    //        this.todayUsageWifi = todayUsageWifi;
+    //    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,8 +75,16 @@ public class TodayUsageFragment extends Fragment {
         progressTodayUsageWifi = (CircleProgress) view.findViewById(R.id.progressTodayUsageWifi);
         progressTodayUsageMobile.setLayoutParams(new LinearLayout.LayoutParams(size, size));
         progressTodayUsageWifi.setLayoutParams(new LinearLayout.LayoutParams(size, size));
-        updateUIMobile(App.preferences.getLong(DataUsageMeter.TODAY_USAGE_BYTES, 0));
-        updateUIWifi(App.preferences.getLong(DataUsageMeter.TODAY_USAGE_BYTES_WIFI, 0));
+        //updateUIMobile(App.preferences.getLong(DataUsageMeter.TODAY_USAGE_BYTES, 0));
+        //updateUIWifi(App.preferences.getLong(DataUsageMeter.TODAY_USAGE_BYTES_WIFI, 0));
+        SharedPreferences preferences;
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+            preferences = PreferenceManager.getDefaultSharedPreferences(App.context);
+        } else {
+            preferences = App.context.getSharedPreferences(App.context.getPackageName() + "_preferences", Context.MODE_MULTI_PROCESS);
+        }
+        updateUIMobile(preferences.getLong(DataUsageMeter.TODAY_USAGE_BYTES, 0));
+        updateUIWifi(preferences.getLong(DataUsageMeter.TODAY_USAGE_BYTES_WIFI, 0));
     }
 
     @Override

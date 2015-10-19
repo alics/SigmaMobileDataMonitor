@@ -1,11 +1,20 @@
 package com.zohaltech.app.sigma.activities;
 
 
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.os.Build;
+import android.preference.PreferenceManager;
+import android.support.v7.widget.AppCompatCheckBox;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -14,6 +23,7 @@ import com.zohaltech.app.sigma.adapters.ReportAdapter;
 import com.zohaltech.app.sigma.classes.App;
 import com.zohaltech.app.sigma.classes.DataUsageMeter;
 import com.zohaltech.app.sigma.classes.Helper;
+import com.zohaltech.app.sigma.classes.SigmaDataService;
 import com.zohaltech.app.sigma.classes.TrafficUnitsUtil;
 import com.zohaltech.app.sigma.dal.DailyTrafficHistories;
 import com.zohaltech.app.sigma.entities.TrafficMonitor;
@@ -25,7 +35,7 @@ public class ReportActivity extends EnhancedActivity {
     ListView lstTraffics;
     TextView txtTotalTraffic;
     TextView txtTotalTrafficWifi;
-    ArrayList<TrafficMonitor> trafficMonitors;
+    ArrayList<TrafficMonitor> trafficMonitors = new ArrayList<>();
     ReportAdapter adapter;
     private BroadcastReceiver broadcastReceiver;
 
@@ -65,7 +75,16 @@ public class ReportActivity extends EnhancedActivity {
         txtTotalTraffic = (TextView) findViewById(R.id.txtTotalTraffic);
         txtTotalTrafficWifi = (TextView) findViewById(R.id.txtTotalTrafficWifi);
 
-        trafficMonitors = DailyTrafficHistories.getMonthlyTraffic();
+        populateTraffics();
+
+        adapter = new ReportAdapter(trafficMonitors);
+        lstTraffics.setAdapter(adapter);
+        populateSummery();
+    }
+
+    private void populateTraffics() {
+        trafficMonitors.clear();
+        trafficMonitors.addAll(DailyTrafficHistories.getMonthlyTraffic());
         //trafficMonitors = new ArrayList<>();
         //for (int i = 0; i < 29; i++) {
         //    Random r = new Random();
@@ -75,13 +94,25 @@ public class ReportActivity extends EnhancedActivity {
         //    TrafficMonitor trafficMonitor = new TrafficMonitor((long)sumReceivedSent, Helper.addDay(i - 29));
         //    trafficMonitors.add(0, trafficMonitor);
         //}
-        setTodayUsage(App.preferences.getLong(DataUsageMeter.TODAY_USAGE_BYTES, 0));
-        setTodayUsageWifi(App.preferences.getLong(DataUsageMeter.TODAY_USAGE_BYTES, 0));
-        trafficMonitors.add(0, new TrafficMonitor(getTodayUsage(), getTodayUsageWifi(), Helper.getCurrentDate()));
 
-        adapter = new ReportAdapter(trafficMonitors);
-        lstTraffics.setAdapter(adapter);
-        populateSummery();
+        //setTodayUsage(App.preferences.getLong(DataUsageMeter.TODAY_USAGE_BYTES, 0));
+        //setTodayUsageWifi(App.preferences.getLong(DataUsageMeter.TODAY_USAGE_BYTES_WIFI, 0));
+        SharedPreferences preferences;
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+            preferences = PreferenceManager.getDefaultSharedPreferences(App.context);
+        } else {
+            preferences = App.context.getSharedPreferences(App.context.getPackageName() + "_preferences", Context.MODE_MULTI_PROCESS);
+        }
+        setTodayUsage(preferences.getLong(DataUsageMeter.TODAY_USAGE_BYTES, 0));
+        setTodayUsageWifi(preferences.getLong(DataUsageMeter.TODAY_USAGE_BYTES_WIFI, 0));
+
+        trafficMonitors.add(0, new TrafficMonitor(getTodayUsage(), getTodayUsageWifi(), Helper.getCurrentDate()));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_report, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -89,6 +120,8 @@ public class ReportActivity extends EnhancedActivity {
         int id = item.getItemId();
         if (id == android.R.id.home) {
             onBackPressed();
+        } else if (id == R.id.action_reset) {
+            showResetDialog();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -131,6 +164,65 @@ public class ReportActivity extends EnhancedActivity {
     public void onStop() {
         super.onStop();
         unregisterReceiver(broadcastReceiver);
+    }
+
+    private void showResetDialog() {
+        App.handler.post(new Runnable() {
+            @Override
+            public void run() {
+                final Dialog dialog = new Dialog(ReportActivity.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.dialog_reset_stats);
+                dialog.setCanceledOnTouchOutside(false);
+                dialog.setCancelable(true);
+                final AppCompatCheckBox chkMobile = (AppCompatCheckBox) dialog.findViewById(R.id.chkMobile);
+                final AppCompatCheckBox chkWifi = (AppCompatCheckBox) dialog.findViewById(R.id.chkWifi);
+                Button positiveButton = (Button) dialog.findViewById(R.id.positiveButton);
+                Button negativeButton = (Button) dialog.findViewById(R.id.negativeButton);
+
+                positiveButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (chkMobile.isChecked() || chkWifi.isChecked()) {
+                            //Intent dataService = new Intent(App.context, SigmaDataService.class);
+                            //App.context.stopService(dataService);
+
+                            DailyTrafficHistories.reset(chkMobile.isChecked(), chkWifi.isChecked());
+                            SharedPreferences preferences;
+                            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+                                preferences = PreferenceManager.getDefaultSharedPreferences(App.context);
+                            } else {
+                                preferences = App.context.getSharedPreferences(App.context.getPackageName() + "_preferences", Context.MODE_MULTI_PROCESS);
+                            }
+                            if (chkMobile.isChecked()) {
+                                //App.preferences.edit().putLong(DataUsageMeter.TODAY_USAGE_BYTES, 0).apply();
+                                preferences.edit().putLong(DataUsageMeter.TODAY_USAGE_BYTES, 0).apply();
+                            }
+                            if (chkWifi.isChecked()) {
+                                //App.preferences.edit().putLong(DataUsageMeter.TODAY_USAGE_BYTES_WIFI, 0).apply();
+                                preferences.edit().putLong(DataUsageMeter.TODAY_USAGE_BYTES_WIFI, 0).apply();
+                            }
+
+                            //App.context.startService(dataService);
+
+                            populateTraffics();
+                            //updateUI(getTodayUsage(), getTodayUsageWifi());
+                            adapter.notifyDataSetChanged();
+                        }
+
+                        dialog.dismiss();
+                    }
+                });
+
+                negativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
     }
 
 }

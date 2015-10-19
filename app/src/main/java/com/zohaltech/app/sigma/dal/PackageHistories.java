@@ -14,25 +14,25 @@ import com.zohaltech.app.sigma.entities.SystemSetting;
 import java.util.ArrayList;
 
 public class PackageHistories {
-    static final String TableName = "PackageHistories";
-    static final String Id = "Id";
-    static final String DataPackageId = "DataPackageId";
-    static final String StartDateTime = "StartDateTime";
-    static final String EndDateTime = "EndDateTime";
-    static final String PrimaryPackageEndDateTime = "PrimaryPackageEndDateTime";
+    static final String TableName                   = "PackageHistories";
+    static final String Id                          = "Id";
+    static final String DataPackageId               = "DataPackageId";
+    static final String StartDateTime               = "StartDateTime";
+    static final String EndDateTime                 = "EndDateTime";
+    static final String PrimaryPackageEndDateTime   = "PrimaryPackageEndDateTime";
     static final String SecondaryTrafficEndDateTime = "SecondaryTrafficEndDateTime";
-    static final String SimSerial = "SimSerial";
-    static final String Status = "Status";
+    static final String SimSerial                   = "SimSerial";
+    static final String Status                      = "Status";
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
-            Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-            DataPackageId + " INTEGER REFERENCES " + DataPackages.TableName + " (" + DataPackages.Id + "), " +
-            StartDateTime + " CHAR(19)  ," +
-            EndDateTime + " CHAR(19)  ," +
-            PrimaryPackageEndDateTime + " CHAR(19) ," +
-            SecondaryTrafficEndDateTime + " CHAR(19) ," +
-            SimSerial + " VARCHAR(50) ," +
-            Status + " INTEGER NOT NULL );";
+                                      Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                                      DataPackageId + " INTEGER REFERENCES " + DataPackages.TableName + " (" + DataPackages.Id + "), " +
+                                      StartDateTime + " CHAR(19)  ," +
+                                      EndDateTime + " CHAR(19)  ," +
+                                      PrimaryPackageEndDateTime + " CHAR(19) ," +
+                                      SecondaryTrafficEndDateTime + " CHAR(19) ," +
+                                      SimSerial + " VARCHAR(50) ," +
+                                      Status + " INTEGER NOT NULL );";
 
     static final String DropTable = "Drop Table If Exists " + TableName;
 
@@ -49,13 +49,13 @@ public class PackageHistories {
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     PackageHistory packageHistory = new PackageHistory(cursor.getInt(cursor.getColumnIndex(Id)),
-                            cursor.getInt(cursor.getColumnIndex(DataPackageId)),
-                            cursor.getString(cursor.getColumnIndex(StartDateTime)),
-                            cursor.getString(cursor.getColumnIndex(EndDateTime)),
-                            cursor.getString(cursor.getColumnIndex(PrimaryPackageEndDateTime)),
-                            cursor.getString(cursor.getColumnIndex(SecondaryTrafficEndDateTime)),
-                            cursor.getString(cursor.getColumnIndex(SimSerial)),
-                            cursor.getInt(cursor.getColumnIndex(Status)));
+                                                                       cursor.getInt(cursor.getColumnIndex(DataPackageId)),
+                                                                       cursor.getString(cursor.getColumnIndex(StartDateTime)),
+                                                                       cursor.getString(cursor.getColumnIndex(EndDateTime)),
+                                                                       cursor.getString(cursor.getColumnIndex(PrimaryPackageEndDateTime)),
+                                                                       cursor.getString(cursor.getColumnIndex(SecondaryTrafficEndDateTime)),
+                                                                       cursor.getString(cursor.getColumnIndex(SimSerial)),
+                                                                       cursor.getInt(cursor.getColumnIndex(Status)));
                     packageList.add(packageHistory);
                 } while (cursor.moveToNext());
             }
@@ -171,5 +171,10 @@ public class PackageHistories {
         systemSetting.setSecondaryTrafficFinishHasShown(false);
         systemSetting.setLeftDaysAlarmHasShown(false);
         SystemSettings.update(systemSetting);
+    }
+
+    public static long clear() {
+        DataAccess db = new DataAccess();
+        return db.delete(TableName, Status + " > ? ", new String[]{String.valueOf(PackageHistory.StatusEnum.RESERVED.ordinal())});
     }
 }

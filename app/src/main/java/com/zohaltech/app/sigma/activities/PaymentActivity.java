@@ -44,7 +44,7 @@ public abstract class PaymentActivity extends EnhancedActivity {
                 if (mIsPremium) {
                     LicenseManager.registerLicense();
                     updateUiToPremiumVersion();
-                    WebApiClient.sendUserData(WebApiClient.PostAction.REGISTER);
+                    WebApiClient.sendUserData(WebApiClient.PostAction.REGISTER, inventory.getPurchase(SKU_PREMIUM).getToken());
                     setWaitScreen(false);
                 }
                 //Log.i(TAG, "User is " + (mIsPremium ? "PREMIUM" : "NOT PREMIUM"));
@@ -70,7 +70,7 @@ public abstract class PaymentActivity extends EnhancedActivity {
                     LicenseManager.registerLicense();
                     MyToast.show(responseMessage, Toast.LENGTH_LONG);
                     updateUiToPremiumVersion();
-                    WebApiClient.sendUserData(WebApiClient.PostAction.REGISTER);
+                    WebApiClient.sendUserData(WebApiClient.PostAction.REGISTER, purchase.getToken());
                 }
             }
             setWaitScreen(false);

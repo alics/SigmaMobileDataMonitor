@@ -12,7 +12,6 @@ import android.widget.Toast;
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.adapters.UsagePagerAdapter;
 import com.zohaltech.app.sigma.classes.App;
-import com.zohaltech.app.sigma.classes.AppDataUsageMeter;
 import com.zohaltech.app.sigma.classes.DialogManager;
 import com.zohaltech.app.sigma.classes.LicenseManager;
 import com.zohaltech.app.sigma.classes.WebApiClient;
@@ -35,7 +34,7 @@ public class DashboardActivity extends PaymentActivity {
 
     UsagePagerAdapter usagePagerAdapter;
 
-    long startTime;
+    long   startTime;
     String paymentDialogMessage;
 
     @Override
@@ -47,7 +46,7 @@ public class DashboardActivity extends PaymentActivity {
         da.getReadableDB();
         da.close();
 
-      //  AppDataUsageMeter.takeSnapshot();
+        //  AppDataUsageMeter.takeSnapshot();
         //
         //AppDataUsageMeter.takeSnapshot();
 
@@ -134,7 +133,7 @@ public class DashboardActivity extends PaymentActivity {
         pagerUsages.setAdapter(usagePagerAdapter);
         pagerUsages.setCurrentItem(1);
 
-        WebApiClient.sendUserData(WebApiClient.PostAction.INSTALL);
+        WebApiClient.sendUserData(WebApiClient.PostAction.INSTALL, null);
     }
 
     @Override

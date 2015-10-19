@@ -16,24 +16,27 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 public class WebApiClient {
+
     private static final String HOST_URL = App.context.getString(R.string.host_name);
-    private JSONObject jsonObject;
 
-    public static void sendUserData(WebApiClient.PostAction postAction) {
-        WebApiClient webApiClient = new WebApiClient();
-        webApiClient.postSubscriberData(postAction);
+    public enum PostAction {
+        INSTALL,
+        REGISTER
     }
 
-    private JSONObject getJsonObject() {
-        return jsonObject;
-    }
-
-    private void setJsonObject(JSONObject jsonObject) {
-        this.jsonObject = jsonObject;
-    }
-
-    public void postSubscriberData(final PostAction action) {
+    public static void sendUserData(final PostAction action, final String token) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -55,10 +58,12 @@ public class WebApiClient {
                                 jsonObject.accumulate("IsPurchased", false);
                                 jsonObject.accumulate("MarketId", App.market);
                                 jsonObject.accumulate("AppVersion", BuildConfig.VERSION_CODE);
-                                setJsonObject(jsonObject);
-                                Boolean result = post(getJsonObject());
-                                setting.setInstalled(result);
-                                SystemSettings.update(setting);
+                                jsonObject.accumulate("PurchaseToken", token);
+                                Boolean result = post(jsonObject);
+                                if (result) {
+                                    setting.setInstalled(true);
+                                    SystemSettings.update(setting);
+                                }
                             }
                         }
                     } else {
@@ -75,10 +80,12 @@ public class WebApiClient {
                                 jsonObject.accumulate("IsPurchased", true);
                                 jsonObject.accumulate("MarketId", App.market);
                                 jsonObject.accumulate("AppVersion", BuildConfig.VERSION_CODE);
-                                setJsonObject(jsonObject);
-                                Boolean result = post(getJsonObject());
-                                setting.setRegistered(result);
-                                SystemSettings.update(setting);
+                                jsonObject.accumulate("PurchaseToken", token);
+                                Boolean result = post(jsonObject);
+                                if (result) {
+                                    setting.setRegistered(true);
+                                    SystemSettings.update(setting);
+                                }
                             }
                         }
                     }
@@ -91,44 +98,29 @@ public class WebApiClient {
         thread.start();
     }
 
-    private Boolean post(JSONObject jsonObject) {
+    private static Boolean post(JSONObject jsonObject) {
+        HttpURLConnection urlConnection = null;
         try {
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
-            // 2. make POST request to the given URL
-            HttpPost httpPost = new HttpPost(HOST_URL);
-            String json;
-            // 3. build jsonObject
-            //JSONObject jsonObject = getJsonObject();
+            URL url = new URL(HOST_URL);
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setDoOutput(true);
+            urlConnection.setRequestMethod("POST");
+            urlConnection.setRequestProperty("Content-Type", "application/json");
+            urlConnection.setRequestProperty("Accept", "application/json");
 
-            // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-            // ** Alternative way to convert Person object to JSON string using Jackson Lib
-            // ObjectMapper mapper = new ObjectMapper();
-            // json = mapper.writeValueAsString(person);
-            // 5. set json to StringEntity
-            StringEntity stringEntity = new StringEntity(json);
-            // 6. set httpPost Entity
-            httpPost.setEntity(stringEntity);
-            // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Content-Type", "application/x-www-form-urlencoded");
-            // httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-            // 8. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPost);
+            OutputStreamWriter out = new OutputStreamWriter(urlConnection.getOutputStream());
+            out.write(jsonObject.toString());
+            out.close();
 
-            StatusLine statusLine = httpResponse.getStatusLine();
-            int resultCode = statusLine.getStatusCode();
-            return resultCode == 200;
+            return urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK;
 
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage());
+        } catch (MyRuntimeException | IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
         }
         return false;
-    }
-
-    public enum PostAction {
-        INSTALL,
-        REGISTER
     }
 }

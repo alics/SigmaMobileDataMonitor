@@ -25,7 +25,7 @@
     </style>
 
     <style name="BorderlessButton" parent="Widget.AppCompat.Button.Borderless">
-        <item name="android:padding">15dp</item>
+        <item name="android:padding">10dp</item>
     </style>
 
     <style name="FormButton" parent="Widget.AppCompat.Button"/>
