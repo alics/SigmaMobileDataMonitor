@@ -18,20 +18,19 @@ Version 1.09 :
 - reset for report statistics
 - clear for package histories
 - wifi usage and report added
--
+- direct activate and buy for data packages
 
 //todo : add sikimioooom
-//todo : add buy/activate for each data package
 //todo : revise data packages and edit they names
 //todo : change introduction images
 //todo : take screenshots for markets
 //todo : change description and write change log in markets
-//todo : change sigma name to 3g/4g in markets
+//todo : change sigma name to 3G/4G/WiFi in markets
 //todo : remove everything about applications(db, service, integration, report, ...)
 //todo : go to about page when click on about
 //todo : add change log dialog
-//todo : use card view where needed(e.g. for app reports, data packages)
 //later
-//todo : add section for user packages
+//todo : use card view where needed(e.g. for app reports, ...)
+//todo : user defined packages
 //todo : home screen widget
 //todo : operator services (estelam, laghve reserve,...)

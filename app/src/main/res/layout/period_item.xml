@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:gravity="right|center"
-              android:paddingBottom="15dp"
-              android:paddingTop="15dp">
+              android:layout_height="wrap_content">
 
     <widgets.MyTextView
         android:id="@+id/txtPeriod"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp"
         android:gravity="right"
-        android:textColor="@color/primary"
         android:paddingRight="?android:attr/expandableListPreferredItemPaddingLeft"
-        android:textAppearance="?android:attr/textAppearanceLarge"/>
+        android:text="7 روزه"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/primary"/>
 
 </LinearLayout>

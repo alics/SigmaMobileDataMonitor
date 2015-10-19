@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.zohaltech.app.sigma.R;
@@ -50,24 +50,31 @@ public class ExpandablePackageAdapter extends AnimatedExpandableListView.Animate
             convertView = inflater.inflate(R.layout.package_item, null);
         }
 
-        LinearLayout layoutPackage = (LinearLayout) convertView.findViewById(R.id.layoutPackage);
+        Button btnPurchase = (Button) convertView.findViewById(R.id.btnPurchase);
+        Button btnActivate = (Button) convertView.findViewById(R.id.btnActivate);
         TextView txtPackage = (TextView) convertView.findViewById(R.id.txtPackage);
         txtPackage.setText(dataPackage.getPackageDescription());
 
-        layoutPackage.setOnClickListener
-                (
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                DialogManager.showConfirmationDialog(activity, "خرید بسته", "آیا مایل به خرید بسته "  + dataPackage.getDescription() + " هستید؟", "بله", "خیر", null, new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Helper.runUssd(activity, dataPackage);
-                                    }
-                                });
-                            }
-                        }
-                );
+        btnPurchase.setOnClickListener(new View.OnClickListener() {
+                                           @Override
+                                           public void onClick(View view) {
+                                               DialogManager.showConfirmationDialog(activity, "خرید بسته", "آیا مایل به خرید بسته " + dataPackage.getDescription() + " هستید؟", "بله", "خیر", null, new Runnable() {
+                                                   @Override
+                                                   public void run() {
+                                                       Helper.runUssd(activity, dataPackage);
+                                                   }
+                                               });
+                                           }
+                                       }
+                                      );
+
+        btnActivate.setOnClickListener(new View.OnClickListener() {
+                                           @Override
+                                           public void onClick(View view) {
+                                               DialogManager.showPackageActivationDialog(dataPackage);
+                                           }
+                                       }
+                                      );
 
         return convertView;
     }

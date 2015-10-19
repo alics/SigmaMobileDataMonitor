@@ -9,7 +9,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.PreferenceManager;
-import android.support.v7.widget.AppCompatCheckBox;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,12 +17,12 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.rey.material.widget.CheckBox;
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.adapters.ReportAdapter;
 import com.zohaltech.app.sigma.classes.App;
 import com.zohaltech.app.sigma.classes.DataUsageMeter;
 import com.zohaltech.app.sigma.classes.Helper;
-import com.zohaltech.app.sigma.classes.SigmaDataService;
 import com.zohaltech.app.sigma.classes.TrafficUnitsUtil;
 import com.zohaltech.app.sigma.dal.DailyTrafficHistories;
 import com.zohaltech.app.sigma.entities.TrafficMonitor;
@@ -175,8 +174,10 @@ public class ReportActivity extends EnhancedActivity {
                 dialog.setContentView(R.layout.dialog_reset_stats);
                 dialog.setCanceledOnTouchOutside(false);
                 dialog.setCancelable(true);
-                final AppCompatCheckBox chkMobile = (AppCompatCheckBox) dialog.findViewById(R.id.chkMobile);
-                final AppCompatCheckBox chkWifi = (AppCompatCheckBox) dialog.findViewById(R.id.chkWifi);
+                //final AppCompatCheckBox chkMobile = (AppCompatCheckBox) dialog.findViewById(R.id.chkMobile);
+                //final AppCompatCheckBox chkWifi = (AppCompatCheckBox) dialog.findViewById(R.id.chkWifi);
+                final CheckBox chkMobile = (CheckBox) dialog.findViewById(R.id.chkMobile);
+                final CheckBox chkWifi = (CheckBox) dialog.findViewById(R.id.chkWifi);
                 Button positiveButton = (Button) dialog.findViewById(R.id.positiveButton);
                 Button negativeButton = (Button) dialog.findViewById(R.id.negativeButton);
 

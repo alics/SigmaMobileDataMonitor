@@ -43,12 +43,14 @@
                 android:layout_marginBottom="10dp"
                 android:background="@android:drawable/divider_horizontal_bright" />
 
-            <widgets.MyCheckBox
+            <com.rey.material.widget.CheckBox
                 android:id="@+id/chkMobile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:checked="true"
+                android:gravity="center|right"
+                android:textColor="@color/primary_text"
                 android:text="موبایل" />
 
             <LinearLayout
@@ -57,12 +59,14 @@
                 android:layout_marginBottom="10dp"
                 android:background="@android:drawable/divider_horizontal_bright" />
 
-            <widgets.MyCheckBox
+            <com.rey.material.widget.CheckBox
                 android:id="@+id/chkWifi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
+                android:gravity="center|right"
                 android:checked="true"
+                android:textColor="@color/primary_text"
                 android:text="وای فای" />
 
             <LinearLayout

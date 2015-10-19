@@ -3,12 +3,12 @@ package widgets;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
-import android.support.v7.widget.AppCompatCheckBox;
 
+import com.rey.material.widget.CheckBox;
 import com.zohaltech.app.sigma.classes.App;
 
 
-public class MyCheckBox extends AppCompatCheckBox
+public class MyCheckBox extends CheckBox
 {
     public MyCheckBox(Context context)
     {

@@ -1,19 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/layoutPackage"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:gravity="right|center"
-              android:background="?attr/selectableItemBackground">
+<LinearLayout
+    android:id="@+id/layoutPackage"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-    <widgets.MyTextView
-        android:id="@+id/txtPackage"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:layout_marginTop="15dp"
-        android:gravity="right"
-        android:paddingRight="?android:attr/expandableListPreferredChildPaddingLeft"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
+        android:layout_margin="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <widgets.MyButton
+                    android:id="@+id/btnPurchase"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="72dp"
+                    style="@style/FormButton"
+                    android:gravity="center"
+                    android:text="خرید"
+                    android:textColor="@color/primary_text"/>
+
+                <widgets.MyButton
+                    android:id="@+id/btnActivate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="72dp"
+                    style="@style/FormButton"
+                    android:gravity="center"
+                    android:text="فعالسازی"
+                    android:textColor="@color/primary_text"/>
+
+            </LinearLayout>
+
+            <widgets.MyTextView
+                android:id="@+id/txtPackage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
+                android:gravity="right"
+                android:textColor="@color/primary_text"
+                android:paddingRight="?android:attr/expandableListPreferredChildPaddingLeft"
+                android:text="700 مگابایت (400 مگابایت + 300 مگابایت (2 بامداد تا 2 ظهر)) ویژه مشترکین اعتباری"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>
+

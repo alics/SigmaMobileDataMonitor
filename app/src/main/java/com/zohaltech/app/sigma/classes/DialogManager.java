@@ -3,6 +3,7 @@ package com.zohaltech.app.sigma.classes;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -11,6 +12,11 @@ import android.widget.TextView;
 
 import com.rey.material.app.TimePickerDialog;
 import com.zohaltech.app.sigma.R;
+import com.zohaltech.app.sigma.activities.PackageSettingsActivity;
+import com.zohaltech.app.sigma.dal.DataPackages;
+import com.zohaltech.app.sigma.dal.PackageHistories;
+import com.zohaltech.app.sigma.entities.DataPackage;
+import com.zohaltech.app.sigma.entities.PackageHistory;
 
 import java.text.SimpleDateFormat;
 
@@ -213,5 +219,55 @@ public final class DialogManager {
             }
         });
         timePickerDialog.show();
+    }
+
+    public static void showPackageActivationDialog(final DataPackage dataPackage){
+        DialogManager.showConfirmationDialog(App.currentActivity, "فعالسازی بسته", "آیا مایل به فعالسازی بسته " + dataPackage.getTitle() + " هستید؟",
+                                             "بله", "خیر", null, new Runnable() {
+                    @Override
+                    public void run() {
+                        final PackageHistory history = PackageHistories.getActivePackage();
+                        if (history == null) {
+                            PackageHistories.insert(new PackageHistory(dataPackage.getId(), Helper.getCurrentDateTime(), null, null, null, null, PackageHistory.StatusEnum.ACTIVE.ordinal()));
+                            Intent intent = new Intent(App.currentActivity, PackageSettingsActivity.class);
+                            intent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_SETTING_ACTIVE);
+                            intent.putExtra(PackageSettingsActivity.PACKAGE_ID_KEY, dataPackage.getId());
+                            intent.putExtra(PackageSettingsActivity.FORM_MODE_KEY, PackageSettingsActivity.FORM_MODE_NEW);
+                            App.currentActivity.startActivity(intent);
+                            App.currentActivity.finish();
+
+                        } else {
+                            DataPackage activePackage = DataPackages.selectPackageById(history.getDataPackageId());
+                            DialogManager.showChoiceDialog(App.currentActivity, "رزرو بسته", "هم اکنون یک بسته فعال " + activePackage.getTitle() + " وجود دارد، آیا بسته " + dataPackage.getTitle() + " به عنوان بسته رزرو در نظر گرفته شود؟",
+                                                           "رزرو شود", "فعال شود", null, new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            PackageHistories.deletedReservedPackages();
+                                            PackageHistories.insert(new PackageHistory(dataPackage.getId(), null, null, null, null, null, PackageHistory.StatusEnum.RESERVED.ordinal()));
+                                            Intent intent = new Intent(App.currentActivity, PackageSettingsActivity.class);
+                                            intent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_SETTING_RESERVED);
+                                            intent.putExtra(PackageSettingsActivity.PACKAGE_ID_KEY, dataPackage.getId());
+                                            intent.putExtra(PackageSettingsActivity.FORM_MODE_KEY, PackageSettingsActivity.FORM_MODE_NEW);
+                                            App.currentActivity.startActivity(intent);
+                                            App.currentActivity.finish();
+                                        }
+
+                                    }, new Runnable() {
+                                        public void run() {
+                                            PackageHistories.deletedReservedPackages();
+                                            //PackageHistories.terminateAll(PackageHistory.StatusEnum.CANCELED);
+                                            PackageHistories.finishPackageProcess(history, PackageHistory.StatusEnum.CANCELED);
+                                            PackageHistories.insert(new PackageHistory(dataPackage.getId(), Helper.getCurrentDateTime(), null, null, null, null, PackageHistory.StatusEnum.ACTIVE.ordinal()));
+                                            Intent intent = new Intent(App.currentActivity, PackageSettingsActivity.class);
+                                            intent.putExtra(PackageSettingsActivity.INIT_MODE_KEY, PackageSettingsActivity.MODE_SETTING_ACTIVE);
+                                            intent.putExtra(PackageSettingsActivity.PACKAGE_ID_KEY, dataPackage.getId());
+                                            intent.putExtra(PackageSettingsActivity.FORM_MODE_KEY, PackageSettingsActivity.FORM_MODE_NEW);
+                                            App.currentActivity.startActivity(intent);
+                                            App.currentActivity.finish();
+                                        }
+                                    });
+                        }
+                    }
+                });
     }
 }
