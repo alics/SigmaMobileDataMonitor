@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
                 android:gravity="right|center"
                 android:text="بازنشانی آمار"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/primary_text" />
+                android:textColor="@color/primary_text"/>
 
             <widgets.MyTextView
                 android:id="@+id/txtMessage"
@@ -35,53 +35,61 @@
                 android:gravity="right"
                 android:text="آیا از بازنشانی آمار گزارش به مقادیر اولیه اطمینان دارید؟"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/secondary_text" />
+                android:textColor="@color/secondary_text"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="10dp"
-                android:background="@android:drawable/divider_horizontal_bright" />
+                android:background="@android:drawable/divider_horizontal_bright"/>
 
-            <com.rey.material.widget.CheckBox
+            <widgets.MyCheckBox
                 android:id="@+id/chkMobile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
+                android:background="?attr/selectableItemBackground"
                 android:checked="true"
                 android:gravity="center|right"
-                android:textColor="@color/primary_text"
-                android:text="موبایل" />
+                android:paddingBottom="20dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="20dp"
+                android:text="موبایل"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/primary_text"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="10dp"
-                android:background="@android:drawable/divider_horizontal_bright" />
+                android:background="@android:drawable/divider_horizontal_bright"/>
 
-            <com.rey.material.widget.CheckBox
+            <widgets.MyCheckBox
                 android:id="@+id/chkWifi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:gravity="center|right"
+                android:background="?attr/selectableItemBackground"
                 android:checked="true"
-                android:textColor="@color/primary_text"
-                android:text="وای فای" />
+                android:gravity="center|right"
+                android:paddingBottom="20dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="20dp"
+                android:text="وای فای"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/primary_text"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@android:drawable/divider_horizontal_bright" />
+                android:background="@android:drawable/divider_horizontal_bright"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
             android:background="@color/white"
-            android:gravity="left"
-            android:layout_marginBottom="5dp">
+            android:gravity="left">
 
             <widgets.MyButton
                 android:id="@+id/negativeButton"
@@ -90,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:text="خیر"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/primary" />
+                android:textColor="@color/primary"/>
 
             <widgets.MyButton
                 android:id="@+id/positiveButton"
@@ -99,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:text="بله"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/primary" />
+                android:textColor="@color/primary"/>
 
         </LinearLayout>
 
