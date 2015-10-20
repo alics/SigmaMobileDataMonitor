@@ -16,7 +16,7 @@ android {
     defaultConfig {
         applicationId "com.zohaltech.app.sigma"
         minSdkVersion 10
-        targetSdkVersion 23
+        targetSdkVersion 22
         versionCode 109
         versionName "1.09"
     }

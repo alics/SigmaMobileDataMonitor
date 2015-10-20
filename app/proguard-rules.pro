@@ -16,3 +16,4 @@
 #   public *;
 #}
 -keep class com.android.vending.billing
+-dontwarn com.rey.material.**

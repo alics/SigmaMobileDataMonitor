@@ -140,7 +140,7 @@ public class DashboardActivity extends PaymentActivity {
             return;
         }
 
-        if (status.getAppVersion().equals("" + BuildConfig.VERSION_CODE)) {
+        if (status.getAppVersion().equals("" + BuildConfig.VERSION_CODE) == false) {
             String changeLog = Helper.inputStreamToString(getResources().openRawResource(R.raw.change_log));
             DialogManager.showNotificationDialog(this, "لیست تغییرات", changeLog, "خُب");
             status.setAppVersion("" + BuildConfig.VERSION_CODE);
