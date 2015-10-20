@@ -6,14 +6,14 @@ public class LicenseStatus {
     private String deviceId;
     private String installDate;
     private int    status;
-    private int    checkCount;
+    //private int    checkCount;
 
-    public LicenseStatus(String appVersion, String deviceId, String installDate, int status, int checkCount) {
+    public LicenseStatus(String appVersion, String deviceId, String installDate, int status) {
         setAppVersion(appVersion);
         setDeviceId(deviceId);
         setInstallDate(installDate);
         setStatus(status);
-        setCheckCount(checkCount);
+        //setCheckCount(checkCount);
     }
 
     public LicenseStatus() {
@@ -51,11 +51,11 @@ public class LicenseStatus {
         this.status = status;
     }
 
-    public int getCheckCount() {
-        return checkCount;
-    }
-
-    public void setCheckCount(int checkCount) {
-        this.checkCount = checkCount;
-    }
+    //public int getCheckCount() {
+    //    return checkCount;
+    //}
+    //
+    //public void setCheckCount(int checkCount) {
+    //    this.checkCount = checkCount;
+    //}
 }

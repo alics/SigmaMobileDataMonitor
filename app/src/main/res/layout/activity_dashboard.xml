@@ -71,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableTop="@drawable/ic_purchase_package"
-                android:text="بسته ها"
+                android:text="   بسته ها   "
                 android:textColor="@color/primary_text"
                 android:textAppearance="?android:attr/textAppearanceMedium"/>
 

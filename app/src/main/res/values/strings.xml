@@ -26,11 +26,11 @@
     <string name="topol">/.vps/</string>
     <string name="sdj">f77995466a906864</string>
     <string name="mongol">a052108fcc1c4fc5</string>
-    <string name="goon">7sc450he388f1c2c</string>
-    <string name="ayri_goon">2K5lq6x30gTk40d</string>
+    <!--<string name="goon">7sc450he388f1c2c</string>-->
+    <!--<string name="ayri_goon">2K5lq6x30gTk40d</string>-->
     <string name="buy_full_vesion">ارتقا به نسخه کامل</string>
     <string name="buy_description">مدت استفاده آزمایشی از برنامه به پایان رسیده است، آیا مایل به خریداری نسخه کامل هستید؟</string>
-    <string name="buy_like">خوشم اومد، میخرم</string>
+    <string name="buy_like">بله، همین الان میخرم</string>
     <string name="buy_sora">شاید بعدا!</string>
     <string name="about">درباره</string>
     <string name="version">"نسخه "</string>
@@ -39,7 +39,6 @@
     <string name="not_register_active_package">بسته فعالی ثبت نشده است.</string>
     <string name="not_register_reserve_package">بسته رزروی ثبت نشده است.</string>
     <string name="package_management">مدیریت بسته</string>
-    <string name="purchase_package">خرید بسته</string>
     <string name="custom_package">بسته سفارشی</string>
     <string name="reserved_package">بسته رزرو</string>
     <string name="active_package">بسته فعال</string>

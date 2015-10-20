@@ -96,11 +96,15 @@ public class DataAccess extends SQLiteOpenHelper {
 
             LicenseStatus status = LicenseManager.getExistingLicense();
             if (status == null) {
-                LicenseManager.initializeLicenseFile(new LicenseStatus(BuildConfig.VERSION_CODE + "",
+                //LicenseManager.initializeLicenseFile(new LicenseStatus("" + BuildConfig.VERSION_CODE,
+                //                                                       Helper.getDeviceId(),
+                //                                                       Helper.getCurrentDate(),
+                //                                                       LicenseManager.Status.TESTING_TIME.ordinal(),
+                //                                                       1));
+                LicenseManager.initializeLicenseFile(new LicenseStatus("" + BuildConfig.VERSION_CODE,
                                                                        Helper.getDeviceId(),
                                                                        Helper.getCurrentDate(),
-                                                                       LicenseManager.Status.TESTING_TIME.ordinal(),
-                                                                       1));
+                                                                       LicenseManager.Status.NOT_REGISTERED.ordinal()));
             }
         } catch (MyRuntimeException e) {
             e.printStackTrace();
@@ -110,6 +114,16 @@ public class DataAccess extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
         try {
+            LicenseStatus status = LicenseManager.getExistingLicense();
+            if (status == null) {
+                LicenseManager.initializeLicenseFile(new LicenseStatus("" + BuildConfig.VERSION_CODE,
+                                                                       Helper.getDeviceId(),
+                                                                       Helper.getCurrentDate(),
+                                                                       LicenseManager.Status.NOT_REGISTERED.ordinal()));
+            } else {
+                status.setStatus(LicenseManager.Status.NOT_REGISTERED.ordinal());
+                LicenseManager.updateLicense(status);
+            }
             if (oldVersion < 9) {
                 database.execSQL(SystemSettings.DropTable);
                 database.execSQL(Settings.DropTable);

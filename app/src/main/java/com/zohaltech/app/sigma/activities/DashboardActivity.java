@@ -9,11 +9,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.zohaltech.app.sigma.BuildConfig;
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.adapters.UsagePagerAdapter;
 import com.zohaltech.app.sigma.classes.App;
 import com.zohaltech.app.sigma.classes.DialogManager;
+import com.zohaltech.app.sigma.classes.Helper;
 import com.zohaltech.app.sigma.classes.LicenseManager;
+import com.zohaltech.app.sigma.classes.LicenseStatus;
 import com.zohaltech.app.sigma.classes.WebApiClient;
 import com.zohaltech.app.sigma.dal.DataAccess;
 
@@ -23,7 +26,7 @@ import widgets.MyViewPagerIndicator;
 public class DashboardActivity extends PaymentActivity {
 
     //private static final String DUAL_SIM_SHOWN        = "DUAL_SIM_SHOWN";
-    private static final String EXPIRED_MESSAGE_SHOWN = "EXPIRED_MESSAGE_SHOWN";
+    //private static final String EXPIRED_MESSAGE_SHOWN = "EXPIRED_MESSAGE_SHOWN";
     ViewPager            pagerUsages;
     MyViewPagerIndicator indicator;
     Button               btnPackageManagement;
@@ -34,8 +37,7 @@ public class DashboardActivity extends PaymentActivity {
 
     UsagePagerAdapter usagePagerAdapter;
 
-    long   startTime;
-    String paymentDialogMessage;
+    long startTime;
 
     @Override
     void onCreated() {
@@ -90,26 +92,24 @@ public class DashboardActivity extends PaymentActivity {
         btnPackageManagement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (LicenseManager.getLicenseStatus() != LicenseManager.Status.EXPIRED) {
+                //if (LicenseManager.getLicenseStatus() == LicenseManager.Status.REGISTERED) {
                     Intent myIntent = new Intent(App.currentActivity, ManagementActivity.class);
                     startActivity(myIntent);
-                } else {
-                    paymentDialogMessage = "برای استفاده از این قسمت میبایست به نسخه کامل ارتقا دهید، آیا مایل به خریداری نسخه کامل هستید؟";
-                    showPaymentDialog();
-                }
+                //} else {
+                //    showPaymentDialog("برای استفاده از این قسمت میبایست به نسخه کامل ارتقا دهید، آیا مایل به خریداری نسخه کامل هستید؟");
+                //}
             }
         });
 
         btnPurchasePackage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (LicenseManager.getLicenseStatus() != LicenseManager.Status.EXPIRED) {
+                //if (LicenseManager.getLicenseStatus() == LicenseManager.Status.REGISTERED) {
                     Intent intent = new Intent(App.currentActivity, PackagesActivity.class);
                     startActivity(intent);
-                } else {
-                    paymentDialogMessage = "برای استفاده از این قسمت میبایست به نسخه کامل ارتقا دهید، آیا مایل به خریداری نسخه کامل هستید؟";
-                    showPaymentDialog();
-                }
+                //} else {
+                //    showPaymentDialog("برای استفاده از این قسمت میبایست به نسخه کامل ارتقا دهید، آیا مایل به خریداری نسخه کامل هستید؟");
+                //}
             }
         });
 
@@ -134,6 +134,18 @@ public class DashboardActivity extends PaymentActivity {
         pagerUsages.setCurrentItem(1);
 
         WebApiClient.sendUserData(WebApiClient.PostAction.INSTALL, null);
+
+        LicenseStatus status = LicenseManager.getExistingLicense();
+        if (status == null) {
+            return;
+        }
+
+        if (status.getAppVersion().equals("" + BuildConfig.VERSION_CODE)) {
+            String changeLog = Helper.inputStreamToString(getResources().openRawResource(R.raw.change_log));
+            DialogManager.showNotificationDialog(this, "لیست تغییرات", changeLog, "خُب");
+            status.setAppVersion("" + BuildConfig.VERSION_CODE);
+            LicenseManager.updateLicense(status);
+        }
     }
 
     @Override
@@ -146,22 +158,24 @@ public class DashboardActivity extends PaymentActivity {
 
     @Override
     void updateUiToPremiumVersion() {
-        destroyPaymentDialog();
+        //destroyPaymentDialog();
+        //do nothing
     }
 
     @Override
     void updateUiToTrialVersion() {
-        showPaymentDialog();
+        //showPaymentDialog();
+        //do nothing
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (App.uiPreferences.getBoolean(EXPIRED_MESSAGE_SHOWN, false) == false && LicenseManager.getLicenseStatus() == LicenseManager.Status.EXPIRED) {
-            paymentDialogMessage = getString(R.string.buy_description);
-            showPaymentDialog();
-            App.uiPreferences.edit().putBoolean(EXPIRED_MESSAGE_SHOWN, true).commit();
-        }
+        //if (App.uiPreferences.getBoolean(EXPIRED_MESSAGE_SHOWN, false) == false && LicenseManager.getLicenseStatus() == LicenseManager.Status.NOT_REGISTERED) {
+        //    paymentDialogMessage = getString(R.string.buy_description);
+        //    showPaymentDialog();
+        //    App.uiPreferences.edit().putBoolean(EXPIRED_MESSAGE_SHOWN, true).commit();
+        //}
 
         //if (App.uiPreferences.getBoolean(DUAL_SIM_SHOWN, false) == false && Helper.isDualSim()) {
         //    DialogManager.showNotificationDialog(this, "دستگاه دو سیم کارته", "دستگاه شما دو سیم کارته است و برای استفاده از سیگما، سیم کارتی که اینترنت فعال دارد، میبایست روی \"سیم یک\" قرار داده شود.", "خُب");
@@ -169,37 +183,37 @@ public class DashboardActivity extends PaymentActivity {
         //App.preferences.edit().putBoolean(DUAL_SIM_SHOWN, true);
     }
 
-    private void showPaymentDialog() {
-        destroyPaymentDialog();
-        paymentDialog = DialogManager.getPopupDialog(App.currentActivity,
-                                                     getString(R.string.buy_full_vesion),
-                                                     paymentDialogMessage,
-                                                     getString(R.string.buy_like),
-                                                     getString(R.string.buy_sora),
-                                                     null,
-                                                     new Runnable() {
-                                                         @Override
-                                                         public void run() {
-                                                             pay();
-                                                         }
-                                                     },
-                                                     new Runnable() {
-                                                         @Override
-                                                         public void run() {
-                                                             paymentDialog.dismiss();
-                                                         }
-                                                     });
-        paymentDialog.show();
-    }
-
-    private void destroyPaymentDialog() {
-        if (paymentDialog != null) {
-            if (paymentDialog.isShowing()) {
-                paymentDialog.dismiss();
-            }
-            paymentDialog = null;
-        }
-    }
+    //private void showPaymentDialog(String paymentMessage) {
+    //    destroyPaymentDialog();
+    //    paymentDialog = DialogManager.getPopupDialog(App.currentActivity,
+    //                                                 getString(R.string.buy_full_vesion),
+    //                                                 paymentMessage,
+    //                                                 getString(R.string.buy_like),
+    //                                                 getString(R.string.buy_sora),
+    //                                                 null,
+    //                                                 new Runnable() {
+    //                                                     @Override
+    //                                                     public void run() {
+    //                                                         pay();
+    //                                                     }
+    //                                                 },
+    //                                                 new Runnable() {
+    //                                                     @Override
+    //                                                     public void run() {
+    //                                                         paymentDialog.dismiss();
+    //                                                     }
+    //                                                 });
+    //    paymentDialog.show();
+    //}
+    //
+    //private void destroyPaymentDialog() {
+    //    if (paymentDialog != null) {
+    //        if (paymentDialog.isShowing()) {
+    //            paymentDialog.dismiss();
+    //        }
+    //        paymentDialog = null;
+    //    }
+    //}
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

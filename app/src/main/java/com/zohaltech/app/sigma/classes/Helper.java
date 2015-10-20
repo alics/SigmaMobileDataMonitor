@@ -11,6 +11,10 @@ import android.telephony.TelephonyManager;
 
 import com.zohaltech.app.sigma.entities.DataPackage;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -132,6 +136,21 @@ public final class Helper {
     public static void vibrate() {
         Vibrator vibrator = (Vibrator) App.context.getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(500);
+    }
+
+    public static String inputStreamToString(InputStream inputStream) {
+        StringBuilder out = new StringBuilder();
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+            for (String line = br.readLine(); line != null; line = br.readLine()) {
+                out.append(line);
+                out.append("\n");
+            }
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return out.toString();
     }
 
     public enum Operator {

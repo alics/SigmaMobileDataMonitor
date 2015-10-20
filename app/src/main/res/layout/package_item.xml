@@ -25,21 +25,23 @@
 
                 <widgets.MyButton
                     android:id="@+id/btnPurchase"
+                    style="@style/FormButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:minWidth="72dp"
-                    style="@style/FormButton"
+                    android:drawablePadding="5dp"
                     android:gravity="center"
-                    android:text="خرید"
+                    android:minWidth="72dp"
+                    android:text="  خرید   "
                     android:textColor="@color/primary_text"/>
 
                 <widgets.MyButton
                     android:id="@+id/btnActivate"
+                    style="@style/FormButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:minWidth="72dp"
-                    style="@style/FormButton"
+                    android:drawablePadding="5dp"
                     android:gravity="center"
+                    android:minWidth="72dp"
                     android:text="فعالسازی"
                     android:textColor="@color/primary_text"/>
 
@@ -52,10 +54,10 @@
                 android:layout_marginBottom="15dp"
                 android:layout_marginTop="15dp"
                 android:gravity="right"
-                android:textColor="@color/primary_text"
                 android:paddingRight="?android:attr/expandableListPreferredChildPaddingLeft"
                 android:text="700 مگابایت (400 مگابایت + 300 مگابایت (2 بامداد تا 2 ظهر)) ویژه مشترکین اعتباری"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/primary_text"/>
 
         </LinearLayout>
 

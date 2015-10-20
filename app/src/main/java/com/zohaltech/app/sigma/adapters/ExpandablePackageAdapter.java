@@ -6,11 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.classes.DialogManager;
 import com.zohaltech.app.sigma.classes.Helper;
+import com.zohaltech.app.sigma.classes.LicenseManager;
 import com.zohaltech.app.sigma.entities.DataPackage;
 
 import java.util.HashMap;
@@ -55,26 +57,35 @@ public class ExpandablePackageAdapter extends AnimatedExpandableListView.Animate
         TextView txtPackage = (TextView) convertView.findViewById(R.id.txtPackage);
         txtPackage.setText(dataPackage.getPackageDescription());
 
-        btnPurchase.setOnClickListener(new View.OnClickListener() {
-                                           @Override
-                                           public void onClick(View view) {
-                                               DialogManager.showConfirmationDialog(activity, "خرید بسته", "آیا مایل به خرید بسته " + dataPackage.getDescription() + " هستید؟", "بله", "خیر", null, new Runnable() {
-                                                   @Override
-                                                   public void run() {
-                                                       Helper.runUssd(activity, dataPackage);
-                                                   }
-                                               });
-                                           }
-                                       }
-                                      );
+        if (LicenseManager.getLicenseStatus() == LicenseManager.Status.REGISTERED) {
 
-        btnActivate.setOnClickListener(new View.OnClickListener() {
-                                           @Override
-                                           public void onClick(View view) {
-                                               DialogManager.showPackageActivationDialog(dataPackage);
+            btnPurchase.setOnClickListener(new View.OnClickListener() {
+                                               @Override
+                                               public void onClick(View view) {
+                                                   DialogManager.showConfirmationDialog(activity, "خرید بسته", "آیا مایل به خرید بسته " + dataPackage.getDescription() + " هستید؟", "بله", "خیر", null, new Runnable() {
+                                                       @Override
+                                                       public void run() {
+                                                           Helper.runUssd(activity, dataPackage);
+                                                       }
+                                                   });
+                                               }
                                            }
-                                       }
-                                      );
+                                          );
+
+            btnActivate.setOnClickListener(new View.OnClickListener() {
+                                               @Override
+                                               public void onClick(View view) {
+                                                   DialogManager.showPackageActivationDialog(dataPackage);
+                                               }
+                                           }
+                                          );
+        } else {
+            btnPurchase.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_premium_small, 0, 0, 0);
+            btnActivate.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_premium_small, 0, 0, 0);
+            btnPurchase.setText("   خرید   ");
+            //btnPurchase.setLayoutParams(new LinearLayout.LayoutParams(108, ViewGroup.LayoutParams.WRAP_CONTENT));
+            //btnActivate.setLayoutParams(new LinearLayout.LayoutParams(108, ViewGroup.LayoutParams.WRAP_CONTENT));
+        }
 
         return convertView;
     }
