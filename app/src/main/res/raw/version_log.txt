@@ -20,7 +20,7 @@ Version 1.09 :
 - wifi usage and report added
 - direct activate and buy for data packages
 
-//todo : add sikimioooom
+//todo : add sikimiooom
 //todo : revise data packages and edit they names
 //todo : change introduction images
 //todo : take screenshots for markets
