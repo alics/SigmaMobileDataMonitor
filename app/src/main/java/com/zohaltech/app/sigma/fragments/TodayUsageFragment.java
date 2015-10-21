@@ -54,8 +54,10 @@ public class TodayUsageFragment extends Fragment {
             @Override
             public void onReceive(Context context, Intent intent) {
                 long usageMobile = intent.getLongExtra(DataUsageMeter.TODAY_USAGE_BYTES, 0);
+                //long usageMobile = 15728640;
                 updateUIMobile(usageMobile);
                 long usageWifi = intent.getLongExtra(DataUsageMeter.TODAY_USAGE_BYTES_WIFI, 0);
+                //long usageWifi = 38482739;
                 updateUIWifi(usageWifi);
             }
         };
@@ -79,9 +81,9 @@ public class TodayUsageFragment extends Fragment {
         //updateUIWifi(App.preferences.getLong(DataUsageMeter.TODAY_USAGE_BYTES_WIFI, 0));
         SharedPreferences preferences;
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-            preferences = PreferenceManager.getDefaultSharedPreferences(App.context);
+            preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         } else {
-            preferences = App.context.getSharedPreferences(App.context.getPackageName() + "_preferences", Context.MODE_MULTI_PROCESS);
+            preferences = getActivity().getSharedPreferences(getActivity().getPackageName() + "_preferences", Context.MODE_MULTI_PROCESS);
         }
         updateUIMobile(preferences.getLong(DataUsageMeter.TODAY_USAGE_BYTES, 0));
         updateUIWifi(preferences.getLong(DataUsageMeter.TODAY_USAGE_BYTES_WIFI, 0));
