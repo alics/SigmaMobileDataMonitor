@@ -21,14 +21,14 @@ import java.util.concurrent.TimeUnit;
 public class DataUsageMeter {
     public static final  String TODAY_USAGE_ACTION         = "TODAY_USAGE_ACTION";
     public static final  String APPLICATION_ALARM_ACTION   = "APPLICATION_ALARM_ACTION";
-    public static final  String TODAY_USAGE_BYTES          = "TODAY_USAGE_BYTES";
-    public static final  String TODAY_USAGE_BYTES_WIFI     = "TODAY_USAGE_BYTES_WIFI";
     private static final String TODAY_USAGE_DATE           = "TODAY_USAGE_DATE";
     // Mobile
+    public static final  String TODAY_USAGE_BYTES          = "TODAY_USAGE_BYTES";
     private static final String LAST_RECEIVED_BYTES        = "LAST_RECEIVED_BYTES";
     private static final String LAST_SENT_BYTES            = "LAST_SENT_BYTES";
     private static final String ONE_MINUTE_USED_BYTES      = "ONE_MINUTE_USED_BYTES";
-    // Wifi
+    // Wifi And Tether
+    public static final  String TODAY_USAGE_BYTES_WIFI     = "TODAY_USAGE_BYTES_WIFI";
     private static final String LAST_RECEIVED_BYTES_WIFI   = "LAST_RECEIVED_BYTES_WIFI";
     private static final String LAST_SENT_BYTES_WIFI       = "LAST_SENT_BYTES_WIFI";
     private static final String ONE_MINUTE_USED_BYTES_WIFI = "ONE_MINUTE_USED_BYTES_WIFI";
@@ -65,15 +65,11 @@ public class DataUsageMeter {
                 if (firstTimeMobile) {
                     firstTimeMobile = false;
 
-                    //App.preferences.edit().putLong(LAST_RECEIVED_BYTES, currentUsageBytesMobile).apply();
-                    //App.preferences.edit().putLong(LAST_SENT_BYTES, currentSentBytesMobile).apply();
                     preferences.edit().putLong(LAST_RECEIVED_BYTES, currentUsageBytesMobile).apply();
                     preferences.edit().putLong(LAST_SENT_BYTES, currentSentBytesMobile).apply();
 
                 }
 
-                //receivedBytesMobile = currentUsageBytesMobile - App.preferences.getLong(LAST_RECEIVED_BYTES, 0);
-                //sentBytesMobile = currentSentBytesMobile - App.preferences.getLong(LAST_SENT_BYTES, 0);
                 receivedBytesMobile = currentUsageBytesMobile - preferences.getLong(LAST_RECEIVED_BYTES, 0);
                 sentBytesMobile = currentSentBytesMobile - preferences.getLong(LAST_SENT_BYTES, 0);
 
@@ -83,14 +79,10 @@ public class DataUsageMeter {
                     firstTimeMobile = true;
                 }
 
-                //App.preferences.edit().putLong(LAST_RECEIVED_BYTES, currentUsageBytesMobile).apply();
-                //App.preferences.edit().putLong(LAST_SENT_BYTES, currentSentBytesMobile).apply();
                 preferences.edit().putLong(LAST_RECEIVED_BYTES, currentUsageBytesMobile).apply();
                 preferences.edit().putLong(LAST_SENT_BYTES, currentSentBytesMobile).apply();
             }
 
-            //final long oneMinuteUsedBytesMobile = App.preferences.getLong(ONE_MINUTE_USED_BYTES, 0) + receivedBytesMobile + sentBytesMobile;
-            //App.preferences.edit().putLong(ONE_MINUTE_USED_BYTES, oneMinuteUsedBytesMobile).apply();
             final long oneMinuteUsedBytesMobile = preferences.getLong(ONE_MINUTE_USED_BYTES, 0) + receivedBytesMobile + sentBytesMobile;
             preferences.edit().putLong(ONE_MINUTE_USED_BYTES, oneMinuteUsedBytesMobile).apply();
 
@@ -107,16 +99,12 @@ public class DataUsageMeter {
                     firstTimeTether = true;
                 } else {
                     if (!firstTimeWifi) {
-                        //currentUsageBytesTether = WifiStats.getTotalBytes(WifiStats.RxBytes) - App.preferences.getLong(LAST_RECEIVED_BYTES_WIFI, 0);
-                        //currentSentBytesTether = WifiStats.getTotalBytes(WifiStats.TxBytes) - App.preferences.getLong(LAST_SENT_BYTES_WIFI, 0);
                         currentUsageBytesTether = WifiStats.getTotalBytes(WifiStats.RxBytes) - preferences.getLong(LAST_RECEIVED_BYTES_WIFI, 0);
                         currentSentBytesTether = WifiStats.getTotalBytes(WifiStats.TxBytes) - preferences.getLong(LAST_SENT_BYTES_WIFI, 0);
                     }
 
                     firstTimeTether = false;
 
-                    //long receivedBytesTether = currentUsageBytesTether - App.preferences.getLong(LAST_RECEIVED_BYTES_TETHER, 0);
-                    //long sentBytesTether = currentSentBytesTether - App.preferences.getLong(LAST_SENT_BYTES_TETHER, 0);
                     long receivedBytesTether = currentUsageBytesTether - preferences.getLong(LAST_RECEIVED_BYTES_TETHER, 0);
                     long sentBytesTether = currentSentBytesTether - preferences.getLong(LAST_SENT_BYTES_TETHER, 0);
 
@@ -124,8 +112,6 @@ public class DataUsageMeter {
                         firstTimeTether = true;
                     }
 
-                    //App.preferences.edit().putLong(LAST_RECEIVED_BYTES_TETHER, currentUsageBytesTether).apply();
-                    //App.preferences.edit().putLong(LAST_SENT_BYTES_TETHER, currentSentBytesTether).apply();
                     preferences.edit().putLong(LAST_RECEIVED_BYTES_TETHER, currentUsageBytesTether).apply();
                     preferences.edit().putLong(LAST_SENT_BYTES_TETHER, currentSentBytesTether).apply();
                 }
@@ -137,8 +123,6 @@ public class DataUsageMeter {
                     firstTimeWifi = true;
                 } else {
                     if (!firstTimeTether) {
-                        //currentUsageBytesWifi -= App.preferences.getLong(LAST_RECEIVED_BYTES_TETHER, 0);
-                        //currentSentBytesWifi -= App.preferences.getLong(LAST_SENT_BYTES_TETHER, 0);
                         currentUsageBytesWifi -= preferences.getLong(LAST_RECEIVED_BYTES_TETHER, 0);
                         currentSentBytesWifi -= preferences.getLong(LAST_SENT_BYTES_TETHER, 0);
                     }
@@ -146,14 +130,10 @@ public class DataUsageMeter {
                     if (firstTimeWifi) {
                         firstTimeWifi = false;
 
-                        //App.preferences.edit().putLong(LAST_RECEIVED_BYTES_WIFI, currentUsageBytesWifi).apply();
-                        //App.preferences.edit().putLong(LAST_SENT_BYTES_WIFI, currentSentBytesWifi).apply();
                         preferences.edit().putLong(LAST_RECEIVED_BYTES_WIFI, currentUsageBytesWifi).apply();
                         preferences.edit().putLong(LAST_SENT_BYTES_WIFI, currentSentBytesWifi).apply();
                     }
 
-                    //receivedBytesWifi = currentUsageBytesWifi - App.preferences.getLong(LAST_RECEIVED_BYTES_WIFI, 0);
-                    //sentBytesWifi = currentSentBytesWifi - App.preferences.getLong(LAST_SENT_BYTES_WIFI, 0);
                     receivedBytesWifi = currentUsageBytesWifi - preferences.getLong(LAST_RECEIVED_BYTES_WIFI, 0);
                     sentBytesWifi = currentSentBytesWifi - preferences.getLong(LAST_SENT_BYTES_WIFI, 0);
 
@@ -163,15 +143,11 @@ public class DataUsageMeter {
                         firstTimeWifi = true;
                     }
 
-                    //App.preferences.edit().putLong(LAST_RECEIVED_BYTES_WIFI, currentUsageBytesWifi).apply();
-                    //App.preferences.edit().putLong(LAST_SENT_BYTES_WIFI, currentSentBytesWifi).apply();
                     preferences.edit().putLong(LAST_RECEIVED_BYTES_WIFI, currentUsageBytesWifi).apply();
                     preferences.edit().putLong(LAST_SENT_BYTES_WIFI, currentSentBytesWifi).apply();
                 }
             }
 
-            //final long oneMinuteUsedBytesWifi = App.preferences.getLong(ONE_MINUTE_USED_BYTES_WIFI, 0) + receivedBytesWifi + sentBytesWifi;
-            //App.preferences.edit().putLong(ONE_MINUTE_USED_BYTES_WIFI, oneMinuteUsedBytesWifi).apply();
             final long oneMinuteUsedBytesWifi = preferences.getLong(ONE_MINUTE_USED_BYTES_WIFI, 0) + receivedBytesWifi + sentBytesWifi;
             preferences.edit().putLong(ONE_MINUTE_USED_BYTES_WIFI, oneMinuteUsedBytesWifi).apply();
 
@@ -179,8 +155,6 @@ public class DataUsageMeter {
             if (usageLogInterval == USAGE_LOG_INTERVAL) {
                 new Thread(new Runnable() {
                     public void run() {
-                        //App.preferences.edit().putLong(ONE_MINUTE_USED_BYTES, 0).apply();
-                        //App.preferences.edit().putLong(ONE_MINUTE_USED_BYTES_WIFI, 0).apply();
                         preferences.edit().putLong(ONE_MINUTE_USED_BYTES, 0).apply();
                         preferences.edit().putLong(ONE_MINUTE_USED_BYTES_WIFI, 0).apply();
                         try {
@@ -196,14 +170,6 @@ public class DataUsageMeter {
             }
 
             String currentDate = Helper.getCurrentDate();
-            //if (currentDate.equals(App.preferences.getString(TODAY_USAGE_DATE, currentDate))) {
-            //    App.preferences.edit().putLong(TODAY_USAGE_BYTES, App.preferences.getLong(TODAY_USAGE_BYTES, 0) + receivedBytesMobile + sentBytesMobile).apply();
-            //    App.preferences.edit().putLong(TODAY_USAGE_BYTES_WIFI, App.preferences.getLong(TODAY_USAGE_BYTES_WIFI, 0) + receivedBytesWifi + sentBytesWifi).apply();
-            //} else {
-            //    App.preferences.edit().putLong(TODAY_USAGE_BYTES, receivedBytesMobile + sentBytesMobile).apply();
-            //    App.preferences.edit().putLong(TODAY_USAGE_BYTES_WIFI, receivedBytesWifi + sentBytesWifi).apply();
-            //}
-            //App.preferences.edit().putString(TODAY_USAGE_DATE, currentDate).apply();
             if (currentDate.equals(preferences.getString(TODAY_USAGE_DATE, currentDate))) {
                 preferences.edit().putLong(TODAY_USAGE_BYTES, preferences.getLong(TODAY_USAGE_BYTES, 0) + receivedBytesMobile + sentBytesMobile).apply();
                 preferences.edit().putLong(TODAY_USAGE_BYTES_WIFI, preferences.getLong(TODAY_USAGE_BYTES_WIFI, 0) + receivedBytesWifi + sentBytesWifi).apply();
@@ -234,8 +200,6 @@ public class DataUsageMeter {
                 iconId = App.context.getResources().getIdentifier("wmb" + sumReceivedSent, "drawable", service.getPackageName());
             }
 
-            //String todayUsage = "Mobile: " + TrafficUnitsUtil.getUsedTrafficWithPoint(App.preferences.getLong(TODAY_USAGE_BYTES, 0)) +
-            //                    (showWifi ? "   WiFi: " + TrafficUnitsUtil.getUsedTrafficWithPoint(App.preferences.getLong(TODAY_USAGE_BYTES_WIFI, 0)) : "");
             String todayUsage = "Mobile: " + TrafficUnitsUtil.getUsedTrafficWithPoint(preferences.getLong(TODAY_USAGE_BYTES, 0)) +
                                 (showWifi ? "   WiFi: " + TrafficUnitsUtil.getUsedTrafficWithPoint(preferences.getLong(TODAY_USAGE_BYTES_WIFI, 0)) : "");
 
@@ -267,8 +231,6 @@ public class DataUsageMeter {
             }
 
             Intent intent = new Intent(TODAY_USAGE_ACTION);
-            //intent.putExtra(TODAY_USAGE_BYTES, App.preferences.getLong(TODAY_USAGE_BYTES, 0));
-            //intent.putExtra(TODAY_USAGE_BYTES_WIFI, App.preferences.getLong(TODAY_USAGE_BYTES_WIFI, 0));
             intent.putExtra(TODAY_USAGE_BYTES, preferences.getLong(TODAY_USAGE_BYTES, 0));
             intent.putExtra(TODAY_USAGE_BYTES_WIFI, preferences.getLong(TODAY_USAGE_BYTES_WIFI, 0));
             service.sendBroadcast(intent);

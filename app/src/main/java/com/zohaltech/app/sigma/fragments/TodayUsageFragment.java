@@ -28,25 +28,6 @@ public class TodayUsageFragment extends Fragment {
     CircleProgress progressTodayUsageWifi;
     private BroadcastReceiver broadcastReceiver;
 
-    //    private long todayUsageMobile;
-    //    private long todayUsageWifi;
-    //
-    //    public long getTodayUsageMobile() {
-    //        return todayUsageMobile;
-    //    }
-    //
-    //    public void setTodayUsageMobile(long todayUsageMobile) {
-    //        this.todayUsageMobile = todayUsageMobile;
-    //    }
-    //
-    //    public long getTodayUsageWifi() {
-    //        return todayUsageWifi;
-    //    }
-    //
-    //    public void setTodayUsageWifi(long todayUsageWifi) {
-    //        this.todayUsageWifi = todayUsageWifi;
-    //    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,8 +58,6 @@ public class TodayUsageFragment extends Fragment {
         progressTodayUsageWifi = (CircleProgress) view.findViewById(R.id.progressTodayUsageWifi);
         progressTodayUsageMobile.setLayoutParams(new LinearLayout.LayoutParams(size, size));
         progressTodayUsageWifi.setLayoutParams(new LinearLayout.LayoutParams(size, size));
-        //updateUIMobile(App.preferences.getLong(DataUsageMeter.TODAY_USAGE_BYTES, 0));
-        //updateUIWifi(App.preferences.getLong(DataUsageMeter.TODAY_USAGE_BYTES_WIFI, 0));
         SharedPreferences preferences;
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
             preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());

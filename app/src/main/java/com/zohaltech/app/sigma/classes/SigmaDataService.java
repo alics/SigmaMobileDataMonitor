@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.os.IBinder;
 
 public class SigmaDataService extends Service {
+
     DataUsageMeter dataUsageMeter;
+
+    //todo : uncomment below lines for app usages
     //AppDataUsageMeter appDataUsageMeter;
 
     @Override
@@ -15,6 +18,7 @@ public class SigmaDataService extends Service {
         dataUsageMeter = new DataUsageMeter(this);
         dataUsageMeter.execute();
 
+        //todo : uncomment below lines for app usages
         //appDataUsageMeter=new AppDataUsageMeter();
         //appDataUsageMeter.execute();
     }
@@ -23,6 +27,8 @@ public class SigmaDataService extends Service {
     public void onDestroy() {
         super.onDestroy();
         dataUsageMeter.shutdown();
+
+        //todo : uncomment below lines for app usages
         //appDataUsageMeter.shutdown();
     }
 

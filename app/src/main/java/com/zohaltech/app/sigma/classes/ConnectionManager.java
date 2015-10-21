@@ -22,7 +22,6 @@ public class ConnectionManager
     public static int getConnectivityStatus()
     {
         ConnectivityManager cm = (ConnectivityManager) App.context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        //WifiManager wifiManager = ((WifiManager)App.context.getSystemService(Context.WIFI_SERVICE));
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         if (activeNetwork != null)
         {

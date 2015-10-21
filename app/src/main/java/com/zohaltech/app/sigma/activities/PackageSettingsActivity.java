@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +21,7 @@ import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.classes.App;
 import com.zohaltech.app.sigma.classes.DialogManager;
 import com.zohaltech.app.sigma.classes.Helper;
+import com.zohaltech.app.sigma.classes.LicenseManager;
 import com.zohaltech.app.sigma.classes.TrafficUnitsUtil;
 import com.zohaltech.app.sigma.classes.Validator;
 import com.zohaltech.app.sigma.dal.DataPackages;
@@ -37,7 +39,7 @@ import java.util.ArrayList;
 
 import widgets.MyToast;
 
-public class PackageSettingsActivity extends EnhancedActivity {
+public class PackageSettingsActivity extends PaymentActivity {
 
     public static final String INIT_MODE_KEY         = "INIT_MODE";
     public static final String MODE_INSERT_CUSTOM    = "INSERT_CUSTOM";
@@ -48,6 +50,8 @@ public class PackageSettingsActivity extends EnhancedActivity {
     public static final String FORM_MODE_NEW         = "FORM_MODE_NEW";
     public static final String FORM_MODE_EDIT        = "FORM_MODE_EDIT";
 
+    LinearLayout     layoutPremium;
+    Button           btnPurchase;
     EditText         edtPackageTitle;
     TextView         txtPackageTitle;
     AppCompatSpinner spinnerOperators;
@@ -76,9 +80,14 @@ public class PackageSettingsActivity extends EnhancedActivity {
 
     @Override
     void onCreated() {
+
+        super.onCreated();
+
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         setContentView(R.layout.activity_package_settings);
 
+        layoutPremium = (LinearLayout) findViewById(R.id.layoutPremium);
+        btnPurchase = (Button) findViewById(R.id.btnPurchase);
         edtPackageTitle = (EditText) findViewById(R.id.edtPackageTitle);
         txtPackageTitle = (TextView) findViewById(R.id.txtPackageTitle);
         spinnerOperators = (AppCompatSpinner) findViewById(R.id.spinnerOperators);
@@ -99,6 +108,13 @@ public class PackageSettingsActivity extends EnhancedActivity {
         edtLeftDaysAlarm = (EditText) findViewById(R.id.edtLeftDaysAlarm);
         txtLeftDaysAlarm = (TextView) findViewById(R.id.txtLeftDaysAlarm);
         switchLeftDaysAlarm = (SwitchCompat) findViewById(R.id.switchLeftDaysAlarm);
+
+        btnPurchase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pay();
+            }
+        });
 
         implementListeners();
         initControls();
@@ -134,8 +150,8 @@ public class PackageSettingsActivity extends EnhancedActivity {
                 txtPackageTitle.setText(dataPackage.getTitle());
                 txtOperator.setText(MobileOperators.getOperatorById(dataPackage.getOperatorId()).getName());
                 txtPackageValidPeriod.setText(String.valueOf(dataPackage.getPeriod()));
-                txtPrimaryTraffic.setText(TrafficUnitsUtil.ByteToMb(dataPackage.getPrimaryTraffic()) + "");
-                txtSecondaryTraffic.setText(TrafficUnitsUtil.ByteToMb(dataPackage.getSecondaryTraffic()) + "");
+                txtPrimaryTraffic.setText("" + TrafficUnitsUtil.ByteToMb(dataPackage.getPrimaryTraffic()));
+                txtSecondaryTraffic.setText("" + TrafficUnitsUtil.ByteToMb(dataPackage.getSecondaryTraffic()));
                 txtSecondaryStartTime.setText(dataPackage.getSecondaryTrafficStartTime());
                 txtSecondaryEndTime.setText(dataPackage.getSecondaryTrafficEndTime());
 
@@ -158,6 +174,14 @@ public class PackageSettingsActivity extends EnhancedActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (LicenseManager.getLicenseStatus() == LicenseManager.Status.REGISTERED) {
+            updateUiToPremiumVersion();
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_package_settings, menu);
         return super.onCreateOptionsMenu(menu);
@@ -169,7 +193,11 @@ public class PackageSettingsActivity extends EnhancedActivity {
         if (id == android.R.id.home) {
             onBackPressed();
         } else if (id == R.id.action_done) {
-            confirm();
+            if (LicenseManager.getLicenseStatus() == LicenseManager.Status.REGISTERED) {
+                confirm();
+            } else {
+                showPaymentDialog();
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -328,18 +356,18 @@ public class PackageSettingsActivity extends EnhancedActivity {
         int alarmType = setting.getAlarmType();
         if (alarmType == Setting.AlarmType.BOTH.ordinal()) {
             switchLeftDaysAlarm.setChecked(true);
-            edtLeftDaysAlarm.setText(setting.getLeftDaysAlarm() + "");
+            edtLeftDaysAlarm.setText("" + setting.getLeftDaysAlarm());
             switchTrafficAlarm.setChecked(true);
-            edtTrafficAlarm.setText(setting.getPercentTrafficAlarm() + "");
+            edtTrafficAlarm.setText("" + setting.getPercentTrafficAlarm());
         } else if (alarmType == Setting.AlarmType.LEFT_DAY.ordinal()) {
             switchLeftDaysAlarm.setChecked(true);
-            edtLeftDaysAlarm.setText(setting.getLeftDaysAlarm() + "");
+            edtLeftDaysAlarm.setText("" + setting.getLeftDaysAlarm());
             edtTrafficAlarm.setVisibility(View.INVISIBLE);
             txtPercentTrafficAlarm.setVisibility(View.INVISIBLE);
             switchTrafficAlarm.setChecked(false);
         } else if (alarmType == Setting.AlarmType.REMINDED_BYTES.ordinal()) {
             switchTrafficAlarm.setChecked(true);
-            edtTrafficAlarm.setText(setting.getPercentTrafficAlarm() + "");
+            edtTrafficAlarm.setText("" + setting.getPercentTrafficAlarm());
             edtLeftDaysAlarm.setVisibility(View.INVISIBLE);
             txtLeftDaysAlarm.setVisibility(View.INVISIBLE);
             switchLeftDaysAlarm.setChecked(false);
@@ -359,18 +387,18 @@ public class PackageSettingsActivity extends EnhancedActivity {
         int alarmType = setting.getAlarmTypeRes();
         if (alarmType == Setting.AlarmType.BOTH.ordinal()) {
             switchLeftDaysAlarm.setChecked(true);
-            edtLeftDaysAlarm.setText(setting.getLeftDaysAlarmRes() + "");
+            edtLeftDaysAlarm.setText("" + setting.getLeftDaysAlarmRes());
             switchTrafficAlarm.setChecked(true);
-            edtTrafficAlarm.setText(setting.getPercentTrafficAlarmRes() + "");
+            edtTrafficAlarm.setText("" + setting.getPercentTrafficAlarmRes());
         } else if (alarmType == Setting.AlarmType.LEFT_DAY.ordinal()) {
             switchLeftDaysAlarm.setChecked(true);
-            edtLeftDaysAlarm.setText(setting.getLeftDaysAlarmRes() + "");
+            edtLeftDaysAlarm.setText("" + setting.getLeftDaysAlarmRes());
             edtTrafficAlarm.setVisibility(View.INVISIBLE);
             txtPercentTrafficAlarm.setVisibility(View.INVISIBLE);
             switchTrafficAlarm.setChecked(false);
         } else if (alarmType == Setting.AlarmType.REMINDED_BYTES.ordinal()) {
             switchTrafficAlarm.setChecked(true);
-            edtTrafficAlarm.setText(setting.getPercentTrafficAlarmRes() + "");
+            edtTrafficAlarm.setText("" + setting.getPercentTrafficAlarmRes());
             edtLeftDaysAlarm.setVisibility(View.INVISIBLE);
             txtLeftDaysAlarm.setVisibility(View.INVISIBLE);
             switchLeftDaysAlarm.setChecked(false);
@@ -401,8 +429,6 @@ public class PackageSettingsActivity extends EnhancedActivity {
 
         if (!Validator.validateEditText(edtPackageTitle, getString(R.string.package_title)))
             return;
-        //if (!Validator.validateEditText(edtPrimaryTraffic, getString(R.string.primary_traffic)))
-        //    return;
         if (!Validator.validateEditText(edtPackageValidPeriod, getString(R.string.validation_period)))
             return;
 
@@ -450,7 +476,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
         customPackage.setPrice(0);
         Long primaryTraffic = TrafficUnitsUtil.MbToByte(edtPrimaryTraffic.getText().length() > 0 ? Integer.valueOf(edtPrimaryTraffic.getText().toString()) : 0);
         customPackage.setPrimaryTraffic(primaryTraffic);
-        Long secondaryTraffic = TrafficUnitsUtil.MbToByte(edtSecondaryTraffic.getText().length() > 0?Integer.valueOf(edtSecondaryTraffic.getText().toString()):0);
+        Long secondaryTraffic = TrafficUnitsUtil.MbToByte(edtSecondaryTraffic.getText().length() > 0 ? Integer.valueOf(edtSecondaryTraffic.getText().toString()) : 0);
         customPackage.setSecondaryTraffic(secondaryTraffic);
         customPackage.setUssdCode(null);
         customPackage.setCustom(true);
@@ -477,7 +503,7 @@ public class PackageSettingsActivity extends EnhancedActivity {
         long result = DataPackages.insert(customPackage);
         boolean saveRes = saveActivePackageSettings(false);
         if (result != -1 && saveRes) {
-            PackageHistories.insert(new PackageHistory(Integer.valueOf(result + ""),
+            PackageHistories.insert(new PackageHistory(Integer.valueOf("" + result),
                                                        Helper.getCurrentDateTime(),
                                                        null,
                                                        null,
@@ -621,5 +647,15 @@ public class PackageSettingsActivity extends EnhancedActivity {
                 }
             }
         });
+    }
+
+    @Override
+    void updateUiToPremiumVersion() {
+        layoutPremium.setVisibility(View.GONE);
+    }
+
+    @Override
+    void updateUiToTrialVersion() {
+        layoutPremium.setVisibility(View.VISIBLE);
     }
 }

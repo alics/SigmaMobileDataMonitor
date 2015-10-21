@@ -24,7 +24,6 @@ public class App extends Application {
 
     public static Context           context;
     public static Activity          currentActivity;
-    //public static SharedPreferences preferences;
     public static SharedPreferences uiPreferences;
     public static Typeface          englishFont;
     public static Typeface          englishFontBold;
@@ -60,11 +59,6 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
-        //if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-        //    preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        //} else {
-        //    preferences = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_MULTI_PROCESS);
-        //}
         uiPreferences = getSharedPreferences("ui", MODE_PRIVATE);
         englishFont = Typeface.createFromAsset(context.getAssets(), "fonts/exo.ttf");
         englishFontBold = Typeface.createFromAsset(context.getAssets(), "fonts/exo.ttf");
@@ -126,6 +120,7 @@ public class App extends Application {
         Intent dataService = new Intent(context, SigmaDataService.class);
         context.startService(dataService);
 
+        //todo : uncomment below lines for app usages
         //Intent appsService = new Intent(context, SigmaAppsService.class);
         //context.startService(appsService);
     }

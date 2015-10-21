@@ -23,11 +23,7 @@ public class XsamCrypt {
 
         try {
             cipher = Cipher.getInstance("AES/CBC/NoPadding");
-        } catch (NoSuchAlgorithmException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (NoSuchPaddingException e) {
-            // TODO Auto-generated catch block
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
             e.printStackTrace();
         }
     }
@@ -36,7 +32,7 @@ public class XsamCrypt {
         if (text == null || text.length() == 0)
             throw new Exception("Empty string");
 
-        byte[] encrypted = null;
+        byte[] encrypted;
 
         try {
             cipher.init(Cipher.ENCRYPT_MODE, keyspec, ivspec);
@@ -53,7 +49,7 @@ public class XsamCrypt {
         if (code == null || code.length() == 0)
             throw new Exception("Empty string");
 
-        byte[] decrypted = null;
+        byte[] decrypted;
 
         try {
             cipher.init(Cipher.DECRYPT_MODE, keyspec, ivspec);

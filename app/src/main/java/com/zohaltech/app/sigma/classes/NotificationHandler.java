@@ -71,7 +71,6 @@ public class NotificationHandler {
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(R.drawable.ic_notification_white)
-                                //.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher))
                         .setContentTitle(title)
                         .setContentText(text)
                         .setShowWhen(true)
@@ -85,7 +84,7 @@ public class NotificationHandler {
             builder.setDefaults(Notification.DEFAULT_VIBRATE);
         } else if (setting.getSoundInAlarms() && setting.getVibrateInAlarms() == false) {
             builder.setDefaults(Notification.DEFAULT_SOUND);
-        } else if (setting.getSoundInAlarms() && setting.getVibrateInAlarms()) {
+        } else if (setting.getSoundInAlarms()) {
             builder.setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND);
         }
 

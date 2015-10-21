@@ -25,6 +25,7 @@ public class IntroductionActivity extends PaymentActivity {
 
     @Override
     void onCreated() {
+
         super.onCreated();
 
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -45,11 +46,9 @@ public class IntroductionActivity extends PaymentActivity {
         viewPager = (ViewPager) findViewById(R.id.pagerTutorial);
         viewPager.setPageMargin(0);
         // Pass results to ViewPagerAdapter Class
-        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
         ParallaxPagerTransformer transformer = new ParallaxPagerTransformer(R.id.imgIntro);
         transformer.setSpeed(-0.8F);
         viewPager.setPageTransformer(true, transformer);
-        //}
         int pageCount = texts.length;
         if (getIntent().getStringExtra(CALL_FROM).equals(FROM_GLOBAL_SETTINGS)) {
             pageCount--;

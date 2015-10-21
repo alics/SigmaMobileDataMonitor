@@ -73,9 +73,6 @@ public class AboutActivity extends EnhancedActivity {
                 Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", email, null));
                 intent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.feedback_subject));
                 startActivity(Intent.createChooser(intent, getResources().getString(R.string.feedback_title)));
-                //Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "[Email_Address]", null));
-                //intent.putExtra(Intent.EXTRA_SUBJECT, "An Email From Myket!");
-                //startActivity(Intent.createChooser(intent, "ارسال ایمیل"));
             }
         });
 

@@ -17,8 +17,8 @@ android {
         applicationId "com.zohaltech.app.sigma"
         minSdkVersion 10
         targetSdkVersion 22
-        versionCode 109
-        versionName "1.09"
+        versionCode 110
+        versionName "1.1"
     }
     buildTypes {
         release {

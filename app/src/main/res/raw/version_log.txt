@@ -8,7 +8,7 @@ Version 1.07 :
 Version 1.08 :
 - mci new packages
 
-Version 1.09 :
+Version 1.1 :
 - fix histories display for only primary and only secondary data packages
 - add AppVersion to webservice
 - change trial version to 2 days
@@ -21,14 +21,10 @@ Version 1.09 :
 - direct activate and buy for data packages
 
 //todo : add sikimiooom
-//todo : go to about page when click on about
-//todo : remove everything about applications(db, service, integration, report, ...)
-//todo : revise data packages and edit they names
-//todo : change introduction images
-//todo : take screenshots for markets
 //todo : change description and write change log in markets
 //todo : change sigma name to 3G/4G/WiFi in markets
 //later
+//todo : change ui to drawer
 //todo : use card view where needed(e.g. for app reports, ...)
 //todo : user defined packages
 //todo : home screen widget

@@ -208,9 +208,6 @@ public class UsageLogs {
         }
         return " SELECT (SELECT IFNULL(SUM(" + TrafficBytes + "), 0) FROM " + TableName + " WHERE " + LogDateTime + " >= '" + history.getStartDateTime() + "') - " +
                 dataPackage.getSecondaryTraffic() + " AS SumTraffic";
-
-        //        return " SELECT (SELECT IFNULL(SUM(" + TrafficBytes + "), 0) FROM " + TableName + " WHERE " + LogDateTime + " >= '" + history.getStartDateTime() + "') - " +
-        //               " (SELECT IFNULL(SUM(" + TrafficBytes + "), 0) FROM " + TableName + " WHERE " + LogDateTime + " BETWEEN '" + history.getStartDateTime() + "' AND '" + history.getSecondaryTrafficEndDateTime() + "') AS SumTraffic";
     }
 
     public static long getUsedSecondaryTrafficOfPackage(DataPackage dataPackage, PackageHistory history) {

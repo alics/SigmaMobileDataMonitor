@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zohaltech.app.sigma.R;
+import com.zohaltech.app.sigma.activities.PaymentActivity;
 import com.zohaltech.app.sigma.classes.DialogManager;
 import com.zohaltech.app.sigma.classes.Helper;
 import com.zohaltech.app.sigma.classes.LicenseManager;
@@ -83,8 +84,20 @@ public class ExpandablePackageAdapter extends AnimatedExpandableListView.Animate
             btnPurchase.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_premium_small, 0, 0, 0);
             btnActivate.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_premium_small, 0, 0, 0);
             btnPurchase.setText("   خرید   ");
-            //btnPurchase.setLayoutParams(new LinearLayout.LayoutParams(108, ViewGroup.LayoutParams.WRAP_CONTENT));
-            //btnActivate.setLayoutParams(new LinearLayout.LayoutParams(108, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            btnPurchase.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((PaymentActivity) activity).showPaymentDialog();
+                }
+            });
+
+            btnActivate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((PaymentActivity)activity).showPaymentDialog();
+                }
+            });
         }
 
         return convertView;

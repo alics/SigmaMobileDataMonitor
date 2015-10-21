@@ -22,7 +22,7 @@ public class DataAccess extends SQLiteOpenHelper {
     public static final String DATABASE_NAME    = "SIGMA";
     //public static final int    DATABASE_VERSION = 9; //published in versions 1.06, 1.07
     //public static final int    DATABASE_VERSION = 10; //published in versions 1.08
-    public static final int    DATABASE_VERSION = 11; //published in versions 1.09
+    public static final int    DATABASE_VERSION = 11; //published in versions 1.1
 
     public DataAccess() {
         super(App.context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -38,6 +38,8 @@ public class DataAccess extends SQLiteOpenHelper {
             database.execSQL(PackageHistories.CreateTable);
             database.execSQL(Settings.CreateTable);
             database.execSQL(SystemSettings.CreateTable);
+
+            //todo : uncomment below lines for app usages
             //database.execSQL(Applications.CreateTable);
             //database.execSQL(AppsUsageLogs.CreateTable);
 
@@ -89,6 +91,7 @@ public class DataAccess extends SQLiteOpenHelper {
             systemSettingsValues.put(SystemSettings.ActiveSim, 0);
             database.insert(SystemSettings.TableName, null, systemSettingsValues);
 
+            //todo : uncomment below lines for app usages
             //insertHasInternetAccessApplications(database);
 
             LicenseStatus status = LicenseManager.getExistingLicense();
@@ -119,8 +122,11 @@ public class DataAccess extends SQLiteOpenHelper {
                 LicenseManager.updateLicense(status);
             }
             if (oldVersion < 9) {
+
+                //todo : uncomment below lines for app usages
                 //database.execSQL(AppsUsageLogs.DropTable);
                 //database.execSQL(Applications.DropTable);
+
                 database.execSQL(SystemSettings.DropTable);
                 database.execSQL(Settings.DropTable);
                 database.execSQL(PackageHistories.DropTable);
@@ -140,12 +146,13 @@ public class DataAccess extends SQLiteOpenHelper {
                 //version11to12(database);
                 //version12to13(database);
                 //version13to14(database);
-            } else if (oldVersion == 11) {
-                //version11to12(database);
-                //version12to13(database);
-                //version13to14(database);
-                //version14to15(database);
             }
+            //else if (oldVersion == 11) {
+            //    //version11to12(database);
+            //    //version12to13(database);
+            //    //version13to14(database);
+            //    //version14to15(database);
+            //}
         } catch (MyRuntimeException e) {
             e.printStackTrace();
         }
@@ -178,16 +185,12 @@ public class DataAccess extends SQLiteOpenHelper {
             database.execSQL("ALTER TABLE " + DailyTrafficHistories.TableName + " ADD COLUMN " + DailyTrafficHistories.TrafficWifi + " BIGINT");
             database.execSQL("ALTER TABLE " + Settings.TableName + " ADD COLUMN " + Settings.ShowWifiUsage + " BOOLEAN");
             database.execSQL("UPDATE " + Settings.TableName + " SET " + Settings.ShowWifiUsage + " = 1");
-
-            //database.execSQL(Applications.CreateTable);
-            //database.execSQL(AppsUsageLogs.CreateTable);
-            //insertHasInternetAccessApplications(database);
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    //todo : uncomment below lines for app usages
     //private void version11to12(SQLiteDatabase database) {
     //    try {
     //        database.execSQL(Applications.CreateTable);
@@ -267,6 +270,7 @@ public class DataAccess extends SQLiteOpenHelper {
         }
     }
 
+    //todo : uncomment below lines for app usages
     //private void insertHasInternetAccessApplications(SQLiteDatabase database) {
     //    PackageManager pm = App.context.getPackageManager();
     //    Iterator iterator = pm.getInstalledPackages(12288).iterator();
@@ -291,6 +295,7 @@ public class DataAccess extends SQLiteOpenHelper {
     //    }
     //}
 
+    //todo : uncomment below lines for app usages
     //private Boolean hasInternetAccess(String[] permissions) {
     //    for (String permission : permissions) {
     //        if ("android.permission.INTERNET".equals(permission)) {
