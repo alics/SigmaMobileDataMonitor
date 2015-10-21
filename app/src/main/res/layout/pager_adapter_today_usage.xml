@@ -20,6 +20,36 @@
             android:orientation="vertical">
 
             <widgets.CircleProgress
+                android:id="@+id/progressTodayUsageWifi"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:scaleType="centerInside"/>
+
+            <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:gravity="center"-->
+            <!--android:text="WiFi"-->
+            <!--android:drawableTop="@drawable/ic_wifi_white"-->
+            <!--android:textColor="@color/white"/>-->
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_wifi_white"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <widgets.CircleProgress
                 android:id="@+id/progressTodayUsageMobile"
                 android:layout_width="96dp"
                 android:layout_height="96dp"
@@ -40,36 +70,6 @@
                 android:layout_marginTop="10dp"
                 android:src="@drawable/ic_mobile_white"/>
 
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <widgets.CircleProgress
-                android:id="@+id/progressTodayUsageWifi"
-                android:layout_width="96dp"
-                android:layout_height="96dp"
-                android:scaleType="centerInside"/>
-
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginTop="10dp"-->
-                <!--android:gravity="center"-->
-                <!--android:text="WiFi"-->
-                <!--android:drawableTop="@drawable/ic_wifi_white"-->
-                <!--android:textColor="@color/white"/>-->
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/ic_wifi_white"/>
 
         </LinearLayout>
 

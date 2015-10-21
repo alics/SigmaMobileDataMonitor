@@ -28,6 +28,7 @@ import com.zohaltech.app.sigma.dal.DailyTrafficHistories;
 import com.zohaltech.app.sigma.entities.TrafficMonitor;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class ReportActivity extends EnhancedActivity {
 
@@ -84,13 +85,14 @@ public class ReportActivity extends EnhancedActivity {
     private void populateTraffics() {
         trafficMonitors.clear();
         trafficMonitors.addAll(DailyTrafficHistories.getMonthlyTraffic());
-        //trafficMonitors = new ArrayList<>();
         //for (int i = 0; i < 29; i++) {
         //    Random r = new Random();
         //    int Low = 10;
-        //    int High = 100*1024*1024;
+        //    int High = 100 * 1024 * 1024;
+        //    int HighWifi = 200 * 1024 * 1024;
         //    int sumReceivedSent = r.nextInt(High - Low) + Low;
-        //    TrafficMonitor trafficMonitor = new TrafficMonitor((long)sumReceivedSent, Helper.addDay(i - 29));
+        //    int sumReceivedSentWifi = r.nextInt(HighWifi - Low) + Low;
+        //    TrafficMonitor trafficMonitor = new TrafficMonitor((long) sumReceivedSent, (long) sumReceivedSentWifi, Helper.addDay(i - 29));
         //    trafficMonitors.add(0, trafficMonitor);
         //}
 
@@ -98,9 +100,9 @@ public class ReportActivity extends EnhancedActivity {
         //setTodayUsageWifi(App.preferences.getLong(DataUsageMeter.TODAY_USAGE_BYTES_WIFI, 0));
         SharedPreferences preferences;
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-            preferences = PreferenceManager.getDefaultSharedPreferences(App.context);
+            preferences = PreferenceManager.getDefaultSharedPreferences(this);
         } else {
-            preferences = App.context.getSharedPreferences(App.context.getPackageName() + "_preferences", Context.MODE_MULTI_PROCESS);
+            preferences = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_MULTI_PROCESS);
         }
         setTodayUsage(preferences.getLong(DataUsageMeter.TODAY_USAGE_BYTES, 0));
         setTodayUsageWifi(preferences.getLong(DataUsageMeter.TODAY_USAGE_BYTES_WIFI, 0));
@@ -191,9 +193,9 @@ public class ReportActivity extends EnhancedActivity {
                             DailyTrafficHistories.reset(chkMobile.isChecked(), chkWifi.isChecked());
                             SharedPreferences preferences;
                             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-                                preferences = PreferenceManager.getDefaultSharedPreferences(App.context);
+                                preferences = PreferenceManager.getDefaultSharedPreferences(ReportActivity.this);
                             } else {
-                                preferences = App.context.getSharedPreferences(App.context.getPackageName() + "_preferences", Context.MODE_MULTI_PROCESS);
+                                preferences = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_MULTI_PROCESS);
                             }
                             if (chkMobile.isChecked()) {
                                 //App.preferences.edit().putLong(DataUsageMeter.TODAY_USAGE_BYTES, 0).apply();

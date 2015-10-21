@@ -6,7 +6,7 @@ import android.os.IBinder;
 
 public class SigmaDataService extends Service {
     DataUsageMeter dataUsageMeter;
-    AppDataUsageMeter appDataUsageMeter;
+    //AppDataUsageMeter appDataUsageMeter;
 
     @Override
     public void onCreate() {
@@ -15,15 +15,15 @@ public class SigmaDataService extends Service {
         dataUsageMeter = new DataUsageMeter(this);
         dataUsageMeter.execute();
 
-        appDataUsageMeter=new AppDataUsageMeter();
-        appDataUsageMeter.execute();
+        //appDataUsageMeter=new AppDataUsageMeter();
+        //appDataUsageMeter.execute();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         dataUsageMeter.shutdown();
-        appDataUsageMeter.shutdown();
+        //appDataUsageMeter.shutdown();
     }
 
     @Override

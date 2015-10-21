@@ -42,7 +42,7 @@ public class DataUsageMeter {
     private boolean firstTimeWifi   = true;
     private boolean firstTimeTether = true;
     private Service           service;
-    private    SharedPreferences preferences;
+    private SharedPreferences preferences;
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
@@ -54,9 +54,9 @@ public class DataUsageMeter {
 
 
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-                preferences = PreferenceManager.getDefaultSharedPreferences(App.context);
+                preferences = PreferenceManager.getDefaultSharedPreferences(service);
             } else {
-                preferences = App.context.getSharedPreferences(App.context.getPackageName() + "_preferences", Context.MODE_MULTI_PROCESS);
+                preferences = service.getSharedPreferences(service.getPackageName() + "_preferences", Context.MODE_MULTI_PROCESS);
             }
 
             if (currentUsageBytesMobile + currentSentBytesMobile == 0) {

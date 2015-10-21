@@ -135,17 +135,7 @@ public class DashboardActivity extends PaymentActivity {
 
         WebApiClient.sendUserData(WebApiClient.PostAction.INSTALL, null);
 
-        LicenseStatus status = LicenseManager.getExistingLicense();
-        if (status == null) {
-            return;
-        }
 
-        if (status.getAppVersion().equals("" + BuildConfig.VERSION_CODE) == false) {
-            String changeLog = Helper.inputStreamToString(getResources().openRawResource(R.raw.change_log));
-            DialogManager.showNotificationDialog(this, "لیست تغییرات", changeLog, "خُب");
-            status.setAppVersion("" + BuildConfig.VERSION_CODE);
-            LicenseManager.updateLicense(status);
-        }
     }
 
     @Override
@@ -181,6 +171,17 @@ public class DashboardActivity extends PaymentActivity {
         //    DialogManager.showNotificationDialog(this, "دستگاه دو سیم کارته", "دستگاه شما دو سیم کارته است و برای استفاده از سیگما، سیم کارتی که اینترنت فعال دارد، میبایست روی \"سیم یک\" قرار داده شود.", "خُب");
         //}
         //App.preferences.edit().putBoolean(DUAL_SIM_SHOWN, true);
+
+        LicenseStatus status = LicenseManager.getExistingLicense();
+        if (status == null) {
+            return;
+        }
+        if (status.getAppVersion().equals("" + BuildConfig.VERSION_CODE) == false) {
+            String changeLog = Helper.inputStreamToString(getResources().openRawResource(R.raw.change_log));
+            DialogManager.showNotificationDialog(this, "لیست تغییرات", changeLog, "خُب");
+            status.setAppVersion("" + BuildConfig.VERSION_CODE);
+            LicenseManager.updateLicense(status);
+        }
     }
 
     //private void showPaymentDialog(String paymentMessage) {

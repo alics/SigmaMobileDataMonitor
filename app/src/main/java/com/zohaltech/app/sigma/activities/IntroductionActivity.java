@@ -6,6 +6,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.xgc1986.parallaxPagerTransformer.ParallaxPagerTransformer;
 import com.zohaltech.app.sigma.R;
@@ -13,7 +14,7 @@ import com.zohaltech.app.sigma.adapters.IntroductionPagerAdapter;
 import com.zohaltech.app.sigma.classes.App;
 
 public class IntroductionActivity extends PaymentActivity {
-    public static final String INTRO_SHOWN = "INTRO_SHOWN";
+    public static final String INTRO_SHOWN          = "INTRO_SHOWN";
     public static final String CALL_FROM            = "CALL_FROM";
     public static final String FROM_DASHBOARD       = "FROM_DASHBOARD";
     public static final String FROM_GLOBAL_SETTINGS = "FROM_GLOBAL_SETTINGS";
@@ -26,8 +27,7 @@ public class IntroductionActivity extends PaymentActivity {
     void onCreated() {
         super.onCreated();
 
-        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-        //                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_introduction);
 
@@ -36,10 +36,10 @@ public class IntroductionActivity extends PaymentActivity {
                              "مشخصات بسته را مشاهده کنید و هشدارهای مربوط به بسته را تنظیم کنید. ",
                              "سوابق بسته های خریداری و فعال شده تا کنون را مشاهده کنید.",
                              "سرعت اینترنت موبایل و وای فای و مصرف روز جاری و همچنین هشدارهای سیگما را در نوار اعلان(Notification) مشاهده کنید.",
-                             "گزارش مصرف اینترنت 30 روز گذشته به تفکیک روز و مجموع ترافیک مصرفی را مشاهده کنید.",
+                             "گزارش مصرف اینترنت 30 روز گذشته به تفکیک موبایل و وای فای را ببینید و مجموع ترافیک مصرفی را مشاهده کنید.",
                              "استفاده از سیگما رایگان است و فقط بخش های خرید بسته و مدیریت بسته غیرفعال هستند و برای استفاده از آنها میبایست از طریق پرداخت درون برنامه ای، نسخه کامل و بدون محدودیت را خریداری نمایید.",
         };
-        images = new int[]{R.drawable.ic_one, R.drawable.ic_two, R.drawable.ic_three, R.drawable.ic_four, R.drawable.ic_five, R.drawable.ic_six,R.drawable.ic_sigma};
+        images = new int[]{R.drawable.ic_one, R.drawable.ic_two, R.drawable.ic_three, R.drawable.ic_four, R.drawable.ic_five, R.drawable.ic_six, R.drawable.ic_sigma};
 
         // Locate the ViewPager in viewpager_main.xml
         viewPager = (ViewPager) findViewById(R.id.pagerTutorial);
