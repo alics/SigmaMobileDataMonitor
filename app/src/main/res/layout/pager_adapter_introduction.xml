@@ -41,10 +41,9 @@
         <widgets.MyTextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="10dp"
             android:layout_weight="1"
             android:gravity="right"
-            android:text="استفاده از سیگما با تمامی امکانات، به مدت دو روز رایگان است و پس از آن بخش های خرید بسته و مدیریت بسته غیرفعال خواهند شد و میبایست از طریق پرداخت درون برنامه ای، نسخه کامل و بدون محدودیت را خریداری نمایید."
+            android:text="استفاده از سیگما رایگان است و فقط بخش های خرید بسته و مدیریت بسته غیرفعال هستند و برای استفاده از آنها میبایست از طریق پرداخت درون برنامه ای، نسخه کامل و بدون محدودیت را خریداری نمایید."
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/secondary_text"/>
 
@@ -52,8 +51,8 @@
             android:id="@+id/btnBuyNow"
             style="@style/BorderlessButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/btn_dialog_ok"
             android:text="همین الان نسخه کامل رو میخرم"
             android:textAppearance="?android:attr/textAppearanceMedium"
@@ -69,6 +68,15 @@
             android:text="فعلا میخوام امتحانش کنم!"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/white"/>
+
+        <widgets.MyTextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="توجه : در صورتیکه قبلا نسخه کامل برنامه را خریداری نموده اید، روی دکمه خرید کلیک کنید و بدون پرداخت هزینه به نسخه کامل ارتقا یابید."
+            android:textColor="@color/secondary_text"/>
 
     </LinearLayout>
 

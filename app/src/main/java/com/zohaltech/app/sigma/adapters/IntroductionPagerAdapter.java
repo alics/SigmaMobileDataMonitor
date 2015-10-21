@@ -69,8 +69,8 @@ public class IntroductionPagerAdapter extends PagerAdapter {
                 btnBuyNow.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        App.uiPreferences.edit().putBoolean(IntroductionActivity.INTRO_SHOWN, true).commit();
-                        if (LicenseManager.getLicenseStatus() != LicenseManager.Status.REGISTERED) {
+                        App.uiPreferences.edit().putBoolean(IntroductionActivity.INTRO_SHOWN, true).apply();
+                        if (LicenseManager.getLicenseStatus() == LicenseManager.Status.NOT_REGISTERED) {
                             ((PaymentActivity) App.currentActivity).pay();
                         } else {
                             Intent intent = new Intent(App.currentActivity, DashboardActivity.class);
@@ -80,10 +80,11 @@ public class IntroductionPagerAdapter extends PagerAdapter {
                         }
                     }
                 });
+
                 btnGoToApp.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        App.uiPreferences.edit().putBoolean(IntroductionActivity.INTRO_SHOWN, true).commit();
+                        App.uiPreferences.edit().putBoolean(IntroductionActivity.INTRO_SHOWN, true).apply();
                         Intent intent = new Intent(App.currentActivity, DashboardActivity.class);
                         App.currentActivity.startActivity(intent);
                         App.currentActivity.finish();

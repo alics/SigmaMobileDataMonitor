@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.zohaltech.app.sigma.BuildConfig;
+import com.zohaltech.app.sigma.activities.IntroductionActivity;
 import com.zohaltech.app.sigma.classes.App;
 import com.zohaltech.app.sigma.classes.CsvReader;
 import com.zohaltech.app.sigma.classes.Helper;
@@ -114,6 +115,8 @@ public class DataAccess extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
         try {
+            App.uiPreferences.edit().putBoolean(IntroductionActivity.INTRO_SHOWN, false).apply();
+
             LicenseStatus status = LicenseManager.getExistingLicense();
             if (status == null) {
                 LicenseManager.initializeLicenseFile(new LicenseStatus("" + BuildConfig.VERSION_CODE,
