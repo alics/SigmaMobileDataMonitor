@@ -50,7 +50,7 @@ public abstract class PaymentActivity extends EnhancedActivity {
                         updateUiToPremiumVersion();
                         WebApiClient.sendUserData(WebApiClient.PostAction.REGISTER, inventory.getPurchase(SKU_PREMIUM).getToken());
                         setWaitScreen(false);
-                        responseMessage = "شما قبلا نسخه کامل را خریده اید و با موفقیت به نسخه کامل ارتقا یافتید";
+                        responseMessage = "شما قبلا نسخه کامل را خریده اید و به نسخه کامل ارتقا یافتید";
                         MyToast.show(responseMessage, Toast.LENGTH_LONG);
                     }
                 }
