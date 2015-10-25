@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.zohaltech.app.sigma.classes.Helper;
 import com.zohaltech.app.sigma.classes.MyRuntimeException;
 import com.zohaltech.app.sigma.entities.DailyTrafficHistory;
 import com.zohaltech.app.sigma.entities.TrafficMonitor;
@@ -118,10 +119,11 @@ public class DailyTrafficHistories {
         Cursor cursor = null;
 
         try {
-            String query = "SELECT  SUM(" + Traffic + ") total,SUM(" + TrafficWifi + ") totalWifi, SUBSTR(" + LogDate + ",0,11) date FROM (" +
+            String query = "SELECT  SUM(" + Traffic + ") total,SUM(" + TrafficWifi + ") totalWifi, " + LogDate + " date FROM (" +
                            " SELECT  *  FROM " + TableName +
+                           " WHERE " + LogDate + " < '" + Helper.getCurrentDate() + "'" +
                            " ORDER BY " + Id + " DESC) t" +
-                           " GROUP BY SUBSTR(" + LogDate + ", 0, 11)" +
+                           " GROUP BY " + LogDate +
                            " ORDER BY date DESC" +
                            " LIMIT 30";
 

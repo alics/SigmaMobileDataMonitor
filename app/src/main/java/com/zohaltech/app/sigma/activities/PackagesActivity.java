@@ -23,8 +23,6 @@ public class PackagesActivity extends PaymentActivity {
     @Override
     void onCreated() {
 
-        super.onCreated();
-
         setContentView(R.layout.activity_packages);
 
         // Initialize the ViewPager and set an adapter
@@ -58,6 +56,9 @@ public class PackagesActivity extends PaymentActivity {
 
         changeTabsFont();
         selectTabByOperator();
+
+        super.onCreated();
+
     }
 
     @Override

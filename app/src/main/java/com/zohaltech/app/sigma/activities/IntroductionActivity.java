@@ -26,8 +26,6 @@ public class IntroductionActivity extends PaymentActivity {
     @Override
     void onCreated() {
 
-        super.onCreated();
-
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_introduction);
@@ -57,6 +55,9 @@ public class IntroductionActivity extends PaymentActivity {
         adapter = new IntroductionPagerAdapter(IntroductionActivity.this, pageCount, texts, images);
         // Binds the Adapter to the ViewPager
         viewPager.setAdapter(adapter);
+
+        super.onCreated();
+
     }
 
     @Override

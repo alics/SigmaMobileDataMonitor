@@ -16,17 +16,17 @@ public class LicenseManager {
         LicenseModifier.initializeLicenseFile(status);
     }
 
-    public static boolean validateLicense() {
-        LicenseStatus status = LicenseModifier.getLicenceFile();
-        if (status == null)
-            return false;
-        if (!status.getDeviceId().equals(Helper.getDeviceId())) {
-            status.setStatus(Status.NOT_REGISTERED.ordinal());
-            LicenseModifier.updateLicenseFile(status);
-            return false;
-        }
-        return status.getStatus() == Status.REGISTERED.ordinal();
-    }
+    //public static boolean validateLicense() {
+    //    LicenseStatus status = LicenseModifier.getLicenceFile();
+    //    if (status == null)
+    //        return false;
+    //    if (!status.getDeviceId().equals(Helper.getDeviceId())) {
+    //        status.setStatus(Status.NOT_REGISTERED.ordinal());
+    //        LicenseModifier.updateLicenseFile(status);
+    //        return false;
+    //    }
+    //    return status.getStatus() == Status.REGISTERED.ordinal();
+    //}
 
     public static Status getLicenseStatus() {
         LicenseStatus status = LicenseModifier.getLicenceFile();

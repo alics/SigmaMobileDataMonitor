@@ -20,12 +20,18 @@ Version 1.1 :
 - wifi usage and report added
 - direct activate and buy for data packages
 
-//todo : add sikimiooom
-//todo : change description and write change log in markets
-//todo : change sigma name to 3G/4G/WiFi in markets
+Version 1.2 :
+- fix rating message display
+
+//todo : reset installed and purchased in preferences when new version of app installed
+//todo : save purchase token on purchase and send user data from receiver or dashboard
+//todo : fix change date bug for package status and report
+//todo : revise data packages and edit names
+//todo : upgrade web api in server to update every time receives data by AppId,MarketId,DeviceId
+
 //later
-//todo : change ui to drawer
-//todo : use card view where needed(e.g. for app reports, ...)
 //todo : user defined packages
-//todo : home screen widget
+//todo : change ui to drawer
 //todo : operator services (estelam, laghve reserve,...)
+//todo : revise data packages and edit names
+//todo : home screen widget

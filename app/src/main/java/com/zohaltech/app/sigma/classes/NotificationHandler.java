@@ -3,15 +3,20 @@ package com.zohaltech.app.sigma.classes;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
+import android.widget.Toast;
 
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.activities.DashboardActivity;
 import com.zohaltech.app.sigma.dal.Settings;
 import com.zohaltech.app.sigma.entities.Setting;
+
+import widgets.MyToast;
 
 public class NotificationHandler {
 
@@ -23,6 +28,10 @@ public class NotificationHandler {
 
     public static void displayAlarmNotification(Context context, int notificationId, String title, String text) {
         notificationManager.notify(notificationId, getAlarmNotification(context, title, text));
+    }
+
+    public static void displayUpdateNotification(Context context, int notificationId, String title, String text) {
+        notificationManager.notify(notificationId, getUpdateNotification(context, title, text));
     }
 
     public static void cancelNotification(int notificationId) {
@@ -54,7 +63,7 @@ public class NotificationHandler {
 
         Intent resultIntent = new Intent(context, DashboardActivity.class);
         resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 1, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(resultPendingIntent);
 
         return builder.build();
@@ -90,7 +99,44 @@ public class NotificationHandler {
 
         Intent resultIntent = new Intent(context, DashboardActivity.class);
         resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 2, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(resultPendingIntent);
+
+        return builder.build();
+    }
+
+    private static Notification getUpdateNotification(Context context, String title, String text) {
+        int lockScreenVisibility;
+        Setting setting = Settings.getCurrentSettings();
+        if (setting.getShowNotificationInLockScreen()) {
+            lockScreenVisibility = NotificationCompat.VISIBILITY_PUBLIC;//visible in lock screen
+        } else {
+            lockScreenVisibility = NotificationCompat.VISIBILITY_SECRET;//invisible in lock screen
+        }
+        NotificationCompat.Builder builder =
+                new NotificationCompat.Builder(context)
+                        .setSmallIcon(R.drawable.ic_notification_white)
+                        .setContentTitle(title)
+                        .setContentText(text)
+                        .setShowWhen(true)
+                        .setOngoing(false)
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                        .setVisibility(lockScreenVisibility)
+                        .setColor(App.context.getResources().getColor(R.color.primary))
+                        .setAutoCancel(true);
+
+        if (setting.getVibrateInAlarms() && setting.getSoundInAlarms() == false) {
+            builder.setDefaults(Notification.DEFAULT_VIBRATE);
+        } else if (setting.getSoundInAlarms() && setting.getVibrateInAlarms() == false) {
+            builder.setDefaults(Notification.DEFAULT_SOUND);
+        } else if (setting.getSoundInAlarms()) {
+            builder.setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND);
+        }
+
+        Intent resultIntent = new Intent(Intent.ACTION_VIEW);
+        resultIntent.setData(Uri.parse(App.marketUri));
+        resultIntent.setPackage(App.marketPackage);
+        PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 3, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(resultPendingIntent);
 
         return builder.build();

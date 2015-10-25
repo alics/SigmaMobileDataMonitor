@@ -85,16 +85,16 @@ public class DashboardActivity extends EnhancedActivity {
         btnPackageManagement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    Intent myIntent = new Intent(App.currentActivity, ManagementActivity.class);
-                    startActivity(myIntent);
+                Intent myIntent = new Intent(App.currentActivity, ManagementActivity.class);
+                startActivity(myIntent);
             }
         });
 
         btnPurchasePackage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    Intent intent = new Intent(App.currentActivity, PackagesActivity.class);
-                    startActivity(intent);
+                Intent intent = new Intent(App.currentActivity, PackagesActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -120,7 +120,9 @@ public class DashboardActivity extends EnhancedActivity {
 
         WebApiClient.sendUserData(WebApiClient.PostAction.INSTALL, null);
 
+        WebApiClient.checkForUpdate();
 
+        App.uiPreferences.edit().putInt("APP_RUN_COUNT", App.uiPreferences.getInt("APP_RUN_COUNT", 0) + 1).apply();
     }
 
     @Override
@@ -143,6 +145,25 @@ public class DashboardActivity extends EnhancedActivity {
             DialogManager.showNotificationDialog(this, "لیست تغییرات", changeLog, "خُب");
             status.setAppVersion("" + BuildConfig.VERSION_CODE);
             LicenseManager.updateLicense(status);
+            return;
+        }
+
+        int runCount = App.uiPreferences.getInt("APP_RUN_COUNT", 0);
+        boolean rated = App.uiPreferences.getBoolean("RATED", false);
+        if (runCount != 0 && runCount % 6 == 0 && rated == false) {
+            App.uiPreferences.edit().putInt("APP_RUN_COUNT", App.uiPreferences.getInt("APP_RUN_COUNT", 0) + 1).apply();
+            Dialog dialog = DialogManager.getPopupDialog(this, "امتیازدهی به سیگما", "اگر سیگما برای شما مفید بوده است، آیا مایلید برای حمایت از تیم توسعه سیگما، به برنامه نظر و امتیاز بدهید؟", "بله، امتیاز میدم", "فعلا نه!", null, new Runnable() {
+                @Override
+                public void run() {
+                    Helper.rateApp(DashboardActivity.this);
+                }
+            }, new Runnable() {
+                @Override
+                public void run() {
+                    //do nothing
+                }
+            });
+            dialog.show();
         }
     }
 

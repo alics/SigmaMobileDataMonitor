@@ -10,6 +10,7 @@ public class ConnectivityStateReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         ConnectionManager.setDataOrWifiConnectedStatus();
         WebApiClient.sendUserData(WebApiClient.PostAction.INSTALL, null);
+        WebApiClient.checkForUpdate();
 
         //todo : uncomment below lines for app usages
         //if (ConnectionManager.getConnectivityStatus() == ConnectionManager.TYPE_WIFI ||

@@ -81,8 +81,6 @@ public class PackageSettingsActivity extends PaymentActivity {
     @Override
     void onCreated() {
 
-        super.onCreated();
-
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         setContentView(R.layout.activity_package_settings);
 
@@ -171,6 +169,9 @@ public class PackageSettingsActivity extends PaymentActivity {
                 }
             }
         }
+
+        super.onCreated();
+
     }
 
     @Override

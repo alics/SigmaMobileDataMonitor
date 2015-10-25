@@ -88,7 +88,7 @@ public abstract class PaymentActivity extends EnhancedActivity {
     void onCreated() {
         if (LicenseManager.getLicenseStatus() == LicenseManager.Status.NOT_REGISTERED) {
             try {
-                mHelper = new IabHelper(this, App.marketPublicKey);
+                //mHelper = new IabHelper(this, App.marketPublicKey);
                 //Log.d(TAG, "Starting setup.");
                 //mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
                 //    public void onIabSetupFinished(IabResult result) {
@@ -104,6 +104,8 @@ public abstract class PaymentActivity extends EnhancedActivity {
                 //    }
                 //});
 
+                mHelper = new IabHelper(this, App.marketPublicKey);
+                //Log.d(TAG, "Starting setup.");
                 mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
                     public void onIabSetupFinished(IabResult result) {
                         Log.d(TAG, "Setup finished.");

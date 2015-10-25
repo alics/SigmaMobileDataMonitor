@@ -33,8 +33,6 @@ public class GlobalSettingsActivity extends PaymentActivity {
     @Override
     void onCreated() {
 
-        super.onCreated();
-
         setContentView(R.layout.activity_global_settings);
 
         switchShowNotification = (SwitchCompat) findViewById(R.id.switchShowNotification);
@@ -155,6 +153,8 @@ public class GlobalSettingsActivity extends PaymentActivity {
                 startActivity(intent);
             }
         });
+
+        super.onCreated();
     }
 
     @Override
