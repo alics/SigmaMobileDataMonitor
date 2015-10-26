@@ -18,8 +18,10 @@ import java.net.URL;
 
 public class WebApiClient {
 
-    private static final int    APP_ID   = 1;
-    private static final String HOST_URL = App.context.getString(R.string.host_name);
+    private static final int    APP_ID              = 1;
+    private static final String HOST_URL            = App.context.getString(R.string.host_name);
+    private static final String HOST_UPDATE         = App.context.getString(R.string.host_update);
+    private static final String UPDATE_QUERY_STRING = App.context.getString(R.string.update_query_string);
 
     public static void sendUserData() {
         Thread thread = new Thread(new Runnable() {
@@ -93,10 +95,9 @@ public class WebApiClient {
                     String lastUpdateCheckDate = App.uiPreferences.getString("UPDATE_CHECK_DATE", "");
                     if (lastUpdateCheckDate.equals("") || (lastUpdateCheckDate.equals(Helper.getCurrentDate()) == false)) {
                         App.uiPreferences.edit().putString("UPDATE_CHECK_DATE", Helper.getCurrentDate()).apply();
-                        String queryString = String.format("?SecurityKey=%s&AppId=%s&MarketId=%s&AppVersion=%s&DeviceId=%s",
-                                                           ConstantParams.getApiSecurityKey(), APP_ID, App.market, BuildConfig.VERSION_CODE, Helper.getDeviceId());
-                        if (get("http://zohaltech.com/api/appversion", queryString) == 1) {
-                            NotificationHandler.displayUpdateNotification(App.context, 3, "پیغام سیگما", "نسخه جدید سیگما آماده بروزرسانی میباشد");
+                        String queryString = String.format(UPDATE_QUERY_STRING, ConstantParams.getApiSecurityKey(), APP_ID, App.market, BuildConfig.VERSION_CODE, Helper.getDeviceId());
+                        if (get(HOST_UPDATE, queryString) == 1) {
+                            NotificationHandler.displayUpdateNotification(App.context, 3, App.context.getString(R.string.app_name), "نسخه جدید آماده بروزرسانی میباشد");
                         }
                     }
                 } catch (Exception e) {

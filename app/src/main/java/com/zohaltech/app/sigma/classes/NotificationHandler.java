@@ -3,20 +3,17 @@ package com.zohaltech.app.sigma.classes;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
-import android.widget.Toast;
 
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.activities.DashboardActivity;
 import com.zohaltech.app.sigma.dal.Settings;
 import com.zohaltech.app.sigma.entities.Setting;
-
-import widgets.MyToast;
 
 public class NotificationHandler {
 
@@ -115,7 +112,8 @@ public class NotificationHandler {
         }
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(context)
-                        .setSmallIcon(R.drawable.ic_notification_white)
+                        .setSmallIcon(R.drawable.ic_notification_update)
+                        .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher))
                         .setContentTitle(title)
                         .setContentText(text)
                         .setShowWhen(true)
@@ -124,14 +122,6 @@ public class NotificationHandler {
                         .setVisibility(lockScreenVisibility)
                         .setColor(App.context.getResources().getColor(R.color.primary))
                         .setAutoCancel(true);
-
-        if (setting.getVibrateInAlarms() && setting.getSoundInAlarms() == false) {
-            builder.setDefaults(Notification.DEFAULT_VIBRATE);
-        } else if (setting.getSoundInAlarms() && setting.getVibrateInAlarms() == false) {
-            builder.setDefaults(Notification.DEFAULT_SOUND);
-        } else if (setting.getSoundInAlarms()) {
-            builder.setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND);
-        }
 
         Intent resultIntent = new Intent(Intent.ACTION_VIEW);
         resultIntent.setData(Uri.parse(App.marketUri));

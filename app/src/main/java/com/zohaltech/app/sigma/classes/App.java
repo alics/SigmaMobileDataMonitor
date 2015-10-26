@@ -70,7 +70,7 @@ public class App extends Application {
         connectivityType = ConnectionManager.getConnectivityStatus();
 
         //todo : set market here and in manifest
-        setTargetMarket(MARKET_CANDO);
+        setTargetMarket(MARKET_BAZAAR);
 
         AlarmHandler.start(context);
 

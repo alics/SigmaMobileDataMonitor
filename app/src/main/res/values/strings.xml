@@ -54,4 +54,6 @@
     <string name="doozlu_bala">MIGeMA0GCSqGSIb3DQEBAQUAA4GMADCBiAKBgKecP8gZbs4/jVxq41Szt7Ba1SL+k4nwfrJ24RMTKhQekzGqJWt5OaEGO5lprEA2drkcmJfd47IROHh4RB41ipd/ou0WO5liKA0p7qB9ZbXjL2Yavd6ESfJGUnKqJrPUUuPNI1gUfv9JsccAQoyaEfJ6xdrDuNgdFlOOcmShJDJ5AgMBAAE=</string>
     <string name="host_name">http://zohaltech.com/api/app/post</string>
     <string name="jan">8F2CF4F0C905</string>
+    <string name="host_update">http://zohaltech.com/api/appversion</string>
+    <string name="update_query_string" formatted="false"><![CDATA[\?SecurityKey=%s&AppId=%s&MarketId=%s&AppVersion=%s&DeviceId=%s]]></string>
 </resources>
