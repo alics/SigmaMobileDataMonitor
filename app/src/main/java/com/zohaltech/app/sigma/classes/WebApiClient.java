@@ -15,13 +15,13 @@ import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Calendar;
 
 public class WebApiClient {
 
+    private static final int    APP_ID   = 1;
     private static final String HOST_URL = App.context.getString(R.string.host_name);
 
-    public static void sendUserData(final PostAction action, final String token) {
+    public static void sendUserData() {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -29,11 +29,13 @@ public class WebApiClient {
                     SystemSetting setting = SystemSettings.getCurrentSettings();
                     JSONObject jsonObject = new JSONObject();
 
-                    if (action == PostAction.INSTALL) {
+                    String token = App.uiPreferences.getString("PURCHASE_TOKEN", null);
+
+                    if (LicenseManager.getLicenseStatus() == LicenseManager.Status.NOT_REGISTERED) {
                         if (!setting.getInstalled()) {
                             if (ConnectionManager.getInternetStatus() == ConnectionManager.InternetStatus.Connected) {
                                 jsonObject.accumulate("SecurityKey", ConstantParams.getApiSecurityKey());
-                                jsonObject.accumulate("AppId", 1);
+                                jsonObject.accumulate("AppId", APP_ID);
                                 jsonObject.accumulate("DeviceId", Helper.getDeviceId());
                                 jsonObject.accumulate("DeviceBrand", Build.MANUFACTURER);
                                 jsonObject.accumulate("DeviceModel", Build.MODEL);
@@ -55,7 +57,7 @@ public class WebApiClient {
                         if (!setting.getRegistered()) {
                             if (ConnectionManager.getInternetStatus() == ConnectionManager.InternetStatus.Connected) {
                                 jsonObject.accumulate("SecurityKey", ConstantParams.getApiSecurityKey());
-                                jsonObject.accumulate("AppId", 1);
+                                jsonObject.accumulate("AppId", APP_ID);
                                 jsonObject.accumulate("DeviceId", Helper.getDeviceId());
                                 jsonObject.accumulate("DeviceBrand", Build.MANUFACTURER);
                                 jsonObject.accumulate("DeviceModel", Build.MODEL);
@@ -89,13 +91,12 @@ public class WebApiClient {
             public void run() {
                 try {
                     String lastUpdateCheckDate = App.uiPreferences.getString("UPDATE_CHECK_DATE", "");
-                    Calendar calendar = Calendar.getInstance();
-                    boolean friday = calendar.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY;
-                    if (lastUpdateCheckDate.equals("") || (lastUpdateCheckDate.equals(Helper.getCurrentDate()) == false && friday)) {
-                        String queryString = String.format("?SecurityKey=%s&AppId=1&MarketId=%s&AppVersion=%s", ConstantParams.getApiSecurityKey(), App.market, BuildConfig.VERSION_CODE);
+                    if (lastUpdateCheckDate.equals("") || (lastUpdateCheckDate.equals(Helper.getCurrentDate()) == false)) {
+                        App.uiPreferences.edit().putString("UPDATE_CHECK_DATE", Helper.getCurrentDate()).apply();
+                        String queryString = String.format("?SecurityKey=%s&AppId=%s&MarketId=%s&AppVersion=%s&DeviceId=%s",
+                                                           ConstantParams.getApiSecurityKey(), APP_ID, App.market, BuildConfig.VERSION_CODE, Helper.getDeviceId());
                         if (get("http://zohaltech.com/api/appversion", queryString) == 1) {
                             NotificationHandler.displayUpdateNotification(App.context, 3, "پیغام سیگما", "نسخه جدید سیگما آماده بروزرسانی میباشد");
-                            App.uiPreferences.edit().putString("UPDATE_CHECK_DATE", Helper.getCurrentDate()).apply();
                         }
                     }
                 } catch (Exception e) {
@@ -151,10 +152,5 @@ public class WebApiClient {
             }
         }
         return 0;
-    }
-
-    public enum PostAction {
-        INSTALL,
-        REGISTER
     }
 }

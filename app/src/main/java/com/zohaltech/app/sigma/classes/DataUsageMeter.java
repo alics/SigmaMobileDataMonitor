@@ -21,14 +21,14 @@ import java.util.concurrent.TimeUnit;
 public class DataUsageMeter {
     public static final  String TODAY_USAGE_ACTION         = "TODAY_USAGE_ACTION";
     public static final  String APPLICATION_ALARM_ACTION   = "APPLICATION_ALARM_ACTION";
-    private static final String TODAY_USAGE_DATE           = "TODAY_USAGE_DATE";
     // Mobile
     public static final  String TODAY_USAGE_BYTES          = "TODAY_USAGE_BYTES";
+    // Wifi And Tether
+    public static final  String TODAY_USAGE_BYTES_WIFI     = "TODAY_USAGE_BYTES_WIFI";
+    private static final String TODAY_USAGE_DATE           = "TODAY_USAGE_DATE";
     private static final String LAST_RECEIVED_BYTES        = "LAST_RECEIVED_BYTES";
     private static final String LAST_SENT_BYTES            = "LAST_SENT_BYTES";
     private static final String ONE_MINUTE_USED_BYTES      = "ONE_MINUTE_USED_BYTES";
-    // Wifi And Tether
-    public static final  String TODAY_USAGE_BYTES_WIFI     = "TODAY_USAGE_BYTES_WIFI";
     private static final String LAST_RECEIVED_BYTES_WIFI   = "LAST_RECEIVED_BYTES_WIFI";
     private static final String LAST_SENT_BYTES_WIFI       = "LAST_SENT_BYTES_WIFI";
     private static final String ONE_MINUTE_USED_BYTES_WIFI = "ONE_MINUTE_USED_BYTES_WIFI";
@@ -153,17 +153,17 @@ public class DataUsageMeter {
 
             usageLogInterval++;
             if (usageLogInterval == USAGE_LOG_INTERVAL) {
-                new Thread(new Runnable() {
-                    public void run() {
-                        preferences.edit().putLong(ONE_MINUTE_USED_BYTES, 0).apply();
-                        preferences.edit().putLong(ONE_MINUTE_USED_BYTES_WIFI, 0).apply();
-                        try {
-                            UsageLogs.insert(new UsageLog(oneMinuteUsedBytesMobile, oneMinuteUsedBytesWifi));
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }).start();
+                //new Thread(new Runnable() {
+                //    public void run() {
+                preferences.edit().putLong(ONE_MINUTE_USED_BYTES, 0).apply();
+                preferences.edit().putLong(ONE_MINUTE_USED_BYTES_WIFI, 0).apply();
+                try {
+                    UsageLogs.insert(new UsageLog(oneMinuteUsedBytesMobile, oneMinuteUsedBytesWifi));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                //    }
+                //}).start();
                 usageLogInterval = 0;
                 Intent intent = new Intent(APPLICATION_ALARM_ACTION);
                 service.sendBroadcast(intent);

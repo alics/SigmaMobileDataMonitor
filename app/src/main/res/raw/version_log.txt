@@ -20,14 +20,14 @@ Version 1.1 :
 - wifi usage and report added
 - direct activate and buy for data packages
 
-Version 1.2 :
+Version 1.11 :
 - fix rating message display
-
-//todo : reset installed and purchased in preferences when new version of app installed
-//todo : save purchase token on purchase and send user data from receiver or dashboard
-//todo : fix change date bug for package status and report
-//todo : revise data packages and edit names
-//todo : upgrade web api in server to update every time receives data by AppId,MarketId,DeviceId
+- fix integration of wifi
+- change check for update policy to every day
+- installed and purchased in preferences set to 0 when new version of app installed
+- save purchase token when purchased in preferences and send user data from receiver or dashboard
+- web api in server has been updated to update every time receives data by AppId,MarketId,DeviceId
+- data packages and names updated
 
 //later
 //todo : user defined packages

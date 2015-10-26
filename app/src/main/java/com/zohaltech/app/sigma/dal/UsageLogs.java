@@ -77,7 +77,7 @@ public class UsageLogs {
             integrateSumUsedTrafficPerDay();
         }
 
-        if (usageLog.getTrafficBytes() != 0) {
+        if (usageLog.getTrafficBytes() != 0 || usageLog.getTrafficBytesWifi() !=0) {
             ContentValues values = new ContentValues();
             values.put(TrafficBytes, usageLog.getTrafficBytes());
             values.put(TrafficBytesWifi, usageLog.getTrafficBytesWifi());

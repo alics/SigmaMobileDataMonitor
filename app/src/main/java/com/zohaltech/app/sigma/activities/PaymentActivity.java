@@ -21,10 +21,10 @@ import widgets.MyToast;
 
 public abstract class PaymentActivity extends EnhancedActivity {
 
+    public final  int    RC_REQUEST  = 10001;
     private final String PAY_LOAD    = "SIGMA_ANDROID_APP";
     private final String TAG         = "SIGMA_TAG";
     private final String SKU_PREMIUM = "PREMIUM";
-    public final  int    RC_REQUEST  = 10001;
     String responseMessage = "ارتقای برنامه با مشکل مواجه شد";
     Dialog paymentDialog;
     private ProgressDialog progressDialog;
@@ -48,7 +48,8 @@ public abstract class PaymentActivity extends EnhancedActivity {
                     if (App.currentActivity instanceof IntroductionActivity == false) {
                         LicenseManager.registerLicense();
                         updateUiToPremiumVersion();
-                        WebApiClient.sendUserData(WebApiClient.PostAction.REGISTER, inventory.getPurchase(SKU_PREMIUM).getToken());
+                        App.uiPreferences.edit().putString("PURCHASE_TOKEN", inventory.getPurchase(SKU_PREMIUM).getToken()).apply();
+                        WebApiClient.sendUserData();
                         setWaitScreen(false);
                         responseMessage = "شما قبلا نسخه کامل را خریده اید و به نسخه کامل ارتقا یافتید";
                         MyToast.show(responseMessage, Toast.LENGTH_LONG);
@@ -77,7 +78,8 @@ public abstract class PaymentActivity extends EnhancedActivity {
                     LicenseManager.registerLicense();
                     MyToast.show(responseMessage, Toast.LENGTH_LONG);
                     updateUiToPremiumVersion();
-                    WebApiClient.sendUserData(WebApiClient.PostAction.REGISTER, purchase.getToken());
+                    App.uiPreferences.edit().putString("PURCHASE_TOKEN", purchase.getToken()).apply();
+                    WebApiClient.sendUserData();
                 }
             }
             setWaitScreen(false);
@@ -117,7 +119,8 @@ public abstract class PaymentActivity extends EnhancedActivity {
                         }
 
                         // Have we been disposed of in the meantime? If so, quit.
-                        if (mHelper == null) return;
+                        if (mHelper == null)
+                            return;
 
                         // IAB is fully set up. Now, let's get an inventory of stuff we own.
                         Log.d(TAG, "Setup successful. Querying inventory.");
@@ -140,7 +143,7 @@ public abstract class PaymentActivity extends EnhancedActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode != RC_REQUEST){
+        if (requestCode != RC_REQUEST) {
             return;
         }
 

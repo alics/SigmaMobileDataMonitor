@@ -22,7 +22,8 @@ public class DataAccess extends SQLiteOpenHelper {
     public static final String DATABASE_NAME    = "SIGMA";
     //public static final int    DATABASE_VERSION = 9; //published in versions 1.06, 1.07
     //public static final int    DATABASE_VERSION = 10; //published in versions 1.08
-    public static final int    DATABASE_VERSION = 11; //published in versions 1.1
+    //public static final int    DATABASE_VERSION = 11; //published in versions 1.1
+    public static final int    DATABASE_VERSION = 12; //published in versions 1.11
 
     public DataAccess() {
         super(App.context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -110,17 +111,21 @@ public class DataAccess extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
         try {
             App.uiPreferences.edit().putBoolean(IntroductionActivity.INTRO_SHOWN, false).apply();
+            database.execSQL("UPDATE " + SystemSettings.TableName + " SET " + SystemSettings.Installed + " = 0, " + SystemSettings.Registered + " = 0");
 
-            LicenseStatus status = LicenseManager.getExistingLicense();
-            if (status == null) {
-                LicenseManager.initializeLicenseFile(new LicenseStatus("" + BuildConfig.VERSION_CODE,
-                                                                       Helper.getDeviceId(),
-                                                                       Helper.getCurrentDate(),
-                                                                       LicenseManager.Status.NOT_REGISTERED.ordinal()));
-            } else {
-                status.setStatus(LicenseManager.Status.NOT_REGISTERED.ordinal());
-                LicenseManager.updateLicense(status);
+            if (oldVersion < 11) {
+                LicenseStatus status = LicenseManager.getExistingLicense();
+                if (status == null) {
+                    LicenseManager.initializeLicenseFile(new LicenseStatus("" + BuildConfig.VERSION_CODE,
+                                                                           Helper.getDeviceId(),
+                                                                           Helper.getCurrentDate(),
+                                                                           LicenseManager.Status.NOT_REGISTERED.ordinal()));
+                } else {
+                    status.setStatus(LicenseManager.Status.NOT_REGISTERED.ordinal());
+                    LicenseManager.updateLicense(status);
+                }
             }
+
             if (oldVersion < 9) {
 
                 //todo : uncomment below lines for app usages
@@ -138,21 +143,26 @@ public class DataAccess extends SQLiteOpenHelper {
             } else if (oldVersion == 9) {
                 version9to10(database);
                 version10to11(database);
-                //version11to12(database);
+                version11to12(database);
                 //version12to13(database);
                 //version13to14(database);
+                //version14to15(database);
             } else if (oldVersion == 10) {
                 version10to11(database);
-                //version11to12(database);
+                version11to12(database);
                 //version12to13(database);
                 //version13to14(database);
+                //version14to15(database);
+            } else if (oldVersion == 11) {
+                version11to12(database);
+                //version12to13(database);
+                //version13to14(database);
+                //version14to15(database);
+            } else if (oldVersion == 12) {
+                //version12to13(database);
+                //version13to14(database);
+                //version14to15(database);
             }
-            //else if (oldVersion == 11) {
-            //    //version11to12(database);
-            //    //version12to13(database);
-            //    //version13to14(database);
-            //    //version14to15(database);
-            //}
         } catch (MyRuntimeException e) {
             e.printStackTrace();
         }
@@ -190,8 +200,14 @@ public class DataAccess extends SQLiteOpenHelper {
         }
     }
 
+    private void version11to12(SQLiteDatabase database) {
+        database.execSQL("UPDATE " + DataPackages.TableName + " SET " + DataPackages.Custom + " = 1 WHERE " + DataPackages.Id + " IN (SELECT " + PackageHistories.DataPackageId + " FROM " + PackageHistories.TableName + ")");
+        database.execSQL("DELETE FROM " + DataPackages.TableName + " WHERE " + DataPackages.Id + " NOT IN (SELECT " + PackageHistories.DataPackageId + " FROM " + PackageHistories.TableName + ")");
+        insertDataFromAsset(database, DataPackages.TableName, "data/packages.csv", ';');
+    }
+
     //todo : uncomment below lines for app usages
-    //private void version11to12(SQLiteDatabase database) {
+    //private void version12to13(SQLiteDatabase database) {
     //    try {
     //        database.execSQL(Applications.CreateTable);
     //        database.execSQL(AppsUsageLogs.CreateTable);
