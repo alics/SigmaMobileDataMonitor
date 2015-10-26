@@ -107,9 +107,10 @@ public class AppsUsageLogs {
 
         try {
             String query = "SELECT " + Applications.AppName + " appName ,sum(" + TrafficBytes + ") data,sum(" + TrafficBytesWifi + ") wifi " +
-                           "FROM " + TableName + " log\n" +
-                           "INNER JOIN " + Applications.TableName + " app\n" +
-                           "ON app.Id=log.AppId\n" +
+                           "FROM " + TableName + " log \n" +
+                           "INNER JOIN " + Applications.TableName + " app \n" +
+                           "ON app.Id=log.AppId \n" +
+
                            "GROUP BY app.AppName "+
                            "ORDER BY data DESC,wifi DESC ";
 

@@ -13,6 +13,7 @@ import com.zohaltech.app.sigma.BuildConfig;
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.adapters.UsagePagerAdapter;
 import com.zohaltech.app.sigma.classes.App;
+import com.zohaltech.app.sigma.classes.AppsTrafficRecord;
 import com.zohaltech.app.sigma.classes.DialogManager;
 import com.zohaltech.app.sigma.classes.Helper;
 import com.zohaltech.app.sigma.classes.LicenseManager;
@@ -47,6 +48,10 @@ public class DashboardActivity extends PaymentActivity {
         DataAccess da = new DataAccess();
         da.getReadableDB();
         da.close();
+
+
+       // AppsTrafficRecord.resetStats();
+       // long s=AppsTrafficRecord.getTotalBytes(10074,"wlan0");
 
         //  AppDataUsageMeter.takeSnapshot();
         //

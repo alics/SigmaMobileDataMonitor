@@ -55,8 +55,10 @@ public class AppsTrafficReportAdapter extends ArrayAdapter<AppsTrafficMonitor> {
                 layoutAppsTraffic.setBackgroundResource(R.color.white);
             }
             txtAppName.setText(item.getAppName());
-            txtTraffic.setText(TrafficUnitsUtil.getUsedTrafficWithPoint(item.getTotalTrafficData()));
-            txtTrafficWifi.setText(TrafficUnitsUtil.getUsedTrafficWithPoint(item.getTotalTrafficWifi()));
+            String traffic = TrafficUnitsUtil.getTodayTraffic(item.getTotalTrafficData()).getInlineDisplay();
+            String trafficWifi = TrafficUnitsUtil.getTodayTraffic(item.getTotalTrafficWifi()).getInlineDisplay();
+            txtTraffic.setText(traffic);
+            txtTrafficWifi.setText(trafficWifi);
         }
     }
 }
