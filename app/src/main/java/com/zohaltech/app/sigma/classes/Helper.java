@@ -1,5 +1,7 @@
 package com.zohaltech.app.sigma.classes;
 
+import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.media.Ringtone;
@@ -8,7 +10,9 @@ import android.net.Uri;
 import android.os.Vibrator;
 import android.support.v4.app.FragmentActivity;
 import android.telephony.TelephonyManager;
+import android.widget.Toast;
 
+import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.entities.DataPackage;
 
 import java.io.BufferedReader;
@@ -22,6 +26,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import widgets.MyToast;
 
 
 public final class Helper {
@@ -151,6 +157,31 @@ public final class Helper {
             e.printStackTrace();
         }
         return out.toString();
+    }
+
+    public static void rateApp(Activity activity) {
+        App.uiPreferences.edit().putBoolean("RATED", true).apply();
+        Intent intent = new Intent(App.marketPollIntent);
+        intent.setData(Uri.parse(App.marketPollUri));
+        intent.setPackage(App.marketPackage);
+        if (!myStartActivity(activity, intent)) {
+            intent.setData(Uri.parse(App.marketWebsiteUri));
+            if (!myStartActivity(activity, intent)) {
+                MyToast.show(String.format(activity.getString(R.string.could_not_open_market), App.marketName, App.marketName), Toast.LENGTH_SHORT);
+            }
+        }
+    }
+
+    public static boolean myStartActivity(Activity activity, Intent intent) {
+        try {
+            activity.startActivity(intent);
+            return true;
+        } catch (ActivityNotFoundException e) {
+            return false;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 
     public enum Operator {

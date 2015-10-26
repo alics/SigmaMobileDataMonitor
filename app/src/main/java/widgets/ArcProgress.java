@@ -27,9 +27,6 @@ public class ArcProgress extends ImageView {
     private Paint textPaint;
     private int    progress = 0;
     private String traffic  = "";
-    //private int strokeWidth = 22;
-    //private int numberTextSize = 120;
-    //private int percentTextSize = 60;
 
     public ArcProgress(Context context) {
         super(context);

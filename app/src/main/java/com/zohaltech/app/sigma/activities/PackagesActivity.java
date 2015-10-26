@@ -14,7 +14,7 @@ import com.zohaltech.app.sigma.classes.DialogManager;
 import com.zohaltech.app.sigma.classes.Helper;
 import com.zohaltech.app.sigma.dal.DataPackages;
 
-public class PackagesActivity extends EnhancedActivity {
+public class PackagesActivity extends PaymentActivity {
 
     PagerSlidingTabStrip tabOperators;
     ViewPager            pagerPackages;
@@ -22,6 +22,7 @@ public class PackagesActivity extends EnhancedActivity {
 
     @Override
     void onCreated() {
+
         setContentView(R.layout.activity_packages);
 
         // Initialize the ViewPager and set an adapter
@@ -55,6 +56,9 @@ public class PackagesActivity extends EnhancedActivity {
 
         changeTabsFont();
         selectTabByOperator();
+
+        super.onCreated();
+
     }
 
     @Override
@@ -104,12 +108,24 @@ public class PackagesActivity extends EnhancedActivity {
     @Override
     protected void onActivityResult(final int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode != 0) {
+        if (requestCode != 0 && requestCode != RC_REQUEST) {
             App.handler.postDelayed(new Runnable() {
                 public void run() {
                     DialogManager.showPackageActivationDialog(DataPackages.selectPackageById(requestCode));
                 }
             }, 1000);
         }
+    }
+
+    @Override
+    void updateUiToPremiumVersion() {
+        //packagePagerAdapter = null;
+        //packagePagerAdapter = new PackagePagerAdapter(getSupportFragmentManager());
+        packagePagerAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    void updateUiToTrialVersion() {
+        //do nothing
     }
 }

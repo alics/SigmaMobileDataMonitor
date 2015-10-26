@@ -32,7 +32,6 @@ public class MyUncaughtExceptionHandler implements java.lang.Thread.UncaughtExce
         try {
             File file = new File(Environment.getExternalStorageDirectory(), "sigma_log.txt");
             if (!file.exists()) {
-                // file.mkdirs();
                 file.createNewFile();
             } else {
                 if (file.length() > (5 * 1024 * 1024)){

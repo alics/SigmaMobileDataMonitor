@@ -75,7 +75,7 @@
             android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:gravity="right"
-            android:text="توجه : در صورتیکه قبلا نسخه کامل برنامه را خریداری نموده اید، روی دکمه خرید کلیک کنید و بدون پرداخت هزینه به نسخه کامل ارتقا یابید."
+            android:text="توجه : در صورتیکه قبلا نسخه کامل را خریداری نموده اید، روی دکمه خرید کلیک کنید و بدون پرداخت هزینه به نسخه کامل ارتقا یابید."
             android:textColor="@color/secondary_text"/>
 
     </LinearLayout>

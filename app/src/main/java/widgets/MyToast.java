@@ -10,7 +10,6 @@ import android.widget.Toast;
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.classes.App;
 
-
 public class MyToast extends Toast {
 
     //    public static enum MessageType{
@@ -18,6 +17,7 @@ public class MyToast extends Toast {
     //        WARNING,
     //        ERROR
     //    }
+
     ImageView image;
     TextView  text;
 
@@ -27,7 +27,6 @@ public class MyToast extends Toast {
         image = (ImageView) layout.findViewById(R.id.image);
         text = (TextView) layout.findViewById(R.id.text);
         setView(layout);
-        //setGravity(Gravity.BOTTOM, 0, 0);
     }
 
     public static void show(String message, int duration) {

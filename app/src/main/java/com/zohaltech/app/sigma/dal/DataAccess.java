@@ -1,9 +1,6 @@
 package com.zohaltech.app.sigma.dal;
 
 import android.content.ContentValues;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -18,15 +15,15 @@ import com.zohaltech.app.sigma.classes.LicenseStatus;
 import com.zohaltech.app.sigma.classes.MyRuntimeException;
 
 import java.io.InputStreamReader;
-import java.util.Iterator;
 
 
 public class DataAccess extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME    = "SIGMA";
     //public static final int    DATABASE_VERSION = 9; //published in versions 1.06, 1.07
-    //    public static final int DATABASE_VERSION = 10; //published in versions 1.08
-    public static final int    DATABASE_VERSION = 11; //published in versions 1.09
+    //public static final int    DATABASE_VERSION = 10; //published in versions 1.08
+    //public static final int    DATABASE_VERSION = 11; //published in versions 1.1
+    public static final int    DATABASE_VERSION = 12; //published in versions 1.11
 
     public DataAccess() {
         super(App.context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -42,8 +39,10 @@ public class DataAccess extends SQLiteOpenHelper {
             database.execSQL(PackageHistories.CreateTable);
             database.execSQL(Settings.CreateTable);
             database.execSQL(SystemSettings.CreateTable);
-            database.execSQL(Applications.CreateTable);
-            database.execSQL(AppsUsageLogs.CreateTable);
+
+            //todo : uncomment below lines for app usages
+            //database.execSQL(Applications.CreateTable);
+            //database.execSQL(AppsUsageLogs.CreateTable);
 
             insertDataFromAsset(database, MobileOperators.TableName, "data/operators.csv", ';');
             insertDataFromAsset(database, DataPackages.TableName, "data/packages.csv", ';');
@@ -93,15 +92,11 @@ public class DataAccess extends SQLiteOpenHelper {
             systemSettingsValues.put(SystemSettings.ActiveSim, 0);
             database.insert(SystemSettings.TableName, null, systemSettingsValues);
 
-            insertHasInternetAccessApplications(database);
+            //todo : uncomment below lines for app usages
+            //insertHasInternetAccessApplications(database);
 
             LicenseStatus status = LicenseManager.getExistingLicense();
             if (status == null) {
-                //LicenseManager.initializeLicenseFile(new LicenseStatus("" + BuildConfig.VERSION_CODE,
-                //                                                       Helper.getDeviceId(),
-                //                                                       Helper.getCurrentDate(),
-                //                                                       LicenseManager.Status.TESTING_TIME.ordinal(),
-                //                                                       1));
                 LicenseManager.initializeLicenseFile(new LicenseStatus("" + BuildConfig.VERSION_CODE,
                                                                        Helper.getDeviceId(),
                                                                        Helper.getCurrentDate(),
@@ -116,18 +111,27 @@ public class DataAccess extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
         try {
             App.uiPreferences.edit().putBoolean(IntroductionActivity.INTRO_SHOWN, false).apply();
+            database.execSQL("UPDATE " + SystemSettings.TableName + " SET " + SystemSettings.Installed + " = 0, " + SystemSettings.Registered + " = 0");
 
-            LicenseStatus status = LicenseManager.getExistingLicense();
-            if (status == null) {
-                LicenseManager.initializeLicenseFile(new LicenseStatus("" + BuildConfig.VERSION_CODE,
-                                                                       Helper.getDeviceId(),
-                                                                       Helper.getCurrentDate(),
-                                                                       LicenseManager.Status.NOT_REGISTERED.ordinal()));
-            } else {
-                status.setStatus(LicenseManager.Status.NOT_REGISTERED.ordinal());
-                LicenseManager.updateLicense(status);
+            if (oldVersion < 11) {
+                LicenseStatus status = LicenseManager.getExistingLicense();
+                if (status == null) {
+                    LicenseManager.initializeLicenseFile(new LicenseStatus("" + BuildConfig.VERSION_CODE,
+                                                                           Helper.getDeviceId(),
+                                                                           Helper.getCurrentDate(),
+                                                                           LicenseManager.Status.NOT_REGISTERED.ordinal()));
+                } else {
+                    status.setStatus(LicenseManager.Status.NOT_REGISTERED.ordinal());
+                    LicenseManager.updateLicense(status);
+                }
             }
+
             if (oldVersion < 9) {
+
+                //todo : uncomment below lines for app usages
+                //database.execSQL(AppsUsageLogs.DropTable);
+                //database.execSQL(Applications.DropTable);
+
                 database.execSQL(SystemSettings.DropTable);
                 database.execSQL(Settings.DropTable);
                 database.execSQL(PackageHistories.DropTable);
@@ -139,12 +143,25 @@ public class DataAccess extends SQLiteOpenHelper {
             } else if (oldVersion == 9) {
                 version9to10(database);
                 version10to11(database);
-                //version11to12(database);
+                version11to12(database);
                 //version12to13(database);
+                //version13to14(database);
+                //version14to15(database);
             } else if (oldVersion == 10) {
                 version10to11(database);
-                //version11to12(database);
+                version11to12(database);
                 //version12to13(database);
+                //version13to14(database);
+                //version14to15(database);
+            } else if (oldVersion == 11) {
+                version11to12(database);
+                //version12to13(database);
+                //version13to14(database);
+                //version14to15(database);
+            } else if (oldVersion == 12) {
+                //version12to13(database);
+                //version13to14(database);
+                //version14to15(database);
             }
         } catch (MyRuntimeException e) {
             e.printStackTrace();
@@ -178,14 +195,27 @@ public class DataAccess extends SQLiteOpenHelper {
             database.execSQL("ALTER TABLE " + DailyTrafficHistories.TableName + " ADD COLUMN " + DailyTrafficHistories.TrafficWifi + " BIGINT");
             database.execSQL("ALTER TABLE " + Settings.TableName + " ADD COLUMN " + Settings.ShowWifiUsage + " BOOLEAN");
             database.execSQL("UPDATE " + Settings.TableName + " SET " + Settings.ShowWifiUsage + " = 1");
-
-            database.execSQL(Applications.CreateTable);
-            database.execSQL(AppsUsageLogs.CreateTable);
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
+    private void version11to12(SQLiteDatabase database) {
+        database.execSQL("UPDATE " + DataPackages.TableName + " SET " + DataPackages.Custom + " = 1 WHERE " + DataPackages.Id + " IN (SELECT " + PackageHistories.DataPackageId + " FROM " + PackageHistories.TableName + ")");
+        database.execSQL("DELETE FROM " + DataPackages.TableName + " WHERE " + DataPackages.Id + " NOT IN (SELECT " + PackageHistories.DataPackageId + " FROM " + PackageHistories.TableName + ")");
+        insertDataFromAsset(database, DataPackages.TableName, "data/packages.csv", ';');
+    }
+
+    //todo : uncomment below lines for app usages
+    //private void version12to13(SQLiteDatabase database) {
+    //    try {
+    //        database.execSQL(Applications.CreateTable);
+    //        database.execSQL(AppsUsageLogs.CreateTable);
+    //        insertHasInternetAccessApplications(database);
+    //    } catch (SQLException e) {
+    //        e.printStackTrace();
+    //    }
+    //}
 
     @Override
     public synchronized void close() {
@@ -256,36 +286,38 @@ public class DataAccess extends SQLiteOpenHelper {
         }
     }
 
-    private void insertHasInternetAccessApplications(SQLiteDatabase database) {
-        PackageManager pm = App.context.getPackageManager();
-        Iterator iterator = pm.getInstalledPackages(12288).iterator();
-        PackageInfo packageInfo;
+    //todo : uncomment below lines for app usages
+    //private void insertHasInternetAccessApplications(SQLiteDatabase database) {
+    //    PackageManager pm = App.context.getPackageManager();
+    //    Iterator iterator = pm.getInstalledPackages(12288).iterator();
+    //    PackageInfo packageInfo;
+    //
+    //    while (iterator.hasNext()) {
+    //        packageInfo = (PackageInfo) iterator.next();
+    //        String[] permissions = packageInfo.requestedPermissions;
+    //
+    //        if (permissions != null && hasInternetAccess(permissions)) {
+    //            ApplicationInfo info = packageInfo.applicationInfo;
+    //            String appName = pm.getApplicationLabel(info).toString();
+    //
+    //            ContentValues appsValues = new ContentValues();
+    //            appsValues.put(Applications.AppName, appName);
+    //            appsValues.put(Applications.PackageName, info.packageName);
+    //            appsValues.put(Applications.Uid, info.uid);
+    //            appsValues.put(Applications.Removed, 0);
+    //
+    //            database.insert(Applications.TableName, null, appsValues);
+    //        }
+    //    }
+    //}
 
-        while (iterator.hasNext()) {
-            packageInfo = (PackageInfo) iterator.next();
-            String[] permissions = packageInfo.requestedPermissions;
-
-            if (permissions != null && hasInternetAccess(permissions)) {
-                ApplicationInfo info = packageInfo.applicationInfo;
-                String appName = pm.getApplicationLabel(info).toString();
-
-                ContentValues appsValues = new ContentValues();
-                appsValues.put(Applications.AppName, appName);
-                appsValues.put(Applications.PackageName, info.packageName);
-                appsValues.put(Applications.Uid, info.uid);
-                appsValues.put(Applications.Removed, 0);
-
-                database.insert(Applications.TableName, null, appsValues);
-            }
-        }
-    }
-
-    private Boolean hasInternetAccess(String[] permissions) {
-        for (String permission : permissions) {
-            if ("android.permission.INTERNET".equals(permission)) {
-                return true;
-            }
-        }
-        return false;
-    }
+    //todo : uncomment below lines for app usages
+    //private Boolean hasInternetAccess(String[] permissions) {
+    //    for (String permission : permissions) {
+    //        if ("android.permission.INTERNET".equals(permission)) {
+    //            return true;
+    //        }
+    //    }
+    //    return false;
+    //}
 }

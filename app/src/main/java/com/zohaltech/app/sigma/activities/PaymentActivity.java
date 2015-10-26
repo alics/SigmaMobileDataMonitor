@@ -1,5 +1,6 @@
 package com.zohaltech.app.sigma.activities;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.util.Log;
@@ -7,6 +8,7 @@ import android.widget.Toast;
 
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.classes.App;
+import com.zohaltech.app.sigma.classes.DialogManager;
 import com.zohaltech.app.sigma.classes.LicenseManager;
 import com.zohaltech.app.sigma.classes.MyRuntimeException;
 import com.zohaltech.app.sigma.classes.WebApiClient;
@@ -19,11 +21,12 @@ import widgets.MyToast;
 
 public abstract class PaymentActivity extends EnhancedActivity {
 
+    public final  int    RC_REQUEST  = 10001;
     private final String PAY_LOAD    = "SIGMA_ANDROID_APP";
     private final String TAG         = "SIGMA_TAG";
     private final String SKU_PREMIUM = "PREMIUM";
-    private final int    RC_REQUEST  = 10001;
     String responseMessage = "ارتقای برنامه با مشکل مواجه شد";
+    Dialog paymentDialog;
     private ProgressDialog progressDialog;
     private boolean mIsPremium = false;
     private IabHelper mHelper;
@@ -42,10 +45,15 @@ public abstract class PaymentActivity extends EnhancedActivity {
 
                 // update UI accordingly
                 if (mIsPremium) {
-                    LicenseManager.registerLicense();
-                    updateUiToPremiumVersion();
-                    WebApiClient.sendUserData(WebApiClient.PostAction.REGISTER, inventory.getPurchase(SKU_PREMIUM).getToken());
-                    setWaitScreen(false);
+                    if (App.currentActivity instanceof IntroductionActivity == false) {
+                        LicenseManager.registerLicense();
+                        updateUiToPremiumVersion();
+                        App.uiPreferences.edit().putString("PURCHASE_TOKEN", inventory.getPurchase(SKU_PREMIUM).getToken()).apply();
+                        WebApiClient.sendUserData();
+                        setWaitScreen(false);
+                        responseMessage = "شما قبلا نسخه کامل را خریده اید و به نسخه کامل ارتقا یافتید";
+                        MyToast.show(responseMessage, Toast.LENGTH_LONG);
+                    }
                 }
                 //Log.i(TAG, "User is " + (mIsPremium ? "PREMIUM" : "NOT PREMIUM"));
             }
@@ -70,7 +78,8 @@ public abstract class PaymentActivity extends EnhancedActivity {
                     LicenseManager.registerLicense();
                     MyToast.show(responseMessage, Toast.LENGTH_LONG);
                     updateUiToPremiumVersion();
-                    WebApiClient.sendUserData(WebApiClient.PostAction.REGISTER, purchase.getToken());
+                    App.uiPreferences.edit().putString("PURCHASE_TOKEN", purchase.getToken()).apply();
+                    WebApiClient.sendUserData();
                 }
             }
             setWaitScreen(false);
@@ -79,19 +88,42 @@ public abstract class PaymentActivity extends EnhancedActivity {
 
     @Override
     void onCreated() {
-        if (LicenseManager.getLicenseStatus() != LicenseManager.Status.REGISTERED) {
+        if (LicenseManager.getLicenseStatus() == LicenseManager.Status.NOT_REGISTERED) {
             try {
+                //mHelper = new IabHelper(this, App.marketPublicKey);
+                //Log.d(TAG, "Starting setup.");
+                //mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+                //    public void onIabSetupFinished(IabResult result) {
+                //        //Log.d(TAG, "Setup finished.");
+                //
+                //        //if (!result.isSuccess()) {
+                //        //    // Oh noes, there was a problem.
+                //        //    //Log.d(TAG, "Problem setting up In-app Billing: " + result);
+                //        //}
+                //
+                //        // Hooray, IAB is fully set up!
+                //        mHelper.queryInventoryAsync(mGotInventoryListener);
+                //    }
+                //});
+
                 mHelper = new IabHelper(this, App.marketPublicKey);
                 //Log.d(TAG, "Starting setup.");
                 mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
                     public void onIabSetupFinished(IabResult result) {
-                        //Log.d(TAG, "Setup finished.");
+                        Log.d(TAG, "Setup finished.");
 
                         if (!result.isSuccess()) {
                             // Oh noes, there was a problem.
-                            //Log.d(TAG, "Problem setting up In-app Billing: " + result);
+                            //complain("Problem setting up in-app billing: " + result);
+                            return;
                         }
-                        // Hooray, IAB is fully set up!
+
+                        // Have we been disposed of in the meantime? If so, quit.
+                        if (mHelper == null)
+                            return;
+
+                        // IAB is fully set up. Now, let's get an inventory of stuff we own.
+                        Log.d(TAG, "Setup successful. Querying inventory.");
                         mHelper.queryInventoryAsync(mGotInventoryListener);
                     }
                 });
@@ -110,6 +142,10 @@ public abstract class PaymentActivity extends EnhancedActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode != RC_REQUEST) {
+            return;
+        }
 
         //Log.d(TAG, "onActivityResult(" + requestCode + "," + resultCode + "," + data);
         if (data != null) {
@@ -131,9 +167,10 @@ public abstract class PaymentActivity extends EnhancedActivity {
         // Pass on the activity result to the helper for handling
         if (!mHelper.handleActivityResult(requestCode, resultCode, data)) {
             super.onActivityResult(requestCode, resultCode, data);
-        } else {
-            //Log.d(TAG, "onActivityResult handled by IABUtil.");
         }
+        //else {
+        //    //Log.d(TAG, "onActivityResult handled by IABUtil.");
+        //}
     }
 
     @Override
@@ -150,10 +187,7 @@ public abstract class PaymentActivity extends EnhancedActivity {
     }
 
     private boolean verifyDeveloperPayload(Purchase p) {
-        if (p.getDeveloperPayload().equals(PAY_LOAD)) {
-            return true;
-        }
-        return false;
+        return p.getDeveloperPayload().equals(PAY_LOAD);
     }
 
     private void complain(String message) {
@@ -186,6 +220,38 @@ public abstract class PaymentActivity extends EnhancedActivity {
                 progressDialog.dismiss();
                 progressDialog = null;
             }
+        }
+    }
+
+    public void showPaymentDialog() {
+        destroyPaymentDialog();
+        paymentDialog = DialogManager.getPopupDialog(this,
+                                                     getString(R.string.buy_full_vesion),
+                                                     "برای استفاده از این قسمت میبایست به نسخه کامل ارتقا دهید، آیا مایل به خریداری نسخه کامل هستید؟",
+                                                     getString(R.string.buy_like),
+                                                     getString(R.string.buy_sora),
+                                                     null,
+                                                     new Runnable() {
+                                                         @Override
+                                                         public void run() {
+                                                             pay();
+                                                         }
+                                                     },
+                                                     new Runnable() {
+                                                         @Override
+                                                         public void run() {
+                                                             paymentDialog.dismiss();
+                                                         }
+                                                     });
+        paymentDialog.show();
+    }
+
+    public void destroyPaymentDialog() {
+        if (paymentDialog != null) {
+            if (paymentDialog.isShowing()) {
+                paymentDialog.dismiss();
+            }
+            paymentDialog = null;
         }
     }
 

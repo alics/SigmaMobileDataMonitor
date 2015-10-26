@@ -12,7 +12,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -375,9 +376,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checked="false"
+                            android:gravity="right"
                             android:text=" هشدار روز باقیمانده "
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:gravity="right"/>
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                     </LinearLayout>
 
@@ -419,9 +420,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checked="false"
+                            android:gravity="right"
                             android:text=" هشدار حجم مصرف شده "
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:gravity="right"/>
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                     </LinearLayout>
 
@@ -432,5 +433,49 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/layoutPremium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|right"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <widgets.MyTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:gravity="right|center"
+                android:text="در نسخه فعلی امکان تعریف بسته سفارشی وجود ندارد، لطفا برای استفاده از این قسمت به نسخه کامل ارتقا دهید."
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/accent"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_premium"/>
+
+        </LinearLayout>
+
+        <widgets.MyButton
+            android:id="@+id/btnPurchase"
+            style="@style/BorderlessButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:background="@drawable/btn_dialog_ok"
+            android:text="ارتقا به نسخه کامل"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
 
 </LinearLayout>

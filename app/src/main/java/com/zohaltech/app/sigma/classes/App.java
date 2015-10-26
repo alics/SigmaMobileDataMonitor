@@ -8,9 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 
 import java.util.Locale;
@@ -24,7 +22,6 @@ public class App extends Application {
 
     public static Context           context;
     public static Activity          currentActivity;
-    //public static SharedPreferences preferences;
     public static SharedPreferences uiPreferences;
     public static Typeface          englishFont;
     public static Typeface          englishFontBold;
@@ -40,7 +37,7 @@ public class App extends Application {
     public static String            marketName;
     public static String            marketPackage;
     public static String            marketAction;
-    //public static String            marketUri;
+    public static String            marketUri;
     public static String            marketWebsiteUri;
     public static String            marketDeveloperUri;
     public static String            marketPollUri;
@@ -60,11 +57,6 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
-        //if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-        //    preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        //} else {
-        //    preferences = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_MULTI_PROCESS);
-        //}
         uiPreferences = getSharedPreferences("ui", MODE_PRIVATE);
         englishFont = Typeface.createFromAsset(context.getAssets(), "fonts/exo.ttf");
         englishFontBold = Typeface.createFromAsset(context.getAssets(), "fonts/exo.ttf");
@@ -78,46 +70,7 @@ public class App extends Application {
         connectivityType = ConnectionManager.getConnectivityStatus();
 
         //todo : set market here and in manifest
-        market = MARKET_BAZAAR;
-        marketName = "بازار";
-        marketPackage = "com.farsitel.bazaar";
-        marketAction = "ir.cafebazaar.pardakht.InAppBillingService.BIND";
-        //marketUri = "bazaar://details?id=" + getPackageName();
-        marketWebsiteUri = "http://cafebazaar.ir/app/" + getPackageName();
-        marketDeveloperUri = "bazaar://collection?slug=by_author&aid=zohaltech";
-        marketPollUri = "bazaar://details?id=" + getPackageName();
-        marketPollIntent = Intent.ACTION_EDIT;
-        marketPublicKey = ConstantParams.getBazaarPublicKey();
-
-        //market = MARKET_CANDO;
-        //marketName = "کندو";
-        //marketPackage = "com.ada.market";
-        //marketAction = "com.ada.market.service.payment.BIND";
-        ////marketUri = "cando://details?id=" + getPackageName();
-        //marketWebsiteUri = "http://cando.asr24.com/app.jsp?package=" + getPackageName();
-        //marketDeveloperUri = "cando://publisher?id=zohaltech@gmail.com";
-        //marketPollUri = "cando://leave-review?id=" + getPackageName();
-        //marketPollIntent = Intent.ACTION_VIEW;
-        //marketPublicKey = ConstantParams.getCandoPublicKey();
-
-        //market = MARKET_MYKET;
-        //marketName = "مایکت";
-        //marketPackage = "ir.mservices.market";
-        //marketAction = "ir.mservices.market.InAppBillingService.BIND";
-        ////marketUri = "myket://application/#Intent;scheme=myket;package= + getPackageName() + ;end";
-        //marketWebsiteUri = "http://myket.ir/Appdetail.aspx?id=" + getPackageName();
-        //marketDeveloperUri = "http://myket.ir/DeveloperApps.aspx?Packagename=" + getPackageName();
-        //marketPollUri = "myket://comment/#Intent;scheme=comment;package=" + getPackageName() + ";end";
-        //marketPollIntent = Intent.ACTION_VIEW;
-        //marketPublicKey = ConstantParams.getMyketPublicKey();
-
-        //market = MARKET_PLAY;
-        //marketName = "Google Play";
-        //marketPackage = "com.android.vending";
-        //marketAction = "com.android.vending.billing.InAppBillingService.BIND";
-        //marketUri = "market://details?id=" + getPackageName();
-        //marketWebsiteUri = "" + getPackageName();
-        //marketPollIntent = Intent.ACTION_EDIT;
+        setTargetMarket(MARKET_BAZAAR);
 
         AlarmHandler.start(context);
 
@@ -126,8 +79,59 @@ public class App extends Application {
         Intent dataService = new Intent(context, SigmaDataService.class);
         context.startService(dataService);
 
+        //todo : uncomment below lines for app usages
         //Intent appsService = new Intent(context, SigmaAppsService.class);
         //context.startService(appsService);
+    }
+
+    private void setTargetMarket(int marketId) {
+        switch (marketId) {
+            case MARKET_BAZAAR:
+                market = MARKET_BAZAAR;
+                marketName = "بازار";
+                marketPackage = "com.farsitel.bazaar";
+                marketAction = "ir.cafebazaar.pardakht.InAppBillingService.BIND";
+                marketUri = "bazaar://details?id=" + getPackageName();
+                marketWebsiteUri = "http://cafebazaar.ir/app/" + getPackageName();
+                marketDeveloperUri = "bazaar://collection?slug=by_author&aid=zohaltech";
+                marketPollUri = "bazaar://details?id=" + getPackageName();
+                marketPollIntent = Intent.ACTION_EDIT;
+                marketPublicKey = ConstantParams.getBazaarPublicKey();
+                break;
+            case MARKET_CANDO:
+                market = MARKET_CANDO;
+                marketName = "کندو";
+                marketPackage = "com.ada.market";
+                marketAction = "com.ada.market.service.payment.BIND";
+                marketUri = "cando://details?id=" + getPackageName();
+                marketWebsiteUri = "http://cando.asr24.com/app.jsp?package=" + getPackageName();
+                marketDeveloperUri = "cando://publisher?id=zohaltech@gmail.com";
+                marketPollUri = "cando://leave-review?id=" + getPackageName();
+                marketPollIntent = Intent.ACTION_VIEW;
+                marketPublicKey = ConstantParams.getCandoPublicKey();
+                break;
+            case MARKET_MYKET:
+                market = MARKET_MYKET;
+                marketName = "مایکت";
+                marketPackage = "ir.mservices.market";
+                marketAction = "ir.mservices.market.InAppBillingService.BIND";
+                marketUri = "myket://application/#Intent;scheme=myket;package=" + getPackageName() + ";end";
+                marketWebsiteUri = "http://myket.ir/Appdetail.aspx?id=" + getPackageName();
+                marketDeveloperUri = "http://myket.ir/DeveloperApps.aspx?Packagename=" + getPackageName();
+                marketPollUri = "myket://comment/#Intent;scheme=comment;package=" + getPackageName() + ";end";
+                marketPollIntent = Intent.ACTION_VIEW;
+                marketPublicKey = ConstantParams.getMyketPublicKey();
+                break;
+            case MARKET_PLAY:
+                market = MARKET_PLAY;
+                marketName = "Google Play";
+                marketPackage = "com.android.vending";
+                marketAction = "com.android.vending.billing.InAppBillingService.BIND";
+                marketUri = "market://details?id=" + getPackageName();
+                marketWebsiteUri = "" + getPackageName();
+                marketPollIntent = Intent.ACTION_EDIT;
+                break;
+        }
     }
 
     @Override

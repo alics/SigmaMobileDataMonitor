@@ -28,14 +28,6 @@ public class TrafficUsageFragment extends Fragment {
     TextView     txtSecondary;
     TextView     txtSecondaryCaption;
 
-    //long   usedPrimaryTraffic;
-    //long   totalPrimaryTraffic;
-    //String strPrimaryTraffic;
-    //
-    //long   usedSecondaryTraffic;
-    //long   totalSecondaryTraffic;
-    //String strSecondaryTraffic;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

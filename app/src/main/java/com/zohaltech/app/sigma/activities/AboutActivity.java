@@ -1,6 +1,5 @@
 package com.zohaltech.app.sigma.activities;
 
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.MenuItem;
@@ -15,17 +14,15 @@ import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.classes.App;
 import com.zohaltech.app.sigma.classes.Helper;
 
-
-
 import widgets.MyToast;
 
 public class AboutActivity extends EnhancedActivity {
 
-    TextView txtVersion;
-    Button   btnShare;
-    Button   btnProducts;
-    Button   btnFeedback;
-    Button   btnRate;
+    TextView     txtVersion;
+    Button       btnShare;
+    Button       btnProducts;
+    Button       btnFeedback;
+    Button       btnRate;
     LinearLayout layoutWebsite;
 
     @Override
@@ -61,7 +58,7 @@ public class AboutActivity extends EnhancedActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(App.marketDeveloperUri));
-                if (!myStartActivity(intent)) {
+                if (!Helper.myStartActivity(AboutActivity.this, intent)) {
                     MyToast.show(getString(R.string.could_not_open_market), Toast.LENGTH_SHORT);
                 }
             }
@@ -73,24 +70,13 @@ public class AboutActivity extends EnhancedActivity {
                 Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", email, null));
                 intent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.feedback_subject));
                 startActivity(Intent.createChooser(intent, getResources().getString(R.string.feedback_title)));
-                //Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "[Email_Address]", null));
-                //intent.putExtra(Intent.EXTRA_SUBJECT, "An Email From Myket!");
-                //startActivity(Intent.createChooser(intent, "ارسال ایمیل"));
             }
         });
 
         btnRate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(App.marketPollIntent);
-                intent.setData(Uri.parse(App.marketPollUri));
-                intent.setPackage(App.marketPackage);
-                if (!myStartActivity(intent)) {
-                    intent.setData(Uri.parse(App.marketWebsiteUri));
-                    if (!myStartActivity(intent)) {
-                        MyToast.show(String.format(getResources().getString(R.string.could_not_open_market), App.marketName, App.marketName), Toast.LENGTH_SHORT);
-                    }
-                }
+                Helper.rateApp(AboutActivity.this);
             }
         });
 
@@ -100,18 +86,6 @@ public class AboutActivity extends EnhancedActivity {
                 Helper.goToWebsite("http://zohaltech.com");
             }
         });
-    }
-
-    private boolean myStartActivity(Intent intent) {
-        try {
-            startActivity(intent);
-            return true;
-        } catch (ActivityNotFoundException e) {
-            return false;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return false;
-        }
     }
 
     @Override

@@ -104,7 +104,6 @@ public final class PackageStatus {
         }
 
         if (dataPackage.getSecondaryTraffic() != 0 && dataPackage.getPrimaryTraffic() != 0) {
-            //long usedSecondaryTraffic = UsageLogs.getUsedSecondaryTrafficOfPackage(dataPackage, history);
             if (usedSecondaryTraffic >= dataPackage.getSecondaryTraffic() &&
                 usedPrimaryTraffic >= dataPackage.getPrimaryTraffic()) {
                 String msg = "حجم اصلی و شبانه تمام شد";

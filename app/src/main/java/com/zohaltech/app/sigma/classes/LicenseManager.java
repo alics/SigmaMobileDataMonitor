@@ -16,66 +16,21 @@ public class LicenseManager {
         LicenseModifier.initializeLicenseFile(status);
     }
 
-    public static boolean validateLicense() {
-        LicenseStatus status = LicenseModifier.getLicenceFile();
-        if (status == null)
-            return false;
-        if (!status.getDeviceId().equals(Helper.getDeviceId())) {
-            status.setStatus(Status.NOT_REGISTERED.ordinal());
-            LicenseModifier.updateLicenseFile(status);
-            return false;
-        }
-        return status.getStatus() == Status.REGISTERED.ordinal();
-
-        //String installDateStr = status.getInstallDate();
-        //if (Helper.getCurrentDate().equals(installDateStr)) {
-        //    status.setCheckCount(status.getCheckCount() + 1);
-        //    status.setAppVersion("" + BuildConfig.VERSION_CODE);
-        //    LicenseModifier.updateLicenseFile(status);
-        //    return true;
-        //}
-        //
-        //int checkCount = status.getCheckCount();
-        //int trialDays;
-        //if (Integer.valueOf(status.getAppVersion()) < BuildConfig.VERSION_CODE ){
-        //    trialDays = Integer.valueOf(ConstantParams.getSeven().substring(0, 1));
-        //} else{
-        //    trialDays = Integer.valueOf(ConstantParams.getTwo().substring(0, 1));
-        //}
-        //if (checkCount > trialDays) {
-        //    status.setStatus(Status.NOT_REGISTERED.ordinal());
-        //    LicenseModifier.updateLicenseFile(status);
-        //    return false;
-        //}
-        //
-        //String calculatedInstallDate = Helper.addDay(0 - checkCount);
-        //if (!calculatedInstallDate.equals(installDateStr)) {
-        //    status.setStatus(Status.NOT_REGISTERED.ordinal());
-        //    LicenseModifier.updateLicenseFile(status);
-        //    return false;
-        //}
-        //
-        //status.setCheckCount(status.getCheckCount() + 1);
-        //status.setAppVersion("" + BuildConfig.VERSION_CODE);
-        //LicenseModifier.updateLicenseFile(status);
-        //
-        //return true;
-    }
+    //public static boolean validateLicense() {
+    //    LicenseStatus status = LicenseModifier.getLicenceFile();
+    //    if (status == null)
+    //        return false;
+    //    if (!status.getDeviceId().equals(Helper.getDeviceId())) {
+    //        status.setStatus(Status.NOT_REGISTERED.ordinal());
+    //        LicenseModifier.updateLicenseFile(status);
+    //        return false;
+    //    }
+    //    return status.getStatus() == Status.REGISTERED.ordinal();
+    //}
 
     public static Status getLicenseStatus() {
         LicenseStatus status = LicenseModifier.getLicenceFile();
 
-        //if (status == null || status.getStatus() == Status.NOT_REGISTERED.ordinal()) {
-        //    return Status.NOT_REGISTERED;
-        //} else if (!status.getDeviceId().equals(Helper.getDeviceId())) {
-        //    status.setStatus(Status.NOT_REGISTERED.ordinal());
-        //    LicenseModifier.updateLicenseFile(status);
-        //    return Status.NOT_REGISTERED;
-        //} else if (status.getStatus() == Status.REGISTERED.ordinal()) {
-        //    return Status.REGISTERED;
-        //} else {
-        //    return Status.TESTING_TIME;
-        //}
         if (status == null) {
             return Status.NOT_REGISTERED;
         }
@@ -90,11 +45,6 @@ public class LicenseManager {
     public static void registerLicense() {
         LicenseStatus status = LicenseModifier.getLicenceFile();
         if (status == null) {
-            //status = new LicenseStatus("" + BuildConfig.VERSION_CODE,
-            //        Helper.getDeviceId(),
-            //        Helper.getCurrentDate(),
-            //        Status.REGISTERED.ordinal(),
-            //        1);
             status = new LicenseStatus("" + BuildConfig.VERSION_CODE,
                                        Helper.getDeviceId(),
                                        Helper.getCurrentDate(),
@@ -162,9 +112,6 @@ public class LicenseManager {
                         case 3:
                             licenseStatus.setStatus(Integer.valueOf(filedText));
                             break;
-                        //case 4:
-                        //    licenseStatus.setCheckCount(Integer.valueOf(filedText));
-                        //    break;
                     }
                 }
                 return licenseStatus;
@@ -239,10 +186,6 @@ public class LicenseManager {
 
             String status = licenseStatus.getStatus() + "";
             licenseStr.append(status);
-            //licenseStr.append("\n");
-            //
-            //String executionCount = licenseStatus.getCheckCount() + "";
-            //licenseStr.append(executionCount);
 
             return licenseStr.toString();
         }

@@ -47,7 +47,6 @@ public class IntroductionPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         View itemView = App.inflater.inflate(R.layout.pager_adapter_introduction, container, false);
-        // Declare Variables
         TextView txtIntro = (TextView) itemView.findViewById(R.id.txtIntro);
         ImageView imgIntro = (ImageView) itemView.findViewById(R.id.imgIntro);
         Slide slide = (Slide) itemView.findViewById(R.id.slide);
@@ -60,7 +59,6 @@ public class IntroductionPagerAdapter extends PagerAdapter {
             slide.setVisibility(View.GONE);
             if (position == 6) {
                 txtIntro.setVisibility(View.GONE);
-                //imgIntro.setVisibility(View.GONE);
                 imgIntro.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                 layoutPurchase.setVisibility(View.VISIBLE);
                 Button btnBuyNow = (Button) itemView.findViewById(R.id.btnBuyNow);
@@ -103,7 +101,6 @@ public class IntroductionPagerAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        // Remove viewpager_item.xml from ViewPager
         container.removeView((LinearLayout) object);
     }
 }
