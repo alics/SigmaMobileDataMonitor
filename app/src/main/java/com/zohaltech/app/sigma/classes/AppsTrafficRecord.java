@@ -16,12 +16,12 @@ public class AppsTrafficRecord {
     Integer appId;
     String appName     = null;
     String packageName = null;
-    ConnectivityType connectivityType;
+    int connectivityType;
 
     AppsTrafficRecord() {
     }
 
-    AppsTrafficRecord(int uid, int appId, String appName, String packageName, ConnectivityType connectivityType, AppsTrafficRecord previousRecord) {
+    AppsTrafficRecord(int uid, int appId, String appName, String packageName, int connectivityType, AppsTrafficRecord previousRecord) {
         //tx = TrafficStats.getUidTxBytes(uid);
         //rx = TrafficStats.getUidRxBytes(uid);
 
@@ -32,13 +32,13 @@ public class AppsTrafficRecord {
             //sumBytes = (tx - previousRecord.tx) + (rx - previousRecord.rx);
             //            firstTx=previousRecord.firstTx;
             //            firstRx=previousRecord.firstRx;
-            firstData=previousRecord.firstData;
-            fistWifi=previousRecord.fistWifi;
+            firstData = previousRecord.firstData;
+            fistWifi = previousRecord.fistWifi;
 
-            if (connectivityType == ConnectivityType.WIFI) {
-                sumWifi =getTotalBytes(uid, "wlan0") - previousRecord.sumWifi-previousRecord.fistWifi;
-            } else if (connectivityType == ConnectivityType.DATA) {
-                sumData =  getTotalBytes(uid, "rmnet0") - previousRecord.sumData-previousRecord.firstData;
+            if (connectivityType == ConnectionManager.TYPE_WIFI) {
+                sumWifi = getTotalBytes(uid, "wlan0") - previousRecord.sumWifi - previousRecord.fistWifi;
+            } else if (connectivityType == ConnectionManager.TYPE_MOBILE) {
+                sumData = getTotalBytes(uid, "rmnet0") - previousRecord.sumData - previousRecord.firstData;
             }
         } else {
             //            firstTx = TrafficStats.getUidTxBytes(uid);
@@ -49,7 +49,7 @@ public class AppsTrafficRecord {
             sumData = 0;
         }
 
-        this.appName = appName+uid;
+        this.appName = appName + uid;
         this.packageName = packageName;
         this.appId = appId;
         this.connectivityType = connectivityType;
@@ -88,8 +88,8 @@ public class AppsTrafficRecord {
                             rx_bytes += Long.valueOf(lineArr[5]);
                             rx_udp_bytes += Long.valueOf(lineArr[11]);
                             tx_udp_bytes += Long.valueOf(lineArr[17]);
-                           // rx_other_bytes += Long.valueOf(lineArr[13]);
-                          //  tx_other_bytes += Long.valueOf(lineArr[19]);
+                            // rx_other_bytes += Long.valueOf(lineArr[13]);
+                            //  tx_other_bytes += Long.valueOf(lineArr[19]);
                             //  }
                         }
                     }
