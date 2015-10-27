@@ -19,5 +19,6 @@ public class ConnectivityStateReceiver extends BroadcastReceiver {
         //    AppDataUsageMeter.takeSnapshot();
         //    App.connectivityType = ConnectionManager.getConnectivityStatus();
         //}
+
     }
 }

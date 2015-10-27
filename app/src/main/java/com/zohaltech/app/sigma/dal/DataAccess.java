@@ -217,6 +217,7 @@ public class DataAccess extends SQLiteOpenHelper {
     //    }
     //}
 
+
     @Override
     public synchronized void close() {
         super.close();
