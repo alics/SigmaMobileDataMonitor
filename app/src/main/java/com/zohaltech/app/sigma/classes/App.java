@@ -78,10 +78,6 @@ public class App extends Application {
 
         Intent dataService = new Intent(context, SigmaDataService.class);
         context.startService(dataService);
-
-        //todo : uncomment below lines for app usages
-        //Intent appsService = new Intent(context, SigmaAppsService.class);
-        //context.startService(appsService);
     }
 
     private void setTargetMarket(int marketId) {

@@ -43,9 +43,6 @@ public class DashboardActivity extends EnhancedActivity {
         da.getReadableDB();
         da.close();
 
-        //todo : is this line necessary
-        //AppDataUsageMeter.takeSnapshot();
-
         setContentView(R.layout.activity_dashboard);
 
         if (App.uiPreferences.getBoolean(IntroductionActivity.INTRO_SHOWN, false) == false) {
