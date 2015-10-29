@@ -115,8 +115,7 @@ public class DashboardActivity extends EnhancedActivity {
         pagerUsages.setAdapter(usagePagerAdapter);
         pagerUsages.setCurrentItem(1);
 
-        WebApiClient.sendUserData();
-        WebApiClient.checkForUpdate();
+        WebApiClient.sendUserData(true);
 
         if (App.uiPreferences.getBoolean("RATED", false) == false) {
             App.uiPreferences.edit().putInt("APP_RUN_COUNT", App.uiPreferences.getInt("APP_RUN_COUNT", 0) + 1).apply();

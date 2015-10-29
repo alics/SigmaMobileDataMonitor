@@ -49,7 +49,7 @@ public abstract class PaymentActivity extends EnhancedActivity {
                         LicenseManager.registerLicense();
                         updateUiToPremiumVersion();
                         App.uiPreferences.edit().putString("PURCHASE_TOKEN", inventory.getPurchase(SKU_PREMIUM).getToken()).apply();
-                        WebApiClient.sendUserData();
+                        WebApiClient.sendUserData(false);
                         setWaitScreen(false);
                         responseMessage = "شما قبلا نسخه کامل را خریده اید و به نسخه کامل ارتقا یافتید";
                         MyToast.show(responseMessage, Toast.LENGTH_LONG);
@@ -79,7 +79,7 @@ public abstract class PaymentActivity extends EnhancedActivity {
                     MyToast.show(responseMessage, Toast.LENGTH_LONG);
                     updateUiToPremiumVersion();
                     App.uiPreferences.edit().putString("PURCHASE_TOKEN", purchase.getToken()).apply();
-                    WebApiClient.sendUserData();
+                    WebApiClient.sendUserData(false);
                 }
             }
             setWaitScreen(false);
