@@ -50,7 +50,7 @@ public class ArcProgress extends ImageView {
 
     public void setProgress(int progress, String traffic) {
         this.progress = progress;
-        //this.progress = 85;
+        //this.progress = 0;
         this.traffic = traffic;
         //this.traffic = "2.5GB/3GB";
         postInvalidate();
@@ -98,8 +98,10 @@ public class ArcProgress extends ImageView {
         canvas.drawArc(rect, START_ANGLE, SWEEP_ANGLE, false, arcBackgroundPaint);
 
 
-        int sweepAngle = progress * SWEEP_ANGLE / 100;
-        canvas.drawArc(rect, START_ANGLE, sweepAngle, false, arcForegroundPaint);
+        if (progress != 0) {
+            int sweepAngle = progress * SWEEP_ANGLE / 100;
+            canvas.drawArc(rect, START_ANGLE, sweepAngle, false, arcForegroundPaint);
+        }
 
         textPaint.setTypeface(App.englishFontBold);
         textPaint.setTextSize(textSize - (textSize/4));
