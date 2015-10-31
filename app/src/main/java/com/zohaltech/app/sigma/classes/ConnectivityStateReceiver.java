@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.zohaltech.app.sigma.dal.SnapshotStatus;
+
 public class ConnectivityStateReceiver extends BroadcastReceiver {
 
     @Override
@@ -12,12 +14,15 @@ public class ConnectivityStateReceiver extends BroadcastReceiver {
         WebApiClient.sendUserData(true);
 
         //todo : uncomment below lines for app usages
-        //if (ConnectionManager.getConnectivityStatus() == ConnectionManager.TYPE_WIFI ||
-        //    ConnectionManager.getConnectivityStatus() == ConnectionManager.TYPE_MOBILE) {
-        //    //AppDataUsageMeter.runnable.run();
-        //    AppDataUsageMeter.takeSnapshot();
-        //    App.connectivityType = ConnectionManager.getConnectivityStatus();
-        //}
+        if (ConnectionManager.getConnectivityStatus() == ConnectionManager.TYPE_NOT_CONNECTED &&
+            App.connectivityType == ConnectionManager.TYPE_MOBILE) {
+            SnapshotStatus status = SnapshotStatus.getCurrentSnapshotStatus();
+
+            if (status.getStatus() != SnapshotStatus.Running) {
+                AppDataUsageMeter.takeSnapshot();
+            }
+            App.connectivityType = ConnectionManager.getConnectivityStatus();
+        }
 
     }
 }

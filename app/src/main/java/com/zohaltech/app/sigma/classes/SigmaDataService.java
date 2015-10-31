@@ -9,7 +9,7 @@ public class SigmaDataService extends Service {
     DataUsageMeter dataUsageMeter;
 
     //todo : uncomment below lines for app usages
-    //AppDataUsageMeter appDataUsageMeter;
+    AppDataUsageMeter appDataUsageMeter;
 
     @Override
     public void onCreate() {
@@ -19,8 +19,8 @@ public class SigmaDataService extends Service {
         dataUsageMeter.execute();
 
         //todo : uncomment below lines for app usages
-        //appDataUsageMeter=new AppDataUsageMeter();
-        //appDataUsageMeter.execute();
+        appDataUsageMeter=new AppDataUsageMeter();
+        appDataUsageMeter.execute();
     }
 
     @Override
@@ -29,7 +29,7 @@ public class SigmaDataService extends Service {
         dataUsageMeter.shutdown();
 
         //todo : uncomment below lines for app usages
-        //appDataUsageMeter.shutdown();
+        appDataUsageMeter.shutdown();
     }
 
     @Override

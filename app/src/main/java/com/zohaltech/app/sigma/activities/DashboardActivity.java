@@ -13,6 +13,7 @@ import com.zohaltech.app.sigma.BuildConfig;
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.adapters.UsagePagerAdapter;
 import com.zohaltech.app.sigma.classes.App;
+import com.zohaltech.app.sigma.classes.AppDataUsageMeter;
 import com.zohaltech.app.sigma.classes.DialogManager;
 import com.zohaltech.app.sigma.classes.Helper;
 import com.zohaltech.app.sigma.classes.LicenseManager;
@@ -42,6 +43,8 @@ public class DashboardActivity extends EnhancedActivity {
         DataAccess da = new DataAccess();
         da.getReadableDB();
         da.close();
+
+       // AppDataUsageMeter.takeSnapshot();
 
         setContentView(R.layout.activity_dashboard);
 

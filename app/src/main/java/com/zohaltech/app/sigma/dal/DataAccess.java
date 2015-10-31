@@ -1,6 +1,9 @@
 package com.zohaltech.app.sigma.dal;
 
 import android.content.ContentValues;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -15,6 +18,7 @@ import com.zohaltech.app.sigma.classes.LicenseStatus;
 import com.zohaltech.app.sigma.classes.MyRuntimeException;
 
 import java.io.InputStreamReader;
+import java.util.Iterator;
 
 
 public class DataAccess extends SQLiteOpenHelper {
@@ -41,8 +45,9 @@ public class DataAccess extends SQLiteOpenHelper {
             database.execSQL(SystemSettings.CreateTable);
 
             //todo : uncomment below lines for app usages
-            //database.execSQL(Applications.CreateTable);
-            //database.execSQL(AppsUsageLogs.CreateTable);
+            database.execSQL(Applications.CreateTable);
+            database.execSQL(AppsUsageLogs.CreateTable);
+            database.execSQL(SnapshotStatus.CreateTable);
 
             insertDataFromAsset(database, MobileOperators.TableName, "data/operators.csv", ';');
             insertDataFromAsset(database, DataPackages.TableName, "data/packages.csv", ';');
@@ -92,8 +97,12 @@ public class DataAccess extends SQLiteOpenHelper {
             systemSettingsValues.put(SystemSettings.ActiveSim, 0);
             database.insert(SystemSettings.TableName, null, systemSettingsValues);
 
+            ContentValues snapShot = new ContentValues();
+            snapShot.put(SnapshotStatus.Status, SnapshotStatus.Stopped);
+            database.insert(SnapshotStatus.TableName, null, snapShot);
+
             //todo : uncomment below lines for app usages
-            //insertHasInternetAccessApplications(database);
+            insertHasInternetAccessApplications(database);
 
             LicenseStatus status = LicenseManager.getExistingLicense();
             if (status == null) {
@@ -159,7 +168,7 @@ public class DataAccess extends SQLiteOpenHelper {
                 //version13to14(database);
                 //version14to15(database);
             } else if (oldVersion == 12) {
-                //version12to13(database);
+                version12to13(database);
                 //version13to14(database);
                 //version14to15(database);
             }
@@ -207,15 +216,15 @@ public class DataAccess extends SQLiteOpenHelper {
     }
 
     //todo : uncomment below lines for app usages
-    //private void version12to13(SQLiteDatabase database) {
-    //    try {
-    //        database.execSQL(Applications.CreateTable);
-    //        database.execSQL(AppsUsageLogs.CreateTable);
-    //        insertHasInternetAccessApplications(database);
-    //    } catch (SQLException e) {
-    //        e.printStackTrace();
-    //    }
-    //}
+    private void version12to13(SQLiteDatabase database) {
+        try {
+            database.execSQL(Applications.CreateTable);
+            database.execSQL(AppsUsageLogs.CreateTable);
+            insertHasInternetAccessApplications(database);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     @Override
@@ -285,6 +294,39 @@ public class DataAccess extends SQLiteOpenHelper {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void insertHasInternetAccessApplications(SQLiteDatabase database) {
+        PackageManager pm = App.context.getPackageManager();
+        Iterator iterator = pm.getInstalledPackages(12288).iterator();
+        PackageInfo packageInfo;
+
+        while (iterator.hasNext()) {
+            packageInfo = (PackageInfo) iterator.next();
+            String[] permissions = packageInfo.requestedPermissions;
+
+            if (permissions != null && hasInternetAccess(permissions)) {
+                ApplicationInfo info = packageInfo.applicationInfo;
+                String appName = pm.getApplicationLabel(info).toString();
+
+                ContentValues appsValues = new ContentValues();
+                appsValues.put(Applications.AppName, appName);
+                appsValues.put(Applications.PackageName, info.packageName);
+                appsValues.put(Applications.Uid, info.uid);
+                appsValues.put(Applications.Removed, 0);
+
+                database.insert(Applications.TableName, null, appsValues);
+            }
+        }
+    }
+
+    private Boolean hasInternetAccess(String[] permissions) {
+        for (String permission : permissions) {
+            if ("android.permission.INTERNET".equals(permission)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     //todo : uncomment below lines for app usages

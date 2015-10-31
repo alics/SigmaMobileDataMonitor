@@ -22,9 +22,11 @@ public class AppDataUsageMeter {
     };
 
     public static void takeSnapshot() {
+        SnapshotStatus status = SnapshotStatus.getCurrentSnapshotStatus();
         int connectivityStatus = ConnectionManager.getConnectivityStatus();
-        if (connectivityStatus != ConnectionManager.TYPE_NOT_CONNECTED) {
-            SnapshotStatus status = SnapshotStatus.getCurrentSnapshotStatus();
+        if (connectivityStatus == ConnectionManager.TYPE_MOBILE &&
+            status.getStatus() != SnapshotStatus.Running) {
+
             status.setStatus(SnapshotStatus.Running);
             SnapshotStatus.update(status);
 
@@ -33,9 +35,9 @@ public class AppDataUsageMeter {
 
             HashSet<Integer> intersection = new HashSet<Integer>(latest.apps.keySet());
 
-            if (previous != null) {
-                intersection.retainAll(previous.apps.keySet());
-            }
+            //if (previous != null) {
+            //    intersection.retainAll(previous.apps.keySet());
+            //}
 
             for (Integer uid : intersection) {
                 AppsTrafficRecord latest_rec = latest.apps.get(uid);
@@ -49,8 +51,8 @@ public class AppDataUsageMeter {
     }
 
     private static void emitLog(AppsTrafficRecord latest_rec) {
-            AppsUsageLog log = new AppsUsageLog(latest_rec.appId, latest_rec.sumData, latest_rec.sumWifi, Helper.getCurrentDateTime());
-            AppsUsageLogs.insert(log);
+        AppsUsageLog log = new AppsUsageLog(latest_rec.appId, latest_rec.sumData, latest_rec.sumWifi, Helper.getCurrentDateTime());
+        AppsUsageLogs.insert(log);
         //  if (latest_rec.rx > 0 || latest_rec.tx > 0) {
         //if (latest_rec.connectivityType == AppsTrafficRecord.ConnectivityType.WIFI) {
         //

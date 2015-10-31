@@ -11,8 +11,6 @@ public class AppsTrafficSnapshot {
 
     AppsTrafficSnapshot(AppsTrafficSnapshot previousSnapshot,int status) {
 
-
-
         ArrayList<Application> applications = Applications.select();
         for (Application app : applications) {
             AppsTrafficRecord previousRecord = null;

@@ -140,7 +140,9 @@ public class GlobalSettingsActivity extends PaymentActivity {
         layoutAbout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(App.currentActivity, AboutActivity.class);
+                //Intent intent = new Intent(App.currentActivity, AboutActivity.class);
+                //startActivity(intent);
+                Intent intent = new Intent(App.currentActivity, AppsTrafficReportActivity.class);
                 startActivity(intent);
             }
         });

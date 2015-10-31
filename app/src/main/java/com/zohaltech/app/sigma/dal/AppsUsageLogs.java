@@ -22,8 +22,8 @@ public class AppsUsageLogs {
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
                                       Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                                       AppId + " INTEGER REFERENCES " + Applications.TableName + " (" + DataPackages.Id + "), " +
-                                      TrafficBytes + " CHAR(19)  ," +
-                                      TrafficBytesWifi + " CHAR(19)  ," +
+                                      TrafficBytes + " BIGINT NOT NULL  ," +
+                                      TrafficBytesWifi + " BIGINT NOT NULL  ," +
                                       LogDateTime + " CHAR(19)   );";
 
     static final String DropTable = "Drop Table If Exists " + TableName;

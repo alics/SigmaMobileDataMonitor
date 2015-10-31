@@ -1,13 +1,12 @@
 package com.zohaltech.app.sigma.classes;
 
+import android.net.TrafficStats;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
 public class AppsTrafficRecord {
-    public enum ConnectivityType {DATA, WIFI}
-
     long firstData = 0;
     long fistWifi  = 0;
     long sumData   = 0;
@@ -17,9 +16,6 @@ public class AppsTrafficRecord {
     String appName     = null;
     String packageName = null;
     int connectivityType;
-
-    AppsTrafficRecord() {
-    }
 
     AppsTrafficRecord(int uid, int appId, String appName, String packageName, int connectivityType, AppsTrafficRecord previousRecord) {
         //tx = TrafficStats.getUidTxBytes(uid);
@@ -39,10 +35,14 @@ public class AppsTrafficRecord {
                 sumWifi = getTotalBytes(uid, "wlan0") - previousRecord.sumWifi - previousRecord.fistWifi;
             } else if (connectivityType == ConnectionManager.TYPE_MOBILE) {
                 sumData = getTotalBytes(uid, "rmnet0") - previousRecord.sumData - previousRecord.firstData;
+                // sumData = getTotal(uid) - previousRecord.sumData - previousRecord.firstData;
             }
         } else {
             //            firstTx = TrafficStats.getUidTxBytes(uid);
             //            firstRx = TrafficStats.getUidRxBytes(uid);
+            //fistWifi = getTotal(uid);
+            //firstData = getTotal(uid);
+
             fistWifi = getTotalBytes(uid, "wlan0");
             firstData = getTotalBytes(uid, "rmnet0");
             sumWifi = 0;
@@ -75,7 +75,7 @@ public class AppsTrafficRecord {
                     String lineArr[] = line.split(" ");
                     String iface = lineArr[1];
                     if (hitCount == 2) {
-                        return tx_bytes + rx_bytes + rx_udp_bytes + tx_udp_bytes;// + tx_other_bytes + rx_other_bytes;
+                        return tx_bytes + rx_bytes;
                     }
 
                     int uid_tag_int = Integer.valueOf(lineArr[3]);
@@ -86,11 +86,6 @@ public class AppsTrafficRecord {
                             //if (cnt_set == 0) {
                             tx_bytes += Long.valueOf(lineArr[7]);
                             rx_bytes += Long.valueOf(lineArr[5]);
-                            rx_udp_bytes += Long.valueOf(lineArr[11]);
-                            tx_udp_bytes += Long.valueOf(lineArr[17]);
-                            // rx_other_bytes += Long.valueOf(lineArr[13]);
-                            //  tx_other_bytes += Long.valueOf(lineArr[19]);
-                            //  }
                         }
                     }
                 }
@@ -101,6 +96,10 @@ public class AppsTrafficRecord {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    private long getTotal(int uid) {
+        return TrafficStats.getUidTxBytes(uid) + TrafficStats.getUidRxBytes(uid);
     }
 }
 
