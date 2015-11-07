@@ -25,6 +25,9 @@ public class Applications {
                                       PackageName + " VARCHAR(50) , " +
                                       Removed + " BOOLEAN NOT NULL  ); ";
 
+
+    static final String DropTable = "Drop Table If Exists " + TableName;
+
     private static ArrayList<Application> select(String whereClause, String[] selectionArgs) {
         ArrayList<Application> applications = new ArrayList<>();
         DataAccess da = new DataAccess();

@@ -43,7 +43,7 @@ public class DataAccess extends SQLiteOpenHelper {
             database.execSQL(PackageHistories.CreateTable);
             database.execSQL(Settings.CreateTable);
             database.execSQL(SystemSettings.CreateTable);
-
+            
             //todo : uncomment below lines for app usages
             database.execSQL(Applications.CreateTable);
             database.execSQL(AppsUsageLogs.CreateTable);
@@ -97,9 +97,10 @@ public class DataAccess extends SQLiteOpenHelper {
             systemSettingsValues.put(SystemSettings.ActiveSim, 0);
             database.insert(SystemSettings.TableName, null, systemSettingsValues);
 
-            ContentValues snapShot = new ContentValues();
-            snapShot.put(SnapshotStatus.Status, SnapshotStatus.Stopped);
-            database.insert(SnapshotStatus.TableName, null, snapShot);
+            ContentValues snapshot = new ContentValues();
+            snapshot.put(SnapshotStatus.Status, SnapshotStatus.Stopped);
+            snapshot.put(SnapshotStatus.InitializationStatus, 0);
+            database.insert(SnapshotStatus.TableName, null, snapshot);
 
             //todo : uncomment below lines for app usages
             insertHasInternetAccessApplications(database);
@@ -136,11 +137,7 @@ public class DataAccess extends SQLiteOpenHelper {
             }
 
             if (oldVersion < 9) {
-
                 //todo : uncomment below lines for app usages
-                //database.execSQL(AppsUsageLogs.DropTable);
-                //database.execSQL(Applications.DropTable);
-
                 database.execSQL(SystemSettings.DropTable);
                 database.execSQL(Settings.DropTable);
                 database.execSQL(PackageHistories.DropTable);
@@ -148,6 +145,9 @@ public class DataAccess extends SQLiteOpenHelper {
                 database.execSQL(UsageLogs.DropTable);
                 database.execSQL(DailyTrafficHistories.DropTable);
                 database.execSQL(MobileOperators.DropTable);
+                database.execSQL(AppsUsageLogs.DropTable);
+                database.execSQL(Applications.DropTable);
+                database.execSQL(SnapshotStatus.DropTable);
                 onCreate(database);
             } else if (oldVersion == 9) {
                 version9to10(database);
@@ -221,6 +221,12 @@ public class DataAccess extends SQLiteOpenHelper {
             database.execSQL(Applications.CreateTable);
             database.execSQL(AppsUsageLogs.CreateTable);
             insertHasInternetAccessApplications(database);
+
+            ContentValues snapshot = new ContentValues();
+            snapshot.put(SnapshotStatus.Status, SnapshotStatus.Stopped);
+            snapshot.put(SnapshotStatus.InitializationStatus, 0);
+            database.insert(SnapshotStatus.TableName, null, snapshot);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

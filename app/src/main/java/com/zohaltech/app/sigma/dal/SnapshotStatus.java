@@ -13,14 +13,16 @@ public class SnapshotStatus {
     public static int Running = 1;
     public static int Stopped = 2;
 
-    static final String TableName = "SnapshotStatus";
-    static final String Id        = "Id";
-    static final String Status    = "Status";
+    static final String TableName            = "SnapshotStatus";
+    static final String Id                   = "Id";
+    static final String Status               = "Status";
+    static final String InitializationStatus = "InitializationStatus";
 
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
                                       Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-                                      Status + " INTEGER NOT NULL );";
+                                      Status + " INTEGER NOT NULL," +
+                                      InitializationStatus + " INTEGER NOT NULL );";
 
     static final String DropTable = "Drop Table If Exists " + TableName;
 
@@ -37,7 +39,8 @@ public class SnapshotStatus {
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     SnapshotStatus status = new SnapshotStatus(cursor.getInt(cursor.getColumnIndex(Id)),
-                                                               cursor.getInt(cursor.getColumnIndex(Status)));
+                                                               cursor.getInt(cursor.getColumnIndex(Status)),
+                                                               cursor.getInt(cursor.getColumnIndex(InitializationStatus)));
                     statuses.add(status);
                 } while (cursor.moveToNext());
             }
@@ -73,14 +76,16 @@ public class SnapshotStatus {
 
     private int id;
     private int status;
+    private int initializationStatus;
 
-    public SnapshotStatus(int id, int status) {
-        this(status);
+    public SnapshotStatus(int id, int status, int initialized) {
+        this(status, initialized);
         this.id = id;
     }
 
-    public SnapshotStatus(int status) {
+    public SnapshotStatus(int status, int initialized) {
         setStatus(status);
+        setInitializationStatus(initialized);
     }
 
     public int getId() {
@@ -98,4 +103,14 @@ public class SnapshotStatus {
     public void setStatus(int status) {
         this.status = status;
     }
+
+    public int getInitializationStatus() {
+        return initializationStatus;
+    }
+
+    public void setInitializationStatus(int initializationStatus) {
+        this.initializationStatus = initializationStatus;
+    }
+
+
 }
