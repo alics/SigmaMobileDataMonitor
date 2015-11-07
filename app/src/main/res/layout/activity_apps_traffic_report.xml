@@ -13,31 +13,31 @@
         android:layout_height="wrap_content"/>
 
     <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:background="@color/primary"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:padding="5dp">-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@color/primary"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:padding="5dp">-->
 
-        <!--<ImageView-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:src="@drawable/ic_mobile_white"/>-->
-
-
-        <!--<ImageView-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:src="@drawable/ic_wifi_white"/>-->
+    <!--<ImageView-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:src="@drawable/ic_mobile_white"/>-->
 
 
-        <!--<ImageView-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:src="@drawable/ic_calendar_white"/>-->
+    <!--<ImageView-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:src="@drawable/ic_wifi_white"/>-->
+
+
+    <!--<ImageView-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:src="@drawable/ic_calendar_white"/>-->
 
     <!--</LinearLayout>-->
 
@@ -54,43 +54,69 @@
         android:layout_height="1dp"
         android:background="@color/primary"/>
 
-    <!--<LinearLayout-->
-        <!--android:id="@+id/layoutAppsTraffic"-->
-        <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:padding="5dp">-->
+    <LinearLayout
+        android:id="@+id/layoutAppsTraffic"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
 
-        <!--<widgets.LatinTextView-->
-            <!--android:id="@+id/txtTotalTraffic"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--android:gravity="center|center"-->
-            <!--android:text="100MB"-->
-            <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
-            <!--android:textColor="@color/secondary_text"/>-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
 
-        <!--<widgets.LatinTextView-->
-            <!--android:id="@+id/txtTotalTrafficWifi"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--android:gravity="center|center"-->
-            <!--android:text="100MB"-->
-            <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
-            <!--android:textColor="@color/secondary_text"/>-->
+            <widgets.LatinTextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Mobile"
+                android:textColor="@color/secondary_text"/>
 
-        <!--<widgets.MyTextView-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--android:gravity="center"-->
-            <!--android:text="مجموع"-->
-            <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
-            <!--android:textColor="@color/secondary_text"/>-->
+            <widgets.LatinTextView
+                android:id="@+id/txtTotalTraffic"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="100MB"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/secondary_text"/>
 
-    <!--</LinearLayout>-->
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <widgets.LatinTextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="WiFi"
+                android:textColor="@color/secondary_text"/>
+
+            <widgets.LatinTextView
+                android:id="@+id/txtTotalTrafficWifi"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="100MB"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/secondary_text"/>
+
+        </LinearLayout>
+
+        <widgets.MyTextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="مجموع"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/secondary_text"/>
+
+    </LinearLayout>
 
 </LinearLayout>
