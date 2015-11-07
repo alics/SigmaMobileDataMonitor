@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.adapters.AppsTrafficReportAdapter;
+import com.zohaltech.app.sigma.classes.AppDataUsageMeter;
 import com.zohaltech.app.sigma.classes.TrafficUnitsUtil;
 import com.zohaltech.app.sigma.dal.AppsUsageLogs;
 import com.zohaltech.app.sigma.entities.AppsTrafficMonitor;
@@ -22,6 +23,8 @@ public class AppsTrafficReportActivity extends EnhancedActivity {
     @Override
     void onCreated() {
         setContentView(R.layout.activity_apps_traffic_report);
+
+        AppDataUsageMeter.takeSnapshot();
 
         lstAppsTraffic = (ListView) findViewById(R.id.lstAppsTraffic);
         txtTotalTraffic = (TextView) findViewById(R.id.txtTotalTraffic);

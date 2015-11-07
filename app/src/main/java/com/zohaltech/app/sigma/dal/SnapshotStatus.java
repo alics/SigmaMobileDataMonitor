@@ -69,6 +69,7 @@ public class SnapshotStatus {
     public static long update(SnapshotStatus status) {
         ContentValues values = new ContentValues();
         values.put(Status, status.getStatus());
+        values.put(InitializationStatus,status.getInitializationStatus());
 
         DataAccess dataAccess = new DataAccess();
         return dataAccess.update(TableName, values, Id + " = ? ", new String[]{String.valueOf(status.getId())});
