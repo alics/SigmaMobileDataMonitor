@@ -5,18 +5,20 @@ public class Application {
     private Integer id;
     private int     uid;
     private String  appName;
+    private int     appIcon;
     private String  packageName;
-    private Boolean  removed;
+    private Boolean removed;
 
 
-    public Application(Integer id, int uid, String appName, String packageName, Boolean removed) {
-        this(uid, appName, packageName, removed);
+    public Application(Integer id, int uid, String appName, int appIcon, String packageName, Boolean removed) {
+        this(uid, appName, appIcon, packageName, removed);
         this.id = id;
     }
 
-    public Application(int uid, String appName, String packageName, Boolean removed) {
+    public Application(int uid, String appName, int appIcon, String packageName, Boolean removed) {
         setUid(uid);
         setAppName(appName);
+        setAppIcon(appIcon);
         setPackageName(packageName);
         setRemoved(removed);
     }
@@ -43,6 +45,14 @@ public class Application {
 
     public void setAppName(String appName) {
         this.appName = appName;
+    }
+
+    public int getAppIcon() {
+        return appIcon;
+    }
+
+    public void setAppIcon(int appIcon) {
+        this.appIcon = appIcon;
     }
 
     public String getPackageName() {

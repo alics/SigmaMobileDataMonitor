@@ -27,7 +27,7 @@ public abstract class EnhancedActivity extends AppCompatActivity {
     }
 
     private void initialize() {
-        Thread.setDefaultUncaughtExceptionHandler(new MyUncaughtExceptionHandler());
+        //Thread.setDefaultUncaughtExceptionHandler(new MyUncaughtExceptionHandler());
         App.currentActivity = this;
 
         onCreated();

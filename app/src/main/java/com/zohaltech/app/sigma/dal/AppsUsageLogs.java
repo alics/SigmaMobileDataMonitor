@@ -106,19 +106,24 @@ public class AppsUsageLogs {
         Cursor cursor = null;
 
         try {
-            String query = "SELECT " + Applications.AppName + " appName ,sum(" + TrafficBytes + ") data,sum(" + TrafficBytesWifi + ") wifi " +
-                           "FROM " + TableName + " log\n" +
-                           "INNER JOIN " + Applications.TableName + " app\n" +
-                           "ON app.Id=log.AppId\n" +
-                           "GROUP BY app.AppName "+
-                           "ORDER BY data DESC,wifi DESC ";
+            String query = "SELECT " + Applications.AppName + " appName, " +
+                           Applications.AppIcon + " appIcon, " +
+                           "sum(" + TrafficBytes + ") mobile, " +
+                           "sum(" + TrafficBytesWifi + ") wifi " +
+                           "FROM " + TableName + " log " +
+                           "INNER JOIN " + Applications.TableName + " app " +
+                           "ON app.Id=log.AppId " +
+                           "GROUP BY app.AppName " +
+                           "ORDER BY mobile DESC, wifi DESC ";
 
             cursor = db.rawQuery(query, null);
             if (cursor != null && cursor.moveToFirst()) {
                 do {
-                    AppsTrafficMonitor trafficMonitor = new AppsTrafficMonitor(cursor.getLong(cursor.getColumnIndex("data")),
-                                                                               cursor.getLong(cursor.getColumnIndex("wifi")),
-                                                                               cursor.getString(cursor.getColumnIndex("appName")));
+                    AppsTrafficMonitor trafficMonitor = new AppsTrafficMonitor(cursor.getString(cursor.getColumnIndex("appName")),
+                                                                               cursor.getInt(cursor.getColumnIndex("appIcon")),
+                                                                               cursor.getLong(cursor.getColumnIndex("mobile")),
+                                                                               cursor.getLong(cursor.getColumnIndex("wifi"))
+                    );
                     appsTrafficMonitors.add(trafficMonitor);
                 } while (cursor.moveToNext());
             }

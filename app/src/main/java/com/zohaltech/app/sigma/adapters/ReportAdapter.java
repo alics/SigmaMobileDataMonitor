@@ -42,26 +42,25 @@ public class ReportAdapter extends ArrayAdapter<TrafficMonitor> {
 
         LinearLayout layoutReport;
         TextView     txtDate;
-        TextView     txtTraffic;
+        TextView     txtTrafficMobile;
         TextView     txtTrafficWifi;
 
         public ViewHolder(View view) {
             layoutReport = (LinearLayout) view.findViewById(R.id.layoutReport);
             txtDate = (TextView) view.findViewById(R.id.txtDate);
-            txtTraffic = (TextView) view.findViewById(R.id.txtTraffic);
+            txtTrafficMobile = (TextView) view.findViewById(R.id.txtTrafficMobile);
             txtTrafficWifi = (TextView) view.findViewById(R.id.txtTrafficWifi);
         }
 
         public void fill(final TrafficMonitor item, final int position) {
             if (position % 2 == 1) {
                 layoutReport.setBackgroundResource(R.color.primary_lighter);
-            }
-            else{
+            } else {
                 layoutReport.setBackgroundResource(R.color.white);
             }
             String date = item.getDate().equals(Helper.getCurrentDate()) ? "امروز" : SolarCalendar.getShamsiDate(Helper.getDate(item.getDate()));
             txtDate.setText(date);
-            txtTraffic.setText(TrafficUnitsUtil.getUsedTrafficWithPoint(item.getTotalTraffic()));
+            txtTrafficMobile.setText(TrafficUnitsUtil.getUsedTrafficWithPoint(item.getTotalTraffic()));
             txtTrafficWifi.setText(TrafficUnitsUtil.getUsedTrafficWithPoint(item.getTotalTrafficWifi()));
         }
     }

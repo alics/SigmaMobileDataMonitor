@@ -2,13 +2,15 @@ package com.zohaltech.app.sigma.entities;
 
 public class AppsTrafficMonitor {
     private String appName;
-    private Long   totalTrafficData;
-    private Long   totalTrafficWifi;
+    private int    appIcon;
+    private Long   mobileTraffic;
+    private Long   wifiTraffic;
 
-    public AppsTrafficMonitor(Long totalTrafficData, Long totalTrafficWifi, String appName) {
-        setTotalTrafficData(totalTrafficData);
-        setTotalTrafficWifi(totalTrafficWifi);
+    public AppsTrafficMonitor(String appName, int appIcon, Long mobileTraffic, Long wifiTraffic) {
         setAppName(appName);
+        setAppIcon(appIcon);
+        setMobileTraffic(mobileTraffic);
+        setWifiTraffic(wifiTraffic);
     }
 
     public String getAppName() {
@@ -19,19 +21,27 @@ public class AppsTrafficMonitor {
         this.appName = appName;
     }
 
-    public Long getTotalTrafficData() {
-        return totalTrafficData;
+    public int getAppIcon() {
+        return appIcon;
     }
 
-    public void setTotalTrafficData(Long totalTrafficData) {
-        this.totalTrafficData = totalTrafficData;
+    public void setAppIcon(int appIcon) {
+        this.appIcon = appIcon;
     }
 
-    public Long getTotalTrafficWifi() {
-        return totalTrafficWifi;
+    public Long getMobileTraffic() {
+        return mobileTraffic;
     }
 
-    public void setTotalTrafficWifi(Long totalTrafficWifi) {
-        this.totalTrafficWifi = totalTrafficWifi;
+    public void setMobileTraffic(Long mobileTraffic) {
+        this.mobileTraffic = mobileTraffic;
+    }
+
+    public Long getWifiTraffic() {
+        return wifiTraffic;
+    }
+
+    public void setWifiTraffic(Long wifiTraffic) {
+        this.wifiTraffic = wifiTraffic;
     }
 }

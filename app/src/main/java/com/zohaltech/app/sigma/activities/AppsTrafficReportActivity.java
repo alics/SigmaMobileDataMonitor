@@ -27,8 +27,8 @@ public class AppsTrafficReportActivity extends EnhancedActivity {
         AppDataUsageMeter.takeSnapshot();
 
         lstAppsTraffic = (ListView) findViewById(R.id.lstAppsTraffic);
-        txtTotalTraffic = (TextView) findViewById(R.id.txtTotalTraffic);
-        txtTotalTrafficWifi = (TextView) findViewById(R.id.txtTotalTrafficWifi);
+        //txtTotalTraffic = (TextView) findViewById(R.id.txtTotalTraffic);
+        //txtTotalTrafficWifi = (TextView) findViewById(R.id.txtTotalTrafficWifi);
 
         appsTrafficMonitors = AppsUsageLogs.getAppsTrafficReport();
         adapter = new AppsTrafficReportAdapter(appsTrafficMonitors);
@@ -38,14 +38,14 @@ public class AppsTrafficReportActivity extends EnhancedActivity {
     }
 
     private void populateSummery() {
-        long sum = 0;
-        long sumWifi = 0;
-        for (AppsTrafficMonitor trafficMonitor : appsTrafficMonitors) {
-            sum += trafficMonitor.getTotalTrafficData();
-            sumWifi += trafficMonitor.getTotalTrafficWifi();
-        }
-        txtTotalTraffic.setText(TrafficUnitsUtil.getUsedTrafficWithPoint(sum));
-        txtTotalTrafficWifi.setText(TrafficUnitsUtil.getUsedTrafficWithPoint(sumWifi));
+        //long sum = 0;
+        //long sumWifi = 0;
+        //for (AppsTrafficMonitor trafficMonitor : appsTrafficMonitors) {
+        //    sum += trafficMonitor.getMobileTraffic();
+        //    sumWifi += trafficMonitor.getWifiTraffic();
+        //}
+        //txtTotalTraffic.setText(TrafficUnitsUtil.getUsedTrafficWithPoint(sum));
+        //txtTotalTrafficWifi.setText(TrafficUnitsUtil.getUsedTrafficWithPoint(sumWifi));
     }
 
     @Override

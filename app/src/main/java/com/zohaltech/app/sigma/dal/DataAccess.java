@@ -27,7 +27,8 @@ public class DataAccess extends SQLiteOpenHelper {
     //public static final int    DATABASE_VERSION = 9; //published in versions 1.06, 1.07
     //public static final int    DATABASE_VERSION = 10; //published in versions 1.08
     //public static final int    DATABASE_VERSION = 11; //published in versions 1.1
-    public static final int    DATABASE_VERSION = 12; //published in versions 1.11
+    //public static final int    DATABASE_VERSION = 12; //published in versions 1.11
+    public static final int    DATABASE_VERSION = 13; //published in versions 1.12
 
     public DataAccess() {
         super(App.context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -153,18 +154,18 @@ public class DataAccess extends SQLiteOpenHelper {
                 version9to10(database);
                 version10to11(database);
                 version11to12(database);
-                //version12to13(database);
+                version12to13(database);
                 //version13to14(database);
                 //version14to15(database);
             } else if (oldVersion == 10) {
                 version10to11(database);
                 version11to12(database);
-                //version12to13(database);
+                version12to13(database);
                 //version13to14(database);
                 //version14to15(database);
             } else if (oldVersion == 11) {
                 version11to12(database);
-                //version12to13(database);
+                version12to13(database);
                 //version13to14(database);
                 //version14to15(database);
             } else if (oldVersion == 12) {
@@ -220,6 +221,7 @@ public class DataAccess extends SQLiteOpenHelper {
         try {
             database.execSQL(Applications.CreateTable);
             database.execSQL(AppsUsageLogs.CreateTable);
+            database.execSQL(SnapshotStatus.CreateTable);
             insertHasInternetAccessApplications(database);
 
             ContentValues snapshot = new ContentValues();

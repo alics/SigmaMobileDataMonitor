@@ -15,6 +15,7 @@ public class Applications {
     static final String Id          = "Id";
     static final String Uid         = "UniqueId";
     static final String AppName     = "AppName";
+    static final String AppIcon     = "AppIcon";
     static final String PackageName = "PackageName";
     static final String Removed     = "Removed";
 
@@ -22,6 +23,7 @@ public class Applications {
                                       Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                                       Uid + " INTEGER  ," +
                                       AppName + " VARCHAR(30)  ," +
+                                      AppIcon + " INTEGER  ," +
                                       PackageName + " VARCHAR(50) , " +
                                       Removed + " BOOLEAN NOT NULL  ); ";
 
@@ -42,6 +44,7 @@ public class Applications {
                     Application app = new Application(cursor.getInt(cursor.getColumnIndex(Id)),
                                                       cursor.getInt(cursor.getColumnIndex(Uid)),
                                                       cursor.getString(cursor.getColumnIndex(AppName)),
+                                                      cursor.getInt(cursor.getColumnIndex(AppIcon)),
                                                       cursor.getString(cursor.getColumnIndex(PackageName)),
                                                       cursor.getInt(cursor.getColumnIndex(Removed)) == 1);
                     applications.add(app);
@@ -66,6 +69,7 @@ public class Applications {
         ContentValues values = new ContentValues();
         values.put(Uid, application.getUid());
         values.put(AppName, application.getAppName());
+        values.put(AppIcon, application.getAppIcon());
         values.put(PackageName, application.getPackageName());
         values.put(Removed, application.getRemoved());
 
@@ -77,6 +81,7 @@ public class Applications {
         ContentValues values = new ContentValues();
         values.put(Uid, application.getUid());
         values.put(AppName, application.getAppName());
+        values.put(AppIcon, application.getAppIcon());
         values.put(PackageName, application.getPackageName());
         values.put(Removed, application.getRemoved());
 

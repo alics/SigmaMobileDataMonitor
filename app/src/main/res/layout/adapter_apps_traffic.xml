@@ -1,40 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:id="@+id/layoutAppsTraffic"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:gravity="center"
     android:orientation="horizontal"
     android:padding="5dp">
 
-    <widgets.LatinTextView
-        android:id="@+id/txtTraffic"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:gravity="center"
-        android:text="100MB"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/secondary_text"/>
+    <ImageView
+        android:id="@+id/imgApp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:src="@mipmap/ic_launcher"/>
 
-    <widgets.LatinTextView
-        android:id="@+id/txtTrafficWifi"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:gravity="center"
-        android:text="100MB"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/secondary_text"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <widgets.MyTextView
-        android:id="@+id/txtAppName"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:gravity="center"
-        android:text="Telegram"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/secondary_text"/>
+        <TextView
+            android:id="@+id/txtAppName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="2dp"
+            android:singleLine="true"
+            android:text="Sigma - Data Manager 3g/4g/WiFi"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/primary_text"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="2dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Mobile"
+                android:textColor="@color/secondary_text"/>
+
+            <TextView
+                android:id="@+id/txtTrafficMobile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="34.5 KB"
+                android:textColor="@color/secondary_text"/>
+
+        </LinearLayout>
+
+        <widgets.PercentProgressbar
+            android:id="@+id/progressMobile"
+            android:layout_width="match_parent"
+            android:layout_height="16dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="2dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="WiFi"
+                android:textColor="@color/secondary_text"/>
+
+            <TextView
+                android:id="@+id/txtTrafficWifi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="34.5 KB"
+                android:textColor="@color/secondary_text"/>
+
+        </LinearLayout>
+
+        <widgets.PercentProgressbar
+            android:id="@+id/progressWifi"
+            android:layout_width="match_parent"
+            android:layout_height="16dp"/>
+
+    </LinearLayout>
 
 </LinearLayout>
