@@ -28,6 +28,10 @@ public class AppDataUsageMeter {
             SnapshotStatus.update(status);
             AppsTrafficSnapshot.snapshot(status.getInitializationStatus());
 
+            SnapshotStatus currentStatus = SnapshotStatus.getCurrentSnapshotStatus();
+            currentStatus.setStatus(SnapshotStatus.Stopped);
+            SnapshotStatus.update(currentStatus);
+
             //  AppsTrafficSnapshot snapshot=new AppsTrafficSnapshot()
             //AppsTrafficSnapshot previous = latest;
             //latest = new AppsTrafficSnapshot(previous, connectivityStatus);
@@ -44,10 +48,21 @@ public class AppDataUsageMeter {
             //    emitLog(latest_rec);
             //}
 
-            SnapshotStatus currentStatus = SnapshotStatus.getCurrentSnapshotStatus();
 
-            currentStatus.setStatus(SnapshotStatus.Stopped);
-            SnapshotStatus.update(currentStatus);
+        }
+    }
+
+    public void execute() {
+        if (executorService == null) {
+            executorService = Executors.newSingleThreadScheduledExecutor();
+        }
+        executorService.scheduleAtFixedRate(runnable, 0L, 36000000L, TimeUnit.MILLISECONDS);
+    }
+
+    public void shutdown() {
+        if (executorService != null) {
+            executorService.shutdown();
+            executorService = null;
         }
     }
 
@@ -68,19 +83,6 @@ public class AppDataUsageMeter {
     //    //  }
     //}
 
-    public void execute() {
-        if (executorService == null) {
-            executorService = Executors.newSingleThreadScheduledExecutor();
-        }
-        executorService.scheduleAtFixedRate(runnable, 0L, 36000000L, TimeUnit.MILLISECONDS);
-    }
-
-    public void shutdown() {
-        if (executorService != null) {
-            executorService.shutdown();
-            executorService = null;
-        }
-    }
 
     //public static void takeSnapshot1(){
     //    ArrayList<Application> applications = Applications.select();
