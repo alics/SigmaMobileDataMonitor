@@ -107,7 +107,7 @@ public class AppsUsageLogs {
 
         try {
             String query = "SELECT " + Applications.AppName + " appName, " +
-                           Applications.AppIcon + " appIcon, " +
+                           Applications.PackageName + " packageName, " +
                            "sum(" + TrafficBytes + ") mobile, " +
                            "sum(" + TrafficBytesWifi + ") wifi " +
                            "FROM " + TableName + " log " +
@@ -120,7 +120,7 @@ public class AppsUsageLogs {
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     AppsTrafficMonitor trafficMonitor = new AppsTrafficMonitor(cursor.getString(cursor.getColumnIndex("appName")),
-                                                                               cursor.getInt(cursor.getColumnIndex("appIcon")),
+                                                                               cursor.getString(cursor.getColumnIndex("packageName")),
                                                                                cursor.getLong(cursor.getColumnIndex("mobile")),
                                                                                cursor.getLong(cursor.getColumnIndex("wifi"))
                     );

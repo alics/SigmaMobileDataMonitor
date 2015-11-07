@@ -15,8 +15,8 @@ import java.util.ArrayList;
 
 public class AppsTrafficReportActivity extends EnhancedActivity {
     ListView lstAppsTraffic;
-    TextView txtTotalTraffic;
-    TextView txtTotalTrafficWifi;
+    //TextView txtTotalTraffic;
+    //TextView txtTotalTrafficWifi;
     ArrayList<AppsTrafficMonitor> appsTrafficMonitors;
     AppsTrafficReportAdapter adapter;
 

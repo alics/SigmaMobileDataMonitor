@@ -2,13 +2,13 @@ package com.zohaltech.app.sigma.entities;
 
 public class AppsTrafficMonitor {
     private String appName;
-    private int    appIcon;
+    private String    packageName;
     private Long   mobileTraffic;
     private Long   wifiTraffic;
 
-    public AppsTrafficMonitor(String appName, int appIcon, Long mobileTraffic, Long wifiTraffic) {
+    public AppsTrafficMonitor(String appName, String packageName, Long mobileTraffic, Long wifiTraffic) {
         setAppName(appName);
-        setAppIcon(appIcon);
+        setPackageName(packageName);
         setMobileTraffic(mobileTraffic);
         setWifiTraffic(wifiTraffic);
     }
@@ -21,12 +21,12 @@ public class AppsTrafficMonitor {
         this.appName = appName;
     }
 
-    public int getAppIcon() {
-        return appIcon;
+    public String getPackageName() {
+        return packageName;
     }
 
-    public void setAppIcon(int appIcon) {
-        this.appIcon = appIcon;
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
     }
 
     public Long getMobileTraffic() {

@@ -1,6 +1,8 @@
 package com.zohaltech.app.sigma.adapters;
 
 
+import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -63,7 +65,14 @@ public class AppsTrafficReportAdapter extends ArrayAdapter<AppsTrafficMonitor> {
         }
 
         public void fill(final AppsTrafficMonitor item, final int position) {
-            imgApp.setImageResource(item.getAppIcon());
+            //imgApp.setImageResource(item.getAppIcon());
+            Drawable icon = null;
+            try {
+                icon = App.context.getPackageManager().getApplicationIcon(item.getPackageName());
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+            imgApp.setImageDrawable(icon);
             txtAppName.setText(item.getAppName());
             String trafficMobile = TrafficUnitsUtil.getTodayTraffic(item.getMobileTraffic()).getInlineDisplay();
             txtTrafficMobile.setText(trafficMobile);

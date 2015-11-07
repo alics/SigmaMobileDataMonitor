@@ -20,7 +20,7 @@ public class AppReceiver extends BroadcastReceiver {
             if (intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED)) {
                 info = context.getPackageManager().getApplicationInfo(pkgName, PackageManager.GET_META_DATA);
                 String appName = context.getPackageManager().getApplicationLabel(info).toString();
-                Application app = new Application(info.uid, appName, info.icon, pkgName, false);
+                Application app = new Application(info.uid, appName, pkgName, false);
                 Applications.insert(app);
                 //MyToast.show("package added : " + info.packageName, Toast.LENGTH_LONG);
                 //MyToast.show("app name : " + appName, Toast.LENGTH_LONG);
