@@ -1,9 +1,13 @@
 package com.zohaltech.app.sigma.classes;
 
+import android.app.usage.NetworkStats;
 import android.net.TrafficStats;
+import android.os.Environment;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class AppsTrafficRecord {
@@ -59,6 +63,12 @@ public class AppsTrafficRecord {
     public static long getTotalBytes(int uid, String connectivityType) {
         String filePath = "/proc/net/xt_qtaguid/stats";
         try {
+
+            NetworkStats statsHistory;
+            //NetworkTemplate template
+            //NetworkStatsHistory history = collectHistoryForUid(mTemplate, UID,
+            //                                                   SET_DEFAULT);
+
             BufferedReader br = new BufferedReader(new FileReader(filePath));
             String line;
             int hitCount = 0;
@@ -98,8 +108,44 @@ public class AppsTrafficRecord {
         return 0;
     }
 
-    private long getTotal(int uid) {
+    public long getTotal(int uid) {
         return TrafficStats.getUidTxBytes(uid) + TrafficStats.getUidRxBytes(uid);
+    }
+
+    public static void insertUidStat(int uid, long trafficBytes) {
+        try {
+            File dir = new File( Environment.getExternalStorageDirectory()+"/.vps/stats");
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            Boolean result = true;
+            File file = new File(dir.getPath(), uid + "");
+            if (!file.exists())
+                result = file.createNewFile();
+            if (result) {
+                FileWriter writer = new FileWriter(file, false);
+
+                writer.write(trafficBytes + "");
+                writer.flush();
+                writer.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static long getLastUidStat(int uid) {
+
+        String filePath = Environment.getExternalStorageDirectory() + "/.vps/stats/" + uid;
+        long bytes = 0;
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(filePath));
+            bytes = Long.valueOf(br.readLine());
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bytes;
     }
 }
 

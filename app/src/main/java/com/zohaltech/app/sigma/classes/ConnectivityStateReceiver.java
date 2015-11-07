@@ -14,15 +14,15 @@ public class ConnectivityStateReceiver extends BroadcastReceiver {
         WebApiClient.sendUserData(true);
 
         //todo : uncomment below lines for app usages
-        if (ConnectionManager.getConnectivityStatus() == ConnectionManager.TYPE_NOT_CONNECTED &&
-            App.connectivityType == ConnectionManager.TYPE_MOBILE) {
-            SnapshotStatus status = SnapshotStatus.getCurrentSnapshotStatus();
-
-            if (status.getStatus() != SnapshotStatus.Running) {
-                AppDataUsageMeter.takeSnapshot();
-            }
-            App.connectivityType = ConnectionManager.getConnectivityStatus();
-        }
+        //if (ConnectionManager.getConnectivityStatus() == ConnectionManager.TYPE_NOT_CONNECTED &&
+        //    App.connectivityType == ConnectionManager.TYPE_MOBILE) {
+        //    SnapshotStatus status = SnapshotStatus.getCurrentSnapshotStatus();
+        //
+        //    if (status.getStatus() != SnapshotStatus.Running) {
+        //        AppDataUsageMeter.takeSnapshot();
+        //    }
+        //    App.connectivityType = ConnectionManager.getConnectivityStatus();
+        //}
 
     }
 }

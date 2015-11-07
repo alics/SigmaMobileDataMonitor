@@ -44,7 +44,7 @@ public class DashboardActivity extends EnhancedActivity {
         da.getReadableDB();
         da.close();
 
-       // AppDataUsageMeter.takeSnapshot();
+      //  AppDataUsageMeter.takeSnapshot1();
 
         setContentView(R.layout.activity_dashboard);
 
