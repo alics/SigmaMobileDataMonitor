@@ -72,7 +72,7 @@ public class AppDataUsageMeter {
         if (executorService == null) {
             executorService = Executors.newSingleThreadScheduledExecutor();
         }
-        executorService.scheduleAtFixedRate(runnable, 0L, 36000000L, TimeUnit.MILLISECONDS);
+        executorService.scheduleAtFixedRate(runnable, 36000000L, 36000000L, TimeUnit.MILLISECONDS);
     }
 
     public void shutdown() {

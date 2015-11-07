@@ -17,43 +17,25 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class AppsTrafficSnapshot {
+    final static String wifiIface = "wlan0";
+    final static String dataIface = "rmnet0";
+
     public static void snapshot(int initStatus) {
-        final String wifiIface = "wlan0";
-        final String dataIface = "rmnet0";
-        
         ArrayList<Application> applications = Applications.select();
-        for (Application app : applications) {
-            if (initStatus == SnapshotStatus.InitStatus.FIRST_SNAPSHOT.ordinal()) {
+        if (initStatus == SnapshotStatus.InitStatus.FIRST_SNAPSHOT.ordinal()) {
+            for (Application app : applications) {
                 long totalWifi = getTotalBytes(app.getUid(), wifiIface);
                 long totalData = getTotalBytes(app.getUid(), dataIface);
-                logUidStat(app.getUid(), totalData, "init/" + dataIface);
-                logUidStat(app.getUid(), totalWifi, "init/" + wifiIface);
 
-                logUidStat(app.getUid(), 0L, dataIface);
-                logUidStat(app.getUid(), 0L, wifiIface);
+                logUidStat(app.getUid(), totalData, dataIface);
+                logUidStat(app.getUid(), totalWifi, wifiIface);
+            }
+            SnapshotStatus status = SnapshotStatus.getCurrentSnapshotStatus();
+            status.setInitializationStatus(SnapshotStatus.InitStatus.NORMAL.ordinal());
+            SnapshotStatus.update(status);
+        } else if (initStatus == SnapshotStatus.InitStatus.NORMAL.ordinal()) {
 
-                //AppsUsageLog log = new AppsUsageLog(app.getId(), 0L, 0L, Helper.getCurrentDateTime());
-                //AppsUsageLogs.insert(log);
-
-                SnapshotStatus status = SnapshotStatus.getCurrentSnapshotStatus();
-                status.setInitializationStatus(SnapshotStatus.InitStatus.BEFORE_FIRST_BOOT.ordinal());
-                SnapshotStatus.update(status);
-            } else if (initStatus == SnapshotStatus.InitStatus.BEFORE_FIRST_BOOT.ordinal()) {
-                long totalWifi = getTotalBytes(app.getUid(), wifiIface);
-                long previousWifiStat = getLastUidStat(app.getUid(), wifiIface);
-                long initWifiStat = getLastUidStat(app.getUid(), "init/" + wifiIface);
-                long wifi = totalWifi - previousWifiStat - initWifiStat;
-
-                long totalData = getTotalBytes(app.getUid(), dataIface);
-                long previousDataStat = getLastUidStat(app.getUid(), dataIface);
-                long initDataStat = getLastUidStat(app.getUid(), "init/" + dataIface);
-                long data = totalData - previousDataStat - initDataStat;
-
-                if (wifi + data != 0) {
-                    AppsUsageLog log = new AppsUsageLog(app.getId(), data, wifi, Helper.getCurrentDateTime());
-                    AppsUsageLogs.insert(log);
-                }
-            } else if (initStatus == SnapshotStatus.InitStatus.NORMAL.ordinal()) {
+            for (Application app : applications) {
                 long totalWifi = getTotalBytes(app.getUid(), wifiIface);
                 long previousWifiStat = getLastUidStat(app.getUid(), wifiIface);
 
@@ -68,7 +50,7 @@ public class AppsTrafficSnapshot {
                 logUidStat(app.getUid(), totalData, dataIface);
 
                 long data = totalData;
-                if (totalData > previousDataStat)
+                if (totalData >= previousDataStat)
                     data = totalData - previousDataStat;
 
                 if (wifi + data != 0) {
@@ -77,6 +59,71 @@ public class AppsTrafficSnapshot {
                 }
             }
         }
+        //AppsUsageLog log = new AppsUsageLog(app.getId(), 0L, 0L, Helper.getCurrentDateTime());
+        //AppsUsageLogs.insert(log);
+
+        //SnapshotStatus status = SnapshotStatus.getCurrentSnapshotStatus();
+        //status.setInitializationStatus(SnapshotStatus.InitStatus.NORMAL.ordinal());
+        //SnapshotStatus.update(status);
+        //} else if (initStatus == SnapshotStatus.InitStatus.BEFORE_FIRST_BOOT.ordinal()) {
+        //    long totalWifi = getTotalBytes(app.getUid(), wifiIface);
+        //    long previousWifiStat = getLastUidStat(app.getUid(), wifiIface);
+        //    // long initWifiStat = getLastUidStat(app.getUid(), "init/" + wifiIface);
+        //
+        //    long wifi = totalWifi;
+        //    if (totalWifi > previousWifiStat)
+        //        wifi = totalWifi - previousWifiStat;
+        //    // long wifi = totalWifi - previousWifiStat - initWifiStat;
+        //
+        //    logUidStat(app.getUid(), totalWifi, wifiIface);
+        //
+        //    long totalData = getTotalBytes(app.getUid(), dataIface);
+        //    long previousDataStat = getLastUidStat(app.getUid(), dataIface);
+        //    // long initDataStat = getLastUidStat(app.getUid(), "init/" + dataIface);
+        //    //long data = totalData - previousDataStat - initDataStat;
+        //
+        //    long data = totalData;
+        //    if (totalData > previousDataStat)
+        //        data = totalData - previousDataStat;
+        //
+        //    if (data < 0) {
+        //        int s = 0;
+        //        data = data + 1;
+        //    }
+        //
+        //
+        //    logUidStat(app.getUid(), totalData, dataIface);
+        //
+        //    if (wifi + data != 0) {
+        //        AppsUsageLog log = new AppsUsageLog(app.getId(), data, wifi, Helper.getCurrentDateTime());
+        //        AppsUsageLogs.insert(log);
+        //    }
+        //    }
+        //    }else if (initStatus == SnapshotStatus.InitStatus.NORMAL.ordinal()) {
+        //        long totalWifi = getTotalBytes(app.getUid(), wifiIface);
+        //        long previousWifiStat = getLastUidStat(app.getUid(), wifiIface);
+        //
+        //        logUidStat(app.getUid(), totalWifi, wifiIface);
+        //
+        //        long wifi = totalWifi;
+        //        if (totalWifi > previousWifiStat)
+        //            wifi = totalWifi - previousWifiStat;
+        //
+        //        long totalData = getTotalBytes(app.getUid(), dataIface);
+        //        long previousDataStat = getLastUidStat(app.getUid(), dataIface);
+        //        logUidStat(app.getUid(), totalData, dataIface);
+        //
+        //        long data = totalData;
+        //        if (totalData > previousDataStat)
+        //            data = totalData - previousDataStat;
+        //
+        //        if (wifi + data != 0) {
+        //            AppsUsageLog log = new AppsUsageLog(app.getId(), data, wifi, Helper.getCurrentDateTime());
+        //            AppsUsageLogs.insert(log);
+        //        }
+        //
+        //
+        //}
     }
     
     private static long getTotalBytes(int uid, String connectivityType) {
