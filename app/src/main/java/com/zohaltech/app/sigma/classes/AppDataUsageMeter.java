@@ -44,8 +44,10 @@ public class AppDataUsageMeter {
             //    emitLog(latest_rec);
             //}
 
-            status.setStatus(SnapshotStatus.Stopped);
-            SnapshotStatus.update(status);
+            SnapshotStatus currentStatus = SnapshotStatus.getCurrentSnapshotStatus();
+
+            currentStatus.setStatus(SnapshotStatus.Stopped);
+            SnapshotStatus.update(currentStatus);
         }
     }
 
