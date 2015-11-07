@@ -99,7 +99,7 @@ public class DataAccess extends SQLiteOpenHelper {
 
             ContentValues snapshot = new ContentValues();
             snapshot.put(SnapshotStatus.Status, SnapshotStatus.Stopped);
-            snapshot.put(SnapshotStatus.InitializationStatus, 0);
+            snapshot.put(SnapshotStatus.InitializationStatus, SnapshotStatus.InitStatus.FIRST_SNAPSHOT.ordinal());
             database.insert(SnapshotStatus.TableName, null, snapshot);
 
             //todo : uncomment below lines for app usages
@@ -224,7 +224,7 @@ public class DataAccess extends SQLiteOpenHelper {
 
             ContentValues snapshot = new ContentValues();
             snapshot.put(SnapshotStatus.Status, SnapshotStatus.Stopped);
-            snapshot.put(SnapshotStatus.InitializationStatus, 0);
+            snapshot.put(SnapshotStatus.InitializationStatus, SnapshotStatus.InitStatus.FIRST_SNAPSHOT.ordinal());
             database.insert(SnapshotStatus.TableName, null, snapshot);
 
         } catch (SQLException e) {

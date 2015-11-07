@@ -14,6 +14,10 @@ public class PowerOffReceiver extends BroadcastReceiver {
         if (status.getStatus() != SnapshotStatus.Running) {
             AppDataUsageMeter.takeSnapshot();
         }
+        if (status.getStatus() == SnapshotStatus.InitStatus.BEFORE_FIRST_BOOT.ordinal()) {
+            status.setInitializationStatus(SnapshotStatus.InitStatus.NORMAL.ordinal());
+            SnapshotStatus.update(status);
+        }
 
         //try {
         //    File dir = new File(App.context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath());

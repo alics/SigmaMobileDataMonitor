@@ -26,7 +26,7 @@ public class AppDataUsageMeter {
 
             status.setStatus(SnapshotStatus.Running);
             SnapshotStatus.update(status);
-            AppsTrafficSnapshot.snapshot();
+            AppsTrafficSnapshot.snapshot(status.getInitializationStatus());
 
             //  AppsTrafficSnapshot snapshot=new AppsTrafficSnapshot()
             //AppsTrafficSnapshot previous = latest;
