@@ -109,7 +109,9 @@ public class DashboardActivity extends EnhancedActivity {
         btnPackagesHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(App.currentActivity, HistoryActivity.class);
+                //Intent intent = new Intent(App.currentActivity, HistoryActivity.class);
+                //startActivity(intent);
+                Intent intent = new Intent(App.currentActivity, AppsTrafficReportActivity.class);
                 startActivity(intent);
             }
         });
