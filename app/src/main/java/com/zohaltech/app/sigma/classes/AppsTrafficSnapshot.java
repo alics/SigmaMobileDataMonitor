@@ -46,8 +46,10 @@ public class AppsTrafficSnapshot {
                 long initDataStat = getLastUidStat(app.getUid(), "init/" + dataIface);
                 long data = totalData - previousDataStat - initDataStat;
 
-                AppsUsageLog log = new AppsUsageLog(app.getId(), data, wifi, Helper.getCurrentDateTime());
-                AppsUsageLogs.insert(log);
+                if (wifi + data != 0) {
+                    AppsUsageLog log = new AppsUsageLog(app.getId(), data, wifi, Helper.getCurrentDateTime());
+                    AppsUsageLogs.insert(log);
+                }
 
             } else if (initStatus == SnapshotStatus.InitStatus.NORMAL.ordinal()) {
                 long totalWifi = getTotalBytes(app.getUid(), wifiIface);
