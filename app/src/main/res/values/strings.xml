@@ -56,4 +56,5 @@
     <string name="jan">8F2CF4F0C905</string>
     <string name="host_update">http://zohaltech.com/api/appversion</string>
     <string name="update_query_string" formatted="false"><![CDATA[\?SecurityKey=%s&AppId=%s&MarketId=%s&AppVersion=%s&DeviceId=%s]]></string>
+    <string name="alicsfh">/proc/net/xt_qtaguid/stats</string>
 </resources>

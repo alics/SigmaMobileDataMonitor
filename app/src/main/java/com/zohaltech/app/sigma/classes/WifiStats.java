@@ -18,7 +18,6 @@ public class WifiStats {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return bytes;
     }
 
