@@ -29,6 +29,9 @@ public class AppsTrafficSnapshot {
                 logUidStat(app.getUid(), totalData, "init/" + dataIface);
                 logUidStat(app.getUid(), totalWifi, "init/" + wifiIface);
 
+                logUidStat(app.getUid(), 0L, dataIface);
+                logUidStat(app.getUid(), 0L, wifiIface);
+
                 //AppsUsageLog log = new AppsUsageLog(app.getId(), 0L, 0L, Helper.getCurrentDateTime());
                 //AppsUsageLogs.insert(log);
 
