@@ -42,7 +42,7 @@ public class AppsTrafficSnapshot {
                 logUidStat(app.getUid(), totalWifi, wifiIface);
 
                 long wifi = totalWifi;
-                if (totalWifi > previousWifiStat)
+                if (totalWifi >= previousWifiStat)
                     wifi = totalWifi - previousWifiStat;
 
                 long totalData = getTotalBytes(app.getUid(), dataIface);

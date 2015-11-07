@@ -1,6 +1,5 @@
 package com.zohaltech.app.sigma.dal;
 
-
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -18,14 +17,12 @@ public class SnapshotStatus {
     static final String Status               = "Status";
     static final String InitializationStatus = "InitializationStatus";
 
-
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
                                       Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                                       Status + " INTEGER NOT NULL," +
                                       InitializationStatus + " INTEGER NOT NULL );";
 
     static final String DropTable = "Drop Table If Exists " + TableName;
-
 
     private static ArrayList<SnapshotStatus> select(String whereClause, String[] selectionArgs) {
         ArrayList<SnapshotStatus> statuses = new ArrayList<>();
@@ -69,7 +66,7 @@ public class SnapshotStatus {
     public static long update(SnapshotStatus status) {
         ContentValues values = new ContentValues();
         values.put(Status, status.getStatus());
-        values.put(InitializationStatus,status.getInitializationStatus());
+        values.put(InitializationStatus, status.getInitializationStatus());
 
         DataAccess dataAccess = new DataAccess();
         return dataAccess.update(TableName, values, Id + " = ? ", new String[]{String.valueOf(status.getId())});
@@ -79,7 +76,7 @@ public class SnapshotStatus {
     private int status;
     private int initializationStatus;
 
-    public enum InitStatus{FIRST_SNAPSHOT,BEFORE_FIRST_BOOT,NORMAL}
+    public enum InitStatus {FIRST_SNAPSHOT, BEFORE_FIRST_BOOT, NORMAL}
 
     public SnapshotStatus(int id, int status, int initialized) {
         this(status, initialized);
