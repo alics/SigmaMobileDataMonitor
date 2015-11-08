@@ -12,6 +12,7 @@ import android.os.Environment;
 import com.zohaltech.app.sigma.BuildConfig;
 import com.zohaltech.app.sigma.activities.IntroductionActivity;
 import com.zohaltech.app.sigma.classes.App;
+import com.zohaltech.app.sigma.classes.AppsTrafficSnapshot;
 import com.zohaltech.app.sigma.classes.CsvReader;
 import com.zohaltech.app.sigma.classes.Helper;
 import com.zohaltech.app.sigma.classes.LicenseManager;
@@ -330,6 +331,12 @@ public class DataAccess extends SQLiteOpenHelper {
                 appsValues.put(Applications.Removed, 0);
 
                 database.insert(Applications.TableName, null, appsValues);
+
+                //long totalWifi = AppsTrafficSnapshot.getTotalBytes(info.uid, "wlan0");
+                //long totalData = AppsTrafficSnapshot.getTotalBytes(info.uid, "rmnet0");
+                //
+                //AppsTrafficSnapshot.logUidStat(info.uid, totalData, "rmnet0");
+                //AppsTrafficSnapshot.logUidStat(info.uid, totalWifi, "wlan0");
             }
         }
     }

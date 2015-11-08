@@ -11,6 +11,10 @@ import android.graphics.Typeface;
 import android.os.Handler;
 import android.view.LayoutInflater;
 
+import com.zohaltech.app.sigma.dal.Applications;
+import com.zohaltech.app.sigma.dal.SnapshotStatus;
+
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class App extends Application {
@@ -75,6 +79,7 @@ public class App extends Application {
         AlarmHandler.start(context);
 
         setAppLocal();
+        init();
 
         Intent dataService = new Intent(context, SigmaDataService.class);
         context.startService(dataService);
@@ -137,5 +142,22 @@ public class App extends Application {
         Configuration config = new Configuration();
         config.locale = locale;
         getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+    }
+
+
+    private void init() {
+        SnapshotStatus status = SnapshotStatus.getCurrentSnapshotStatus();
+        if (status.getInitializationStatus() == SnapshotStatus.InitStatus.FIRST_SNAPSHOT.ordinal()) {
+            ArrayList<com.zohaltech.app.sigma.entities.Application> applications = Applications.select();
+            for (com.zohaltech.app.sigma.entities.Application app : applications) {
+                long totalWifi = AppsTrafficSnapshot.getTotalBytes(app.getUid(), "wlan0");
+                long totalData = AppsTrafficSnapshot.getTotalBytes(app.getUid(), "rmnet0");
+
+                AppsTrafficSnapshot.logUidStat(app.getUid(), totalData, "rmnet0");
+                AppsTrafficSnapshot.logUidStat(app.getUid(), totalWifi, "wlan0");
+            }
+            status.setInitializationStatus(SnapshotStatus.InitStatus.NORMAL.ordinal());
+            SnapshotStatus.update(status);
+        }
     }
 }
