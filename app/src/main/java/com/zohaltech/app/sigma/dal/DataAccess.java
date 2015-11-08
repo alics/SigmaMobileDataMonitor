@@ -109,7 +109,7 @@ public class DataAccess extends SQLiteOpenHelper {
 
             //todo : uncomment below lines for app usages
             insertHasInternetAccessApplications(database);
-            deleteStatDirs();
+            //deleteStatDirs();
 
             LicenseStatus status = LicenseManager.getExistingLicense();
             if (status == null) {
@@ -234,7 +234,7 @@ public class DataAccess extends SQLiteOpenHelper {
             snapshot.put(SnapshotStatus.InitializationStatus, SnapshotStatus.InitStatus.FIRST_SNAPSHOT.ordinal());
             database.insert(SnapshotStatus.TableName, null, snapshot);
 
-            deleteStatDirs();
+            //deleteStatDirs();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -350,31 +350,31 @@ public class DataAccess extends SQLiteOpenHelper {
         return false;
     }
 
-    private void deleteStatDirs() {
-        File dirWlan = new File(App.context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath() + "/wlan0");
-        File dirRnmt = new File(App.context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath() + "/rmnet0");
-        File dirInitWlan = new File(App.context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath() + "/init/wlan0");
-        File dirInitRnmt = new File(App.context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath() + "/init/rmnet0");
-        deleteDir(dirRnmt);
-        deleteDir(dirWlan);
-        deleteDir(dirInitWlan);
-        deleteDir(dirInitRnmt);
-    }
-
-    private static boolean deleteDir(File dir) {
-        if (dir.isDirectory()) {
-            String[] children = dir.list();
-            for (int i = 0; i < children.length; i++) {
-                boolean success = deleteDir(new File(dir, children[i]));
-                if (!success) {
-                    return false;
-                }
-            }
-        }
-
-        // The directory is now empty so delete it
-        return dir.delete();
-    }
+    //private void deleteStatDirs() {
+    //    File dirWlan = new File(App.context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath() + "/wlan0");
+    //    File dirRnmt = new File(App.context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath() + "/rmnet0");
+    //    File dirInitWlan = new File(App.context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath() + "/init/wlan0");
+    //    File dirInitRnmt = new File(App.context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath() + "/init/rmnet0");
+    //    deleteDir(dirRnmt);
+    //    deleteDir(dirWlan);
+    //    deleteDir(dirInitWlan);
+    //    deleteDir(dirInitRnmt);
+    //}
+    //
+    //private static boolean deleteDir(File dir) {
+    //    if (dir.isDirectory()) {
+    //        String[] children = dir.list();
+    //        for (int i = 0; i < children.length; i++) {
+    //            boolean success = deleteDir(new File(dir, children[i]));
+    //            if (!success) {
+    //                return false;
+    //            }
+    //        }
+    //    }
+    //
+    //    // The directory is now empty so delete it
+    //    return dir.delete();
+    //}
 
     //todo : uncomment below lines for app usages
     //private void insertHasInternetAccessApplications(SQLiteDatabase database) {
