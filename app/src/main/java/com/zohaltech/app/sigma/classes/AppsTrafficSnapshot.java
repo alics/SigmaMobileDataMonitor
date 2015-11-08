@@ -144,7 +144,7 @@ public class AppsTrafficSnapshot {
                     String lineArr[] = line.split(" ");
                     String iface = lineArr[1];
                     if (hitCount == 2) {
-                        return tx_bytes + rx_bytes;
+                        return tx_bytes + rx_bytes+rx_udp_bytes+tx_udp_bytes+rx_other_bytes+tx_other_bytes;
                     }
                     
                     int uid_tag_int = Integer.valueOf(lineArr[3]);
@@ -154,6 +154,12 @@ public class AppsTrafficSnapshot {
                             
                             tx_bytes += Long.valueOf(lineArr[7]);
                             rx_bytes += Long.valueOf(lineArr[5]);
+
+                            rx_udp_bytes+=Long.valueOf(lineArr[11]);
+                            tx_udp_bytes+=Long.valueOf(lineArr[17]);
+
+                            rx_other_bytes+=Long.valueOf(lineArr[13]);
+                            tx_other_bytes+=Long.valueOf(lineArr[19]);
                         }
                     }
                 }
