@@ -174,7 +174,7 @@ public class AppsTrafficSnapshot {
     
     public static void logUidStat(int uid, long trafficBytes, String type) {
         try {
-            File dir = new File(App.context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath() + "/" + type);
+            File dir = new File(App.context.getExternalFilesDir(null).getAbsolutePath() + "/Documents/" + type);
             if (!dir.exists()) {
                 dir.mkdirs();
             }
@@ -195,7 +195,7 @@ public class AppsTrafficSnapshot {
     }
     
     private static long getLastUidStat(int uid, String type) {
-        String filePath = App.context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS) + "/" + type + "/" + uid;
+        String filePath = App.context.getExternalFilesDir(null) + "/Documents/" + type + "/" + uid;
         long bytes = 0;
         try {
             BufferedReader br = new BufferedReader(new FileReader(filePath));
