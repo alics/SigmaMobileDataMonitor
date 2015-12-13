@@ -21,12 +21,13 @@ public class AppDataUsageMeter {
     public static void takeSnapshot() {
         SnapshotStatus status = SnapshotStatus.getCurrentSnapshotStatus();
         int connectivityStatus = ConnectionManager.getConnectivityStatus();
-        if ((connectivityStatus == ConnectionManager.TYPE_MOBILE || connectivityStatus == ConnectionManager.TYPE_WIFI) &&
-            status.getStatus() != SnapshotStatus.Running) {
+        //if ((connectivityStatus == ConnectionManager.TYPE_MOBILE || connectivityStatus == ConnectionManager.TYPE_WIFI) &&
+        //    status.getStatus() != SnapshotStatus.Running) {
+        if (status.getStatus() != SnapshotStatus.Running) {
 
             status.setStatus(SnapshotStatus.Running);
             SnapshotStatus.update(status);
-            AppsTrafficSnapshot.snapshot();
+            AppsTrafficSnapshot.captureSnapshot(SnapshotStatus.InitStatus.NORMAL);
 
             SnapshotStatus currentStatus = SnapshotStatus.getCurrentSnapshotStatus();
             currentStatus.setStatus(SnapshotStatus.Stopped);

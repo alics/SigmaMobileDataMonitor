@@ -7,13 +7,20 @@ import android.content.Intent;
 
 import com.zohaltech.app.sigma.dal.SnapshotStatus;
 
+import java.io.IOException;
+
 public class PowerOffReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        SnapshotStatus status = SnapshotStatus.getCurrentSnapshotStatus();
-        if (status.getStatus() != SnapshotStatus.Running) {
-            AppDataUsageMeter.takeSnapshot();
+        try {
+            SnapshotStatus status = SnapshotStatus.getCurrentSnapshotStatus();
+            if (status.getStatus() != SnapshotStatus.Running) {
+                AppsTrafficSnapshot.captureSnapshot(SnapshotStatus.InitStatus.NORMAL);
+            }
+        }catch (MyRuntimeException e) {
+            e.printStackTrace();
         }
+
         //if (status.getStatus() == SnapshotStatus.InitStatus.BEFORE_FIRST_BOOT.ordinal()) {
         //    status.setInitializationStatus(SnapshotStatus.InitStatus.NORMAL.ordinal());
         //    SnapshotStatus.update(status);

@@ -21,7 +21,7 @@ public class AppsUsageLogs {
 
     static final String CreateTable = "CREATE TABLE " + TableName + " (" +
                                       Id + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-                                      AppId + " INTEGER REFERENCES " + Applications.TableName + " (" + DataPackages.Id + "), " +
+                                      AppId + " INTEGER NOT NULL , " +
                                       TrafficBytes + " BIGINT NOT NULL  ," +
                                       TrafficBytesWifi + " BIGINT NOT NULL  ," +
                                       LogDateTime + " CHAR(19)   );";
@@ -106,24 +106,28 @@ public class AppsUsageLogs {
         Cursor cursor = null;
 
         try {
-            String query = "SELECT " + Applications.AppName + " appName, " +
-                           Applications.PackageName + " packageName, " +
-                           "sum(" + TrafficBytes + ") mobile, " +
-                           "sum(" + TrafficBytesWifi + ") wifi " +
-                           "FROM " + TableName + " log " +
-                           "INNER JOIN " + Applications.TableName + " app " +
-                           "ON app.Id=log.AppId " +
-                           "GROUP BY app.AppName " +
-                           "ORDER BY mobile DESC, wifi DESC ";
+            //String query = "SELECT " + Applications.AppName + " appName, " +
+            //               Applications.PackageName + " packageName, " +
+            //               "sum(" + TrafficBytes + ") mobile, " +
+            //               "sum(" + TrafficBytesWifi + ") wifi " +
+            //               "FROM " + TableName + " log " +
+            //               "INNER JOIN " + Applications.TableName + " app " +
+            //               "ON app.Id=log.AppId " +
+            //               "GROUP BY app.AppName " +
+            //               "ORDER BY mobile DESC, wifi DESC ";
+            String query = " SELECT " + AppId + " , " +
+                           " sum(" + TrafficBytes + ") mobile, " +
+                           " sum(" + TrafficBytesWifi + ") wifi " +
+                           " FROM " + TableName + " log " +
+                           " GROUP BY " + AppId +
+                           " ORDER BY mobile DESC, wifi DESC ";
 
             cursor = db.rawQuery(query, null);
             if (cursor != null && cursor.moveToFirst()) {
                 do {
-                    AppsTrafficMonitor trafficMonitor = new AppsTrafficMonitor(cursor.getString(cursor.getColumnIndex("appName")),
-                                                                               cursor.getString(cursor.getColumnIndex("packageName")),
+                    AppsTrafficMonitor trafficMonitor = new AppsTrafficMonitor(cursor.getInt(cursor.getColumnIndex(AppId)),
                                                                                cursor.getLong(cursor.getColumnIndex("mobile")),
-                                                                               cursor.getLong(cursor.getColumnIndex("wifi"))
-                    );
+                                                                               cursor.getLong(cursor.getColumnIndex("wifi")));
                     appsTrafficMonitors.add(trafficMonitor);
                 } while (cursor.moveToNext());
             }

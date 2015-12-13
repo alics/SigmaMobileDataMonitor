@@ -54,14 +54,14 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".classes.AppReceiver">
-            <intent-filter android:priority="999">
-                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
-                <action android:name="android.intent.action.PACKAGE_ADDED"/>
+        <!--<receiver android:name=".classes.AppReceiver">-->
+        <!--<intent-filter android:priority="999">-->
+        <!--<action android:name="android.intent.action.PACKAGE_REMOVED"/>-->
+        <!--<action android:name="android.intent.action.PACKAGE_ADDED"/>-->
 
-                <data android:scheme="package"/>
-            </intent-filter>
-        </receiver>
+        <!--<data android:scheme="package"/>-->
+        <!--</intent-filter>-->
+        <!--</receiver>-->
 
         <receiver android:name=".classes.PowerOffReceiver">
             <intent-filter>

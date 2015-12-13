@@ -1,16 +1,31 @@
 package com.zohaltech.app.sigma.entities;
 
 public class AppsTrafficMonitor {
-    private String appName;
-    private String    packageName;
-    private Long   mobileTraffic;
-    private Long   wifiTraffic;
+    private Integer uid;
+    private String  appName;
+    private String  packageName;
+    private Long    mobileTraffic;
+    private Long    wifiTraffic;
 
     public AppsTrafficMonitor(String appName, String packageName, Long mobileTraffic, Long wifiTraffic) {
         setAppName(appName);
         setPackageName(packageName);
         setMobileTraffic(mobileTraffic);
         setWifiTraffic(wifiTraffic);
+    }
+
+    public AppsTrafficMonitor(Integer uid, Long mobileTraffic, Long wifiTraffic) {
+        setUid(uid);
+        setMobileTraffic(mobileTraffic);
+        setWifiTraffic(wifiTraffic);
+    }
+
+    public Integer getUid() {
+        return uid;
+    }
+
+    public void setUid(Integer uid) {
+        this.uid = uid;
     }
 
     public String getAppName() {

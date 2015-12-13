@@ -75,7 +75,6 @@ public final class TelephonyInfo {
     }*/
 
     private static String getDeviceIdBySlot(Context context, String predictedMethodName, int slotID) throws GeminiMethodNotFoundException {
-
         String imsi = null;
 
         TelephonyManager telephony = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
@@ -109,15 +108,10 @@ public final class TelephonyInfo {
     }*/
 
     private static boolean getSIMStateBySlot(Context context, String predictedMethodName, int slotID) throws GeminiMethodNotFoundException {
-
         boolean isReady = false;
-
         TelephonyManager telephony = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-
         try {
-
             Class<?> telephonyClass = Class.forName(telephony.getClass().getName());
-
             Class<?>[] parameter = new Class[1];
             parameter[0] = int.class;
             Method getSimStateGemini = telephonyClass.getMethod(predictedMethodName, parameter);
@@ -136,7 +130,6 @@ public final class TelephonyInfo {
             e.printStackTrace();
             throw new GeminiMethodNotFoundException(predictedMethodName);
         }
-
         return isReady;
     }
 

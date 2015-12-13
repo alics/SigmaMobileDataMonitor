@@ -1,6 +1,7 @@
 package com.zohaltech.app.sigma.adapters;
 
 
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.view.View;
@@ -65,15 +66,29 @@ public class AppsTrafficReportAdapter extends ArrayAdapter<AppsTrafficMonitor> {
         }
 
         public void fill(final AppsTrafficMonitor item, final int position) {
-            //imgApp.setImageResource(item.getAppIcon());
+            String packageName = App.context.getPackageManager().getNameForUid(item.getUid());
             Drawable icon = null;
-            try {
-                icon = App.context.getPackageManager().getApplicationIcon(item.getPackageName());
-            } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
+
+            String appName = packageName+"-"+item.getUid();
+            if (item.getUid() == 0) {
+                appName = "Root System+ 0";
+            } else {
+                try {
+                    icon = App.context.getPackageManager().getApplicationIcon(packageName);
+                } catch (PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
+                }
+                imgApp.setImageDrawable(icon);
+                try {
+                    ApplicationInfo info = App.context.getPackageManager().getApplicationInfo(packageName, PackageManager.GET_META_DATA);
+                    appName = App.context.getPackageManager().getApplicationLabel(info).toString()+"-"+packageName;
+
+                } catch (PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
-            imgApp.setImageDrawable(icon);
-            txtAppName.setText(item.getAppName());
+
+            txtAppName.setText(appName);
             String trafficMobile = TrafficUnitsUtil.getTodayTraffic(item.getMobileTraffic()).getInlineDisplay();
             txtTrafficMobile.setText(trafficMobile);
             progressMobile.setProgress(mobileSum == 0 ? 0 : (int) (item.getMobileTraffic() * 100 / mobileSum));

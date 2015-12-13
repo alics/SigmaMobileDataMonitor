@@ -76,7 +76,7 @@ public class SnapshotStatus {
     private int status;
     private int initializationStatus;
 
-    public enum InitStatus {FIRST_SNAPSHOT, BEFORE_FIRST_BOOT, NORMAL}
+    public enum InitStatus {FIRST_SNAPSHOT, NORMAL}
 
     public SnapshotStatus(int id, int status, int initialized) {
         this(status, initialized);
