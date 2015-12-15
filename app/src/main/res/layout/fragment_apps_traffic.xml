@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical">
+
+    <ListView
+        android:id="@+id/lstAppsTraffic"
+        tools:listitem="@layout/adapter_apps_traffic"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@null"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/primary"/>
+
+    <LinearLayout
+        android:id="@+id/layoutAppsTraffic"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <widgets.LatinTextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Mobile"
+                android:textColor="@color/secondary_text"/>
+
+            <widgets.LatinTextView
+                android:id="@+id/txtTotalTraffic"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="100MB"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/secondary_text"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <widgets.LatinTextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="WiFi"
+                android:textColor="@color/secondary_text"/>
+
+            <widgets.LatinTextView
+                android:id="@+id/txtTotalTrafficWifi"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="100MB"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/secondary_text"/>
+
+        </LinearLayout>
+
+        <widgets.MyTextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="مجموع"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/secondary_text"/>
+
+    </LinearLayout>
+
+</LinearLayout>

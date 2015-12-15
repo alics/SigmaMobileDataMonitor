@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_wifi_white"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_mobile_white"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_calendar_white"/>
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lstTraffics"
+        tools:listitem="@layout/adapter_report"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@null"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/primary"/>
+
+    <LinearLayout
+        android:id="@+id/layoutReport"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <widgets.LatinTextView
+            android:id="@+id/txtTotalTrafficWifi"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|center"
+            android:text="100MB"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/secondary_text"/>
+
+        <widgets.LatinTextView
+            android:id="@+id/txtTotalTraffic"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|center"
+            android:text="100MB"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/secondary_text"/>
+
+        <widgets.MyTextView
+            android:id="@+id/txtDate"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="مجموع"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/secondary_text"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

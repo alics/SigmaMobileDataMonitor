@@ -113,6 +113,9 @@
             android:name=".activities.AppsTrafficReportActivity"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".activities.TrafficReportActivity"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".activities.ApplicationAlarmActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="portrait"
