@@ -99,14 +99,14 @@ public class AppsTrafficReportAdapter extends ArrayAdapter<AppsTrafficMonitor> {
 
             if (_reportType == AppsTrafficReportFragment.ReportType.BOTH) {
                 traffic = TrafficUnitsUtil.getTodayTraffic(item.getTotal()).getInlineDisplay();
-                progress.setProgress(_mobileSum == 0 ? 0 : (int) (item.getMobileTraffic() * 100 / _total));
+                progress.setProgress(_total == 0 ? 0 : (int) (item.getTotal() * 100 / _total));
             } else if (_reportType == AppsTrafficReportFragment.ReportType.DATA) {
                 traffic = TrafficUnitsUtil.getTodayTraffic(item.getMobileTraffic()).getInlineDisplay();
                 progress.setProgress(_mobileSum == 0 ? 0 : (int) (item.getMobileTraffic() * 100 / _mobileSum));
 
             } else if (_reportType == AppsTrafficReportFragment.ReportType.WIFI) {
                 traffic = TrafficUnitsUtil.getTodayTraffic(item.getWifiTraffic()).getInlineDisplay();
-                progress.setProgress(_mobileSum == 0 ? 0 : (int) (item.getMobileTraffic() * 100 / _wifiSum));
+                progress.setProgress(_wifiSum == 0 ? 0 : (int) (item.getWifiTraffic() * 100 / _wifiSum));
             }
             txtTraffic.setText(traffic);
         }
