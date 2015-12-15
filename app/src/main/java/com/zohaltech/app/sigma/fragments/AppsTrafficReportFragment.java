@@ -1,8 +1,5 @@
 package com.zohaltech.app.sigma.fragments;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,9 +10,7 @@ import android.widget.TextView;
 
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.adapters.AppsTrafficReportAdapter;
-import com.zohaltech.app.sigma.adapters.ReportAdapter;
 import com.zohaltech.app.sigma.classes.AppDataUsageMeter;
-import com.zohaltech.app.sigma.classes.DataUsageMeter;
 import com.zohaltech.app.sigma.classes.TrafficUnitsUtil;
 import com.zohaltech.app.sigma.dal.AppsUsageLogs;
 import com.zohaltech.app.sigma.entities.AppsTrafficMonitor;
@@ -24,8 +19,8 @@ import java.util.ArrayList;
 
 public class AppsTrafficReportFragment extends Fragment {
     ListView                      lstAppsTraffic;
-    TextView                      txtTotalTraffic;
-    TextView                      txtTotalTrafficWifi;
+    //TextView                      txtTotalTraffic;
+    //TextView                      txtTotalTrafficWifi;
     ArrayList<AppsTrafficMonitor> appsTrafficMonitors;
     AppsTrafficReportAdapter      adapter;
 
@@ -43,26 +38,26 @@ public class AppsTrafficReportFragment extends Fragment {
         AppDataUsageMeter.takeSnapshot();
 
         lstAppsTraffic = (ListView) view.findViewById(R.id.lstAppsTraffic);
-        txtTotalTraffic = (TextView) view.findViewById(R.id.txtTotalTraffic);
-        txtTotalTrafficWifi = (TextView) view.findViewById(R.id.txtTotalTrafficWifi);
+        //txtTotalTraffic = (TextView) view.findViewById(R.id.txtTotalTraffic);
+        //txtTotalTrafficWifi = (TextView) view.findViewById(R.id.txtTotalTrafficWifi);
 
         appsTrafficMonitors = AppsUsageLogs.getAppsTrafficReport();
         adapter = new AppsTrafficReportAdapter(appsTrafficMonitors);
         lstAppsTraffic.setAdapter(adapter);
 
-        populateSummery();
+      //  populateSummery();
 
         return view;
     }
 
-    private void populateSummery() {
-        long sum = 0;
-        long sumWifi = 0;
-        for (AppsTrafficMonitor trafficMonitor : appsTrafficMonitors) {
-            sum += trafficMonitor.getMobileTraffic();
-            sumWifi += trafficMonitor.getWifiTraffic();
-        }
-        txtTotalTraffic.setText(TrafficUnitsUtil.getUsedTrafficWithPoint(sum));
-        txtTotalTrafficWifi.setText(TrafficUnitsUtil.getUsedTrafficWithPoint(sumWifi));
-    }
+    //private void populateSummery() {
+    //    long sum = 0;
+    //    long sumWifi = 0;
+    //    for (AppsTrafficMonitor trafficMonitor : appsTrafficMonitors) {
+    //        sum += trafficMonitor.getMobileTraffic();
+    //        sumWifi += trafficMonitor.getWifiTraffic();
+    //    }
+    //    txtTotalTraffic.setText(TrafficUnitsUtil.getUsedTrafficWithPoint(sum));
+    //    txtTotalTrafficWifi.setText(TrafficUnitsUtil.getUsedTrafficWithPoint(sumWifi));
+    //}
 }

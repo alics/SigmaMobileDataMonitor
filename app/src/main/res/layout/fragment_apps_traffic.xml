@@ -26,60 +26,80 @@
         android:orientation="horizontal"
         android:padding="5dp">
 
-        <LinearLayout
-            android:layout_width="0dp"
+
+        <widgets.MyButton
+            android:id="@+id/btnWifi"
+            style="@style/FormButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:minWidth="72dp"
+            android:text="Wifi"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-            <widgets.LatinTextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="Mobile"
-                android:textColor="@color/secondary_text"/>
 
-            <widgets.LatinTextView
-                android:id="@+id/txtTotalTraffic"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="100MB"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/secondary_text"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
+        <widgets.MyButton
+            android:id="@+id/btnData"
+            style="@style/FormButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:minWidth="72dp"
+            android:text="Data"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-            <widgets.LatinTextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="WiFi"
-                android:textColor="@color/secondary_text"/>
+        <!--<LinearLayout-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="vertical">-->
 
-            <widgets.LatinTextView
-                android:id="@+id/txtTotalTrafficWifi"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="100MB"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/secondary_text"/>
+            <!--<widgets.LatinTextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:text="Mobile"-->
+                <!--android:textColor="@color/secondary_text"/>-->
 
-        </LinearLayout>
+            <!--<widgets.LatinTextView-->
+                <!--android:id="@+id/txtTotalTraffic"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:text="100MB"-->
+                <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+                <!--android:textColor="@color/secondary_text"/>-->
 
-        <widgets.MyTextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="مجموع"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/secondary_text"/>
+        <!--</LinearLayout>-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="vertical">-->
+
+            <!--<widgets.LatinTextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:text="WiFi"-->
+                <!--android:textColor="@color/secondary_text"/>-->
+
+            <!--<widgets.LatinTextView-->
+                <!--android:id="@+id/txtTotalTrafficWifi"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:text="100MB"-->
+                <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+                <!--android:textColor="@color/secondary_text"/>-->
+
+        <!--</LinearLayout>-->
+
+        <!--<widgets.MyTextView-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="center"-->
+            <!--android:text="مجموع"-->
+            <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+            <!--android:textColor="@color/secondary_text"/>-->
 
     </LinearLayout>
 
