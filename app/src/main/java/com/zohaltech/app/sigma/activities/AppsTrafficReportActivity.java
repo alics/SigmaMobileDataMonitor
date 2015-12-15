@@ -10,6 +10,7 @@ import com.zohaltech.app.sigma.classes.AppDataUsageMeter;
 import com.zohaltech.app.sigma.classes.TrafficUnitsUtil;
 import com.zohaltech.app.sigma.dal.AppsUsageLogs;
 import com.zohaltech.app.sigma.entities.AppsTrafficMonitor;
+import com.zohaltech.app.sigma.fragments.AppsTrafficReportFragment;
 
 import java.util.ArrayList;
 
@@ -30,8 +31,8 @@ public class AppsTrafficReportActivity extends EnhancedActivity {
         txtTotalTraffic = (TextView) findViewById(R.id.txtTotalTraffic);
         txtTotalTrafficWifi = (TextView) findViewById(R.id.txtTotalTrafficWifi);
 
-        appsTrafficMonitors = AppsUsageLogs.getAppsTrafficReport();
-        adapter = new AppsTrafficReportAdapter(appsTrafficMonitors);
+        appsTrafficMonitors = AppsUsageLogs.getAppsTrafficReport(AppsTrafficReportFragment.ReportType.BOTH);
+        adapter = new AppsTrafficReportAdapter(appsTrafficMonitors, AppsTrafficReportFragment.ReportType.BOTH);
         lstAppsTraffic.setAdapter(adapter);
 
         populateSummery();

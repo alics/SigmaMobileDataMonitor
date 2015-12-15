@@ -5,13 +5,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.adapters.AppsTrafficReportAdapter;
 import com.zohaltech.app.sigma.classes.AppDataUsageMeter;
-import com.zohaltech.app.sigma.classes.TrafficUnitsUtil;
 import com.zohaltech.app.sigma.dal.AppsUsageLogs;
 import com.zohaltech.app.sigma.entities.AppsTrafficMonitor;
 
@@ -19,10 +18,16 @@ import java.util.ArrayList;
 
 public class AppsTrafficReportFragment extends Fragment {
     ListView                      lstAppsTraffic;
-    //TextView                      txtTotalTraffic;
-    //TextView                      txtTotalTrafficWifi;
+    Button                        btnData;
+    Button                        btnWifi;
     ArrayList<AppsTrafficMonitor> appsTrafficMonitors;
     AppsTrafficReportAdapter      adapter;
+
+    public enum ReportType {
+        WIFI,
+        DATA,
+        BOTH
+    }
 
     public static AppsTrafficReportFragment newInstance() {
         Bundle args = new Bundle();
@@ -38,14 +43,31 @@ public class AppsTrafficReportFragment extends Fragment {
         AppDataUsageMeter.takeSnapshot();
 
         lstAppsTraffic = (ListView) view.findViewById(R.id.lstAppsTraffic);
-        //txtTotalTraffic = (TextView) view.findViewById(R.id.txtTotalTraffic);
-        //txtTotalTrafficWifi = (TextView) view.findViewById(R.id.txtTotalTrafficWifi);
+        btnData = (Button) view.findViewById(R.id.btnData);
+        btnWifi = (Button) view.findViewById(R.id.btnWifi);
 
-        appsTrafficMonitors = AppsUsageLogs.getAppsTrafficReport();
-        adapter = new AppsTrafficReportAdapter(appsTrafficMonitors);
+        appsTrafficMonitors = AppsUsageLogs.getAppsTrafficReport(ReportType.BOTH);
+        adapter = new AppsTrafficReportAdapter(appsTrafficMonitors, ReportType.BOTH);
         lstAppsTraffic.setAdapter(adapter);
 
-      //  populateSummery();
+        btnData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                appsTrafficMonitors = AppsUsageLogs.getAppsTrafficReport(ReportType.DATA);
+                adapter = new AppsTrafficReportAdapter(appsTrafficMonitors, ReportType.DATA);
+                lstAppsTraffic.setAdapter(adapter);
+            }
+        });
+
+
+        btnWifi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                appsTrafficMonitors = AppsUsageLogs.getAppsTrafficReport(ReportType.WIFI);
+                adapter = new AppsTrafficReportAdapter(appsTrafficMonitors, ReportType.WIFI);
+                lstAppsTraffic.setAdapter(adapter);
+            }
+        });
 
         return view;
     }

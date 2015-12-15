@@ -14,21 +14,26 @@ import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.classes.App;
 import com.zohaltech.app.sigma.classes.TrafficUnitsUtil;
 import com.zohaltech.app.sigma.entities.AppsTrafficMonitor;
+import com.zohaltech.app.sigma.fragments.AppsTrafficReportFragment;
 
 import java.util.ArrayList;
 
 import widgets.PercentProgressbar;
 
 public class AppsTrafficReportAdapter extends ArrayAdapter<AppsTrafficMonitor> {
+    long                                 _mobileSum;
+    long                                 _wifiSum;
+    long                                 _total;
+    AppsTrafficReportFragment.ReportType _reportType;
 
-    long mobileSum;
-    long wifiSum;
-
-    public AppsTrafficReportAdapter(ArrayList<AppsTrafficMonitor> trafficMonitorList) {
+    public AppsTrafficReportAdapter(ArrayList<AppsTrafficMonitor> trafficMonitorList, AppsTrafficReportFragment.ReportType reportType) {
         super(App.context, R.layout.adapter_apps_traffic, trafficMonitorList);
+        _reportType = reportType;
         for (AppsTrafficMonitor trafficMonitor : trafficMonitorList) {
-            mobileSum += trafficMonitor.getMobileTraffic();
-            wifiSum += trafficMonitor.getWifiTraffic();
+            _mobileSum += trafficMonitor.getMobileTraffic();
+            _wifiSum += trafficMonitor.getWifiTraffic();
+            _total += trafficMonitor.getTotal();
+
         }
     }
 
@@ -51,25 +56,25 @@ public class AppsTrafficReportAdapter extends ArrayAdapter<AppsTrafficMonitor> {
     private class ViewHolder {
         ImageView          imgApp;
         TextView           txtAppName;
-        TextView           txtTrafficMobile;
-        PercentProgressbar progressMobile;
-        TextView           txtTrafficWifi;
-        PercentProgressbar progressWifi;
+        TextView           txtTraffic;
+        PercentProgressbar progress;
+        //TextView           txtTrafficWifi;
+        //PercentProgressbar progressWifi;
 
         public ViewHolder(View view) {
             imgApp = (ImageView) view.findViewById(R.id.imgApp);
             txtAppName = (TextView) view.findViewById(R.id.txtAppName);
-            txtTrafficMobile = (TextView) view.findViewById(R.id.txtTrafficMobile);
-            txtTrafficWifi = (TextView) view.findViewById(R.id.txtTrafficWifi);
-            progressMobile = (PercentProgressbar) view.findViewById(R.id.progressMobile);
-            progressWifi = (PercentProgressbar) view.findViewById(R.id.progressWifi);
+            txtTraffic = (TextView) view.findViewById(R.id.txtTraffic);
+            //txtTrafficWifi = (TextView) view.findViewById(R.id.txtTrafficWifi);
+            progress = (PercentProgressbar) view.findViewById(R.id.progress);
+            //progressWifi = (PercentProgressbar) view.findViewById(R.id.progressWifi);
         }
 
         public void fill(final AppsTrafficMonitor item, final int position) {
             String packageName = App.context.getPackageManager().getNameForUid(item.getUid());
             Drawable icon = null;
 
-            String appName = packageName+"-"+item.getUid();
+            String appName = packageName + "-" + item.getUid();
             if (item.getUid() == 0) {
                 appName = "Root System+ 0";
             } else {
@@ -81,7 +86,7 @@ public class AppsTrafficReportAdapter extends ArrayAdapter<AppsTrafficMonitor> {
                 imgApp.setImageDrawable(icon);
                 try {
                     ApplicationInfo info = App.context.getPackageManager().getApplicationInfo(packageName, PackageManager.GET_META_DATA);
-                    appName = App.context.getPackageManager().getApplicationLabel(info).toString()+"-"+packageName;
+                    appName = App.context.getPackageManager().getApplicationLabel(info).toString() + "-" + packageName;
 
                 } catch (PackageManager.NameNotFoundException e) {
                     e.printStackTrace();
@@ -89,12 +94,21 @@ public class AppsTrafficReportAdapter extends ArrayAdapter<AppsTrafficMonitor> {
             }
 
             txtAppName.setText(appName);
-            String trafficMobile = TrafficUnitsUtil.getTodayTraffic(item.getMobileTraffic()).getInlineDisplay();
-            txtTrafficMobile.setText(trafficMobile);
-            progressMobile.setProgress(mobileSum == 0 ? 0 : (int) (item.getMobileTraffic() * 100 / mobileSum));
-            String trafficWifi = TrafficUnitsUtil.getTodayTraffic(item.getWifiTraffic()).getInlineDisplay();
-            txtTrafficWifi.setText(trafficWifi);
-            progressWifi.setProgress((int) (wifiSum == 0 ? 0 : item.getWifiTraffic() * 100 / wifiSum));
+
+            String traffic = "";
+
+            if (_reportType == AppsTrafficReportFragment.ReportType.BOTH) {
+                traffic = TrafficUnitsUtil.getTodayTraffic(item.getTotal()).getInlineDisplay();
+                progress.setProgress(_mobileSum == 0 ? 0 : (int) (item.getMobileTraffic() * 100 / _total));
+            } else if (_reportType == AppsTrafficReportFragment.ReportType.DATA) {
+                traffic = TrafficUnitsUtil.getTodayTraffic(item.getMobileTraffic()).getInlineDisplay();
+                progress.setProgress(_mobileSum == 0 ? 0 : (int) (item.getMobileTraffic() * 100 / _mobileSum));
+
+            } else if (_reportType == AppsTrafficReportFragment.ReportType.WIFI) {
+                traffic = TrafficUnitsUtil.getTodayTraffic(item.getWifiTraffic()).getInlineDisplay();
+                progress.setProgress(_mobileSum == 0 ? 0 : (int) (item.getMobileTraffic() * 100 / _wifiSum));
+            }
+            txtTraffic.setText(traffic);
         }
     }
 }

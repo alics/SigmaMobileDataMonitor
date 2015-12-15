@@ -36,15 +36,15 @@
             android:orientation="horizontal"
             android:padding="2dp">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Mobile"
-                android:textColor="@color/secondary_text"/>
+            <!--<TextView-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:text="Mobile"-->
+            <!--android:textColor="@color/secondary_text"/>-->
 
             <TextView
-                android:id="@+id/txtTrafficMobile"
+                android:id="@+id/txtTraffic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="34.5 KB"
@@ -53,37 +53,37 @@
         </LinearLayout>
 
         <widgets.PercentProgressbar
-            android:id="@+id/progressMobile"
+            android:id="@+id/progress"
             android:layout_width="match_parent"
             android:layout_height="24dp"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="2dp">
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:padding="2dp">-->
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="WiFi"
-                android:textColor="@color/secondary_text"/>
+            <!--<TextView-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="WiFi"-->
+                <!--android:textColor="@color/secondary_text"/>-->
 
-            <TextView
-                android:id="@+id/txtTrafficWifi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="34.5 KB"
-                android:textColor="@color/secondary_text"/>
+            <!--<TextView-->
+                <!--android:id="@+id/txtTrafficWifi"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="34.5 KB"-->
+                <!--android:textColor="@color/secondary_text"/>-->
 
-        </LinearLayout>
+        <!--</LinearLayout>-->
 
-        <widgets.PercentProgressbar
-            android:id="@+id/progressWifi"
-            android:layout_width="match_parent"
-            android:layout_height="24dp"/>
+        <!--<widgets.PercentProgressbar-->
+            <!--android:id="@+id/progressWifi"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="24dp"/>-->
 
     </LinearLayout>
 

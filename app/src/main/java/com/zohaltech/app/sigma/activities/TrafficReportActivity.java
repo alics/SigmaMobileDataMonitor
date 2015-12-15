@@ -85,6 +85,4 @@ public class TrafficReportActivity extends EnhancedActivity {
             actionBar.setDisplayShowHomeEnabled(true);
         }
     }
-
-
 }

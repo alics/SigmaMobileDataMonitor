@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.zohaltech.app.sigma.classes.MyRuntimeException;
 import com.zohaltech.app.sigma.entities.AppsTrafficMonitor;
 import com.zohaltech.app.sigma.entities.AppsUsageLog;
+import com.zohaltech.app.sigma.fragments.AppsTrafficReportFragment;
 
 import java.util.ArrayList;
 
@@ -99,7 +100,7 @@ public class AppsUsageLogs {
         return (count == 0) ? null : logs.get(count - 1);
     }
 
-    public static ArrayList<AppsTrafficMonitor> getAppsTrafficReport() {
+    public static ArrayList<AppsTrafficMonitor> getAppsTrafficReport(AppsTrafficReportFragment.ReportType reportType) {
         ArrayList<AppsTrafficMonitor> appsTrafficMonitors = new ArrayList<>();
         DataAccess da = new DataAccess();
         SQLiteDatabase db = da.getReadableDB();
@@ -115,21 +116,62 @@ public class AppsUsageLogs {
             //               "ON app.Id=log.AppId " +
             //               "GROUP BY app.AppName " +
             //               "ORDER BY mobile DESC, wifi DESC ";
-            String query = " SELECT " + AppId + " , " +
-                           " sum(" + TrafficBytes + ") mobile, " +
-                           " sum(" + TrafficBytesWifi + ") wifi " +
-                           " FROM " + TableName + " log " +
-                           " GROUP BY " + AppId +
-                           " ORDER BY mobile DESC, wifi DESC ";
 
-            cursor = db.rawQuery(query, null);
-            if (cursor != null && cursor.moveToFirst()) {
-                do {
-                    AppsTrafficMonitor trafficMonitor = new AppsTrafficMonitor(cursor.getInt(cursor.getColumnIndex(AppId)),
-                                                                               cursor.getLong(cursor.getColumnIndex("mobile")),
-                                                                               cursor.getLong(cursor.getColumnIndex("wifi")));
-                    appsTrafficMonitors.add(trafficMonitor);
-                } while (cursor.moveToNext());
+            if (reportType == AppsTrafficReportFragment.ReportType.BOTH) {
+                String query = " SELECT " + AppId + " , " +
+                               " sum(" + TrafficBytes + ") mobile, " +
+                               " sum(" + TrafficBytesWifi + ") wifi " +
+                               " FROM " + TableName + " log " +
+                               " GROUP BY " + AppId +
+                               " ORDER BY (mobile+wifi) DESC ";
+
+                cursor = db.rawQuery(query, null);
+                if (cursor != null && cursor.moveToFirst()) {
+                    do {
+                        AppsTrafficMonitor trafficMonitor = new AppsTrafficMonitor(cursor.getInt(cursor.getColumnIndex(AppId)),
+                                                                                   0L,
+                                                                                   0L,
+                                                                                   cursor.getLong(cursor.getColumnIndex("mobile")) +
+                                                                                   cursor.getLong(cursor.getColumnIndex("wifi")));
+                        appsTrafficMonitors.add(trafficMonitor);
+                    } while (cursor.moveToNext());
+                }
+            } else if (reportType == AppsTrafficReportFragment.ReportType.WIFI) {
+                String query = " SELECT " + AppId + " , " +
+                               " sum(" + TrafficBytes + ") mobile, " +
+                               " sum(" + TrafficBytesWifi + ") wifi " +
+                               " FROM " + TableName + " log " +
+                               " GROUP BY " + AppId +
+                               " ORDER BY  wifi DESC ";
+
+                cursor = db.rawQuery(query, null);
+                if (cursor != null && cursor.moveToFirst()) {
+                    do {
+                        AppsTrafficMonitor trafficMonitor = new AppsTrafficMonitor(cursor.getInt(cursor.getColumnIndex(AppId)),
+                                                                                   0L,
+                                                                                   cursor.getLong(cursor.getColumnIndex("wifi")),
+                                                                                   0L);
+                        appsTrafficMonitors.add(trafficMonitor);
+                    } while (cursor.moveToNext());
+                }
+            } else if (reportType == AppsTrafficReportFragment.ReportType.DATA) {
+                String query = " SELECT " + AppId + " , " +
+                               " sum(" + TrafficBytes + ") mobile, " +
+                               " sum(" + TrafficBytesWifi + ") wifi " +
+                               " FROM " + TableName + " log " +
+                               " GROUP BY " + AppId +
+                               " ORDER BY mobile DESC ";
+
+                cursor = db.rawQuery(query, null);
+                if (cursor != null && cursor.moveToFirst()) {
+                    do {
+                        AppsTrafficMonitor trafficMonitor = new AppsTrafficMonitor(cursor.getInt(cursor.getColumnIndex(AppId)),
+                                                                                   cursor.getLong(cursor.getColumnIndex("mobile")),
+                                                                                   0L,
+                                                                                   0L);
+                        appsTrafficMonitors.add(trafficMonitor);
+                    } while (cursor.moveToNext());
+                }
             }
         } catch (MyRuntimeException e) {
             e.printStackTrace();
