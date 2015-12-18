@@ -94,9 +94,7 @@ public class AppsTrafficReportAdapter extends ArrayAdapter<AppsTrafficMonitor> {
             }
 
             txtAppName.setText(appName);
-
             String traffic = "";
-
             if (_reportType == AppsTrafficReportFragment.ReportType.BOTH) {
                 traffic = TrafficUnitsUtil.getTodayTraffic(item.getTotal()).getInlineDisplay();
                 progress.setProgress(_total == 0 ? 0 : (int) (item.getTotal() * 100 / _total));
