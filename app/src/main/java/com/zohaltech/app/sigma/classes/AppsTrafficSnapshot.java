@@ -98,8 +98,8 @@ public class AppsTrafficSnapshot {
                         AppsUsageLog log = new AppsUsageLog(uid, 0L, wifi, Helper.getCurrentDateTime());
                         AppsUsageLogs.insert(log);
                     }
-                    iterator.remove();
                 }
+                iterator.remove();
             }
         } catch (MyRuntimeException e) {
             e.printStackTrace();
