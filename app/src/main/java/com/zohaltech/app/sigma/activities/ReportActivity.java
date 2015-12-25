@@ -174,6 +174,7 @@ public class ReportActivity extends EnhancedActivity {
                 dialog.setContentView(R.layout.dialog_reset_stats);
                 dialog.setCanceledOnTouchOutside(false);
                 dialog.setCancelable(true);
+
                 final CheckBox chkMobile = (CheckBox) dialog.findViewById(R.id.chkMobile);
                 final CheckBox chkWifi = (CheckBox) dialog.findViewById(R.id.chkWifi);
                 Button positiveButton = (Button) dialog.findViewById(R.id.positiveButton);

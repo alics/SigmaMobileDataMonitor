@@ -40,7 +40,6 @@ import java.util.ArrayList;
 import widgets.MyToast;
 
 public class PackageSettingsActivity extends PaymentActivity {
-
     public static final String INIT_MODE_KEY         = "INIT_MODE";
     public static final String MODE_INSERT_CUSTOM    = "INSERT_CUSTOM";
     public static final String MODE_SETTING_ACTIVE   = "SETTING_ACTIVE";

@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -11,18 +14,25 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.rey.material.app.TimePickerDialog;
+import com.rey.material.widget.CheckBox;
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.activities.PackageSettingsActivity;
+import com.zohaltech.app.sigma.activities.ReportActivity;
+import com.zohaltech.app.sigma.classes.datepicker.PersianCalendar;
+import com.zohaltech.app.sigma.classes.datepicker.PersianDatePicker;
+import com.zohaltech.app.sigma.dal.DailyTrafficHistories;
 import com.zohaltech.app.sigma.dal.DataPackages;
 import com.zohaltech.app.sigma.dal.PackageHistories;
 import com.zohaltech.app.sigma.entities.DataPackage;
 import com.zohaltech.app.sigma.entities.PackageHistory;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public final class DialogManager {
 
     public static String timeResult;
+    public static String dateResult;
 
     public static void showConfirmationDialog(
             final Context context
@@ -220,6 +230,41 @@ public final class DialogManager {
         });
         timePickerDialog.show();
     }
+
+    public static void showDatePickerDialog(Activity activity, int year, int month, int day, final Runnable onPositiveActionClick) {
+        final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_date_picker);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(true);
+
+        final PersianDatePicker datePicker = (PersianDatePicker) dialog.findViewById(R.id.datePicker);
+        PersianCalendar persianCalendar = new PersianCalendar();
+        persianCalendar.setPersianDate(year, month, day);
+        datePicker.setDisplayPersianDate(persianCalendar);
+
+        Button positiveButton = (Button) dialog.findViewById(R.id.positiveButton);
+        Button negativeButton = (Button) dialog.findViewById(R.id.negativeButton);
+
+        positiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dateResult = Helper.getDate(datePicker.getDisplayDate());
+                onPositiveActionClick.run();
+                dateResult="";
+                dialog.dismiss();
+            }
+        });
+
+        negativeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
 
     public static void showPackageActivationDialog(final DataPackage dataPackage) {
         DialogManager.showConfirmationDialog(App.currentActivity, "فعالسازی بسته", "آیا مایل به فعالسازی بسته " + dataPackage.getTitle() + " هستید؟",
