@@ -4,9 +4,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Build;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -14,20 +11,16 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.rey.material.app.TimePickerDialog;
-import com.rey.material.widget.CheckBox;
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.activities.PackageSettingsActivity;
-import com.zohaltech.app.sigma.activities.ReportActivity;
-import com.zohaltech.app.sigma.classes.datepicker.PersianCalendar;
-import com.zohaltech.app.sigma.classes.datepicker.PersianDatePicker;
-import com.zohaltech.app.sigma.dal.DailyTrafficHistories;
+import com.zohaltech.app.sigma.datepicker.PersianCalendar;
+import com.zohaltech.app.sigma.datepicker.PersianDatePicker;
 import com.zohaltech.app.sigma.dal.DataPackages;
 import com.zohaltech.app.sigma.dal.PackageHistories;
 import com.zohaltech.app.sigma.entities.DataPackage;
 import com.zohaltech.app.sigma.entities.PackageHistory;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public final class DialogManager {
 

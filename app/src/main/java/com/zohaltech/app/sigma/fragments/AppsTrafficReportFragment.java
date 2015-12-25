@@ -17,14 +17,10 @@ import com.zohaltech.app.sigma.classes.AppDataUsageMeter;
 import com.zohaltech.app.sigma.classes.DialogManager;
 import com.zohaltech.app.sigma.classes.Helper;
 import com.zohaltech.app.sigma.classes.SolarCalendar;
-import com.zohaltech.app.sigma.classes.datepicker.PersianCalendar;
 import com.zohaltech.app.sigma.dal.AppsUsageLogs;
-import com.zohaltech.app.sigma.dal.MobileOperators;
 import com.zohaltech.app.sigma.entities.AppsTrafficMonitor;
-import com.zohaltech.app.sigma.entities.MobileOperator;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class AppsTrafficReportFragment extends Fragment {
     ListView                      lstAppsTraffic;
