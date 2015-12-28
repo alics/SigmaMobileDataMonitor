@@ -17,9 +17,10 @@
         android:id="@+id/tabTrafficReports"
         android:layout_width="match_parent"
         android:layout_height="36dp"
+        android:background="@color/primary"
         app:pstsIndicatorColor="@color/white"
         app:pstsIndicatorHeight="4dp"
-        app:pstsTextAllCaps="false"/>
+        app:pstsDividerColor="@color/primary"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pagerTrafficReports"

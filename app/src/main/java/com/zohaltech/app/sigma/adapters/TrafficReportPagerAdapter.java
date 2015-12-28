@@ -9,7 +9,7 @@ import com.zohaltech.app.sigma.fragments.TotalTrafficReportFragment;
 
 public class TrafficReportPagerAdapter extends FragmentPagerAdapter {
 
-    private String[] tabTitles = new String[]{"مصرف برنامه ها", "مصرف کلی"};
+    private String[] tabTitles = new String[]{"مصرف کلی", "مصرف برنامه ها"};
     private int vocabId;
 
     public TrafficReportPagerAdapter(FragmentManager fm) {

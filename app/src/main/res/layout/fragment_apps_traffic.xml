@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              xmlns:tools="http://schemas.android.com/tools"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical">
 
     <ListView
         android:id="@+id/lstAppsTraffic"
-        tools:listitem="@layout/adapter_apps_traffic"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:divider="@null"/>
+        android:divider="@null"
+        tools:listitem="@layout/adapter_apps_traffic"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/primary"/>
+        android:background="@color/secondary_text"/>
 
     <LinearLayout
         android:id="@+id/layoutAppsTraffic"
@@ -27,25 +26,47 @@
         android:orientation="horizontal"
         android:padding="5dp">
 
+        <!--<widgets.MyButton-->
+        <!--android:id="@+id/btnWifi"-->
+        <!--style="@style/FormButton"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:minWidth="72dp"-->
+        <!--android:text="Wifi"-->
+        <!--android:textAppearance="?android:attr/textAppearanceMedium"/>-->
 
-        <widgets.MyButton
-            android:id="@+id/btnWifi"
-            style="@style/FormButton"
-            android:layout_width="wrap_content"
+        <!--<widgets.MyButton-->
+        <!--android:id="@+id/btnData"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1"-->
+        <!--android:text="Data"-->
+        <!--android:textAppearance="?android:attr/textAppearanceMedium"/>-->
+
+        <CheckBox
+            android:id="@+id/chkWifi"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:minWidth="72dp"
+            android:layout_weight="1"
+            android:background="@drawable/chk_usage"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center"
             android:text="Wifi"
             android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-
-        <widgets.MyButton
-            android:id="@+id/btnData"
-            style="@style/FormButton"
-            android:layout_width="wrap_content"
+        <CheckBox
+            android:id="@+id/chkData"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:minWidth="72dp"
+            android:layout_weight="1"
+            android:background="@drawable/chk_usage"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center"
             android:text="Data"
             android:textAppearance="?android:attr/textAppearanceMedium"/>
+
     </LinearLayout>
 
     <LinearLayout
@@ -73,67 +94,6 @@
             android:text="1394/10/01"
             android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-
-
-
     </LinearLayout>
-
-
-    <!--<LinearLayout-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:gravity="center"-->
-            <!--android:orientation="vertical">-->
-
-            <!--<widgets.LatinTextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:text="Mobile"-->
-                <!--android:textColor="@color/secondary_text"/>-->
-
-            <!--<widgets.LatinTextView-->
-                <!--android:id="@+id/txtTotalTraffic"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:text="100MB"-->
-                <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
-                <!--android:textColor="@color/secondary_text"/>-->
-
-        <!--</LinearLayout>-->
-
-        <!--<LinearLayout-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:gravity="center"-->
-            <!--android:orientation="vertical">-->
-
-            <!--<widgets.LatinTextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:text="WiFi"-->
-                <!--android:textColor="@color/secondary_text"/>-->
-
-            <!--<widgets.LatinTextView-->
-                <!--android:id="@+id/txtTotalTrafficWifi"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:text="100MB"-->
-                <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
-                <!--android:textColor="@color/secondary_text"/>-->
-
-        <!--</LinearLayout>-->
-
-        <!--<widgets.MyTextView-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--android:gravity="center"-->
-            <!--android:text="مجموع"-->
-            <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
-            <!--android:textColor="@color/secondary_text"/>-->
-
-
 
 </LinearLayout>

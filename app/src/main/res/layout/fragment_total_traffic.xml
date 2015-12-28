@@ -9,7 +9,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primary"
         android:orientation="horizontal"
         android:padding="5dp">
 
@@ -17,21 +16,26 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_wifi_white"/>
+            android:src="@drawable/ic_wifi"/>
 
         <ImageView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_mobile_white"/>
+            android:src="@drawable/ic_mobile"/>
 
         <ImageView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_calendar_white"/>
+            android:src="@drawable/ic_calendar"/>
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/secondary_text"/>
 
     <ListView
         android:id="@+id/lstTraffics"
@@ -44,7 +48,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/primary"/>
+        android:background="@color/secondary_text"/>
 
     <LinearLayout
         android:id="@+id/layoutReport"
@@ -85,6 +89,5 @@
             android:textColor="@color/secondary_text"/>
 
     </LinearLayout>
-
 
 </LinearLayout>

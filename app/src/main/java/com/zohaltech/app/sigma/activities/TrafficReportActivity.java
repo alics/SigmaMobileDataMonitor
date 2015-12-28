@@ -16,19 +16,18 @@ import com.zohaltech.app.sigma.classes.App;
 public class TrafficReportActivity extends EnhancedActivity {
     PagerSlidingTabStrip      tabTrafficReports;
     ViewPager                 pagerTrafficReports;
-    LinearLayout              layoutRoot;
     TrafficReportPagerAdapter trafficReportPagerAdapter;
 
     @Override
     protected void onCreated() {
         setContentView(R.layout.activity_traffic_report);
 
-        tabTrafficReports = (PagerSlidingTabStrip) findViewById(R.id.tabTrafficReports);
         pagerTrafficReports = (ViewPager) findViewById(R.id.pagerTrafficReports);
         trafficReportPagerAdapter = new TrafficReportPagerAdapter(getSupportFragmentManager());
         pagerTrafficReports.setAdapter(trafficReportPagerAdapter);
 
         // Bind the tabCategories to the ViewPager
+        tabTrafficReports = (PagerSlidingTabStrip) findViewById(R.id.tabTrafficReports);
         tabTrafficReports.setViewPager(pagerTrafficReports);
 
         pagerTrafficReports.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -71,8 +70,9 @@ public class TrafficReportActivity extends EnhancedActivity {
         for (int j = 0; j < tabsCount; j++) {
             TextView textView = (TextView) vg.getChildAt(j);
             textView.setWidth(App.screenWidth / 2);
+            textView.setTypeface(App.persianFont);
             textView.setTextColor(getResources().getColor(R.color.primary_light));
-            textView.setTextSize(16);
+            textView.setTextSize(14);
         }
     }
 
@@ -80,7 +80,7 @@ public class TrafficReportActivity extends EnhancedActivity {
     protected void onToolbarCreated() {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle("گزارش مصرف");
+            txtToolbarTitle.setText("گزارش مصرف");
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
         }

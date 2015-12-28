@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 
 import com.zohaltech.app.sigma.R;
@@ -24,28 +26,16 @@ import com.zohaltech.app.sigma.entities.AppsTrafficMonitor;
 import java.util.ArrayList;
 
 public class AppsTrafficReportFragment extends Fragment {
-    private static ReportType      reportType;
-    private static String          selectedDate;
-    private static RestrictionType restrictionType;
 
     ListView                      lstAppsTraffic;
-    Button                        btnData;
-    Button                        btnWifi;
+    CheckBox                      chkData;
+    CheckBox                      chkWifi;
     Button                        btnPickDate;
     ArrayList<AppsTrafficMonitor> appsTrafficMonitors;
     AppsTrafficReportAdapter      adapter;
     AppCompatSpinner              spinnerFrom;
 
-    public enum ReportType {
-        WIFI,
-        DATA,
-        BOTH
-    }
-
-    public enum RestrictionType {
-        ON,
-        FROM
-    }
+    String          selectedDate;
 
     public static AppsTrafficReportFragment newInstance() {
         Bundle args = new Bundle();
@@ -61,15 +51,14 @@ public class AppsTrafficReportFragment extends Fragment {
         AppDataUsageMeter.takeSnapshot();
 
         lstAppsTraffic = (ListView) view.findViewById(R.id.lstAppsTraffic);
-        btnData = (Button) view.findViewById(R.id.btnData);
-        btnWifi = (Button) view.findViewById(R.id.btnWifi);
+        chkData = (CheckBox) view.findViewById(R.id.chkData);
+        chkWifi = (CheckBox) view.findViewById(R.id.chkWifi);
         btnPickDate = (Button) view.findViewById(R.id.btnPickDate);
         spinnerFrom = (AppCompatSpinner) view.findViewById(R.id.spinnerFrom);
 
 
         initSpinner();
 
-        reportType = ReportType.BOTH;
         selectedDate = Helper.getCurrentDateTime().substring(0, 10);
         btnPickDate.setText(SolarCalendar.getCurrentShamsiDateTime().substring(0, 10));
         //appsTrafficMonitors = AppsUsageLogs.getAppsTrafficReport(ReportType.BOTH, "", RestrictionType.ON);
@@ -77,34 +66,48 @@ public class AppsTrafficReportFragment extends Fragment {
         //lstAppsTraffic.setAdapter(adapter);
         bindReport();
 
-        btnData.setOnClickListener(new View.OnClickListener() {
+        //btnData.setOnClickListener(new View.OnClickListener() {
+        //    @Override
+        //    public void onClick(View view) {
+        //        reportType = ReportType.DATA;
+        //        bindReport();
+        //        //appsTrafficMonitors = AppsUsageLogs.getAppsTrafficReport(ReportType.DATA);
+        //        //adapter = new AppsTrafficReportAdapter(appsTrafficMonitors, ReportType.DATA);
+        //        //lstAppsTraffic.setAdapter(adapter);
+        //    }
+        //});
+        //
+        //
+        //btnWifi.setOnClickListener(new View.OnClickListener() {
+        //    @Override
+        //    public void onClick(View view) {
+        //        reportType = ReportType.WIFI;
+        //        bindReport();
+        //        //reportType = ReportType.WIFI;
+        //        //appsTrafficMonitors = AppsUsageLogs.getAppsTrafficReport(ReportType.WIFI);
+        //        //adapter = new AppsTrafficReportAdapter(appsTrafficMonitors, ReportType.WIFI);
+        //        //lstAppsTraffic.setAdapter(adapter);
+        //    }
+        //});
+
+        chkData.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View view) {
-                reportType = ReportType.DATA;
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 bindReport();
-                //appsTrafficMonitors = AppsUsageLogs.getAppsTrafficReport(ReportType.DATA);
-                //adapter = new AppsTrafficReportAdapter(appsTrafficMonitors, ReportType.DATA);
-                //lstAppsTraffic.setAdapter(adapter);
             }
         });
 
-
-        btnWifi.setOnClickListener(new View.OnClickListener() {
+        chkWifi.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View view) {
-                reportType = ReportType.WIFI;
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 bindReport();
-                //reportType = ReportType.WIFI;
-                //appsTrafficMonitors = AppsUsageLogs.getAppsTrafficReport(ReportType.WIFI);
-                //adapter = new AppsTrafficReportAdapter(appsTrafficMonitors, ReportType.WIFI);
-                //lstAppsTraffic.setAdapter(adapter);
             }
         });
 
         btnPickDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String currentSolarDate = SolarCalendar.getCurrentShamsiDateTime().substring(0,10);
+                String currentSolarDate = SolarCalendar.getCurrentShamsiDateTime().substring(0, 10);
                 String dareParts[] = currentSolarDate.split("/");
                 DialogManager.showDatePickerDialog(App.currentActivity, Integer.parseInt(dareParts[0]), Integer.parseInt(dareParts[1]), Integer.parseInt(dareParts[2]), new Runnable() {
                     @Override
@@ -145,9 +148,30 @@ public class AppsTrafficReportFragment extends Fragment {
     }
 
     private void bindReport() {
+        //RestrictionType restrictionType;
+        ReportType      reportType;
+
+        if (chkData.isChecked() && chkData.isChecked()) {
+            reportType = ReportType.BOTH;
+        } else if (chkData.isChecked()) {
+            reportType = ReportType.DATA;
+        } else {
+            reportType = ReportType.WIFI;
+        }
         appsTrafficMonitors = AppsUsageLogs.getAppsTrafficReport(reportType, selectedDate, spinnerFrom.getSelectedItemPosition() == 0 ? RestrictionType.ON : RestrictionType.FROM);
         adapter = new AppsTrafficReportAdapter(appsTrafficMonitors, reportType);
         lstAppsTraffic.setAdapter(adapter);
+    }
+
+    public enum ReportType {
+        WIFI,
+        DATA,
+        BOTH
+    }
+
+    public enum RestrictionType {
+        ON,
+        FROM
     }
 
     //private void populateSummery() {
