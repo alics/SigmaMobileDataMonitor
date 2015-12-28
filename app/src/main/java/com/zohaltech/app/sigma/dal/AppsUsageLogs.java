@@ -8,6 +8,7 @@ import com.zohaltech.app.sigma.classes.MyRuntimeException;
 import com.zohaltech.app.sigma.entities.AppsTrafficMonitor;
 import com.zohaltech.app.sigma.entities.AppsUsageLog;
 import com.zohaltech.app.sigma.fragments.AppsTrafficReportFragment;
+import com.zohaltech.app.sigma.fragments.AppsTrafficReportFragment.RestrictionType;
 
 import java.util.ArrayList;
 
@@ -100,7 +101,7 @@ public class AppsUsageLogs {
         return (count == 0) ? null : logs.get(count - 1);
     }
 
-    public static ArrayList<AppsTrafficMonitor> getAppsTrafficReport(AppsTrafficReportFragment.ReportType reportType) {
+    public static ArrayList<AppsTrafficMonitor> getAppsTrafficReport(AppsTrafficReportFragment.ReportType reportType, String date, AppsTrafficReportFragment.RestrictionType restrictionType) {
         ArrayList<AppsTrafficMonitor> appsTrafficMonitors = new ArrayList<>();
         DataAccess da = new DataAccess();
         SQLiteDatabase db = da.getReadableDB();
@@ -122,6 +123,8 @@ public class AppsUsageLogs {
                                " sum(" + TrafficBytes + ") mobile, " +
                                " sum(" + TrafficBytesWifi + ") wifi " +
                                " FROM " + TableName + " log " +
+                               " WHERE SUBSTR(" + LogDateTime + ", 12, 5)" +
+                               (restrictionType == RestrictionType.FROM ? ">=" : "=") + "'" + date + "'" +
                                " GROUP BY " + AppId +
                                " ORDER BY (mobile+wifi) DESC ";
 
@@ -141,6 +144,8 @@ public class AppsUsageLogs {
                                " sum(" + TrafficBytes + ") mobile, " +
                                " sum(" + TrafficBytesWifi + ") wifi " +
                                " FROM " + TableName + " log " +
+                               " WHERE SUBSTR(" + LogDateTime + ", 12, 5)" +
+                               (restrictionType == RestrictionType.FROM ? ">=" : "=") + "'" + date + "'" +
                                " GROUP BY " + AppId +
                                " ORDER BY  wifi DESC ";
 
@@ -159,6 +164,8 @@ public class AppsUsageLogs {
                                " sum(" + TrafficBytes + ") mobile, " +
                                " sum(" + TrafficBytesWifi + ") wifi " +
                                " FROM " + TableName + " log " +
+                               " WHERE SUBSTR(" + LogDateTime + ", 12, 5)" +
+                               (restrictionType == RestrictionType.FROM ? ">=" : "=") + "'" + date + "'" +
                                " GROUP BY " + AppId +
                                " ORDER BY mobile DESC ";
 

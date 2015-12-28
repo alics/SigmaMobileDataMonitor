@@ -27,13 +27,13 @@ public class AppsTrafficReportActivity extends EnhancedActivity {
 
         AppDataUsageMeter.takeSnapshot();
 
-        lstAppsTraffic = (ListView) findViewById(R.id.lstAppsTraffic);
-        txtTotalTraffic = (TextView) findViewById(R.id.txtTotalTraffic);
-        txtTotalTrafficWifi = (TextView) findViewById(R.id.txtTotalTrafficWifi);
-
-        appsTrafficMonitors = AppsUsageLogs.getAppsTrafficReport(AppsTrafficReportFragment.ReportType.BOTH);
-        adapter = new AppsTrafficReportAdapter(appsTrafficMonitors, AppsTrafficReportFragment.ReportType.BOTH);
-        lstAppsTraffic.setAdapter(adapter);
+        //lstAppsTraffic = (ListView) findViewById(R.id.lstAppsTraffic);
+        //txtTotalTraffic = (TextView) findViewById(R.id.txtTotalTraffic);
+        //txtTotalTrafficWifi = (TextView) findViewById(R.id.txtTotalTrafficWifi);
+        //
+        //appsTrafficMonitors = AppsUsageLogs.getAppsTrafficReport(AppsTrafficReportFragment.ReportType.BOTH);
+        //adapter = new AppsTrafficReportAdapter(appsTrafficMonitors, AppsTrafficReportFragment.ReportType.BOTH);
+        //lstAppsTraffic.setAdapter(adapter);
 
         populateSummery();
     }

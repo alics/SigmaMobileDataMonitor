@@ -6,6 +6,7 @@ import android.support.v7.widget.AppCompatSpinner;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -23,6 +24,10 @@ import com.zohaltech.app.sigma.entities.AppsTrafficMonitor;
 import java.util.ArrayList;
 
 public class AppsTrafficReportFragment extends Fragment {
+    private static ReportType      reportType;
+    private static String          selectedDate;
+    private static RestrictionType restrictionType;
+
     ListView                      lstAppsTraffic;
     Button                        btnData;
     Button                        btnWifi;
@@ -35,6 +40,11 @@ public class AppsTrafficReportFragment extends Fragment {
         WIFI,
         DATA,
         BOTH
+    }
+
+    public enum RestrictionType {
+        ON,
+        FROM
     }
 
     public static AppsTrafficReportFragment newInstance() {
@@ -59,16 +69,22 @@ public class AppsTrafficReportFragment extends Fragment {
 
         initSpinner();
 
-        appsTrafficMonitors = AppsUsageLogs.getAppsTrafficReport(ReportType.BOTH);
-        adapter = new AppsTrafficReportAdapter(appsTrafficMonitors, ReportType.BOTH);
-        lstAppsTraffic.setAdapter(adapter);
+        reportType = ReportType.BOTH;
+        selectedDate = Helper.getCurrentDateTime().substring(0, 10);
+        btnPickDate.setText(SolarCalendar.getCurrentShamsiDateTime().substring(0, 10));
+        //appsTrafficMonitors = AppsUsageLogs.getAppsTrafficReport(ReportType.BOTH, "", RestrictionType.ON);
+        //adapter = new AppsTrafficReportAdapter(appsTrafficMonitors, ReportType.BOTH);
+        //lstAppsTraffic.setAdapter(adapter);
+        bindReport();
 
         btnData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                appsTrafficMonitors = AppsUsageLogs.getAppsTrafficReport(ReportType.DATA);
-                adapter = new AppsTrafficReportAdapter(appsTrafficMonitors, ReportType.DATA);
-                lstAppsTraffic.setAdapter(adapter);
+                reportType = ReportType.DATA;
+                bindReport();
+                //appsTrafficMonitors = AppsUsageLogs.getAppsTrafficReport(ReportType.DATA);
+                //adapter = new AppsTrafficReportAdapter(appsTrafficMonitors, ReportType.DATA);
+                //lstAppsTraffic.setAdapter(adapter);
             }
         });
 
@@ -76,22 +92,40 @@ public class AppsTrafficReportFragment extends Fragment {
         btnWifi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                appsTrafficMonitors = AppsUsageLogs.getAppsTrafficReport(ReportType.WIFI);
-                adapter = new AppsTrafficReportAdapter(appsTrafficMonitors, ReportType.WIFI);
-                lstAppsTraffic.setAdapter(adapter);
+                reportType = ReportType.WIFI;
+                bindReport();
+                //reportType = ReportType.WIFI;
+                //appsTrafficMonitors = AppsUsageLogs.getAppsTrafficReport(ReportType.WIFI);
+                //adapter = new AppsTrafficReportAdapter(appsTrafficMonitors, ReportType.WIFI);
+                //lstAppsTraffic.setAdapter(adapter);
             }
         });
 
         btnPickDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DialogManager.showDatePickerDialog(App.currentActivity, 1394, 10, 2, new Runnable() {
+                String currentSolarDate = SolarCalendar.getCurrentShamsiDateTime().substring(0,10);
+                String dareParts[] = currentSolarDate.split("/");
+                DialogManager.showDatePickerDialog(App.currentActivity, Integer.parseInt(dareParts[0]), Integer.parseInt(dareParts[1]), Integer.parseInt(dareParts[2]), new Runnable() {
                     @Override
                     public void run() {
-                        String selectedDate = DialogManager.dateResult;
+                        selectedDate = DialogManager.dateResult;
                         btnPickDate.setText(SolarCalendar.getShamsiDate(Helper.getDate(selectedDate)));
+                        bindReport();
                     }
                 });
+            }
+        });
+
+        spinnerFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                bindReport();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                bindReport();
             }
         });
 
@@ -108,6 +142,12 @@ public class AppsTrafficReportFragment extends Fragment {
         selectTypesAdapter = new ArrayAdapter<>(App.context, R.layout.spinner_current_item, typeList);
         selectTypesAdapter.setDropDownViewResource(R.layout.spinner_item);
         spinnerFrom.setAdapter(selectTypesAdapter);
+    }
+
+    private void bindReport() {
+        appsTrafficMonitors = AppsUsageLogs.getAppsTrafficReport(reportType, selectedDate, spinnerFrom.getSelectedItemPosition() == 0 ? RestrictionType.ON : RestrictionType.FROM);
+        adapter = new AppsTrafficReportAdapter(appsTrafficMonitors, reportType);
+        lstAppsTraffic.setAdapter(adapter);
     }
 
     //private void populateSummery() {
