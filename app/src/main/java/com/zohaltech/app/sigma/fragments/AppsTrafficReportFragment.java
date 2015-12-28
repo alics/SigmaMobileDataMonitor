@@ -151,7 +151,7 @@ public class AppsTrafficReportFragment extends Fragment {
         //RestrictionType restrictionType;
         ReportType      reportType;
 
-        if (chkData.isChecked() && chkData.isChecked()) {
+        if (chkData.isChecked() && chkWifi.isChecked()) {
             reportType = ReportType.BOTH;
         } else if (chkData.isChecked()) {
             reportType = ReportType.DATA;
