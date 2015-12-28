@@ -123,7 +123,7 @@ public class AppsUsageLogs {
                                " sum(" + TrafficBytes + ") mobile, " +
                                " sum(" + TrafficBytesWifi + ") wifi " +
                                " FROM " + TableName + " log " +
-                               " WHERE SUBSTR(" + LogDateTime + ", 12, 5)" +
+                               " WHERE SUBSTR(" + LogDateTime + ", 0, 11)" +
                                (restrictionType == RestrictionType.FROM ? ">=" : "=") + "'" + date + "'" +
                                " GROUP BY " + AppId +
                                " ORDER BY (mobile+wifi) DESC ";
@@ -144,7 +144,7 @@ public class AppsUsageLogs {
                                " sum(" + TrafficBytes + ") mobile, " +
                                " sum(" + TrafficBytesWifi + ") wifi " +
                                " FROM " + TableName + " log " +
-                               " WHERE SUBSTR(" + LogDateTime + ", 12, 5)" +
+                               " WHERE SUBSTR(" + LogDateTime + ", 0, 11)" +
                                (restrictionType == RestrictionType.FROM ? ">=" : "=") + "'" + date + "'" +
                                " GROUP BY " + AppId +
                                " ORDER BY  wifi DESC ";
@@ -164,7 +164,7 @@ public class AppsUsageLogs {
                                " sum(" + TrafficBytes + ") mobile, " +
                                " sum(" + TrafficBytesWifi + ") wifi " +
                                " FROM " + TableName + " log " +
-                               " WHERE SUBSTR(" + LogDateTime + ", 12, 5)" +
+                               " WHERE SUBSTR(" + LogDateTime + ", 0, 11)" +
                                (restrictionType == RestrictionType.FROM ? ">=" : "=") + "'" + date + "'" +
                                " GROUP BY " + AppId +
                                " ORDER BY mobile DESC ";
