@@ -26,7 +26,6 @@ import com.zohaltech.app.sigma.entities.AppsTrafficMonitor;
 import java.util.ArrayList;
 
 public class AppsTrafficReportFragment extends Fragment {
-
     ListView                      lstAppsTraffic;
     CheckBox                      chkData;
     CheckBox                      chkWifi;
@@ -184,4 +183,5 @@ public class AppsTrafficReportFragment extends Fragment {
     //    txtTotalTraffic.setText(TrafficUnitsUtil.getUsedTrafficWithPoint(sum));
     //    txtTotalTrafficWifi.setText(TrafficUnitsUtil.getUsedTrafficWithPoint(sumWifi));
     //}
+
 }

@@ -86,7 +86,9 @@ public class AppsTrafficReportAdapter extends ArrayAdapter<AppsTrafficMonitor> {
                 imgApp.setImageDrawable(icon);
                 try {
                     ApplicationInfo info = App.context.getPackageManager().getApplicationInfo(packageName, PackageManager.GET_META_DATA);
-                    appName = App.context.getPackageManager().getApplicationLabel(info).toString() + "-" + packageName;
+                    appName = App.context.getPackageManager().getApplicationLabel(info).toString();
+                    if (appName.equals(""))
+                        appName = packageName+"-" + item.getUid();;
 
                 } catch (PackageManager.NameNotFoundException e) {
                     e.printStackTrace();
