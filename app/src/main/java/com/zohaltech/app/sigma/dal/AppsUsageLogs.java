@@ -190,4 +190,20 @@ public class AppsUsageLogs {
         }
         return appsTrafficMonitors;
     }
+
+    public static void reset(boolean data, boolean wifi) {
+        DataAccess da = new DataAccess();
+        SQLiteDatabase db = da.getWritableDB();
+        if (data & wifi)
+            db.execSQL("delete from " + TableName);
+        else {
+            ContentValues values = new ContentValues();
+            if (data) {
+                values.put(TrafficBytes, 0);
+            } else if (wifi) {
+                values.put(TrafficBytesWifi, 0);
+            }
+            da.update(TableName, values, "", null);
+        }
+    }
 }
