@@ -193,10 +193,10 @@ public class AppsUsageLogs {
 
     public static void reset(boolean data, boolean wifi) {
         DataAccess da = new DataAccess();
-        SQLiteDatabase db = da.getWritableDB();
-        if (data & wifi)
+        if (data & wifi) {
+            SQLiteDatabase db = da.getWritableDB();
             db.execSQL("delete from " + TableName);
-        else {
+        } else {
             ContentValues values = new ContentValues();
             if (data) {
                 values.put(TrafficBytes, 0);
