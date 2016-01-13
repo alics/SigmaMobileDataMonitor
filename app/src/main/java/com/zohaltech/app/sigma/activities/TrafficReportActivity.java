@@ -1,11 +1,8 @@
 package com.zohaltech.app.sigma.activities;
 
-
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.view.MenuItem;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
@@ -26,7 +23,6 @@ public class TrafficReportActivity extends EnhancedActivity {
         trafficReportPagerAdapter = new TrafficReportPagerAdapter(getSupportFragmentManager());
         pagerTrafficReports.setAdapter(trafficReportPagerAdapter);
 
-        // Bind the tabCategories to the ViewPager
         tabTrafficReports = (PagerSlidingTabStrip) findViewById(R.id.tabTrafficReports);
         tabTrafficReports.setViewPager(pagerTrafficReports);
 
@@ -53,15 +49,6 @@ public class TrafficReportActivity extends EnhancedActivity {
         ((TextView) ((ViewGroup) tabTrafficReports.getChildAt(0)).getChildAt(0)).setTextColor(getResources().getColor(R.color.primary_light));
         ((TextView) ((ViewGroup) tabTrafficReports.getChildAt(0)).getChildAt(1)).setTextColor(getResources().getColor(R.color.primary_light));
         ((TextView) ((ViewGroup) tabTrafficReports.getChildAt(0)).getChildAt(position)).setTextColor(getResources().getColor(R.color.white));
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            onBackPressed();
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     private void changeTabsFont() {

@@ -156,7 +156,9 @@ public class AppsUsageLogs {
                                                                                    0L,
                                                                                    cursor.getLong(cursor.getColumnIndex("wifi")),
                                                                                    0L);
-                        appsTrafficMonitors.add(trafficMonitor);
+                        if (trafficMonitor.getWifiTraffic() != 0) {
+                            appsTrafficMonitors.add(trafficMonitor);
+                        }
                     } while (cursor.moveToNext());
                 }
             } else if (reportType == AppsTrafficReportFragment.ReportType.DATA) {
@@ -176,7 +178,9 @@ public class AppsUsageLogs {
                                                                                    cursor.getLong(cursor.getColumnIndex("mobile")),
                                                                                    0L,
                                                                                    0L);
-                        appsTrafficMonitors.add(trafficMonitor);
+                        if (trafficMonitor.getMobileTraffic() != 0) {
+                            appsTrafficMonitors.add(trafficMonitor);
+                        }
                     } while (cursor.moveToNext());
                 }
             }

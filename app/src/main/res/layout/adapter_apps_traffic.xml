@@ -5,48 +5,43 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="horizontal"
-    android:padding="5dp">
+    android:padding="10dp">
 
     <ImageView
         android:id="@+id/imgApp"
         android:layout_width="@dimen/app_icon_size"
         android:layout_height="@dimen/app_icon_size"
-        android:layout_margin="10dp"
-        android:src="@mipmap/ic_launcher"/>
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/ic_app"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/txtAppName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="2dp"
-            android:singleLine="true"
-            android:text="Sigma - Data Manager 3g/4g/WiFi"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/primary_text"/>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="2dp">
+            android:orientation="horizontal">
 
-            <!--<TextView-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:text="Mobile"-->
-            <!--android:textColor="@color/secondary_text"/>-->
+        <TextView
+            android:id="@+id/txtAppName"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:padding="2dp"
+            android:text="Sigma - Data Manager 3g/4g/WiFi"
+            android:gravity="start"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/primary_text"/>
 
             <TextView
                 android:id="@+id/txtTraffic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="2dp"
                 android:text="34.5 KB"
                 android:textColor="@color/secondary_text"/>
 

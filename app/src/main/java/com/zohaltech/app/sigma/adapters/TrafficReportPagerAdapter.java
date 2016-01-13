@@ -10,7 +10,6 @@ import com.zohaltech.app.sigma.fragments.TotalTrafficReportFragment;
 public class TrafficReportPagerAdapter extends FragmentPagerAdapter {
 
     private String[] tabTitles = new String[]{"مصرف کلی", "مصرف برنامه ها"};
-    private int vocabId;
 
     public TrafficReportPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -29,14 +28,13 @@ public class TrafficReportPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 0)
-            return TotalTrafficReportFragment.newInstance();
+            return new TotalTrafficReportFragment();
         else
-            return AppsTrafficReportFragment.newInstance();
+            return new AppsTrafficReportFragment();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        // Generate title based on item position
         return tabTitles[position];
     }
 }

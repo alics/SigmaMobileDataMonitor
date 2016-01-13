@@ -16,9 +16,9 @@ import com.zohaltech.app.sigma.entities.TrafficMonitor;
 import java.util.ArrayList;
 
 
-public class ReportAdapter extends ArrayAdapter<TrafficMonitor> {
-    public ReportAdapter(ArrayList<TrafficMonitor> trafficMonitorList) {
-        super(App.context, R.layout.adapter_report, trafficMonitorList);
+public class TotalTrafficReportAdapter extends ArrayAdapter<TrafficMonitor> {
+    public TotalTrafficReportAdapter(ArrayList<TrafficMonitor> trafficMonitorList) {
+        super(App.context, R.layout.adapter_total_traffic, trafficMonitorList);
     }
 
     @Override
@@ -27,7 +27,7 @@ public class ReportAdapter extends ArrayAdapter<TrafficMonitor> {
 
         TrafficMonitor item = getItem(position);
         if (convertView == null) {
-            convertView = App.inflater.inflate(R.layout.adapter_report, parent, false);
+            convertView = App.inflater.inflate(R.layout.adapter_total_traffic, parent, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {

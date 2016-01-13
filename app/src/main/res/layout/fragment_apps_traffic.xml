@@ -14,85 +14,79 @@
         tools:listitem="@layout/adapter_apps_traffic"/>
 
     <LinearLayout
+        android:id="@+id/layoutProgress"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/secondary_text"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layoutAppsTraffic"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="5dp">
-
-        <!--<widgets.MyButton-->
-        <!--android:id="@+id/btnWifi"-->
-        <!--style="@style/FormButton"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:minWidth="72dp"-->
-        <!--android:text="Wifi"-->
-        <!--android:textAppearance="?android:attr/textAppearanceMedium"/>-->
-
-        <!--<widgets.MyButton-->
-        <!--android:id="@+id/btnData"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_weight="1"-->
-        <!--android:text="Data"-->
-        <!--android:textAppearance="?android:attr/textAppearanceMedium"/>-->
+        android:orientation="horizontal">
 
         <CheckBox
             android:id="@+id/chkWifi"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
             android:layout_weight="1"
             android:background="@drawable/chk_usage"
             android:button="@null"
             android:checked="true"
             android:gravity="center"
-            android:text="Wifi"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:text="WiFi"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@drawable/chk_text_color"/>
 
         <CheckBox
             android:id="@+id/chkData"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
             android:layout_weight="1"
             android:background="@drawable/chk_usage"
             android:button="@null"
             android:checked="true"
             android:gravity="center"
             android:text="Data"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@drawable/chk_text_color"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layoutDatePicker"
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="5dp">
+        android:orientation="horizontal">
+
+        <widgets.MyButton
+            android:id="@+id/btnPickDate"
+            style="@style/FormButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="1394/10/01"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
         <android.support.v7.widget.AppCompatSpinner
             android:id="@+id/spinnerFrom"
             style="@style/FormButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            />
-
-        <widgets.MyButton
-            android:id="@+id/btnPickDate"
-            style="@style/FormButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="72dp"
-            android:text="1394/10/01"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:textColor="@color/white"/>
 
     </LinearLayout>
 

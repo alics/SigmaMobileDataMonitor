@@ -1,17 +1,25 @@
 package com.zohaltech.app.sigma.fragments;
 
+import android.app.Dialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatSpinner;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.adapters.AppsTrafficReportAdapter;
@@ -26,22 +34,17 @@ import com.zohaltech.app.sigma.entities.AppsTrafficMonitor;
 import java.util.ArrayList;
 
 public class AppsTrafficReportFragment extends Fragment {
-    ListView                      lstAppsTraffic;
-    CheckBox                      chkData;
-    CheckBox                      chkWifi;
-    Button                        btnPickDate;
-    ArrayList<AppsTrafficMonitor> appsTrafficMonitors;
-    AppsTrafficReportAdapter      adapter;
-    AppCompatSpinner              spinnerFrom;
 
-    String          selectedDate;
+    ListView     lstAppsTraffic;
+    LinearLayout layoutProgress;
+    CheckBox     chkData;
+    CheckBox     chkWifi;
+    Button       btnPickDate;
+    ArrayList<AppsTrafficMonitor> appsTrafficMonitors = new ArrayList<>();
+    AppsTrafficReportAdapter adapter;
+    AppCompatSpinner         spinnerFrom;
 
-    public static AppsTrafficReportFragment newInstance() {
-        Bundle args = new Bundle();
-        AppsTrafficReportFragment fragment = new AppsTrafficReportFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
+    String selectedDate;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,58 +53,34 @@ public class AppsTrafficReportFragment extends Fragment {
         AppDataUsageMeter.takeSnapshot();
 
         lstAppsTraffic = (ListView) view.findViewById(R.id.lstAppsTraffic);
+        layoutProgress = (LinearLayout) view.findViewById(R.id.layoutProgress);
         chkData = (CheckBox) view.findViewById(R.id.chkData);
         chkWifi = (CheckBox) view.findViewById(R.id.chkWifi);
         btnPickDate = (Button) view.findViewById(R.id.btnPickDate);
         spinnerFrom = (AppCompatSpinner) view.findViewById(R.id.spinnerFrom);
 
+        layoutProgress.setVisibility(View.GONE);
 
         initSpinner();
 
-        selectedDate = Helper.getCurrentDateTime().substring(0, 10);
+        selectedDate = Helper.getCurrentDate();
         btnPickDate.setText(SolarCalendar.getCurrentShamsiDateTime().substring(0, 10));
-        //appsTrafficMonitors = AppsUsageLogs.getAppsTrafficReport(ReportType.BOTH, "", RestrictionType.ON);
-        //adapter = new AppsTrafficReportAdapter(appsTrafficMonitors, ReportType.BOTH);
-        //lstAppsTraffic.setAdapter(adapter);
-        bindReport();
+        populateTraffics();
 
-        //btnData.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //    public void onClick(View view) {
-        //        reportType = ReportType.DATA;
-        //        bindReport();
-        //        //appsTrafficMonitors = AppsUsageLogs.getAppsTrafficReport(ReportType.DATA);
-        //        //adapter = new AppsTrafficReportAdapter(appsTrafficMonitors, ReportType.DATA);
-        //        //lstAppsTraffic.setAdapter(adapter);
-        //    }
-        //});
-        //
-        //
-        //btnWifi.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //    public void onClick(View view) {
-        //        reportType = ReportType.WIFI;
-        //        bindReport();
-        //        //reportType = ReportType.WIFI;
-        //        //appsTrafficMonitors = AppsUsageLogs.getAppsTrafficReport(ReportType.WIFI);
-        //        //adapter = new AppsTrafficReportAdapter(appsTrafficMonitors, ReportType.WIFI);
-        //        //lstAppsTraffic.setAdapter(adapter);
-        //    }
-        //});
-
-        chkData.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                bindReport();
+                if (chkData.isChecked() == false && chkWifi.isChecked() == false) {
+                    buttonView.setChecked(true);
+                } else {
+                    populateTraffics();
+                }
             }
-        });
+        };
 
-        chkWifi.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                bindReport();
-            }
-        });
+        chkData.setOnCheckedChangeListener(onCheckedChangeListener);
+
+        chkWifi.setOnCheckedChangeListener(onCheckedChangeListener);
 
         btnPickDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +92,7 @@ public class AppsTrafficReportFragment extends Fragment {
                     public void run() {
                         selectedDate = DialogManager.dateResult;
                         btnPickDate.setText(SolarCalendar.getShamsiDate(Helper.getDate(selectedDate)));
-                        bindReport();
+                        populateTraffics();
                     }
                 });
             }
@@ -122,16 +101,35 @@ public class AppsTrafficReportFragment extends Fragment {
         spinnerFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                bindReport();
+                populateTraffics();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                bindReport();
+                populateTraffics();
             }
         });
 
+        setHasOptionsMenu(true);
+
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_report, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            getActivity().onBackPressed();
+        } else if (id == R.id.action_reset) {
+            showResetDialog();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void initSpinner() {
@@ -146,20 +144,64 @@ public class AppsTrafficReportFragment extends Fragment {
         spinnerFrom.setAdapter(selectTypesAdapter);
     }
 
-    private void bindReport() {
-        //RestrictionType restrictionType;
-        ReportType      reportType;
+    private void populateTraffics() {
+        //ReportType      reportType;
+        //if (chkData.isChecked() && chkWifi.isChecked()) {
+        //    reportType = ReportType.BOTH;
+        //} else if (chkData.isChecked()) {
+        //    reportType = ReportType.DATA;
+        //} else {
+        //    reportType = ReportType.WIFI;
+        //}
+        //appsTrafficMonitors.clear();
+        //appsTrafficMonitors.addAll(AppsUsageLogs.getAppsTrafficReport(reportType, selectedDate, spinnerFrom.getSelectedItemPosition() == 0 ? RestrictionType.ON : RestrictionType.FROM));
+        //adapter = new AppsTrafficReportAdapter(appsTrafficMonitors, reportType);
+        //lstAppsTraffic.setAdapter(adapter);
+        //adapter.notifyDataSetChanged();
 
-        if (chkData.isChecked() && chkWifi.isChecked()) {
-            reportType = ReportType.BOTH;
-        } else if (chkData.isChecked()) {
-            reportType = ReportType.DATA;
-        } else {
-            reportType = ReportType.WIFI;
-        }
-        appsTrafficMonitors = AppsUsageLogs.getAppsTrafficReport(reportType, selectedDate, spinnerFrom.getSelectedItemPosition() == 0 ? RestrictionType.ON : RestrictionType.FROM);
-        adapter = new AppsTrafficReportAdapter(appsTrafficMonitors, reportType);
-        lstAppsTraffic.setAdapter(adapter);
+        new TrafficLoaderTask().execute();
+    }
+
+    private void showResetDialog() {
+        App.handler.post(new Runnable() {
+            @Override
+            public void run() {
+                final Dialog dialog = new Dialog(getActivity());
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.dialog_reset_stats);
+                dialog.setCanceledOnTouchOutside(false);
+                dialog.setCancelable(true);
+                TextView txtMessage = (TextView) dialog.findViewById(R.id.txtMessage);
+                final com.rey.material.widget.CheckBox chkMobile = (com.rey.material.widget.CheckBox) dialog.findViewById(R.id.chkMobile);
+                final com.rey.material.widget.CheckBox chkWifi = (com.rey.material.widget.CheckBox) dialog.findViewById(R.id.chkWifi);
+                Button positiveButton = (Button) dialog.findViewById(R.id.positiveButton);
+                Button negativeButton = (Button) dialog.findViewById(R.id.negativeButton);
+
+                txtMessage.setText("آیا از بازنشانی آمار گزارش مصرف برنامه ها به مقادیر اولیه اطمینان دارید؟");
+
+                positiveButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (chkMobile.isChecked() || chkWifi.isChecked()) {
+
+                            AppsUsageLogs.reset(chkMobile.isChecked(), chkWifi.isChecked());
+
+                            populateTraffics();
+                        }
+
+                        dialog.dismiss();
+                    }
+                });
+
+                negativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
     }
 
     public enum ReportType {
@@ -173,15 +215,42 @@ public class AppsTrafficReportFragment extends Fragment {
         FROM
     }
 
-    //private void populateSummery() {
-    //    long sum = 0;
-    //    long sumWifi = 0;
-    //    for (AppsTrafficMonitor trafficMonitor : appsTrafficMonitors) {
-    //        sum += trafficMonitor.getMobileTraffic();
-    //        sumWifi += trafficMonitor.getWifiTraffic();
-    //    }
-    //    txtTotalTraffic.setText(TrafficUnitsUtil.getUsedTrafficWithPoint(sum));
-    //    txtTotalTrafficWifi.setText(TrafficUnitsUtil.getUsedTrafficWithPoint(sumWifi));
-    //}
+    private class TrafficLoaderTask extends AsyncTask<Void, Void, Void> {
 
+        ReportType      reportType;
+        RestrictionType restrictionType;
+
+        @Override
+        protected void onPreExecute() {
+            if (chkData.isChecked() && chkWifi.isChecked()) {
+                reportType = ReportType.BOTH;
+            } else if (chkData.isChecked()) {
+                reportType = ReportType.DATA;
+            } else {
+                reportType = ReportType.WIFI;
+            }
+            restrictionType = spinnerFrom.getSelectedItemPosition() == 0 ? RestrictionType.ON : RestrictionType.FROM;
+            //adapter.clear();
+            layoutProgress.setVisibility(View.VISIBLE);
+            lstAppsTraffic.setVisibility(View.GONE);
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            appsTrafficMonitors.clear();
+            appsTrafficMonitors.addAll(AppsUsageLogs.getAppsTrafficReport(reportType, selectedDate, restrictionType));
+            adapter = new AppsTrafficReportAdapter(appsTrafficMonitors, reportType);
+            //lstAppsTraffic.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            layoutProgress.setVisibility(View.GONE);
+            lstAppsTraffic.setVisibility(View.VISIBLE);
+            lstAppsTraffic.setAdapter(adapter);
+        }
+    }
 }

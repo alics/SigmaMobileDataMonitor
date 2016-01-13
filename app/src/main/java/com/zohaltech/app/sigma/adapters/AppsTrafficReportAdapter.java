@@ -76,7 +76,7 @@ public class AppsTrafficReportAdapter extends ArrayAdapter<AppsTrafficMonitor> {
 
             String appName = packageName + "-" + item.getUid();
             if (item.getUid() == 0) {
-                appName = "Root System+ 0";
+                appName = "Root System";
             } else {
                 try {
                     icon = App.context.getPackageManager().getApplicationIcon(packageName);
@@ -88,8 +88,7 @@ public class AppsTrafficReportAdapter extends ArrayAdapter<AppsTrafficMonitor> {
                     ApplicationInfo info = App.context.getPackageManager().getApplicationInfo(packageName, PackageManager.GET_META_DATA);
                     appName = App.context.getPackageManager().getApplicationLabel(info).toString();
                     if (appName.equals(""))
-                        appName = packageName+"-" + item.getUid();;
-
+                        appName = packageName + "-" + item.getUid();
                 } catch (PackageManager.NameNotFoundException e) {
                     e.printStackTrace();
                 }

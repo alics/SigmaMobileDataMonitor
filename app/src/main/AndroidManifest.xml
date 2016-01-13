@@ -98,9 +98,6 @@
             android:name=".activities.PackagesActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activities.ReportActivity"
-            android:screenOrientation="portrait"/>
-        <activity
             android:name=".activities.PackageSettingsActivity"
             android:screenOrientation="portrait"/>
         <activity
@@ -108,9 +105,6 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.IntroductionActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".activities.AppsTrafficReportActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.TrafficReportActivity"
