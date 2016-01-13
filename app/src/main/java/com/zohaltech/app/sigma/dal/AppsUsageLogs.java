@@ -136,7 +136,9 @@ public class AppsUsageLogs {
                                                                                    0L,
                                                                                    cursor.getLong(cursor.getColumnIndex("mobile")) +
                                                                                    cursor.getLong(cursor.getColumnIndex("wifi")));
-                        appsTrafficMonitors.add(trafficMonitor);
+                        if (trafficMonitor.getMobileTraffic() != 0 || trafficMonitor.getWifiTraffic() != 0) {
+                            appsTrafficMonitors.add(trafficMonitor);
+                        }
                     } while (cursor.moveToNext());
                 }
             } else if (reportType == AppsTrafficReportFragment.ReportType.WIFI) {

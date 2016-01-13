@@ -37,6 +37,7 @@ public class AppsTrafficReportFragment extends Fragment {
 
     ListView     lstAppsTraffic;
     LinearLayout layoutProgress;
+    LinearLayout layoutNothingFound;
     CheckBox     chkData;
     CheckBox     chkWifi;
     Button       btnPickDate;
@@ -54,12 +55,14 @@ public class AppsTrafficReportFragment extends Fragment {
 
         lstAppsTraffic = (ListView) view.findViewById(R.id.lstAppsTraffic);
         layoutProgress = (LinearLayout) view.findViewById(R.id.layoutProgress);
+        layoutNothingFound = (LinearLayout) view.findViewById(R.id.layoutNothingFound);
         chkData = (CheckBox) view.findViewById(R.id.chkData);
         chkWifi = (CheckBox) view.findViewById(R.id.chkWifi);
         btnPickDate = (Button) view.findViewById(R.id.btnPickDate);
         spinnerFrom = (AppCompatSpinner) view.findViewById(R.id.spinnerFrom);
 
         layoutProgress.setVisibility(View.GONE);
+        layoutNothingFound.setVisibility(View.GONE);
 
         initSpinner();
 
@@ -232,6 +235,7 @@ public class AppsTrafficReportFragment extends Fragment {
             restrictionType = spinnerFrom.getSelectedItemPosition() == 0 ? RestrictionType.ON : RestrictionType.FROM;
             //adapter.clear();
             layoutProgress.setVisibility(View.VISIBLE);
+            layoutNothingFound.setVisibility(View.GONE);
             lstAppsTraffic.setVisibility(View.GONE);
         }
 
@@ -249,7 +253,11 @@ public class AppsTrafficReportFragment extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             layoutProgress.setVisibility(View.GONE);
-            lstAppsTraffic.setVisibility(View.VISIBLE);
+            if (adapter.getCount() > 0) {
+                lstAppsTraffic.setVisibility(View.VISIBLE);
+            } else {
+                layoutNothingFound.setVisibility(View.VISIBLE);
+            }
             lstAppsTraffic.setAdapter(adapter);
         }
     }

@@ -27,6 +27,22 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layoutNothingFound"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <widgets.MyTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/secondary_text"
+            android:text="موردی یافت نشد"/>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/layoutAppsTraffic"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
