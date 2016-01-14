@@ -88,8 +88,7 @@ public class AppsTrafficReportFragment extends Fragment {
         btnPickDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String currentSolarDate = SolarCalendar.getCurrentShamsiDateTime().substring(0, 10);
-                String dareParts[] = currentSolarDate.split("/");
+                String dareParts[] = btnPickDate.getText().toString().split("/");
                 DialogManager.showDatePickerDialog(App.currentActivity, Integer.parseInt(dareParts[0]), Integer.parseInt(dareParts[1]), Integer.parseInt(dareParts[2]), new Runnable() {
                     @Override
                     public void run() {

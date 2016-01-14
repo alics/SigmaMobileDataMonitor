@@ -6,22 +6,12 @@ public class AppsTrafficMonitor {
     private String  packageName;
     private Long    mobileTraffic;
     private Long    wifiTraffic;
-    private Long    total;
 
 
-
-    public AppsTrafficMonitor(String appName, String packageName, Long mobileTraffic, Long wifiTraffic) {
-        setAppName(appName);
-        setPackageName(packageName);
-        setMobileTraffic(mobileTraffic);
-        setWifiTraffic(wifiTraffic);
-    }
-
-    public AppsTrafficMonitor(Integer uid, Long mobileTraffic, Long wifiTraffic,Long total) {
+    public AppsTrafficMonitor(Integer uid, Long mobileTraffic, Long wifiTraffic) {
         setUid(uid);
         setMobileTraffic(mobileTraffic);
         setWifiTraffic(wifiTraffic);
-        setTotal(total);
     }
 
     public Integer getUid() {
@@ -62,13 +52,5 @@ public class AppsTrafficMonitor {
 
     public void setWifiTraffic(Long wifiTraffic) {
         this.wifiTraffic = wifiTraffic;
-    }
-
-    public Long getTotal() {
-        return total;
-    }
-
-    public void setTotal(Long total) {
-        this.total = total;
     }
 }

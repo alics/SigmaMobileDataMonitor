@@ -32,8 +32,7 @@ public class AppsTrafficReportAdapter extends ArrayAdapter<AppsTrafficMonitor> {
         for (AppsTrafficMonitor trafficMonitor : trafficMonitorList) {
             _mobileSum += trafficMonitor.getMobileTraffic();
             _wifiSum += trafficMonitor.getWifiTraffic();
-            _total += trafficMonitor.getTotal();
-
+            _total += trafficMonitor.getMobileTraffic() + trafficMonitor.getWifiTraffic();
         }
     }
 
@@ -97,8 +96,9 @@ public class AppsTrafficReportAdapter extends ArrayAdapter<AppsTrafficMonitor> {
             txtAppName.setText(appName);
             String traffic = "";
             if (_reportType == AppsTrafficReportFragment.ReportType.BOTH) {
-                traffic = TrafficUnitsUtil.getTodayTraffic(item.getTotal()).getInlineDisplay();
-                progress.setProgress(_total == 0 ? 0 : (int) (item.getTotal() * 100 / _total));
+                long totalTraffic = item.getMobileTraffic()+item.getWifiTraffic();
+                traffic = TrafficUnitsUtil.getTodayTraffic(totalTraffic).getInlineDisplay();
+                progress.setProgress(_total == 0 ? 0 : (int) (totalTraffic * 100 / _total));
             } else if (_reportType == AppsTrafficReportFragment.ReportType.DATA) {
                 traffic = TrafficUnitsUtil.getTodayTraffic(item.getMobileTraffic()).getInlineDisplay();
                 progress.setProgress(_mobileSum == 0 ? 0 : (int) (item.getMobileTraffic() * 100 / _mobileSum));

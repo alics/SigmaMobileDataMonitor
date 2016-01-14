@@ -1,7 +1,5 @@
 package com.zohaltech.app.sigma.datepicker;
 
-import java.util.Date;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Parcel;
@@ -14,20 +12,71 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.zohaltech.app.sigma.R;
+import com.zohaltech.app.sigma.classes.App;
+
+import java.util.Date;
 
 public class PersianDatePicker extends LinearLayout {
 
     private OnDateChangedListener mListener;
-    private NumberPicker yearNumberPicker;
-    private NumberPicker monthNumberPicker;
-    private NumberPicker dayNumberPicker;
+    private NumberPicker          yearNumberPicker;
+    private NumberPicker          monthNumberPicker;
+    private NumberPicker          dayNumberPicker;
 
     private int minYear;
     private int maxYear;
     private int yearRange;
 
-    private boolean displayDescription;
+    private boolean  displayDescription;
     private TextView descriptionTextView;
+    NumberPicker.OnValueChangeListener dateChangeListener = new NumberPicker.OnValueChangeListener() {
+
+        @Override
+        public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+            int year = yearNumberPicker.getValue();
+            boolean isLeapYear = PersianCalendarUtils.isPersianLeapYear(year);
+
+            int month = monthNumberPicker.getValue();
+            int day = dayNumberPicker.getValue();
+
+            if (month < 7) {
+                dayNumberPicker.setMinValue(1);
+                dayNumberPicker.setMaxValue(31);
+            } else if (month > 6 && month < 12) {
+                if (day == 31) {
+                    dayNumberPicker.setValue(30);
+                }
+                dayNumberPicker.setMinValue(1);
+                dayNumberPicker.setMaxValue(30);
+            } else if (month == 12) {
+                if (isLeapYear) {
+                    if (day == 31) {
+                        dayNumberPicker.setValue(30);
+                    }
+                    dayNumberPicker.setMinValue(1);
+                    dayNumberPicker.setMaxValue(30);
+                } else {
+                    if (day > 29) {
+                        dayNumberPicker.setValue(29);
+                    }
+                    dayNumberPicker.setMinValue(1);
+                    dayNumberPicker.setMaxValue(29);
+                }
+            }
+
+            // Set description
+            if (displayDescription) {
+                descriptionTextView.setText(getDisplayPersianDate().getPersianLongDate());
+            }
+
+            if (mListener != null) {
+                mListener.onDateChanged                           (yearNumberPicker.getValue(), monthNumberPicker.getValue(),
+                                        dayNumberPicker.getValue());
+            }
+
+        }
+
+    };
 
     public PersianDatePicker(Context context) {
         this(context, null, -1);
@@ -48,25 +97,42 @@ public class PersianDatePicker extends LinearLayout {
         dayNumberPicker = (NumberPicker) view.findViewById(R.id.dayNumberPicker);
         descriptionTextView = (TextView) view.findViewById(R.id.descriptionTextView);
 
+
+        //for (int i = 0; i < yearNumberPicker.getChildCount(); i++) {
+        //    TextView txtYear = (TextView) yearNumberPicker.getChildAt(i);
+        //    txtYear.setTypeface(App.persianFont);
+        //    txtYear.setTextSize(24);
+        //}
+        //
+        //for (int i = 0; i < monthNumberPicker.getChildCount(); i++) {
+        //    TextView txtMonth = (TextView) monthNumberPicker.getChildAt(0);
+        //    txtMonth.setTypeface(App.persianFont);
+        //    txtMonth.setTextSize(24);
+        //}
+        //
+        //for (int i = 0; i < dayNumberPicker.getChildCount(); i++) {
+        //    TextView txtDay = (TextView) dayNumberPicker.getChildAt(0);
+        //    txtDay.setTypeface(App.persianFont);
+        //    txtDay.setTextSize(24);
+        //}
+
+
         PersianCalendar pCalendar = new PersianCalendar();
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PersianDatePicker, 0, 0);
 
         boolean disableSoftKeyboard = a.getBoolean(R.styleable.PersianDatePicker_disableSoftKeyboard, false);
-        if(disableSoftKeyboard)
-        {
+        if (disableSoftKeyboard) {
             yearNumberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
             monthNumberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
             dayNumberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         }
 
 
-
-
         yearRange = a.getInteger(R.styleable.PersianDatePicker_yearRange, 10);
 
 		/*
-		 * Initializing yearNumberPicker min and max values If minYear and
+         * Initializing yearNumberPicker min and max values If minYear and
 		 * maxYear attributes are not set, use (current year - 10) as min and
 		 * (current year + 10) as max.
 		 */
@@ -124,83 +190,15 @@ public class PersianDatePicker extends LinearLayout {
 		 * displayDescription
 		 */
         displayDescription = a.getBoolean(R.styleable.PersianDatePicker_displayDescription, false);
-        if( displayDescription ) {
+        if (displayDescription) {
             descriptionTextView.setVisibility(View.VISIBLE);
         }
 
         a.recycle();
     }
 
-    NumberPicker.OnValueChangeListener dateChangeListener = new NumberPicker.OnValueChangeListener() {
-
-        @Override
-        public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-            int year = yearNumberPicker.getValue();
-            boolean isLeapYear = PersianCalendarUtils.isPersianLeapYear(year);
-
-            int month = monthNumberPicker.getValue();
-            int day = dayNumberPicker.getValue();
-
-            if (month < 7) {
-                dayNumberPicker.setMinValue(1);
-                dayNumberPicker.setMaxValue(31);
-            } else if (month > 6 && month < 12) {
-                if (day == 31) {
-                    dayNumberPicker.setValue(30);
-                }
-                dayNumberPicker.setMinValue(1);
-                dayNumberPicker.setMaxValue(30);
-            } else if (month == 12) {
-                if (isLeapYear) {
-                    if (day == 31) {
-                        dayNumberPicker.setValue(30);
-                    }
-                    dayNumberPicker.setMinValue(1);
-                    dayNumberPicker.setMaxValue(30);
-                } else {
-                    if (day > 29) {
-                        dayNumberPicker.setValue(29);
-                    }
-                    dayNumberPicker.setMinValue(1);
-                    dayNumberPicker.setMaxValue(29);
-                }
-            }
-
-            // Set description
-            if( displayDescription ) {
-                descriptionTextView.setText(getDisplayPersianDate().getPersianLongDate());
-            }
-
-            if (mListener != null) {
-                mListener.onDateChanged(yearNumberPicker.getValue(), monthNumberPicker.getValue(),
-                                        dayNumberPicker.getValue());
-            }
-
-        }
-
-    };
-
     public void setOnDateChangedListener(OnDateChangedListener onDateChangedListener) {
         mListener = onDateChangedListener;
-    }
-
-    /**
-     * The callback used to indicate the user changed the date.
-     * A class that wants to be notified when the date of PersianDatePicker
-     * changes should implement this interface and register itself as the
-     * listener of date change events using the PersianDataPicker's
-     * setOnDateChangedListener method.
-     */
-    public interface OnDateChangedListener {
-
-        /**
-         * Called upon a date change.
-         *
-         * @param newYear  The year that was set.
-         * @param newMonth The month that was set (1-12)
-         * @param newDay   The day of the month that was set.
-         */
-        void onDateChanged(int newYear, int newMonth, int newDay);
     }
 
     public Date getDisplayDate() {
@@ -271,7 +269,38 @@ public class PersianDatePicker extends LinearLayout {
         setDisplayDate(new Date(ss.datetime));
     }
 
+    /**
+     * The callback used to indicate the user changed the date.
+     * A class that wants to be notified when the date of PersianDatePicker
+     * changes should implement this interface and register itself as the
+     * listener of date change events using the PersianDataPicker's
+     * setOnDateChangedListener method.
+     */
+    public interface OnDateChangedListener {
+
+        /**
+         * Called upon a date change.
+         *
+         * @param newYear  The year that was set.
+         * @param newMonth The month that was set (1-12)
+         * @param newDay   The day of the month that was set.
+         */
+        void onDateChanged(int newYear, int newMonth, int newDay);
+    }
+
     static class SavedState extends BaseSavedState {
+        // required field that makes Parcelables from a Parcel
+        public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
+            @Override
+            public SavedState createFromParcel(Parcel in) {
+                return new SavedState(in);
+            }
+
+            @Override
+            public SavedState[] newArray(int size) {
+                return new SavedState[size];
+            }
+        };
         long datetime;
 
         SavedState(Parcelable superState) {
@@ -288,19 +317,6 @@ public class PersianDatePicker extends LinearLayout {
             super.writeToParcel(out, flags);
             out.writeLong(this.datetime);
         }
-
-        // required field that makes Parcelables from a Parcel
-        public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
-            @Override
-            public SavedState createFromParcel(Parcel in) {
-                return new SavedState(in);
-            }
-
-            @Override
-            public SavedState[] newArray(int size) {
-                return new SavedState[size];
-            }
-        };
     }
 
 }
