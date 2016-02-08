@@ -6,12 +6,11 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 
-import com.xgc1986.parallaxPagerTransformer.ParallaxPagerTransformer;
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.adapters.IntroductionPagerAdapter;
 import com.zohaltech.app.sigma.classes.App;
+import com.zohaltech.app.sigma.classes.ParallaxPagerTransformer;
 
 public class IntroductionActivity extends PaymentActivity {
     public static final String INTRO_SHOWN          = "INTRO_SHOWN";
