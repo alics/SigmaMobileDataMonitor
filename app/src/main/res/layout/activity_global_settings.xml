@@ -218,36 +218,45 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
-                        android:text="محدودیت مصرف کلی"
+                        android:text="تنظیمات کلی مصرف"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@color/primary"/>
 
-                    <widgets.MySwitch
-                        android:id="@+id/switchDailyLimitation"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginTop="5dp"
-                        android:gravity="right"
-                        android:text=" محدودیت مصرف روزانه"
-                        android:textAppearance="?android:attr/textAppearanceMedium"/>
-
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@android:drawable/divider_horizontal_bright"/>
-
-                    <widgets.MySwitch
-                        android:id="@+id/switchMonthlyLimitation"
-                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginTop="5dp"
-                        android:gravity="right"
-                        android:text=" محدودیت مصرف ماهانه"
-                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+                        android:gravity="end"
+                        android:orientation="horizontal">
+
+                        <widgets.MyTextView
+                            android:id="@+id/txtDailyLimitationAlarm"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text=" مگابایت"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+                        <widgets.MyEditText
+                            android:id="@+id/edtDailyLimitationAlarm"
+                            android:layout_width="64dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:inputType="number"
+                            android:maxLength="3"
+                            android:text="200"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+                        <widgets.MySwitch
+                            android:id="@+id/switchDailyLimitation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:gravity="right"
+                            android:text="محدودیت مصرف روزانه"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+                    </LinearLayout>
+
 
                 </LinearLayout>
 

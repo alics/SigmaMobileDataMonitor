@@ -6,7 +6,9 @@ import android.support.v7.widget.SwitchCompat;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.classes.App;
@@ -17,18 +19,21 @@ import com.zohaltech.app.sigma.entities.Setting;
 
 public class GlobalSettingsActivity extends PaymentActivity {
 
-    SwitchCompat switchShowNotification;
-    SwitchCompat switchShowNotificationWhenDataOrWifiIsOn;
-    SwitchCompat switchShowWifiUsage;
-    SwitchCompat switchShowDownUpSpeed;
-    LinearLayout layoutLockScreen;
-    SwitchCompat switchShowNotificationInLockScreen;
-    SwitchCompat switchVibrateInAlarms;
-    SwitchCompat switchSoundInAlarms;
-    LinearLayout layoutPremium;
-    LinearLayout layoutPremiumSplitter;
-    LinearLayout layoutAbout;
-    LinearLayout layoutIntroduction;
+    SwitchCompat     switchShowNotification;
+    SwitchCompat     switchShowNotificationWhenDataOrWifiIsOn;
+    SwitchCompat     switchShowWifiUsage;
+    SwitchCompat     switchShowDownUpSpeed;
+    LinearLayout     layoutLockScreen;
+    SwitchCompat     switchShowNotificationInLockScreen;
+    SwitchCompat     switchVibrateInAlarms;
+    SwitchCompat     switchSoundInAlarms;
+    LinearLayout     layoutPremium;
+    LinearLayout     layoutPremiumSplitter;
+    LinearLayout     layoutAbout;
+    LinearLayout     layoutIntroduction;
+    SwitchCompat     switchDailyLimitation;
+    TextView         txtDailyLimitationAlarm;
+    EditText         edtDailyLimitationAlarm;
 
     @Override
     void onCreated() {
@@ -47,6 +52,9 @@ public class GlobalSettingsActivity extends PaymentActivity {
         layoutPremiumSplitter = (LinearLayout) findViewById(R.id.layoutPremiumSplitter);
         layoutAbout = (LinearLayout) findViewById(R.id.layoutAbout);
         layoutIntroduction = (LinearLayout) findViewById(R.id.layoutIntroduction);
+        switchDailyLimitation=(SwitchCompat) findViewById(R.id.switchDailyLimitation);
+        edtDailyLimitationAlarm=(EditText) findViewById(R.id.edtDailyLimitationAlarm);
+        txtDailyLimitationAlarm = (TextView) findViewById(R.id.txtDailyLimitationAlarm);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             layoutLockScreen.setVisibility(View.GONE);
@@ -60,6 +68,19 @@ public class GlobalSettingsActivity extends PaymentActivity {
         switchShowDownUpSpeed.setChecked(setting.getShowUpDownSpeed());
         switchVibrateInAlarms.setChecked(setting.getVibrateInAlarms());
         switchSoundInAlarms.setChecked(setting.getSoundInAlarms());
+
+
+        switchDailyLimitation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    edtDailyLimitationAlarm.setVisibility(View.VISIBLE);
+                    txtDailyLimitationAlarm.setVisibility(View.VISIBLE);
+                } else {
+                    edtDailyLimitationAlarm.setVisibility(View.INVISIBLE);
+                    txtDailyLimitationAlarm.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
 
         switchShowNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
