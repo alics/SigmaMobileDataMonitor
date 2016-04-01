@@ -8,46 +8,50 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class AppDataUsageMeter {
-    private static ScheduledExecutorService executorService;
-    //private static AppsTrafficSnapshot      latest;
-
     public static Runnable runnable = new Runnable() {
         @Override
         public void run() {
             takeSnapshot();
         }
     };
+    //private static AppsTrafficSnapshot      latest;
+    private static ScheduledExecutorService executorService;
 
     public static void takeSnapshot() {
         SnapshotStatus status = SnapshotStatus.getCurrentSnapshotStatus();
-        int connectivityStatus = ConnectionManager.getConnectivityStatus();
-        //if ((connectivityStatus == ConnectionManager.TYPE_MOBILE || connectivityStatus == ConnectionManager.TYPE_WIFI) &&
-        //    status.getStatus() != SnapshotStatus.Running) {
-        if (status.getStatus() != SnapshotStatus.Running) {
 
-            status.setStatus(SnapshotStatus.Running);
-            SnapshotStatus.update(status);
-            AppsTrafficSnapshot.captureSnapshot(SnapshotStatus.InitStatus.NORMAL);
+        if (status != null) {
+            int connectivityStatus = ConnectionManager.getConnectivityStatus();
+            //if ((connectivityStatus == ConnectionManager.TYPE_MOBILE || connectivityStatus == ConnectionManager.TYPE_WIFI) &&
+            //    status.getStatus() != SnapshotStatus.Running) {
+            if (status.getStatus() != SnapshotStatus.Running) {
 
-            SnapshotStatus currentStatus = SnapshotStatus.getCurrentSnapshotStatus();
-            currentStatus.setStatus(SnapshotStatus.Stopped);
-            SnapshotStatus.update(currentStatus);
+                status.setStatus(SnapshotStatus.Running);
+                SnapshotStatus.update(status);
+                AppsTrafficSnapshot.captureSnapshot(SnapshotStatus.InitStatus.NORMAL);
 
-            //  AppsTrafficSnapshot snapshot=new AppsTrafficSnapshot()
-            //AppsTrafficSnapshot previous = latest;
-            //latest = new AppsTrafficSnapshot(previous, connectivityStatus);
-            //
-            //HashSet<Integer> intersection = new HashSet<Integer>(latest.apps.keySet());
-            //
-            ////if (previous != null) {
-            ////    intersection.retainAll(previous.apps.keySet());
-            ////}
-            //
-            //for (Integer uid : intersection) {
-            //    AppsTrafficRecord latest_rec = latest.apps.get(uid);
-            //    //AppsTrafficRecord previous_rec = (previous == null ? null : previous.apps.get(uid));
-            //    emitLog(latest_rec);
-            //}
+                SnapshotStatus currentStatus = SnapshotStatus.getCurrentSnapshotStatus();
+                if (currentStatus != null) {
+                    currentStatus.setStatus(SnapshotStatus.Stopped);
+                }
+                SnapshotStatus.update(currentStatus);
+
+                //  AppsTrafficSnapshot snapshot=new AppsTrafficSnapshot()
+                //AppsTrafficSnapshot previous = latest;
+                //latest = new AppsTrafficSnapshot(previous, connectivityStatus);
+                //
+                //HashSet<Integer> intersection = new HashSet<Integer>(latest.apps.keySet());
+                //
+                ////if (previous != null) {
+                ////    intersection.retainAll(previous.apps.keySet());
+                ////}
+                //
+                //for (Integer uid : intersection) {
+                //    AppsTrafficRecord latest_rec = latest.apps.get(uid);
+                //    //AppsTrafficRecord previous_rec = (previous == null ? null : previous.apps.get(uid));
+                //    emitLog(latest_rec);
+                //}
+            }
         }
     }
 

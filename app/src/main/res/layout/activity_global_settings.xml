@@ -200,6 +200,59 @@
 
             </android.support.v7.widget.CardView>
 
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <widgets.MyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:text="محدودیت مصرف کلی"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/primary"/>
+
+                    <widgets.MySwitch
+                        android:id="@+id/switchDailyLimitation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:gravity="right"
+                        android:text=" محدودیت مصرف روزانه"
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@android:drawable/divider_horizontal_bright"/>
+
+                    <widgets.MySwitch
+                        android:id="@+id/switchMonthlyLimitation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:gravity="right"
+                        android:text=" محدودیت مصرف ماهانه"
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
             <!--<android.support.v7.widget.CardView-->
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="wrap_content"-->

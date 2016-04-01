@@ -44,7 +44,7 @@ public class AppsTrafficSnapshot {
                             map.put(dataIface + "-" + uid_tag_int, totalData);
                         }
 
-                    } else if (iface.equals(p2pIface) || iface.equals(wifiIface)) {
+                    } else if (iface.equals(wifiIface)) {
                         long totalWifi = getTotalBytes(line);
                         if (map.containsKey(wifiIface + "-" + uid_tag_int)) {
                             Long value = map.get(wifiIface + "-" + uid_tag_int);

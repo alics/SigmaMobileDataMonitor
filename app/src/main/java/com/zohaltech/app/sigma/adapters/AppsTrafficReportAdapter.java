@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.classes.App;
+import com.zohaltech.app.sigma.classes.Helper;
 import com.zohaltech.app.sigma.classes.TrafficUnitsUtil;
 import com.zohaltech.app.sigma.entities.AppsTrafficMonitor;
 import com.zohaltech.app.sigma.fragments.AppsTrafficReportFragment;
@@ -73,24 +74,38 @@ public class AppsTrafficReportAdapter extends ArrayAdapter<AppsTrafficMonitor> {
             String packageName = App.context.getPackageManager().getNameForUid(item.getUid());
             Drawable icon = null;
 
-            String appName = packageName + "-" + item.getUid();
+            //String appName = packageName + "-" + item.getUid();
+            String appName ="";
             if (item.getUid() == 0) {
                 appName = "Root System";
             } else {
-                try {
-                    icon = App.context.getPackageManager().getApplicationIcon(packageName);
-                } catch (PackageManager.NameNotFoundException e) {
-                    e.printStackTrace();
-                }
+                //try {
+                //    icon = App.context.getPackageManager().getApplicationIcon(packageName);
+                //} catch (PackageManager.NameNotFoundException e) {
+                //    e.printStackTrace();
+                //}
+                //imgApp.setImageDrawable(icon);
+                icon=Helper.getApplicationIcon(packageName,item.getUid());
                 imgApp.setImageDrawable(icon);
-                try {
-                    ApplicationInfo info = App.context.getPackageManager().getApplicationInfo(packageName, PackageManager.GET_META_DATA);
-                    appName = App.context.getPackageManager().getApplicationLabel(info).toString();
-                    if (appName.equals(""))
-                        appName = packageName + "-" + item.getUid();
-                } catch (PackageManager.NameNotFoundException e) {
-                    e.printStackTrace();
-                }
+                appName= Helper.getApplicationName(packageName,item.getUid());
+                //try {
+                //    ApplicationInfo info = App.context.getPackageManager().getApplicationInfo(packageName, PackageManager.GET_META_DATA);
+                //    appName = App.context.getPackageManager().getApplicationLabel(info).toString();
+                //    if (appName.equals("")) {
+                //        switch (item.getUid()){
+                //            case 1000:
+                //                appName="Android System";
+                //            case 10005:
+                //                appName="Media Storage";
+                //                default:
+                //                    assert packageName != null;
+                //                    appName = packageName.substring(4) + "-" + item.getUid();
+                //        }
+                //
+                //    }
+                //} catch (PackageManager.NameNotFoundException e) {
+                //    e.printStackTrace();
+                //}
             }
 
             txtAppName.setText(appName);

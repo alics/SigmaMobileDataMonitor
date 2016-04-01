@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -31,7 +34,6 @@ import widgets.MyToast;
 
 
 public final class Helper {
-
 
     public static String getCurrentDateTime() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault());
@@ -186,6 +188,55 @@ public final class Helper {
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;
+        }
+    }
+
+    public static String getApplicationName(String packageName, int uid) {
+        String appName = "";
+        try {
+
+            ApplicationInfo info = App.context.getPackageManager().getApplicationInfo(packageName, PackageManager.GET_META_DATA);
+            appName = App.context.getPackageManager().getApplicationLabel(info).toString();
+            return appName;
+
+        } catch (PackageManager.NameNotFoundException e) {
+            switch (uid) {
+                case 1000:
+                    return  appName = "Android System";
+                case 10005:
+                    return  appName = "Media Storage";
+                case 10057:
+                    return appName = "Maps";
+                case 10007:
+                    return  appName = "Google Shared";
+                default:
+                    assert packageName != null;
+                    return appName = packageName.substring(4) + "-" + uid;
+
+
+            }
+        }
+    }
+
+    public static Drawable getApplicationIcon(String packageName,int uid) {
+        Drawable icon = null;
+        try {
+            icon = App.context.getPackageManager().getApplicationIcon(packageName);
+            return icon;
+        } catch (PackageManager.NameNotFoundException e) {
+            switch (uid) {
+                case 1000:
+                    //Android System
+                  return icon;
+                case 10005:
+                    //Media Storage
+                    return icon;
+                case 100057:
+                   //Maps
+                    return icon;
+                default:
+                    return icon;
+            }
         }
     }
 

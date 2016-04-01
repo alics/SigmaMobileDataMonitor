@@ -117,7 +117,6 @@ public class AppsUsageLogs {
 
             if (reportType == AppsTrafficReportFragment.ReportType.BOTH) {
                 query += " ORDER BY (mobile+wifi) DESC ";
-
                 cursor = db.rawQuery(query, null);
                 if (cursor != null && cursor.moveToFirst()) {
                     do {
@@ -131,7 +130,6 @@ public class AppsUsageLogs {
                 }
             } else if (reportType == AppsTrafficReportFragment.ReportType.WIFI) {
                 query += " ORDER BY wifi DESC ";
-
                 cursor = db.rawQuery(query, null);
                 if (cursor != null && cursor.moveToFirst()) {
                     do {
@@ -145,20 +143,19 @@ public class AppsUsageLogs {
                 }
             } else if (reportType == AppsTrafficReportFragment.ReportType.DATA) {
                 query += " ORDER BY mobile DESC ";
-
-
+                cursor = db.rawQuery(query, null);
+                if (cursor != null && cursor.moveToFirst()) {
+                    do {
+                        AppsTrafficMonitor trafficMonitor = new AppsTrafficMonitor(cursor.getInt(cursor.getColumnIndex(AppId)),
+                                                                                   cursor.getLong(cursor.getColumnIndex("mobile")),
+                                                                                   0L);
+                        if (trafficMonitor.getMobileTraffic() != 0) {
+                            appsTrafficMonitors.add(trafficMonitor);
+                        }
+                    } while (cursor.moveToNext());
+                }
             }
-            cursor = db.rawQuery(query, null);
-            if (cursor != null && cursor.moveToFirst()) {
-                do {
-                    AppsTrafficMonitor trafficMonitor = new AppsTrafficMonitor(cursor.getInt(cursor.getColumnIndex(AppId)),
-                                                                               cursor.getLong(cursor.getColumnIndex("mobile")),
-                                                                               0L);
-                    if (trafficMonitor.getMobileTraffic() != 0) {
-                        appsTrafficMonitors.add(trafficMonitor);
-                    }
-                } while (cursor.moveToNext());
-            }
+
         } catch (MyRuntimeException e) {
             e.printStackTrace();
         } finally {
