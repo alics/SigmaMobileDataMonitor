@@ -20,11 +20,13 @@ public class Setting
     private Boolean showUpDownSpeed;
     private Boolean vibrateInAlarms;
     private Boolean soundInAlarms;
+    private Boolean dailyTrafficLimitationAlarm;
+    private Long dailyTrafficLimitation;
 
     public Setting(Boolean dataConnected, Long dailyTraffic, int alarmType, Integer percentTrafficAlarm, Integer leftDaysAlarm,
                    int alarmTypeRes, Integer percentTrafficAlarmRes, Integer leftDaysAlarmRes, Boolean showNotification,
                    Boolean showNotificationWhenDataIsOn,Boolean showWifiUsage, Boolean showNotificationInLockScreen, Boolean showUpDownSpeed,
-                   Boolean vibrateInAlarms, Boolean soundInAlarms)
+                   Boolean vibrateInAlarms, Boolean soundInAlarms,Boolean dailyTrafficLimitationAlarm,Long dailyTrafficLimitation)
     {
         setDataConnected(dataConnected);
         setDailyTraffic(dailyTraffic);
@@ -41,17 +43,19 @@ public class Setting
         setShowUpDownSpeed(showUpDownSpeed);
         setVibrateInAlarms(vibrateInAlarms);
         setSoundInAlarms(soundInAlarms);
+        setDailyTrafficLimitationAlarm(dailyTrafficLimitationAlarm);
+        setDailyTrafficLimitation(dailyTrafficLimitation);
     }
 
     public Setting(Integer id, Boolean dataConnected, Long dailyTraffic, int alarmType, Integer percentTrafficAlarm,
                    Integer leftDaysAlarm, int alarmTypeRes, Integer percentTrafficAlarmRes, Integer leftDaysAlarmRes,
                    Boolean showNotification, Boolean showNotificationWhenDataIsOn,Boolean showWifiUsage, Boolean showNotificationInLockScreen,
-                   Boolean showUpDownSpeed, Boolean vibrateInAlarms, Boolean soundInAlarms)
+                   Boolean showUpDownSpeed, Boolean vibrateInAlarms, Boolean soundInAlarms,Boolean dailyTrafficLimitationAlarm,Long dailyTrafficLimitation)
     {
         this(dataConnected, dailyTraffic, alarmType, percentTrafficAlarm,
                 leftDaysAlarm, alarmTypeRes, percentTrafficAlarmRes, leftDaysAlarmRes,
                 showNotification, showNotificationWhenDataIsOn,showWifiUsage, showNotificationInLockScreen, showUpDownSpeed,
-                vibrateInAlarms, soundInAlarms);
+                vibrateInAlarms, soundInAlarms,dailyTrafficLimitationAlarm,dailyTrafficLimitation);
         this.id = id;
     }
 
@@ -213,6 +217,22 @@ public class Setting
     public void setShowWifiUsage(Boolean showWifiUsage)
     {
         this.showWifiUsage = showWifiUsage;
+    }
+
+    public Boolean getDailyTrafficLimitationAlarm() {
+        return dailyTrafficLimitationAlarm;
+    }
+
+    public void setDailyTrafficLimitationAlarm(Boolean dailyTrafficLimitationAlarm) {
+        this.dailyTrafficLimitationAlarm = dailyTrafficLimitationAlarm;
+    }
+
+    public Long getDailyTrafficLimitation() {
+        return dailyTrafficLimitation;
+    }
+
+    public void setDailyTrafficLimitation(Long dailyTrafficLimitation) {
+        this.dailyTrafficLimitation = dailyTrafficLimitation;
     }
 
     public enum AlarmType

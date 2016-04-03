@@ -3,6 +3,8 @@ package com.zohaltech.app.sigma.activities;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v7.widget.SwitchCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -14,26 +16,29 @@ import com.zohaltech.app.sigma.R;
 import com.zohaltech.app.sigma.classes.App;
 import com.zohaltech.app.sigma.classes.ConnectionManager;
 import com.zohaltech.app.sigma.classes.LicenseManager;
+import com.zohaltech.app.sigma.classes.TrafficUnitsUtil;
 import com.zohaltech.app.sigma.dal.Settings;
 import com.zohaltech.app.sigma.entities.Setting;
 
 public class GlobalSettingsActivity extends PaymentActivity {
 
-    SwitchCompat     switchShowNotification;
-    SwitchCompat     switchShowNotificationWhenDataOrWifiIsOn;
-    SwitchCompat     switchShowWifiUsage;
-    SwitchCompat     switchShowDownUpSpeed;
-    LinearLayout     layoutLockScreen;
-    SwitchCompat     switchShowNotificationInLockScreen;
-    SwitchCompat     switchVibrateInAlarms;
-    SwitchCompat     switchSoundInAlarms;
-    LinearLayout     layoutPremium;
-    LinearLayout     layoutPremiumSplitter;
-    LinearLayout     layoutAbout;
-    LinearLayout     layoutIntroduction;
-    SwitchCompat     switchDailyLimitation;
-    TextView         txtDailyLimitationAlarm;
-    EditText         edtDailyLimitationAlarm;
+    SwitchCompat switchShowNotification;
+    SwitchCompat switchShowNotificationWhenDataOrWifiIsOn;
+    SwitchCompat switchShowWifiUsage;
+    SwitchCompat switchShowDownUpSpeed;
+    LinearLayout layoutLockScreen;
+    SwitchCompat switchShowNotificationInLockScreen;
+    SwitchCompat switchVibrateInAlarms;
+    SwitchCompat switchSoundInAlarms;
+    LinearLayout layoutPremium;
+    LinearLayout layoutPremiumSplitter;
+    LinearLayout layoutAbout;
+    LinearLayout layoutIntroduction;
+    SwitchCompat switchDailyLimitation;
+    TextView     txtDailyLimitationAlarm;
+    EditText     edtDailyLimitationAlarm;
+    Setting      setting;
+
 
     @Override
     void onCreated() {
@@ -52,15 +57,16 @@ public class GlobalSettingsActivity extends PaymentActivity {
         layoutPremiumSplitter = (LinearLayout) findViewById(R.id.layoutPremiumSplitter);
         layoutAbout = (LinearLayout) findViewById(R.id.layoutAbout);
         layoutIntroduction = (LinearLayout) findViewById(R.id.layoutIntroduction);
-        switchDailyLimitation=(SwitchCompat) findViewById(R.id.switchDailyLimitation);
-        edtDailyLimitationAlarm=(EditText) findViewById(R.id.edtDailyLimitationAlarm);
+        switchDailyLimitation = (SwitchCompat) findViewById(R.id.switchDailyLimitation);
+        edtDailyLimitationAlarm = (EditText) findViewById(R.id.edtDailyLimitationAlarm);
         txtDailyLimitationAlarm = (TextView) findViewById(R.id.txtDailyLimitationAlarm);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             layoutLockScreen.setVisibility(View.GONE);
         }
 
-        Setting setting = Settings.getCurrentSettings();
+        setting = Settings.getCurrentSettings();
+
         switchShowNotification.setChecked(setting.getShowNotification());
         switchShowNotificationWhenDataOrWifiIsOn.setChecked(setting.getShowNotificationWhenDataOrWifiIsOn());
         switchShowWifiUsage.setChecked(setting.getShowWifiUsage());
@@ -68,6 +74,42 @@ public class GlobalSettingsActivity extends PaymentActivity {
         switchShowDownUpSpeed.setChecked(setting.getShowUpDownSpeed());
         switchVibrateInAlarms.setChecked(setting.getVibrateInAlarms());
         switchSoundInAlarms.setChecked(setting.getSoundInAlarms());
+        switchDailyLimitation.setChecked(setting.getDailyTrafficLimitationAlarm());
+
+        if (setting.getDailyTrafficLimitationAlarm()) {
+            edtDailyLimitationAlarm.setVisibility(View.VISIBLE);
+            txtDailyLimitationAlarm.setVisibility(View.VISIBLE);
+            edtDailyLimitationAlarm.setText("" + TrafficUnitsUtil.ByteToMb(setting.getDailyTrafficLimitation()));
+        } else {
+            edtDailyLimitationAlarm.setVisibility(View.INVISIBLE);
+            txtDailyLimitationAlarm.setVisibility(View.INVISIBLE);
+        }
+
+
+        edtDailyLimitationAlarm.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                //if (edtDailyLimitationAlarm.getText().length()== 0) {
+                //    MyToast.show("لطفا محدودیت حجم را وارد نمایید!", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
+                //}else {
+                setting.setDailyTrafficLimitationAlarm(true);
+                Long value = TrafficUnitsUtil.MbToByte(Integer.valueOf(edtDailyLimitationAlarm.getText().toString()));
+                setting.setDailyTrafficLimitation(value);
+                Settings.update(setting);
+                //  }
+            }
+        });
 
 
         switchDailyLimitation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -78,6 +120,10 @@ public class GlobalSettingsActivity extends PaymentActivity {
                 } else {
                     edtDailyLimitationAlarm.setVisibility(View.INVISIBLE);
                     txtDailyLimitationAlarm.setVisibility(View.INVISIBLE);
+
+                    setting.setDailyTrafficLimitationAlarm(false);
+                    setting.setDailyTrafficLimitation(0L);
+                    Settings.update(setting);
                 }
             }
         });
@@ -90,7 +136,7 @@ public class GlobalSettingsActivity extends PaymentActivity {
                 switchShowNotificationWhenDataOrWifiIsOn.setEnabled(isChecked);
                 switchShowWifiUsage.setEnabled(isChecked);
 
-                Setting setting = Settings.getCurrentSettings();
+                //Setting setting = Settings.getCurrentSettings();
                 setting.setShowNotification(isChecked);
                 Settings.update(setting);
             }
@@ -100,7 +146,7 @@ public class GlobalSettingsActivity extends PaymentActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 ConnectionManager.setDataOrWifiConnectedStatus();
-                Setting setting = Settings.getCurrentSettings();
+                // Setting setting = Settings.getCurrentSettings();
                 setting.setShowNotificationWhenDataOrWifiIsOn(isChecked);
                 Settings.update(setting);
             }
@@ -109,7 +155,7 @@ public class GlobalSettingsActivity extends PaymentActivity {
         switchShowWifiUsage.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Setting setting = Settings.getCurrentSettings();
+                //  Setting setting = Settings.getCurrentSettings();
                 setting.setShowWifiUsage(isChecked);
                 Settings.update(setting);
             }
@@ -127,7 +173,7 @@ public class GlobalSettingsActivity extends PaymentActivity {
         switchSoundInAlarms.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Setting setting = Settings.getCurrentSettings();
+                // Setting setting = Settings.getCurrentSettings();
                 setting.setSoundInAlarms(isChecked);
                 Settings.update(setting);
             }
@@ -136,7 +182,7 @@ public class GlobalSettingsActivity extends PaymentActivity {
         switchVibrateInAlarms.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Setting setting = Settings.getCurrentSettings();
+                //  Setting setting = Settings.getCurrentSettings();
                 setting.setVibrateInAlarms(isChecked);
                 Settings.update(setting);
             }
@@ -145,7 +191,7 @@ public class GlobalSettingsActivity extends PaymentActivity {
         switchShowNotificationInLockScreen.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Setting setting = Settings.getCurrentSettings();
+                // Setting setting = Settings.getCurrentSettings();
                 setting.setShowNotificationInLockScreen(isChecked);
                 Settings.update(setting);
             }
@@ -181,7 +227,7 @@ public class GlobalSettingsActivity extends PaymentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (LicenseManager.getLicenseStatus() == LicenseManager.Status.REGISTERED){
+        if (LicenseManager.getLicenseStatus() == LicenseManager.Status.REGISTERED) {
             updateUiToPremiumVersion();
         }
     }

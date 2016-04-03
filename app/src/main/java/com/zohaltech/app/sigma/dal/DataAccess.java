@@ -18,6 +18,7 @@ import com.zohaltech.app.sigma.classes.Helper;
 import com.zohaltech.app.sigma.classes.LicenseManager;
 import com.zohaltech.app.sigma.classes.LicenseStatus;
 import com.zohaltech.app.sigma.classes.MyRuntimeException;
+import com.zohaltech.app.sigma.classes.TrafficUnitsUtil;
 
 import java.io.File;
 import java.io.InputStreamReader;
@@ -88,6 +89,8 @@ public class DataAccess extends SQLiteOpenHelper {
             settingsValues.put(Settings.ShowUpDownSpeed, 0);
             settingsValues.put(Settings.VibrateInAlarms, 1);
             settingsValues.put(Settings.SoundInAlarms, 1);
+            settingsValues.put(Settings.DailyTrafficLimitationAlarm, 0);
+            settingsValues.put(Settings.DailyTrafficLimitation, TrafficUnitsUtil.MbToByte(100));
             database.insert(Settings.TableName, null, settingsValues);
 
 
@@ -108,7 +111,7 @@ public class DataAccess extends SQLiteOpenHelper {
 
 
             //todo : uncomment below lines for app usages
-            insertHasInternetAccessApplications(database);
+            //insertHasInternetAccessApplications(database);
             //deleteStatDirs();
 
             LicenseStatus status = LicenseManager.getExistingLicense();
@@ -227,7 +230,7 @@ public class DataAccess extends SQLiteOpenHelper {
             database.execSQL(Applications.CreateTable);
             database.execSQL(AppsUsageLogs.CreateTable);
             database.execSQL(SnapshotStatus.CreateTable);
-            insertHasInternetAccessApplications(database);
+            //insertHasInternetAccessApplications(database);
 
             ContentValues snapshot = new ContentValues();
             snapshot.put(SnapshotStatus.Status, SnapshotStatus.Stopped);
@@ -311,35 +314,35 @@ public class DataAccess extends SQLiteOpenHelper {
         }
     }
 
-    private void insertHasInternetAccessApplications(SQLiteDatabase database) {
-        PackageManager pm = App.context.getPackageManager();
-        Iterator iterator = pm.getInstalledPackages(12288).iterator();
-        PackageInfo packageInfo;
-
-        while (iterator.hasNext()) {
-            packageInfo = (PackageInfo) iterator.next();
-            String[] permissions = packageInfo.requestedPermissions;
-
-            if (permissions != null && hasInternetAccess(permissions)) {
-                ApplicationInfo info = packageInfo.applicationInfo;
-                String appName = pm.getApplicationLabel(info).toString();
-
-                ContentValues appsValues = new ContentValues();
-                appsValues.put(Applications.AppName, appName);
-                appsValues.put(Applications.PackageName, info.packageName);
-                appsValues.put(Applications.Uid, info.uid);
-                appsValues.put(Applications.Removed, 0);
-
-                database.insert(Applications.TableName, null, appsValues);
-
-                //long totalWifi = AppsTrafficSnapshot.getTotalBytes(info.uid, "wlan0");
-                //long totalData = AppsTrafficSnapshot.getTotalBytes(info.uid, "rmnet0");
-                //
-                //AppsTrafficSnapshot.logUidStat(info.uid, totalData, "rmnet0");
-                //AppsTrafficSnapshot.logUidStat(info.uid, totalWifi, "wlan0");
-            }
-        }
-    }
+    //private void insertHasInternetAccessApplications(SQLiteDatabase database) {
+    //    PackageManager pm = App.context.getPackageManager();
+    //    Iterator iterator = pm.getInstalledPackages(12288).iterator();
+    //    PackageInfo packageInfo;
+    //
+    //    while (iterator.hasNext()) {
+    //        packageInfo = (PackageInfo) iterator.next();
+    //        String[] permissions = packageInfo.requestedPermissions;
+    //
+    //        if (permissions != null && hasInternetAccess(permissions)) {
+    //            ApplicationInfo info = packageInfo.applicationInfo;
+    //            String appName = pm.getApplicationLabel(info).toString();
+    //
+    //            ContentValues appsValues = new ContentValues();
+    //            appsValues.put(Applications.AppName, appName);
+    //            appsValues.put(Applications.PackageName, info.packageName);
+    //            appsValues.put(Applications.Uid, info.uid);
+    //            appsValues.put(Applications.Removed, 0);
+    //
+    //            database.insert(Applications.TableName, null, appsValues);
+    //
+    //            //long totalWifi = AppsTrafficSnapshot.getTotalBytes(info.uid, "wlan0");
+    //            //long totalData = AppsTrafficSnapshot.getTotalBytes(info.uid, "rmnet0");
+    //            //
+    //            //AppsTrafficSnapshot.logUidStat(info.uid, totalData, "rmnet0");
+    //            //AppsTrafficSnapshot.logUidStat(info.uid, totalWifi, "wlan0");
+    //        }
+    //    }
+    //}
 
     private Boolean hasInternetAccess(String[] permissions) {
         for (String permission : permissions) {
