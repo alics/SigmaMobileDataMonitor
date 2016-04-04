@@ -1,5 +1,10 @@
 package com.zohaltech.app.sigma.classes;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Build;
+import android.preference.PreferenceManager;
+
 import com.zohaltech.app.sigma.dal.DataPackages;
 import com.zohaltech.app.sigma.dal.PackageHistories;
 import com.zohaltech.app.sigma.dal.Settings;
@@ -81,6 +86,21 @@ public final class PackageStatus {
         PackageHistory history = PackageHistories.getActivePackage();
         ArrayList<AlarmObject> alarmObjects = new ArrayList<>();
 
+        if (setting.getDailyTrafficLimitationAlarm()) {
+            SharedPreferences preferences;
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+                preferences = PreferenceManager.getDefaultSharedPreferences(App.currentActivity);
+            } else {
+                preferences = App.currentActivity.getSharedPreferences(App.currentActivity.getPackageName() + "_preferences", Context.MODE_MULTI_PROCESS);
+            }
+            Long totalUsage = preferences.getLong(DataUsageMeter.TODAY_USAGE_BYTES, 0);
+            Long limitation=setting.getDailyTrafficLimitation();
+
+            if(totalUsage>limitation){
+                String msg = "بیش از حد تعیین شده مصرف روزانه";
+                alarmObjects.add(new AlarmObject(AlarmObject.AlarmType.FINISH_DAILY_LIMITATION_ALARM, msg));
+            }
+        }
         if (history == null) {
             return alarmObjects;
         }

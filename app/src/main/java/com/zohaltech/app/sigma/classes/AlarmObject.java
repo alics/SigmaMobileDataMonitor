@@ -10,6 +10,7 @@ public class AlarmObject {
         FINISH_SECONDARY_TRAFFIC_ALARM,
         FINISH_TRAFFIC_ALARM,
         FINISH_VALIDATION_DATE_ALARM,
+        FINISH_DAILY_LIMITATION_ALARM
     }
 
     AlarmType alarmType;
