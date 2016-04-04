@@ -103,8 +103,11 @@ public class GlobalSettingsActivity extends PaymentActivity {
                 //if (edtDailyLimitationAlarm.getText().length()== 0) {
                 //    MyToast.show("لطفا محدودیت حجم را وارد نمایید!", Toast.LENGTH_SHORT, R.drawable.ic_warning_white);
                 //}else {
+                Long value = 0L;
+                if (edtDailyLimitationAlarm.getText().length() != 0) {
+                    value = TrafficUnitsUtil.MbToByte(Integer.valueOf(edtDailyLimitationAlarm.getText().toString()));
+                }
                 setting.setDailyTrafficLimitationAlarm(true);
-                Long value = TrafficUnitsUtil.MbToByte(Integer.valueOf(edtDailyLimitationAlarm.getText().toString()));
                 setting.setDailyTrafficLimitation(value);
                 Settings.update(setting);
                 //  }
@@ -220,7 +223,6 @@ public class GlobalSettingsActivity extends PaymentActivity {
                 startActivity(intent);
             }
         });
-
         super.onCreated();
     }
 
